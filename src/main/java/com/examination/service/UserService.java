@@ -1,19 +1,11 @@
 package com.examination.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.examination.bean.User;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-@Service
-public interface UserService {
 
-    List<User> queryUserList();
 
-    User queryUserByName(String username);
 
-    int addUser(User user);
+public interface UserService extends IService<User> {
 
-    int updateUser(User user);
-
-    int deleteUser(Integer id);
 }

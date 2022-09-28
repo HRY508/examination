@@ -4,8 +4,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
-mybatis:
-  type-aliases-package: com.examination.bean
-  mapper-locations: classpath:/mybatis/mapper/*.xml
+
+server:
+  port: 8080
+
+
+mybatis-plus:
   configuration:
-    map-underscore-to-camel-case: on
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID

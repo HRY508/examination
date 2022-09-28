@@ -1,6 +1,8 @@
 package com.examination.bean;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -10,10 +12,12 @@ import java.util.Date;
  * @Author he
  * @Data 2022/9/27 0:35
  */
+@TableName(value = "t_user")
 @Data
 public class User {
 
-    private Integer id;
+    @TableId(value = "id")
+    private Long id;
 
     private String userUuid;
 

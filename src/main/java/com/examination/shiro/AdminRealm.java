@@ -1,5 +1,6 @@
 package com.examination.shiro;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.examination.bean.User;
 import com.examination.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -20,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AdminRealm extends AuthorizingRealm {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     //授权
     @Override
@@ -41,7 +42,9 @@ public class AdminRealm extends AuthorizingRealm {
         //获取token,并强转为(UsernamePasswordToken)类型，用户名密码会封装到token中
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         //对从token中拿到用户名进行查询并赋值到user中
-        User user = userService.queryUserByName(token.getUsername());
+        LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<User>();
+        queryWrapper.eq(User::getUserName,token.getUsername());
+        User user=userService.getOne(queryWrapper);
         if(user != null){//用户输入的判断用户名存在
             //参数：数据库中查到的user、数据库中查到的user的密码，当前这个对象 返回的SimpleAuthenticationInfo对象会进行密码的验证
             System.out.println("rengzheng");
