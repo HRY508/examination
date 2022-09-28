@@ -1,5 +1,4 @@
 package com.examination.controller;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -18,12 +17,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class PageController {
 
-
     @RequestMapping("/login")
     public String loginPage(){
         return "admin/login";
     }
-
+    @RequestMapping("/index")
+    public String indexPage(){
+        return "admin/index";
+    }
 
     @GetMapping({"/{url}"})
     public String toPage(@PathVariable("url") String url){
@@ -35,15 +36,7 @@ public class PageController {
         return "admin/index";
     }
 
-    @RequestMapping("/index")
-    public String indexPage(){
-        return "admin/index";
-    }
 
-    @RequestMapping("/common")
-    public String leftnav(){
-        return "admin/commons/common";
-    }
 
 
     @PostMapping("/loginInto")

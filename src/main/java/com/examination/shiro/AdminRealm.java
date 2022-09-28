@@ -35,7 +35,6 @@ public class AdminRealm extends AuthorizingRealm {
         return info;
     }
 
-
     //认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
@@ -47,7 +46,6 @@ public class AdminRealm extends AuthorizingRealm {
         User user=userService.getOne(queryWrapper);
         if(user != null){//用户输入的判断用户名存在
             //参数：数据库中查到的user、数据库中查到的user的密码，当前这个对象 返回的SimpleAuthenticationInfo对象会进行密码的验证
-            System.out.println("rengzheng");
             return new SimpleAuthenticationInfo(user,user.getPassword(),getName());
         }
         return null;

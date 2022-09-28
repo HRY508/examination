@@ -2,11 +2,9 @@ package com.examination.shiro;
 
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import java.util.LinkedHashMap;
 
 /**
@@ -18,13 +16,11 @@ import java.util.LinkedHashMap;
 //配置类
 @Configuration
 public class ShiroConfig {
-
     //3、同样，把安全管理器注入到shiroFilterFactoryBean
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager")DefaultWebSecurityManager defaultWebSecurityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
-
         //权限设置：
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         //设置登录页面
@@ -33,7 +29,6 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/admin/login");
         // 设置成功之后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/admin/index");
-        //
         map.put("/admin/login","anon");
         map.put("/admin/loginInto","anon");
         //所有的静态文件都放行
@@ -44,11 +39,10 @@ public class ShiroConfig {
         //请求所有的管理员下的界面都要有管理员权限
         map.put("/admin/**","perms[admin]");
         //所有页面都要认证才能进入
-//        map.put("/admin/*","authc");
+        //map.put("/admin/*","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
-
     //2、@Qualifier("adminRealm")将容器中的adminRealm注入到安全管理器中,设置安全管理器的Realm
     @Bean
     public DefaultWebSecurityManager defaultWebSecurityManager(@Qualifier("adminRealm") AdminRealm adminRealm){
@@ -56,11 +50,9 @@ public class ShiroConfig {
         defaultWebSecurityManager.setRealm(adminRealm);
         return defaultWebSecurityManager;
     }
-
     //1、注入Realm
     @Bean
     public AdminRealm adminRealm(){
         return new AdminRealm();
     }
-
 }
