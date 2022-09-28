@@ -1,7 +1,7 @@
 package com.examination.shiro;
 
 import com.examination.bean.User;
-import com.examination.serice.UserService;
+import com.examination.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

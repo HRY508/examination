@@ -35,14 +35,14 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("/admin/index");
         //
         map.put("/admin/login","anon");
-        map.put("/admin/login1","anon");
+        map.put("/admin/loginInto","anon");
+        //所有的静态文件都放行
         map.put("/css/**", "anon");
         map.put("/fonts/**", "anon");
         map.put("/images/**", "anon");
         map.put("/js/**", "anon");
-        //请求/admin/common必须拥有管理员权限
-//        map.put("/admin/common","perms[admin]");
-        map.put("/admin/index","perms[admin]");
+        //请求所有的管理员下的界面都要有管理员权限
+        map.put("/admin/**","perms[admin]");
         //所有页面都要认证才能进入
 //        map.put("/admin/*","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

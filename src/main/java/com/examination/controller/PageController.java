@@ -7,9 +7,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description
@@ -19,6 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/admin")
 public class PageController {
+
+
+    @RequestMapping("/login")
+    public String loginPage(){
+        return "admin/login";
+    }
+
+
+    @GetMapping({"/{url}"})
+    public String toPage(@PathVariable("url") String url){
+        return "admin/"+url;
+    }
 
     @RequestMapping({"/",""})
     public String dashobard(){
@@ -36,11 +46,7 @@ public class PageController {
     }
 
 
-    @RequestMapping({"/toLogin","/login"})
-    public String loginPage(){
-        return "admin/login";
-    }
-    @PostMapping("/login1")
+    @PostMapping("/loginInto")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         @RequestParam("email")String email, Model model){

@@ -1,7 +1,6 @@
-package com.examination.serice;
+package com.examination.service;
 
 import com.examination.bean.User;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

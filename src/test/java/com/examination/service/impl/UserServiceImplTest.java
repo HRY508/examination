@@ -1,4 +1,4 @@
-package com.examination.serice.impl;
+package com.examination.service.impl;
 
 import com.examination.bean.User;
 import com.examination.mapper.UserMapper;
