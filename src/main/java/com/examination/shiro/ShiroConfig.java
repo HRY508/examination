@@ -40,6 +40,8 @@ public class ShiroConfig {
         map.put("/","anon");
         //登录请求放行
         map.put("/loginInto","anon");
+        //注册页面放行
+        map.put("/registration","anon");
         //所有的静态文件都放行
         map.put("/css/**", "anon");
         map.put("/fonts/**", "anon");

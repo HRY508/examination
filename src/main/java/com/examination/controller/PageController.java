@@ -8,17 +8,20 @@ import org.springframework.web.bind.annotation.*;
  * @Data 2022/9/27 7:41
  */
 @Controller
-@RequestMapping("/admin")
 public class PageController {
 
-    @RequestMapping({"","/index","/"})
+    @RequestMapping({"/admin/","/admin/index","/admin"})
     public String indexPage(){
         return "admin/index";
     }
 
-    @GetMapping({"/{url}"})
+    @GetMapping({"/admin/{url}"})
     public String toPage(@PathVariable("url") String url){
         return "admin/"+url;
     }
 
+    @RequestMapping("/registration")
+    public String toRegister(){
+        return "registration";
+    }
 }
