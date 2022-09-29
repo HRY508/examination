@@ -1,10 +1,15 @@
 package com.examination.shiro;
 
+import com.examination.bean.User;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import java.util.LinkedHashMap;
 
 /**
@@ -24,22 +29,28 @@ public class ShiroConfig {
         //权限设置：
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         //设置登录页面
-        shiroFilterFactoryBean.setLoginUrl("/admin/login");
+        shiroFilterFactoryBean.setLoginUrl("/login");
         //设置退出页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/admin/login");
-        // 设置成功之后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/admin/index");
-        map.put("/admin/login","anon");
-        map.put("/admin/loginInto","anon");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
+        //设置没有权限跳转的页面
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
+        //注意优先级从上到下依次降低---
+        //登录页面放行
+        map.put("/login","anon");
+        map.put("/","anon");
+        //登录请求放行
+        map.put("/loginInto","anon");
         //所有的静态文件都放行
         map.put("/css/**", "anon");
         map.put("/fonts/**", "anon");
         map.put("/images/**", "anon");
         map.put("/js/**", "anon");
         //请求所有的管理员下的界面都要有管理员权限
-        map.put("/admin/**","perms[admin]");
-        //所有页面都要认证才能进入
-        //map.put("/admin/*","authc");
+        map.put("/admin/**","perms["+"admin"+"]");
+        //请求所有的用户下的界面都要有用户权限
+        map.put("/user/**","perms["+"user"+"]");
+        //进入的所有页面都要登录
+        map.put("/**","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
