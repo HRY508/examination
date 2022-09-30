@@ -1,28 +1,212 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>后台管理系统</title>
-    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
-    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
-    <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
+    <title>主页</title>
+    <!--icheck-->
+    <link href="/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/square.css" rel="stylesheet">
     <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
     <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
     <!--dashboard calendar-->
     <link href="/css/clndr.css" rel="stylesheet">
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="/js/morris-chart/morris.css">
     <!--common-->
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
 </head>
 
-<body style="" class="sticky-header">
+<body class="sticky-header">
+
 <!--左侧开始-->
 <div th:replace="~{/admin/commons/common :: commonleft}"></div>
 <!--左侧结束-->
 
-<!--头部开始-->
-<div th:replace="~{/admin/commons/common :: commonheader}"></div>
-<!--头部结束-->
+<!-- 主页面开始-->
+<div class="main-content" >
+
+    <!--头部开始-->
+    <div th:replace="~{/admin/commons/common :: commonheader}"></div>
+    <!--头部结束-->
+
+    <!-- page heading start-->
+    <div class="page-heading">
+        <h3>
+            首页
+        </h3>
+        <ul class="breadcrumb">
+<!--            <li class="active">-->
+<!--                <a href="#" >数据总览</a>-->
+<!--            </li>-->
+            <li class="active">数据总览</li>
+        </ul>
+    </div>
+    <!-- page heading end-->
+
+    <!--body wrapper start-->
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-md-6">
+                <!--statistics start-->
+                <div class="row state-overview">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <div class="panel purple">
+                            <div class="symbol">
+                                <i class="fa fa-gavel"></i>
+                            </div>
+                            <div class="state-value">
+                                <div class="value">230</div>
+                                <div class="title">待批阅</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <div class="panel red">
+                            <div class="symbol">
+                                <i class="fa fa-tags"></i>
+                            </div>
+                            <div class="state-value">
+                                <div class="value">3490</div>
+                                <div class="title">题目数</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row state-overview">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <div class="panel blue">
+                            <div class="symbol">
+                                <i class="fa fa-money"></i>
+                            </div>
+                            <div class="state-value">
+                                <div class="value">22014</div>
+                                <div class="title">完成量</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <div class="panel green">
+                            <div class="symbol">
+                                <i class="fa fa-eye"></i>
+                            </div>
+                            <div class="state-value">
+                                <div class="value">390</div>
+                                <div class="title">访问量</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--statistics end-->
+            </div>
+            <div class="col-md-6">
+                <!--more statistics box start-->
+                <div class="panel deep-purple-box">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <div id="graph-donut" class="revenue-graph"></div>
+
+                            </div>
+                            <div class="col-md-5 col-sm-5 col-xs-5">
+                                <ul class="bar-legend">
+                                    <li><span class="blue"></span> 选择题</li>
+                                    <li><span class="green"></span> 填空题</li>
+                                    <li><span class="purple"></span> 判断题</li>
+                                    <li><span class="red"></span> 判断题</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--more statistics box end-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row revenue-states">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <h4>Monthly revenue report</h4>
+                                <div class="icheck">
+                                    <div class="square-red single-row">
+                                        <div class="checkbox ">
+                                            <input type="checkbox" checked>
+                                            <label>Online</label>
+                                        </div>
+                                    </div>
+                                    <div class="square-blue single-row">
+                                        <div class="checkbox ">
+                                            <input type="checkbox">
+                                            <label>Offline </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <ul class="revenue-nav">
+                                    <li><a href="#">weekly</a></li>
+                                    <li><a href="#">monthly</a></li>
+                                    <li class="active"><a href="#">yearly</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="clearfix">
+                                    <div id="main-chart-legend" class="pull-right">
+                                    </div>
+                                </div>
+
+                                <div id="main-chart">
+                                    <div id="main-chart-container" class="main-chart">
+                                    </div>
+                                </div>
+                                <ul class="revenue-short-info">
+                                    <li>
+                                        <h1 class="red">15%</h1>
+                                        <p>Server Load</p>
+                                    </li>
+                                    <li>
+                                        <h1 class="purple">30%</h1>
+                                        <p>Disk Space</p>
+                                    </li>
+                                    <li>
+                                        <h1 class="green">84%</h1>
+                                        <p>Transferred</p>
+                                    </li>
+                                    <li>
+                                        <h1 class="blue">28%</h1>
+                                        <p>Temperature</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--body wrapper end-->
+
+    <!--footer section start-->
+    <footer>
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--footer section end-->
+
+
+</div>
+<!-- 主页面结束-->
+
+
 
 
 
@@ -50,15 +234,29 @@
 <script src="/js/flot-chart/jquery.flot.js"></script>
 <script src="/js/flot-chart/jquery.flot.tooltip.js"></script>
 <script src="/js/flot-chart/jquery.flot.resize.js"></script>
-<script src="/js/flot-chart/jquery.flot.pie.resize.js"></script>
-<script src="/js/flot-chart/jquery.flot.selection.js"></script>
-<script src="/js/flot-chart/jquery.flot.stack.js"></script>
-<script src="/js/flot-chart/jquery.flot.time.js"></script>
-<script src="/js/main-chart.js"></script>
+
+
+<!--Morris Chart-->
+<script src="/js/morris-chart/morris.js"></script>
+<script src="/js/morris-chart/raphael-min.js"></script>
+
+<!--Calendar-->
+<script src="/js/calendar/clndr.js"></script>
+<script src="/js/calendar/evnt.calendar.init.js"></script>
+<script src="/js/calendar/moment-2.2.1.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
 
-
+<!--Dashboard Charts-->
+<script src="/js/dashboard-chart-init.js"></script>
+<!-- END JAVASCRIPTS -->
+<script>
+    jQuery(document).ready(function() {
+        EditableTable.init();
+    });
+    document.getElementById("menu1").className="menu-list nav-active";
+</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>管理员列表</title>
@@ -355,6 +355,8 @@
     jQuery(document).ready(function() {
         EditableTable.init();
     });
+    document.getElementById("admin-list").className="active";
+    document.getElementById("menu2").className="menu-list nav-active";
 </script>
 </body>
 </html>

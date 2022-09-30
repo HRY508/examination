@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>用户列表</title>
@@ -320,7 +320,7 @@
 
     <!--footer section start-->
     <footer>
-        2022 &copy; 平顶山学院提供技术支持
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
     </footer>
     <!--footer section end-->
 
@@ -352,6 +352,8 @@
     jQuery(document).ready(function() {
         EditableTable.init();
     });
+    document.getElementById("user-list").className="active";
+    document.getElementById("menu2").className="menu-list nav-active";
 </script>
 </body>
 </html>
