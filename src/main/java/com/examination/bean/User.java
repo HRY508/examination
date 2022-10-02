@@ -21,7 +21,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User  {
+public class User implements Serializable{
 
     @TableId(type = IdType.AUTO)
     private Integer id;

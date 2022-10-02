@@ -89,33 +89,52 @@
                                     <label for="subject" class="">Subject:</label>
                                     <input type="text" tabindex="1" id="subject" class="form-control">
                                 </div>
-                                <!--onclick函数，当管理员点击题干表单时题干表单设置不可编辑，显示富文本编辑器，-->
-                                <div class="form-group col-md-12">
+                                <!--onclick函数，当管理员点击题干表单时题干表单设置不可见，显示富文本编辑器，-->
+                                <div class="form-group">
                                     <label for="textarea" class="">题干:</label>
                                     <input type="text" tabindex="1" id="subject2" class="form-control"
-                                           onclick="$(this).parent().addClass('hidden');$('#textarea').parent().removeClass('hidden');
-                                            $('#textarea-button').removeClass('hidden');
-                                           $('#textarea').focus();">
+                                           onclick="$(this).parent().addClass('hidden');//当前表单设置不可见
+                                           $('#textarea').parent().removeClass('hidden');//富文本编辑器设置可见
+                                           $('#textarea-button').removeClass('hidden');//富文本编辑器按钮设置可见
+                                           $('#textarea').focus();"
+                                    >
                                 </div>
 
+                                <!--富文本编辑器开始，包括按钮-->
                                 <div class="compose-editor hidden">
                                     <textarea id="textarea" class="wysihtml5 form-control" rows="5" th:text="请在此输入题干"></textarea>
                                 </div>
-
                                 <div class="compose-btn hidden" id="textarea-button">
-                                    <button type="button" class="btn btn-primary btn-sm" onclick="$('#subject2').attr('value',$('#textarea').val());
-                                    $('#textarea').parent().addClass('hidden');$('#textarea-button').addClass('hidden');" ><i class="fa fa-check"></i> 确定</button>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                            onclick="$('#subject2').attr('value',$('#textarea').val());//设置题干的文本内容为富文本编辑器的内容
+                                            $('#textarea').parent().addClass('hidden');//设置文本编辑器不可见，
+                                            $('#textarea-button').addClass('hidden');//设置按钮不可见，设置题干可见
+                                            $('#subject2').parent().removeClass('hidden')"
+                                    ><i class="fa fa-check"></i> 确定</button>
                                     <button class="btn btn-sm btn-default"><i class="fa fa-times"></i> 取消</button>
                                 </div>
+                                <!--富文本编辑器结束-->
 
                                 <div class="form-group">
-                                    <label for="subject" class="">Subject:</label>
-                                    <input type="text" tabindex="1" id="subject1" class="form-control">
+                                    <label for="subject" class="">A</label>
+                                    <input type="text" tabindex="1" id="A" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject" class="">B</label>
+                                    <input type="text" tabindex="1" id="B" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject" class="">C</label>
+                                    <input type="text" tabindex="1" id="C" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject" class="">D</label>
+                                    <input type="text" tabindex="1" id="D" class="form-control">
                                 </div>
                                 <div class="compose-btn">
-                                    <button class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Send</button>
-                                    <button class="btn btn-sm btn-default"><i class="fa fa-times"></i> Discard</button>
-                                    <button class="btn btn-sm btn-default">Draft</button>
+                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> 完成</button>
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-rotate-right"></i> 重置</button>
+                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-plus"></i>添加选项</button>
                                 </div>
 
                             </form>
