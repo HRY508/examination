@@ -48,11 +48,11 @@ public class LoginController {
             subject.login(token);
         }catch(UnknownAccountException e){
             model.addAttribute("msg","用户不存在");
-            return "/login";
+            return "login";
         }
         catch (IncorrectCredentialsException e){
             model.addAttribute("msg","密码错误");
-            return "/login";
+            return "login";
         }
         User user = (User)subject.getPrincipal();
         if(user.getPerms().equals("user")){
