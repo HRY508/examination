@@ -34,20 +34,19 @@
                 <section class="panel">
                     <header class="panel-heading">
                         <div>
-                            用户名:<input type="text" value="" name="userName" th:value="${userName}">
-<!--                            真实姓名：<input type="text" value="" name="realName" th:value="${realName}">-->
-<!--                            学号:<input type="text" value="" name="uId" th:value="${uId}">-->
-                            <input type="submit"  value="查询">
-<!--                            <a th:href="${/admin/searchSubmit}">查询</a>-->
+                            <input class="form-control mr-sm-2 findUsername" type="search" name="userName" placeholder="根据用户名" aria-label="Search">
+                            <a class="btn btn-outline-success my-2 my-sm-0 find" type="submit" th:href="@{/admin/searchByList}">查询</a>
+
                         </div>
 
-
+                        <a href="javascript:void(0)" onclick="deleteSome()">批量删除</a>
                     </header>
 
                     <div class="panel-body">
                         <div class="adv-table" style="height: 55em">
                             <div class="space15"></div>
                             <table class="display table table-hover" id="dynamic-table">
+                                <form id = "formUser" th:action="@{deleteCount}" method="post">
                                 <thead>
                                 <tr>
                                     <th>id</th>
@@ -79,10 +78,13 @@
                                     </td>
                                     <td>
                                         <a th:href="@{/toEdit(id=${user.id})}">edit</a>
-                                        <a th:href="@{/delete(id=${user.id})}">delete</a>
+                                        <a  th:href="@{/admin/delete/{id}(id=${user.id})}"
+                                           onclick="return del()" th:value="${user.id}" value="1">Delete
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>
+                                </form>
                             </table>
                             <!--分页-->
                             <div th:replace="~{/admin/commons/page :: page}"></div>
@@ -107,6 +109,27 @@
 </div>
 <!--主页面结束-->
 
+<!--批量删除-->
+<script type="text/javascript">
+
+    function del() {
+        if (confirm("您确定要删除吗？")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    function deleteSome(){
+        var t = confirm("您确认要删除选中的内容吗？");
+        if (t == false) {
+            return false;
+        } else {
+            document.getElementById("formUser").submit();  //firnUser是表单名字
+        }
+    }
+</script>
 
 
 <!--common scripts for all pages-->
