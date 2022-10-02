@@ -21,23 +21,31 @@
     <form class="form-signin" th:action="@{/loginInto}" method="post">
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">登录</h1>
+            <!--注册成功通知开始-->
+            <div class="alert alert-success fade in" th:if="${regMsg}=='success'">
+                <button type="button" class="close close-sm" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                </button>
+                <strong>注册成功!</strong>可以进行登录
+            </div>
+            <!--注册成功通知结束-->
             <img src="/images/login-logo.png" alt=""/>
         </div>
         <div class="login-wrap">
             <font th:text="${msg}" color="#8b0000"></font>
-            <input type="text" name="username" class="form-control" placeholder="用户名" autofocus>
+            <input type="text" name="username" class="form-control" placeholder="用户名" th:value="${username}" autofocus>
             <input type="password" name="password" class="form-control" placeholder="密码">
             <button class="btn btn-lg btn-login btn-block" type="submit">
                 <i class="fa fa-check"></i>
             </button>
             <div class="registration">
                 还没有账号?
-                <a class="" href="registration.html">
+                <a class="" th:href="@{/registration}">
                     去注册
                 </a>
             </div>
             <label class="checkbox">
-                <input type="checkbox" value="remember-me"> 记住密码
+                <input type="checkbox" name="rememberMe" > 记住我
                 <span class="pull-right">
                     <a data-toggle="modal" href="#myModal"> 忘记密码?</a>
                 </span>

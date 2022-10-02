@@ -1,5 +1,4 @@
 package com.examination.shiro;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.examination.bean.User;
 import com.examination.service.UserService;
@@ -10,6 +9,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -45,8 +45,10 @@ public class AdminRealm extends AuthorizingRealm {
         queryWrapper.eq(User::getUserName,token.getUsername());
         User user=userService.getOne(queryWrapper);
         if(user != null){//用户输入的判断用户名存在
-            //参数：数据库中查到的user、数据库中查到的user的密码，当前这个对象 返回的SimpleAuthenticationInfo对象会进行密码的验证
-            return new SimpleAuthenticationInfo(user,user.getPassword(),getName());
+            //盐值
+            ByteSource salt = ByteSource.Util.bytes(user.getUserName());//账号作为盐值
+            //参数：数据库中查到的user、数据库中查到的user的密码，盐值，当前realm这个对象的名字 返回的SimpleAuthenticationInfo对象会进行密码的验证
+            return new SimpleAuthenticationInfo(user,user.getPassword(),salt,getName());
         }
         return null;
     }

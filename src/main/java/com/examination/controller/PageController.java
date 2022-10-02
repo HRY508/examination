@@ -15,13 +15,18 @@ public class PageController {
         return "admin/index";
     }
 
-    @GetMapping({"/admin/{url}"})
-    public String toPage(@PathVariable("url") String url){
-        return "admin/"+url;
+    @RequestMapping("/admin/singleEditors")
+    public String toSingleChoicePage(){
+        return "admin/editors";
     }
 
-    @RequestMapping("/registration")
-    public String toRegister(){
-        return "registration";
-    }
+//    @GetMapping({"/admin/{url}"})
+//    public String toPage(@PathVariable("url") String url){
+//        return "admin/"+url;
+//    }
+
+//    @RequestMapping("/registration")
+//    public String toRegister(){
+//        return "registration";
+//    }
 }

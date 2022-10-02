@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description
@@ -21,13 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @RequestMapping({"/login","","/"})
-    public String toLoginPage(){
+    public String toLoginPage(Model model){
+        model.addAttribute("check",false);
         return "login";
     }
-    @RequestMapping("/unauthorized")
-    public String unauthorized(){
-        return "admin/500";
-    }
+
 
     @RequestMapping("/user/index")
     public String toUserPage(){
@@ -37,9 +36,14 @@ public class LoginController {
     @PostMapping("/loginInto")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        Model model){
+                        Model model, HttpServletRequest request){
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        //获取记住我，的选中状态，如果未选中，获取的是null，如果选中获取的是value值，没有设置value值选中时获取的是on
+        String rememberMe = request.getParameter("rememberMe");
+        if(rememberMe!=null){
+          token.setRememberMe(true);
+        }
         try{
             subject.login(token);
         }catch(UnknownAccountException e){

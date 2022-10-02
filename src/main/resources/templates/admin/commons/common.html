@@ -39,16 +39,17 @@
 
             <!--左侧导航开始-->
             <ul class="nav nav-pills nav-stacked custom-nav">
+
                 <!--导航一开始-->
-                <li id="menu1"><a th:href="@{/admin/index.html}"><i class="fa fa-home"></i> <span>首页</span></a>
+                <li id="menu1"><a th:href="@{/admin/index}"><i class="fa fa-home"></i> <span>首页</span></a>
                 </li>
                 <!--导航一结束-->
 
                 <!--导航二开始-->
                 <li id="menu2" class="menu-list"><a href=""><i class="fa fa-user"></i> <span>用户管理</span></a>
                     <ul class="sub-menu-list">
-                        <li id="user-list"><a  th:href="@{/admin/user_list.html}"><i class="fa fa-users"></i>用户列表</a></li>
-                        <li id="admin-list"><a th:href="@{/admin/admin_list.html}"><i class="fa fa-user"></i>管理员列表</a></li>
+                        <li id="user-list"><a  th:href="@{/admin/user_list}"><i class="fa fa-users"></i>用户列表</a></li>
+                        <li id="admin-list"><a th:href="@{/admin/admin_list}"><i class="fa fa-user"></i>管理员列表</a></li>
                     </ul>
                 </li>
                 <!--导航二结束-->
@@ -56,17 +57,17 @@
                 <!--导航三开始-->
                 <li id="menu3" class="menu-list"><a href=""><i class="fa fa-book"></i> <span>卷库管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="general.html"><i class="fa fa-align-left"></i>试卷列表</a></li>
+                        <li ><a href="general.html"><i class="fa fa-align-left"></i>试卷列表</a></li>
                         <li><a href="buttons.html"><i class="fa fa-edit"></i>试卷创编</a></li>
                     </ul>
                 </li>
                 <!--导航三结束-->
 
                 <!--导航四开始-->
-                <li class="menu-list"><a href=""><i class="fa fa-align-justify"></i> <span>题库管理</span></a>
+                <li id="menu4" class="menu-list"><a href=""><i class="fa fa-align-justify"></i> <span>题库管理</span></a>
                     <ul class="sub-menu-list">
                         <li><a href="grids.html"><i class="fa fa-list"></i>题目列表</a></li>
-                        <li><a href="gallery.html"><i class="fa fa-minus"></i>单选题创建</a></li>
+                        <li id="single-choice"><a th:href="@{/admin/singleEditors}"><i class="fa fa-minus"></i>单选题创建</a></li>
                         <li><a href="calendar.html"><i class="fa fa-check-square-o"></i>多选题创建</a></li>
                         <li><a href="tree_view.html"><i class="fa fa-square-o"></i>判断题创建</a></li>
                         <li><a href="nestable.html"><i class="fa fa-pencil"></i>填空题创建</a></li>

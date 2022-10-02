@@ -1,10 +1,12 @@
 package com.examination.bean;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,34 +16,27 @@ import java.util.Date;
  */
 @TableName(value = "t_user")
 @Data
-public class User {
+//序列化操作，配置cookie操作时要求
+public class User implements Serializable {
 
-    @TableId(value = "id")
+    @TableId(value = "id",type = IdType.AUTO)
     private Long id;
-
-    private String userUuid;
 
     private String userName;
 
     private String password;
 
-    private String realName;
+    private String uId;
 
-    private Integer age;
+    private String realName;
 
     private Integer sex;
 
-    private Date birthDay;
+    private String profession;
 
     private String perms;
 
-    private String phone;
-
-    private Integer role;
-
     private Integer status;
-
-    private String imagePath;
 
     private Date createTime;
 }

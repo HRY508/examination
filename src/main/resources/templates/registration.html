@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -23,32 +23,41 @@
 
 <div class="container">
 
-    <form class="form-signin" action="http://view.jqueryfuns.com/2014/4/10/7_df25ceea231ba5f44f0fc060c943cdae/index.html">
+
+    <form class="form-signin" th:action="@{/register}" method="post">
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">新用户注册</h1>
             <img src="/images/login-logo.png" alt=""/>
         </div>
-
-
         <div class="login-wrap">
             <p>输入您的个人信息</p>
-            <input type="text" autofocus="" placeholder="全名" class="form-control">
-            <input type="text" autofocus="" placeholder="地址" class="form-control">
-            <input type="text" autofocus="" placeholder="邮箱" class="form-control">
-            <input type="text" autofocus="" placeholder="城镇" class="form-control">
+            <input type="text" autofocus="" placeholder="姓名" name="realName" th:value="${reg.realName}" class="form-control">
+            <input type="text" autofocus="" placeholder="学号" name="uId" th:value="${reg.UId}" class="form-control">
+            <input type="text" autofocus="" placeholder="专业" name="profession" th:value="${reg.profession}" class="form-control">
             <div class="radios">
                 <label for="radio-01" class="label_radio col-lg-6 col-sm-6">
-                    <input type="radio" checked="" value="1" id="radio-01" name="sample-radio"> 男
+                    <input type="radio"  id="radio-01" th:field="*{reg.sex}" th:value="1" name="sex"> 男
                 </label>
                 <label for="radio-02" class="label_radio col-lg-6 col-sm-6">
-                    <input type="radio" value="1" id="radio-02" name="sample-radio"> 女
+                    <!--数据回显-->
+                    <input type="radio" id="radio-02" th:field="*{reg.sex}" th:value="0"  name="sex"> 女
                 </label>
             </div>
 
             <p>输入您的帐户详细信息如下</p>
-            <input type="text" autofocus="" placeholder="用户名" class="form-control">
-            <input type="password" placeholder="密码" class="form-control">
-            <input type="password" placeholder="确认密码" class="form-control">
+            <input type="text" autofocus="" placeholder="用户名" name="username" class="form-control">
+            <input type="password" placeholder="密码" name="password" class="form-control">
+            <input type="password" placeholder="确认密码" name="repassword" class="form-control">
+            <!--注册出错通知开始-->
+            <div class="alert alert-block alert-danger fade in" th:if="${regMsg}!=null">
+                <button type="button" class="close close-sm" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                </button>
+                <strong>注册失败！</strong>
+                <a th:text="${regMsg}" style="color: #a94442"></a>
+            </div>
+            <!--注册出错通知结束-->
+
             <label class="checkbox">
                 <input type="checkbox" value="agree this condition"> 我同意服务条款和隐私政策
             </label>
@@ -57,12 +66,11 @@
             </button>
 
             <div class="registration">
-                已经注册。
-                <a href="login.html" class="">
+                已经注册?
+                <a th:href="@{/login}" class="">
                     去登陆
                 </a>
             </div>
-
         </div>
 
     </form>
@@ -78,5 +86,12 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/modernizr.min.js"></script>
 
+
 </body>
 </html>
+<script>
+    $(document).ready(function(){
+        alert(document.getElementById("boy").val())
+
+    });
+</script>
