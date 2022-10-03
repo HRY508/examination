@@ -68,15 +68,14 @@
                                 <div class="form-group">
                                     <label for="to" class="">To:</label>
                                     <input type="text" tabindex="1" id="to" class="form-control">
-
-                                    <div class="compose-options">
-                                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>
-                                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>
-                                    </div>
+<!--                                    <div class="compose-options">-->
+<!--                                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>-->
+<!--                                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>-->
+<!--                                    </div>-->
                                 </div>
 
                                 <div class="form-group hidden">
-                                    <label for="cc" class="">Cc:</label>
+                                    <label for="cc" class="0">Cc:</label>
                                     <input type="text" tabindex="2" id="cc" class="form-control">
                                 </div>
 
@@ -89,6 +88,7 @@
                                     <label for="subject" class="">Subject:</label>
                                     <input type="text" tabindex="1" id="subject" class="form-control">
                                 </div>
+
                                 <!--onclick函数，当管理员点击题干表单时题干表单设置不可见，显示富文本编辑器，-->
                                 <div class="form-group">
                                     <label for="textarea" class="">题干:</label>
@@ -99,7 +99,7 @@
                                            $('#textarea').focus();"
                                     >
                                 </div>
-
+                                &nbsp;
                                 <!--富文本编辑器开始，包括按钮-->
                                 <div class="compose-editor hidden">
                                     <textarea id="textarea" class="wysihtml5 form-control" rows="5" th:text="请在此输入题干"></textarea>
@@ -114,30 +114,86 @@
                                     <button class="btn btn-sm btn-default"><i class="fa fa-times"></i> 取消</button>
                                 </div>
                                 <!--富文本编辑器结束-->
+                                <div id="p">
+                                <div class="form-group">
+                                    <label for="subject" class="a">A</label>
+                                    <input type="text" tabindex="1" id="A" class="form-control" name="A">
+                                </div>
 
                                 <div class="form-group">
-                                    <label for="subject" class="">A</label>
-                                    <input type="text" tabindex="1" id="A" class="form-control">
+                                    <label for="subject" class="a">B</label>
+                                    <input type="text" tabindex="1" id="B" class="form-control" name="B">
                                 </div>
+
+                                <div class="form-group" id="cloneForm">
+                                    <label for="subject" class="a" >C</label>
+                                    <input type="text" tabindex="1"  class="form-control" name="C">
+                                </div>
+
+                                <div class="form-group" >
+                                    <label for="subject" class="a" >D</label>
+                                    <input type="text" tabindex="1" id="D"  class="form-control" name="D">
+                                </div>
+
+                                </div>
+
+
+
+                                &nbsp;
                                 <div class="form-group">
-                                    <label for="subject" class="">B</label>
-                                    <input type="text" tabindex="1" id="B" class="form-control">
+                                    <label for="bcc" class="">解析</label>
+                                    <input type="text" tabindex="2" id="Answer" class="form-control">
                                 </div>
+                                &nbsp;
+<!--                                分数开始-->
                                 <div class="form-group">
-                                    <label for="subject" class="">C</label>
-                                    <input type="text" tabindex="1" id="C" class="form-control">
+
+                                    <div id="spinner4">
+                                        <label for="subject" class="">分数</label>
+                                        <div class="input-group" style="width:150px;">
+                                            <div class="spinner-buttons input-group-btn">
+                                                <button type="button" class="btn spinner-up btn-primary">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <input type="text" class="spinner-input form-control" maxlength="3" readonly="">
+                                            <div class="spinner-buttons input-group-btn">
+                                                <button type="button" class="btn spinner-down btn-warning">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="subject" class="">D</label>
-                                    <input type="text" tabindex="1" id="D" class="form-control">
-                                </div>
+<!--                                分数结束-->
                                 <div class="compose-btn">
+                                    &nbsp;
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> 完成</button>
                                     <button type="button" class="btn btn-sm btn-default"><i class="fa fa-rotate-right"></i> 重置</button>
-                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-plus"></i>添加选项</button>
+                                    <button type="button" class="btn btn-sm btn-default"
+                                    onclick="addForm()"><i class="fa fa-plus"></i>添加选项</button>
+                                    <button type="button" class="btn btn-sm btn-default"
+                                    onclick="reduceForm()"><i class="fa fa-minus"></i>减少选项</button>
                                 </div>
-
+                                &nbsp;
                             </form>
+                            &nbsp;
+                            <!--提示开始-->
+                            <div class="alert alert-warning fade in hidden" id="tip1">
+                                <button type="button" class="close close-sm" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <strong>提示!</strong> 最多10个选项
+                            </div>
+                            <!--提示结束-->
+                            <!--提示开始-->
+                            <div class="alert alert-warning fade in hidden" id="tip2">
+                                <button type="button" class="close close-sm" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <strong>提示!</strong> 最少3个选项
+                            </div>
+                            <!--提示结束-->
                         </div>
                     </section>
 
@@ -146,38 +202,6 @@
             </div>
 
         </div>
-
-
-        <!--body wrapper start-->
-<!--        <div class="wrapper">-->
-<!--            <div class="row">-->
-<!--                <div class="col-lg-12">-->
-<!--                    -->
-<!--                    <section class="panel">-->
-<!--                        <header class="panel-heading">-->
-<!--                            <span class="tools pull-right">-->
-<!--                                <a class="fa fa-chevron-down" href="javascript:;"></a>-->
-<!--                                <a class="fa fa-times" href="javascript:;"></a>-->
-<!--                             </span>-->
-<!--                        </header>-->
-<!--                        <div class="panel-body">-->
-<!--                            <div class="form">-->
-<!--                                <form action="#" class="form-horizontal">-->
-<!--                                    <div class="form-group">-->
-<!--                                        <div class="col-sm-12">-->
-<!--                                            <textarea class="form-control ckeditor" name="editor1" rows="6"></textarea>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </form>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </section>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--        </div>-->
-        <!--body wrapper end-->
-
         <!--footer section start-->
         <footer>
             2014 &copy; AdminEx by ThemeBucket
@@ -206,11 +230,54 @@
 <script src="/js/scripts.js"></script>
 
 <script>
+    document.getElementById("single-choice").className="active";
+    document.getElementById("menu4").className="menu-list nav-active";
+    // 增加form表单
+    function addForm() {
+        var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
+        //通过类获取选项的个数
+         var num = document.getElementsByClassName('a').length
+        //设置选项数目最多不能大于10个选项
+        if(num<10){
+            // alert(document.getElementsByClassName('a').length)
+            //获取要克隆的节点
+            var cloneFrom = document.getElementById('cloneForm')
+            //他的属性全部会被克隆
+            var clone = document.getElementById('cloneForm').cloneNode(true)
+            //设置选项name属性，label标签的文本内容通过动态获取jquery的id设置的
+            clone.childNodes[1].innerHTML = arr1[num-3]
+            clone.childNodes[3].id=arr1[num-3]
+            // alert(clone.childNodes[1].innerHTML)
+            //获取父节点，用来将子节点追加到其后
+            var p = document.getElementById('p')
+            p.appendChild(clone)
+            //最后在修改name属性（放在前面不生效，巨坑）
+            $("#"+arr1[num-3]+"").attr('name',arr1[num-3])
+        }
+        //大于十个选项设置提示
+        else{
+            $('#tip1').removeClass('hidden')
+        }
+    }
+    function reduceForm(){
+        $('#tip1').addClass('hidden')
+        var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
+        var num = document.getElementsByClassName('a').length
+        if(num<4){
+            $('#tip2').removeClass('hidden')
+        }
+        else{
+           var d =  document.getElementsByName(arr1[num-4])[0]
+            var dp=d.parentNode
+            dp.remove()
+        }
+    }
+
+
     jQuery(document).ready(function(){
          $('.wysihtml5').wysihtml5();
     });
-    document.getElementById("single-choice").className="active";
-    document.getElementById("menu4").className="menu-list nav-active";
+
 </script>
 
 </body>

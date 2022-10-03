@@ -4020,7 +4020,8 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
 .compose-mail input, .compose-mail input:focus {
     border:none;
     padding: 0;
-    width: 80%;
+    /*标签的宽度10%这里*/
+    width: 90%;
     float: left;
 }
 .compose-mail .form-group {
@@ -4037,7 +4038,8 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
     padding-left: 10px;
     margin-bottom: 0;
     background: #eaebee;
-    margin-right: 10px;
+    /*这里注释是因为，label标签与input之间有空隙影响美观*/
+    /*margin-right: 10px;*/
 }
 
 .compose-editor input {
