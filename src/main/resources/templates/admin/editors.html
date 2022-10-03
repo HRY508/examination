@@ -13,6 +13,30 @@
   <link href="/css/style.css" rel="stylesheet">
   <link href="/css/style-responsive.css" rel="stylesheet">
 
+
+    <!--icheck-->
+    <link href="/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/minimal/red.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/minimal/green.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/minimal/blue.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/minimal/yellow.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/minimal/purple.css" rel="stylesheet">
+
+    <link href="/js/iCheck/skins/square/square.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/green.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/yellow.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/purple.css" rel="stylesheet">
+
+    <link href="/js/iCheck/skins/flat/grey.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/flat/red.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/flat/blue.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/flat/yellow.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/flat/purple.css" rel="stylesheet">
+
+
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   <script src="/js/html5shiv.js"></script>
@@ -137,19 +161,19 @@
 
                                 </div>
 
-
-
                                 &nbsp;
+                                <div class="form-group">
+                                    <label for="bcc" class="">答案</label>
+                                    <input type="text" tabindex="2" id="Key" class="form-control">
+                                </div>
                                 <div class="form-group">
                                     <label for="bcc" class="">解析</label>
                                     <input type="text" tabindex="2" id="Answer" class="form-control">
                                 </div>
-                                &nbsp;
 <!--                                分数开始-->
                                 <div class="form-group">
-
+                                    <label for="bcc" class="">分数</label>
                                     <div id="spinner4">
-                                        <label for="subject" class="">分数</label>
                                         <div class="input-group" style="width:150px;">
                                             <div class="spinner-buttons input-group-btn">
                                                 <button type="button" class="btn spinner-up btn-primary">
@@ -166,8 +190,19 @@
                                     </div>
                                 </div>
 <!--                                分数结束-->
-                                <div class="compose-btn">
-                                    &nbsp;
+<!--                                难度选择开始-->
+                                <div class="form-group">
+                                    <label for="bcc" class="">难度</label>
+                                    <a href="#" class="btn btn-success" style="width:20%">简单</a>
+                                    <a href="#" class="btn btn-info" style="width:29%" >中等</a>
+                                    <a href="#" class="btn btn-danger" style="width:39%">困难</a>
+                                </div>
+                                &nbsp;
+<!--                                难度选择结束-->
+<!--                                充当换行-->
+                                <div class="form-group " style="display: none"></div>
+
+                                <div class="compose-btn1">
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> 完成</button>
                                     <button type="button" class="btn btn-sm btn-default"><i class="fa fa-rotate-right"></i> 重置</button>
                                     <button type="button" class="btn btn-sm btn-default"
@@ -175,24 +210,56 @@
                                     <button type="button" class="btn btn-sm btn-default"
                                     onclick="reduceForm()"><i class="fa fa-minus"></i>减少选项</button>
                                 </div>
-                                &nbsp;
+
                             </form>
-                            &nbsp;
+
                             <!--提示开始-->
-                            <div class="alert alert-warning fade in hidden" id="tip1">
-                                <button type="button" class="close close-sm" data-dismiss="alert">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                <strong>提示!</strong> 最多10个选项
+                            <!--选项过多弹出框开始-->
+                            <div class="col-md-12 ">
+                                <a href="#myModal1" data-toggle="modal" class="btn btn-warning hidden" id="tip1">
+                                    提示按钮
+                                </a>
+                                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal1" class="modal fade" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background:#bb1f1f">
+                                                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                                <h4 class="modal-title">提示</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                最多十个选项
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <!--提示结束-->
-                            <!--提示开始-->
-                            <div class="alert alert-warning fade in hidden" id="tip2">
-                                <button type="button" class="close close-sm" data-dismiss="alert">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                <strong>提示!</strong> 最少3个选项
+                            <!--选项过多弹出框开始-->
+                            <!--选项过少弹出框开始-->
+                            <div class="col-md-12 ">
+                                <a href="#myModal2" data-toggle="modal" class="btn btn-warning hidden" id="tip2">
+                                    提示按钮
+                                </a>
+                                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background:#F4C160">
+                                                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                                <h4 class="modal-title">提示</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                最少三个选项
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <!--弹出框结束-->
                             <!--提示结束-->
                         </div>
                     </section>
@@ -223,8 +290,17 @@
 
 <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
 
+<!--spinner-->
+<script type="text/javascript" src="/js/fuelux/js/spinner.min.js"></script>
+<script src="/js/spinner-init.js"></script>
+
 <script type="text/javascript" src="/js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
 <script type="text/javascript" src="/js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+
+<!--icheck -->
+<script src="/js/iCheck/jquery.icheck.js"></script>
+<script src="/js/icheck-init.js"></script>
+
 
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
@@ -256,7 +332,7 @@
         }
         //大于十个选项设置提示
         else{
-            $('#tip1').removeClass('hidden')
+            document.getElementById("tip1").click()
         }
     }
     function reduceForm(){
@@ -264,9 +340,10 @@
         var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
         var num = document.getElementsByClassName('a').length
         if(num<4){
-            $('#tip2').removeClass('hidden')
+            //弹出提示框
+            document.getElementById("tip2").click()
         }
-        else{
+        else{//删除节点
            var d =  document.getElementsByName(arr1[num-4])[0]
             var dp=d.parentNode
             dp.remove()

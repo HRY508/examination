@@ -1845,6 +1845,9 @@ ul.user-states li {
     direction: rtl;
     font-size: 30px;
 }
+.star-different{
+    margin-top: 8px;
+}
 
 .rating span.star, .rating span.star {
     font-family: FontAwesome;
@@ -4047,13 +4050,18 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
 }
 
 .compose-editor {
-    margin-top: 35px;
+    margin-top: 0px;
     margin-bottom: 15px;
     display: inline-block;
     width: 100%;
 }
 
 .compose-btn {
+    float: left;
+    margin-bottom: 20px;
+}
+.compose-btn1 {
+    margin-top: 20px;
     float: left;
 }
 

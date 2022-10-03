@@ -1856,10 +1856,17 @@ output {
     color: #999
 }
 
+/*.input-score {*/
+/*    cursor: not-allowed;*/
+/*    background-color: #eee;*/
+/*    opacity: 1*/
+/*    text-align:center;*/
+/*}*/
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     cursor: not-allowed;
     background-color: #eee;
-    opacity: 1
+    opacity: 1;
+    text-align:center;
 }
 
 textarea.form-control {
