@@ -34,12 +34,13 @@
                 <section class="panel">
                     <header class="panel-heading">
                         <form action="/admin/searchName" method="post">
-                                用户名:<input type="text" value="" name="searchName">
+                                用户名:<input type="text" value="" name="searchName" th:value="${searchName}">
                                 <!--                            真实姓名：<input type="text" value="" name="realName" th:value="${realName}">-->
                                 <!--                            学号:<input type="text" value="" name="uId" th:value="${uId}">-->
                                 <button value="查询" class="btn btn-sm btn-default" ><i class="fa fa-plus"></i>查询</button>
                                 <!--                            <a th:href="${/admin/searchSubmit}">查询</a>-->
-                                <button class="btn btn-sm btn-default" onclick="DelSelect()">批量删除</button>
+                                <button class="btn btn-sm btn-danger" onclick="DelSelect()"><i class="fa fa-archive"></i>批量删除</button>
+
                         </form>
 
                     </header>

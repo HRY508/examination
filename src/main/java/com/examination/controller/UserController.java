@@ -46,10 +46,12 @@ public class UserController {
     @RequestMapping("/admin/searchName")
     public String searchSubmit(@RequestParam(value = "searchName",required = false,defaultValue = "")String searchName,
                                HttpServletRequest request,
-                               @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn) {
+                               @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn
+                               ) {
 //        IPage<User> page = userService.searchByPage(pn, 5, searchName);
         Page<User> userPage=new Page<>(pn,2);
         QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        request.setAttribute("searchName",searchName);
         queryWrapper.like("user_name",searchName).or().like("real_name",searchName);
         Page<User> result = userService.page(userPage, queryWrapper);
         request.setAttribute("jumpUrl", "/admin/searchName?searchName="+searchName+"&pn=");
