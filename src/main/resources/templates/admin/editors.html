@@ -15,26 +15,26 @@
 
 
     <!--icheck-->
-    <link href="/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/minimal/red.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/minimal/green.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/minimal/blue.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/minimal/yellow.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/minimal/purple.css" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/red.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/green.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/blue.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/yellow.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/purple.css}" rel="stylesheet">
 
-    <link href="/js/iCheck/skins/square/square.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/square/green.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/square/yellow.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/square/purple.css" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/red.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/green.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/blue.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/yellow.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/purple.css}" rel="stylesheet">
 
-    <link href="/js/iCheck/skins/flat/grey.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/flat/red.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/flat/green.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/flat/blue.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/flat/yellow.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/flat/purple.css" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/flat/grey.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/flat/red.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/flat/green.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/flat/blue.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/flat/yellow.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/flat/purple.css}" rel="stylesheet">
 
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -98,15 +98,15 @@
 <!--                                    </div>-->
                                 </div>
 
-                                <div class="form-group hidden">
-                                    <label for="cc" class="0">Cc:</label>
-                                    <input type="text" tabindex="2" id="cc" class="form-control">
-                                </div>
+<!--                                <div class="form-group hidden">-->
+<!--                                    <label for="cc" class="0">Cc:</label>-->
+<!--                                    <input type="text" tabindex="2" id="cc" class="form-control">-->
+<!--                                </div>-->
 
-                                <div class="form-group hidden">
-                                    <label for="bcc" class="">Bcc:</label>
-                                    <input type="text" tabindex="2" id="bcc" class="form-control">
-                                </div>
+<!--                                <div class="form-group hidden">-->
+<!--                                    <label for="bcc" class="">Bcc:</label>-->
+<!--                                    <input type="text" tabindex="2" id="bcc" class="form-control">-->
+<!--                                </div>-->
 
                                 <div class="form-group">
                                     <label for="subject" class="">Subject:</label>
@@ -135,7 +135,7 @@
                                             $('#textarea-button').addClass('hidden');//设置按钮不可见，设置题干可见
                                             $('#subject2').parent().removeClass('hidden')"
                                     ><i class="fa fa-check"></i> 确定</button>
-                                    <button class="btn btn-sm btn-default"><i class="fa fa-times"></i> 取消</button>
+                                    <button type="button" onclick="quit()" class="btn btn-sm btn-default"><i class="fa fa-times"></i> 取消</button>
                                 </div>
                                 <!--富文本编辑器结束-->
                                 <div id="p">
@@ -151,7 +151,7 @@
 
                                 <div class="form-group" id="cloneForm">
                                     <label for="subject" class="a" >C</label>
-                                    <input type="text" tabindex="1"  class="form-control" name="C">
+                                    <input type="text" tabindex="1" id="C" class="form-control" name="C">
                                 </div>
 
                                 <div class="form-group" >
@@ -163,16 +163,89 @@
 
                                 &nbsp;
                                 <div class="form-group">
-                                    <label for="bcc" class="">答案</label>
-                                    <input type="text" tabindex="2" id="Key" class="form-control">
+                                    <label class="col-sm-3 control-label">答案</label>
+
+                                    <div class="col-sm-9 icheck ">
+
+                                        <div class="flat-grey ">
+                                            <div class="radio " >
+                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_A" value="A">
+                                                A
+                                            </div>
+                                        </div>
+                                        <div class="flat-red ">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio" name="choiceKey" id="r_B" value="B">
+                                                B
+                                            </div>
+                                        </div>
+
+                                        <div class="flat-green ">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio" name="choiceKey" id="r_C" value="C">
+                                                C
+                                            </div>
+                                        </div>
+
+                                        <div class="flat-blue " id="choice_D">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_D" value="D">
+                                                D
+                                            </div>
+                                        </div>
+
+                                        <div class="flat-yellow hidden" id="choice_E">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_E" value="E">
+                                                E
+                                            </div>
+                                        </div>
+
+                                        <div class="flat-purple hidden" id="choice_F">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_F" value="F">
+                                               F
+                                            </div>
+                                        </div>
+                                        <div class="flat-purple hidden" id="choice_G">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_G" value="G">
+                                                G
+                                            </div>
+                                        </div>
+                                        <div class="flat-purple hidden" id="choice_H">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_H" value="H">
+                                                H
+                                            </div>
+                                        </div>
+                                        <div class="flat-purple hidden" id="choice_I">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_I" value="I">
+                                                I
+                                            </div>
+                                        </div>
+                                        <div class="flat-purple hidden" id="choice_J">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_J" value="J">
+                                                J
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+<!--                                <div class="form-group">-->
+<!--                                    <label for="bcc" class="">答案</label>-->
+<!--                                    <input type="text" tabindex="2" id="Key" class="form-control">-->
+<!--                                </div>-->
+
                                 <div class="form-group">
-                                    <label for="bcc" class="">解析</label>
+                                    <label  class="">解析</label>
                                     <input type="text" tabindex="2" id="Answer" class="form-control">
                                 </div>
 <!--                                分数开始-->
                                 <div class="form-group">
-                                    <label for="bcc" class="">分数</label>
+                                    <label  class="">分数</label>
                                     <div id="spinner4">
                                         <div class="input-group" style="width:150px;">
                                             <div class="spinner-buttons input-group-btn">
@@ -180,7 +253,7 @@
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </div>
-                                            <input type="text" class="spinner-input form-control" maxlength="3" readonly="">
+                                            <input type="text" name="score" id="score" class="spinner-input form-control" maxlength="3" style="text-align: center;">
                                             <div class="spinner-buttons input-group-btn">
                                                 <button type="button" class="btn spinner-down btn-warning">
                                                     <i class="fa fa-minus"></i>
@@ -192,10 +265,11 @@
 <!--                                分数结束-->
 <!--                                难度选择开始-->
                                 <div class="form-group">
-                                    <label for="bcc" class="">难度</label>
-                                    <a href="#" class="btn btn-success" style="width:20%">简单</a>
-                                    <a href="#" class="btn btn-info" style="width:29%" >中等</a>
-                                    <a href="#" class="btn btn-danger" style="width:39%">困难</a>
+                                    <label  class="">难度</label>
+                                    <button class="btn btn-success" type="button" name="b1" onclick="cd1()" id="b1" value="1" style="width:20%">简单</button>
+                                    <button class="btn btn-info" type="button" name="b2" onclick="cd2()"  id="b2" value="2" style="width:29%" >中等</button>
+                                    <button class="btn btn-danger" type="button" name="b3" onclick="cd3()"  id="b3" value="3" style="width:39%">困难</button>
+                                    <button class="btn btn-default hidden" type="button" name="b3" onclick="cd4()"  id="b4" >重置</button>
                                 </div>
                                 &nbsp;
 <!--                                难度选择结束-->
@@ -204,7 +278,7 @@
 
                                 <div class="compose-btn1">
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> 完成</button>
-                                    <button type="button" class="btn btn-sm btn-default"><i class="fa fa-rotate-right"></i> 重置</button>
+                                    <button type="button" onclick="reSetQuestion()" class="btn btn-sm btn-default"><i class="fa fa-rotate-right"></i> 重置</button>
                                     <button type="button" class="btn btn-sm btn-default"
                                     onclick="addForm()"><i class="fa fa-plus"></i>添加选项</button>
                                     <button type="button" class="btn btn-sm btn-default"
@@ -296,11 +370,9 @@
 
 <script type="text/javascript" src="/js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
 <script type="text/javascript" src="/js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-
 <!--icheck -->
 <script src="/js/iCheck/jquery.icheck.js"></script>
 <script src="/js/icheck-init.js"></script>
-
 
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
@@ -308,6 +380,14 @@
 <script>
     document.getElementById("single-choice").className="active";
     document.getElementById("menu4").className="menu-list nav-active";
+    //点击取消触发
+    function quit(){
+        $('#textarea').parent().addClass('hidden');//设置文本编辑器不可见，
+        $('#textarea-button').addClass('hidden');//设置按钮不可见，设置题干可见
+        $('#subject2').parent().removeClass('hidden')
+    }
+
+
     // 增加form表单
     function addForm() {
         var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
@@ -327,8 +407,10 @@
             //获取父节点，用来将子节点追加到其后
             var p = document.getElementById('p')
             p.appendChild(clone)
-            //最后在修改name属性（放在前面不生效，巨坑）
-            $("#"+arr1[num-3]+"").attr('name',arr1[num-3])
+            //最后在修改name属性value属性（放在前面不生效，巨坑）
+            $("#"+arr1[num-3]+"").attr('name',arr1[num-3]).attr('value',null)
+            //将该表单对应的选项设置为可见
+            $("#choice_"+arr1[num-3]+"").removeClass('hidden')
         }
         //大于十个选项设置提示
         else{
@@ -343,13 +425,82 @@
             //弹出提示框
             document.getElementById("tip2").click()
         }
-        else{//删除节点
+        else{//js写的，获取该节点，用js获取的用jquery也能获取，见上文
            var d =  document.getElementsByName(arr1[num-4])[0]
+            //将该节点对应的选项设置为不可见
+            $("#choice_"+arr1[num-4]+"").addClass('hidden')
+            //移除该节点
             var dp=d.parentNode
             dp.remove()
         }
     }
+    //对点击按钮的操作
+    function cd1() {
+        $('#b2').addClass('hidden')
+        $('#b3').addClass('hidden')
+        $(this).attr("name",1)
+        $('#b4').css("width","68%").removeClass('hidden')
+        // $('#b4').removeClass('hidden')
+    }
+    function cd2() {
+        $('#b1').addClass('hidden')
+        $('#b3').addClass('hidden')
+        $(this).attr("name",2)
+        $('#b4').css("width","59%").removeClass('hidden')
+    }
+    function cd3() {
+        $('#b1').addClass('hidden')
+        $('#b2').addClass('hidden')
+        $(this).attr("name",3)
+        $('#b4').css("width","48%").removeClass('hidden')
+    }
+    function cd4() {
+        $('#b1').removeClass('hidden')
+        $('#b2').removeClass('hidden')
+        $('#b3').removeClass('hidden')
+        $('#b4').addClass('hidden')
+    }
+    function reSetQuestion() {
+        //移除选定状态
+        var arrR =['A','B','C','D','E','F','G','H','I','J']
+        for(var i=0; i<arrR.length; i++){
+            if(($("#r_"+arrR[i]+"").parent())!=null){
+                $("#r_"+arrR[i]+"").parent().removeClass('checked')
+            }
 
+        }
+        //将默认文本框的值设置为空
+        $('#to').attr('value',null)
+        $('#subject').attr('value',null)
+        $('#subject2').attr('value',null)
+        $('#Answer').attr('value',null)
+        $('#A').attr('value',null)
+        $('#B').attr('value',null)
+        $('#C').attr('value',null)
+        $('#D').attr('value',null)
+        $('#score').attr('value',0)
+        // $('#b1').removeClass('hidden')
+        // $('#b2').removeClass('hidden')
+        // $('#b3').removeClass('hidden')
+        // $('#b4').addClass('hidden')
+        cd4()
+        //获取input的个数
+        var len = document.getElementsByClassName('a').length
+        if(len==3){
+            //调用增加的函数增加一个表单
+            addForm()
+        }
+        else if(len==4){//如果等于4什么也不做
+        }
+        else{//不等于4把多余的清除
+            var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
+            var s = len-4//剩余的个数
+            for(var i=0;i<s;i++){//用循环把所有多余的节点全删了
+                //调用减少的函数减少几次
+                reduceForm();
+            }
+        }
+    }
 
     jQuery(document).ready(function(){
          $('.wysihtml5').wysihtml5();
