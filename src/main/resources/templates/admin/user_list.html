@@ -39,9 +39,8 @@
                                 <!--                            学号:<input type="text" value="" name="uId" th:value="${uId}">-->
                                 <button value="查询" class="btn btn-sm btn-default" ><i class="fa fa-plus"></i>查询</button>
                                 <!--                            <a th:href="${/admin/searchSubmit}">查询</a>-->
-
+                                <button class="btn btn-sm btn-default" onclick="DelSelect()">批量删除</button>
                         </form>
-
 
                     </header>
 
@@ -66,7 +65,7 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="user : ${page.records}">
-                                    <td class="center"><input type="checkbox" name="ids" id="id" th:value="${user.id}"></td>
+                                    <td class="center">  <input type="checkbox" name="id[]" value="" id="id[]" th:value="${user.id}"/></td>
                                     <td th:text="${user.userName}"></td>
                                     <td th:text="${user.password}"></td>
                                     <td th:text="${user.uId}"></td>
@@ -81,10 +80,13 @@
                                     </td>
                                     <td>
                                         <a th:href="@{/toEdit(id=${user.id})}">edit</a>
-                                        <a th:href="@{/delete(id=${user.id})}">delete</a>
+                                        <a  th:href="@{/admin/delete/{id}(id=${user.id})}"
+                                           onclick="return del()" th:value="${user.id}" value="1">Delete
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>
+
                             </table>
                             <!--分页-->
                             <div th:replace="~{/admin/commons/page :: page}"></div>
@@ -110,6 +112,7 @@
 <!--主页面结束-->
 
 
+
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
@@ -128,8 +131,50 @@
 <!--script for editable table-->
 <script src="/js/editable-table.js"></script>
 
+
+<!--删除-->
+<script type="text/javascript">
+    // 单个删除
+    function del() {
+        if (confirm("您确定要删除吗？")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // 批量删除
+    function DelSelect() {
+        var Checkbox = false;
+        $("input[name='id[]']").each(function() {
+            if (this.checked == true) {
+                Checkbox = true;
+            }
+        });
+        if (Checkbox) {
+            var t = confirm("您确认要删除选中的内容吗？");
+            if (t == false) {
+                return false;
+            } else {
+                var ids="";
+                $("input[name='id[]']").each(function() {
+                    if (this.checked == true) {
+                        ids += this.value + ",";
+
+                    }
+                });
+                window.location.replace("/admin/deleteCounts?ids="+ids);
+            }
+        } else {
+            alert("请选择您要删除的内容!");
+            return false;
+        }
+    }
+
+
+
 <!-- END JAVASCRIPTS -->
-<script>
+
     //获取按钮数组
     var len = document.getElementsByName("statusButton").length;
     //通过循环给每个按钮添加点击事件
@@ -140,7 +185,7 @@
     for(var i = 0; i < document.getElementsByName("statusButton").length ; i++){
         //获取每个按钮的值，index索引
         document.getElementsByName("statusButton")[i].onclick = (function() {
-             var id = this.value
+            var id = this.value
             var statusValue = this.innerHTML=='启用'?1:0
             this.innerHTML= this.innerHTML=='启用'?'禁用':'启用'
             $.ajax({
@@ -180,22 +225,24 @@
     //
     //     alert(id.item(1))
 
-            // }
+    // }
     //     });
     // }
-
     jQuery(document).ready(function() {
-        EditableTable.init();
+    EditableTable.init();
     });
     document.getElementById("user-list").className="active";
     document.getElementById("menu2").className="menu-list nav-active";
 </script>
-</body>
-</html>
-<script>
-    import Form_advanced_components from "./form_advanced_components.html";
-    export default {
-        components: {Form_advanced_components}
-    }
 
-</script>
+</body>
+
+
+</html>
+    <script>
+        import Form_advanced_components from "./form_advanced_components.html";
+        export default {
+            components: {Form_advanced_components}
+        }
+
+    </script>

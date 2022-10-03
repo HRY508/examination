@@ -9,11 +9,15 @@ import com.examination.bean.User;
 import com.examination.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,10 +57,30 @@ public class UserController {
         return "admin/user_list";
     }
 
+
+    // 批量删除
+    @RequestMapping("admin/deleteCounts")
+    public String deleteCount(@RequestParam String ids){//ids是复选框名字
+        List<String> delList = new ArrayList<>();
+        String[] strs = ids.split(",");
+        for (String str : strs) {
+            delList.add(str);
+        }
+        userService.removeByIds(delList);
+        return "redirect:/admin/userList";
+    }
+    //删除
+    @GetMapping("admin/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        userService.removeById(id);
+        return "redirect:/admin/userList";
+   }
+
+
 //    @PostMapping("/admin/statusChange")
 //    public String statusChange(){
 //
-//    }
+
     @ResponseBody
     @PostMapping("/admin/statusChange")
     public Object statusChange(@RequestBody String req){
