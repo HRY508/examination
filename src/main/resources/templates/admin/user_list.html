@@ -85,6 +85,7 @@
                                     <td>
 <!--                                        onclick="changeStatus()"-->
                                         <button th:text="${user.uStatus}==1?'启用':'禁用'" type="button" th:value="${user.id}" class="btn btn-sm btn-default"  name="statusButton"  id="statusButton" ><i class="fa fa-plus"></i>启用</button>
+
                                     </td>
                                     <td>
                                         <a href="#updateModal" data-toggle="modal" th:onclick="values([[${user.id}]],[[${user.userName}]],[[${user.password}]],[[${user.uId}]],[[${user.realName}]],
