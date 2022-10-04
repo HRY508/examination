@@ -77,7 +77,8 @@
                                     <td th:text="${#dates.format(user.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td>
 <!--                                        onclick="changeStatus()"-->
-                                        <button th:text="${user.uStatus}==1?'启用':'禁用'" type="button" th:value="${user.id}" class="btn btn-sm btn-default"  name="statusButton"  id="statusButton" ><i class="fa fa-plus"></i>启用</button>
+                                        <button th:if="${user.uStatus}==1" type="button" th:value="${user.id}" class="btn btn-sm btn-success"  name="statusButton"  id="statusButton" ><i class="fa "></i>启用</button>
+                                        <button th:if="${user.uStatus}==0" type="button" th:value="${user.id}" class="btn btn-sm btn-danger"  name="statusButton"  id="statusButton" ><i class="fa "></i>禁用</button>
                                     </td>
                                     <td>
                                         <a th:href="@{/toEdit(id=${user.id})}">edit</a>
@@ -183,11 +184,10 @@
 
 
     for(var i = 0; i < document.getElementsByName("statusButton").length ; i++){
-        //获取每个按钮的值，index索引
         document.getElementsByName("statusButton")[i].onclick = (function() {
             var id = this.value
-            var statusValue = this.innerHTML=='启用'?1:0
-            this.innerHTML= this.innerHTML=='启用'?'禁用':'启用'
+            var statusValue = this.innerText=='启用'?1:0
+            var _this = $(this)
             $.ajax({
                 //请求路径
                 url: "/admin/statusChange",
@@ -203,31 +203,19 @@
                 dataType: "json",
                 //成功响应的结果
                 success: function (data) {
-                    if (data != null) {
-
+                    if(data.status==1){
+                        _this.removeClass('btn-danger').addClass('btn-success').html('启用')
+                    }else if(data.status==0) {
+                        _this.removeClass('btn-success').addClass('btn-danger').html('禁用')
                     }
                     else {
-                        alert("error,状态修改失败");
+                        alert('修改失败')
                     }
                 },
-            })
 
+            })
         });
     }
-
-    //状态改变函数
-    // $('[id=要获取的id]').on('click',function() {
-    //
-    //     // //改变按钮状态
-    //     // $('#statusButton').val("禁用");
-    //     //获取按钮上的值
-    //     var statusValue = $("#statusButton").html()=='启用'?1:0;
-    //
-    //     alert(id.item(1))
-
-    // }
-    //     });
-    // }
     jQuery(document).ready(function() {
     EditableTable.init();
     });
