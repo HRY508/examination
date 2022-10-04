@@ -88,10 +88,10 @@
 
                     <section class="mail-list">
                         <div class="compose-mail">
-                            <form role="form-horizontal" method="post">
+                            <form role="form-horizontal" th:action="@{/admin/singleSelect}" method="post">
                                 <div class="form-group">
                                     <label for="to" class="">To:</label>
-                                    <input type="text" tabindex="1" id="to" class="form-control">
+                                    <input type="text" tabindex="1" id="to" name="to" class="form-control" required>
 <!--                                    <div class="compose-options">-->
 <!--                                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>-->
 <!--                                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>-->
@@ -110,17 +110,18 @@
 
                                 <div class="form-group">
                                     <label for="subject" class="">Subject:</label>
-                                    <input type="text" tabindex="1" id="subject" class="form-control">
+                                    <input type="text" name="subject" tabindex="1" id="subject" class="form-control">
                                 </div>
 
                                 <!--onclick函数，当管理员点击题干表单时题干表单设置不可见，显示富文本编辑器，-->
                                 <div class="form-group">
                                     <label for="textarea" class="">题干:</label>
-                                    <input type="text" tabindex="1" id="subject2" class="form-control"
+                                    <input type="text" tabindex="1" name="tg" id="subject2" class="form-control"
                                            onclick="$(this).parent().addClass('hidden');//当前表单设置不可见
                                            $('#textarea').parent().removeClass('hidden');//富文本编辑器设置可见
                                            $('#textarea-button').removeClass('hidden');//富文本编辑器按钮设置可见
                                            $('#textarea').focus();"
+                                           required
                                     >
                                 </div>
                                 &nbsp;
@@ -141,22 +142,22 @@
                                 <div id="p">
                                 <div class="form-group">
                                     <label for="subject" class="a">A</label>
-                                    <input type="text" tabindex="1" id="A" class="form-control" name="A">
+                                    <input type="text" tabindex="1" id="A" class="form-control" name="A" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="subject" class="a">B</label>
-                                    <input type="text" tabindex="1" id="B" class="form-control" name="B">
+                                    <input type="text" tabindex="1" id="B" class="form-control" name="B" required>
                                 </div>
 
                                 <div class="form-group" id="cloneForm">
                                     <label for="subject" class="a" >C</label>
-                                    <input type="text" tabindex="1" id="C" class="form-control" name="C">
+                                    <input type="text" tabindex="1" id="C" class="form-control" name="C" required>
                                 </div>
 
                                 <div class="form-group" >
                                     <label for="subject" class="a" >D</label>
-                                    <input type="text" tabindex="1" id="D"  class="form-control" name="D">
+                                    <input type="text" tabindex="1" id="D"  class="form-control" name="D" required>
                                 </div>
 
                                 </div>
@@ -241,7 +242,7 @@
 
                                 <div class="form-group">
                                     <label  class="">解析</label>
-                                    <input type="text" tabindex="2" id="Answer" class="form-control">
+                                    <input type="text" name="jx" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
 <!--                                分数开始-->
                                 <div class="form-group">
@@ -266,10 +267,13 @@
 <!--                                难度选择开始-->
                                 <div class="form-group">
                                     <label  class="">难度</label>
-                                    <button class="btn btn-success" type="button" name="b1" onclick="cd1()" id="b1" value="1" style="width:20%">简单</button>
-                                    <button class="btn btn-info" type="button" name="b2" onclick="cd2()"  id="b2" value="2" style="width:29%" >中等</button>
-                                    <button class="btn btn-danger" type="button" name="b3" onclick="cd3()"  id="b3" value="3" style="width:39%">困难</button>
-                                    <button class="btn btn-default hidden" type="button" name="b3" onclick="cd4()"  id="b4" >重置</button>
+                                    <div class="btn-group btn-group-justified" style="width: 90%">
+                                        <a class="btn btn-success" type="button" name="b1" onclick="cd1()" id="b1" value="1" style="width:20%">简单</a>
+                                        <a class="btn btn-info" type="button" name="b2" onclick="cd2()"  id="b2" value="2" style="width:29%" >中等</a>
+                                        <a class="btn btn-danger" type="button" name="b3" onclick="cd3()"  id="b3" value="3" style="width:39%">困难</a>
+                                        <a class="btn btn-default hidden" type="button" name="b32" onclick="cd4()"  id="b4" >重置</a>
+                                        <input type="text" name="nd" style="display: none" id="nd" value='1' >
+                                    </div>
                                 </div>
                                 &nbsp;
 <!--                                难度选择结束-->
@@ -277,7 +281,7 @@
                                 <div class="form-group " style="display: none"></div>
 
                                 <div class="compose-btn1">
-                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> 完成</button>
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> 完成</button>
                                     <button type="button" onclick="reSetQuestion()" class="btn btn-sm btn-default"><i class="fa fa-rotate-right"></i> 重置</button>
                                     <button type="button" class="btn btn-sm btn-default"
                                     onclick="addForm()"><i class="fa fa-plus"></i>添加选项</button>
@@ -345,7 +349,7 @@
         </div>
         <!--footer section start-->
         <footer>
-            2014 &copy; AdminEx by ThemeBucket
+            2022 &copy;平顶山学院软件应用双创实验室提供技术支持
         </footer>
         <!--footer section end-->
 
@@ -436,6 +440,7 @@
     }
     //对点击按钮的操作
     function cd1() {
+        $('#nd').val(1)
         $('#b2').addClass('hidden')
         $('#b3').addClass('hidden')
         $(this).attr("name",1)
@@ -443,18 +448,21 @@
         // $('#b4').removeClass('hidden')
     }
     function cd2() {
+        $('#nd').val(2)
         $('#b1').addClass('hidden')
         $('#b3').addClass('hidden')
         $(this).attr("name",2)
         $('#b4').css("width","59%").removeClass('hidden')
     }
     function cd3() {
+        $("#nd").attr("value",'3')
         $('#b1').addClass('hidden')
         $('#b2').addClass('hidden')
         $(this).attr("name",3)
         $('#b4').css("width","48%").removeClass('hidden')
     }
     function cd4() {
+        $('#nd').val(3)
         $('#b1').removeClass('hidden')
         $('#b2').removeClass('hidden')
         $('#b3').removeClass('hidden')

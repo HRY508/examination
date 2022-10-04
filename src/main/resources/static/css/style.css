@@ -4041,9 +4041,9 @@ ul.labels-info li a:hover, ul.labels-info li a:focus {
     padding-left: 10px;
     margin-bottom: 0;
     background: #eaebee;
-    /*这里注释是因为，label标签与input之间有空隙影响美观*/
-    /*margin-right: 10px;*/
 }
+/*这里注释是因为，label标签与input之间有空隙影响美观*/
+/*margin-right: 10px;*/
 
 .compose-editor input {
     margin-top: 15px;
