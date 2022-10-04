@@ -2,7 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
     <title>用户列表</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
     <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
     <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
@@ -37,8 +42,11 @@
                                 用户名:<input type="text" value="" name="searchName" th:value="${searchName}">
                                 <!--                            真实姓名：<input type="text" value="" name="realName" th:value="${realName}">-->
                                 <!--                            学号:<input type="text" value="" name="uId" th:value="${uId}">-->
+
                                 <button value="查询" class="btn btn-sm btn-default" ><i class="fa fa-plus"></i>查询</button>
                                 <!--                            <a th:href="${/admin/searchSubmit}">查询</a>-->
+                                <tr></tr>
+                                <button type="button" class="btn btn-sm btn-lg" data-toggle="modal" href="#addModal">添加用户</button>
                                 <button class="btn btn-sm btn-danger" onclick="DelSelect()"><i class="fa fa-archive"></i>批量删除</button>
 
                         </form>
@@ -57,7 +65,7 @@
                                     <th>学号</th>
                                     <th>真实姓名</th>
                                     <th>性别</th>
-                                    <th>职业</th>
+                                    <th>专业</th>
                                     <th>权限</th>
                                     <th>创建时间</th>
                                     <th>状态</th>
@@ -74,13 +82,14 @@
                                     <td th:text="${user.sex==1} ? '男' : '女'"></td>
                                     <td th:text="${user.profession}"></td>
                                     <td th:text="${user.perms}"></td>
-                                    <td th:text="${#dates.format(user.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${#temporals.format(user.createTime, 'yyyy-MM-dd HH:mm')}"></td>
                                     <td>
 <!--                                        onclick="changeStatus()"-->
                                         <button th:text="${user.uStatus}==1?'启用':'禁用'" type="button" th:value="${user.id}" class="btn btn-sm btn-default"  name="statusButton"  id="statusButton" ><i class="fa fa-plus"></i>启用</button>
                                     </td>
                                     <td>
-                                        <a th:href="@{/toEdit(id=${user.id})}">edit</a>
+                                        <a href="#updateModal" data-toggle="modal" th:onclick="values([[${user.id}]],[[${user.userName}]],[[${user.password}]],[[${user.uId}]],[[${user.realName}]],
+                                    [[${user.sex}]],[[${user.profession}]],[[${user.perms}]])">edit</a>
                                         <a  th:href="@{/admin/delete/{id}(id=${user.id})}"
                                            onclick="return del()" th:value="${user.id}" value="1">Delete
                                         </a>
@@ -94,6 +103,133 @@
                             <!--分页结束-->
 
                         </div>
+
+                        <!--   添加功能modal框开始-->
+                        <div aria-hidden="true" data-backdrop="static" data-keyboard="false"  aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addModal" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">新增</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                             <div aria-hidden="true">&times;</div>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal" role="form" th:action="@{/admin/addUser}" method="post">
+                                            <div class="form-inline">
+                                                <label for="userName">用户名:</label><br/>
+                                                <input type="text" id="userName" name="userName" class="form-control" />
+                                            </div>
+                                            <div class="form-inline">
+                                                <label for="password">密 码:</label><br/>
+                                                <input type="password" id="password" name="password" class="form-control" />
+                                            </div>
+                                            <div class="form-inline">
+                                                <label for="uId">学 号:</label><br/>
+                                                <input type="text" id="uId" name="uId" class="form-control" />
+                                            </div>
+                                            <div class="form-inline">
+                                                <label for="realName">姓 名:</label><br/>
+                                                <input type="text" id="realName" name="realName" class="form-control" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="sex" class="control-label">性 别:</label><br/>
+                                                <input type="radio" class="control-label" value="1" name="sex" checked/>男
+                                                <input type="radio" class="control-label"  value="2" name="sex"/>女
+                                            </div>
+
+                                            <div class="form-inline">
+                                                <label for="profession">专 业:</label><br/>
+                                                <input type="text" id="profession" name="profession" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="perms" class="control-label">权 限:</label><br/>
+                                                <input type="radio" class="control-label" value="user" name="perms" checked/>用户
+                                                <input type="radio" class="control-label"  value="admin" name="perms" />管理员
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                <button type="submit" class="btn btn-primary" >保存</button>
+                                            </div>
+                                      </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--   添加modal框结束-->
+
+                        <!-- 修改modal框开始   -->
+                        <div aria-hidden="true"  data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="updateModal" class="modal fade" >
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">修改</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <div aria-hidden="true">&times;</div>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="updateForm" class="form-horizontal" th:action="@{/admin/updateUser}" method="post">
+                                            <input type="hidden" name="id" id="id" value=""/>
+                                            <div class="form-inline">
+                                                <label for="userNameUpdate">用户名:</label><br/>
+                                                <input type="text" id="userNameUpdate" name="userNameUpdate" class="form-control"  readonly/>
+                                            </div>
+                                            <div class="form-inline">
+                                                <label for="passwordUpdate">密 码:</label><br/>
+                                                <input type="text" id="passwordUpdate" name="passwordUpdate" class="form-control"  />
+                                            </div>
+                                            <div class="form-inline">
+                                                <label for="uIdUpdate">学 号:</label><br/>
+                                                <input type="text" id="uIdUpdate" name="uIdUpdate" class="form-control" />
+                                            </div>
+                                            <div class="form-inline">
+                                                <label for="realNameUpdate">姓 名:</label><br/>
+                                                <input type="text" id="realNameUpdate" name="realNameUpdate" class="form-control"/>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label">性 别:</label><br/>
+                                                <div class="form-inline">
+                                                    <label for="sexUpdate1">
+                                                        <input checked="checked" type="radio" class="control-label" value="1" id="sexUpdate1" name="sexUpdate"  required/>男
+                                                    </label>
+                                                    <label for="sexUpdate2">
+                                                        <input checked="checked" type="radio" class="control-label"  value="2"  id="sexUpdate2" name="sexUpdate" required/>女
+                                                    </label>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-inline">
+                                                <label for="professionUpdate">专 业:</label><br/>
+                                                <input type="text" id="professionUpdate" name="professionUpdate" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">权 限:</label><br/>
+                                                <div class="form-inline">
+                                                    <label for="permsUpdate1">
+                                                        <input checked="checked" type="radio" class="control-label" value="user" id="permsUpdate1" name="permsUpdate" required/>用户
+                                                    </label>
+                                                    <label for="permsUpdate2">
+                                                        <input checked="checked" type="radio" class="control-label"  value="admin"  id="permsUpdate2" name="permsUpdate" required/>管理员
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                <button type="submit" class="btn btn-primary" >保存</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--   修改modal框结束-->
+
+
                     </div>
                 </section>
 
@@ -101,6 +237,7 @@
         </div>
     </div>
     <!--body wrapper end-->
+
 
     <!--footer section start-->
     <footer>
@@ -126,6 +263,9 @@
 <script type="text/javascript" src="/js/data-tables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
 
+<!--表单校验-->
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script src="js/validation-init.js"></script>
 
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
@@ -133,7 +273,6 @@
 <script src="/js/editable-table.js"></script>
 
 
-<!--删除-->
 <script type="text/javascript">
     // 单个删除
     function del() {
@@ -171,17 +310,29 @@
             return false;
         }
     }
+    // //获取按钮数组
+    // var len = document.getElementsByName("eidtButton").length;
+    // //通过循环给每个按钮添加点击事件
+    // var temp = document.getElementsByName("eidtButton")
+    // // alert(len)
+    // for (var i=0;i < document.getElementsByName("eidtButton").length; i++){
+    //     document.getElementsByName("eidtButton")[i].onclik= (function(){
+    //         var id = this.value;
+    //
+    //     })
+    // }
 
+    $("#updateModal").modal("hide");
+    function Values(ID) {
+        $("#id").val(ID);
+    }
 
-
-<!-- END JAVASCRIPTS -->
 
     //获取按钮数组
     var len = document.getElementsByName("statusButton").length;
     //通过循环给每个按钮添加点击事件
     var temp = document.getElementsByName("statusButton")
     // alert(len)
-
 
     for(var i = 0; i < document.getElementsByName("statusButton").length ; i++){
         //获取每个按钮的值，index索引
@@ -229,7 +380,20 @@
     // }
     //     });
     // }
-    jQuery(document).ready(function() {
+
+    function values(id,userName,password,uId,realName,sex,profession,perms){
+        $('#id').val(id)
+        $('#userNameUpdate').val(userName)
+        $('#passwordUpdate').val(password)
+        $('#uIdUpdate').val(uId)
+        $('#realNameUpdate').val(realName)
+        $("input[name='sexUpdate'][value='" + sex + "']").prop("checked", true);
+        $('#professionUpdate').val(profession)
+        $("input[name='permsUpdate'][value='" + perms + "']").prop("checked", true);
+    }
+
+
+jQuery(document).ready(function() {
     EditableTable.init();
     });
     document.getElementById("user-list").className="active";

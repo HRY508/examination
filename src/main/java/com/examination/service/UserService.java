@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface UserService extends IService<User> {
 
-
+    // 添加用户
+    public int addUser(User user);
 
 
 

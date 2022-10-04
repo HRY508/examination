@@ -1,20 +1,19 @@
 package com.examination.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.User;
 import com.examination.service.UserService;
+import com.examination.utils.ShiroMd5Util;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +42,7 @@ public class UserController {
         request.setAttribute("page", result);
         return "admin/user_list";
     }
+
     @RequestMapping("/admin/searchName")
     public String searchSubmit(@RequestParam(value = "searchName",required = false,defaultValue = "")String searchName,
                                HttpServletRequest request,
@@ -82,7 +82,7 @@ public class UserController {
 //    @PostMapping("/admin/statusChange")
 //    public String statusChange(){
 //
-
+    // 修改状态
     @ResponseBody
     @PostMapping("/admin/statusChange")
     public Object statusChange(@RequestBody String req){
@@ -112,6 +112,75 @@ public class UserController {
         }
     }
 
+    // 添加用户
+    @PostMapping("/admin/addUser")
+    public String addUser(@RequestParam("userName") String userName,
+                          @RequestParam("password") String password,
+                          @RequestParam("uId") String uId,
+                          @RequestParam("realName") String realName,
+                          @RequestParam("sex") Integer sex,
+                          @RequestParam("profession") String profession,
+                          @RequestParam("perms") String perms,
+                            HttpServletRequest request){
+        // 判断userName是否唯一
+        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUserName,userName);
+        User one = userService.getOne(lambdaQueryWrapper);
+        if(one.getUserName().equals(userName)){
+        //    request.setAttribute("message","添加失败,用户名已存在,请更换!"); 功能未实现，提交后，模态框关闭，无法返回message?
+        }else{
+            User user=new User();
+            user.setUserName(userName);
+            user.setPassword(ShiroMd5Util.SysMd5(userName,password));
+            user.setUId(uId);
+            user.setRealName(realName);
+            user.setSex(sex);
+            user.setProfession(profession);
+            user.setPerms(perms);
+            userService.save(user);
+        }
+
+        return "redirect:/admin/userList";
+    }
+
+
+    // 修改用户
+    @RequestMapping(value = "/admin/updateUser", method = RequestMethod.POST)
+    public String updateUser(@RequestParam("id") Integer id,
+                             @RequestParam("userNameUpdate") String userName,
+                             @RequestParam("passwordUpdate") String password,
+                             @RequestParam("uIdUpdate") String uId,
+                             @RequestParam("realNameUpdate") String realName,
+                             @RequestParam("sexUpdate") Integer sex,
+                             @RequestParam("professionUpdate") String profession,
+                             @RequestParam("permsUpdate") String perms){
+        if(id!=null){
+            // 先查询一次
+            LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
+            queryWrapper.eq(User::getId,id);
+            User user = userService.getOne(queryWrapper);
+            if (!user.getPassword().equals(password)) {
+                user.setPassword(ShiroMd5Util.SysMd5(userName,password));
+            }
+            if (!user.getUId().equals(uId)){
+                user.setUId(uId);
+            }
+            if(!user.getRealName().equals(realName)){
+                user.setRealName(realName);
+            }
+            if(user.getSex()!=sex){
+                user.setSex(sex);
+            }
+            if(!user.getProfession().equals(password)){
+                user.setProfession(profession);
+            }
+            if(!user.getPerms().equals(perms)){
+                user.setPerms(perms);
+            }
+            userService.updateById(user);
+        }
+        return "redirect:/admin/userList";
+    }
 
 
 

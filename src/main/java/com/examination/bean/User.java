@@ -1,15 +1,15 @@
 package com.examination.bean;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -23,7 +23,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class User implements Serializable{
 
-    @TableId(type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     private String userName;
@@ -41,6 +41,8 @@ public class User implements Serializable{
     private String perms;
 
     private Integer uStatus;
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 
-    private Date createTime;
+
 }

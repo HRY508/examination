@@ -20,4 +20,13 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
 
+    private UserMapper userMapper;
+
+    @Override
+    public int addUser(User user) {
+        int result = userMapper.insert(user);
+        return result;
+    }
+
+
 }
