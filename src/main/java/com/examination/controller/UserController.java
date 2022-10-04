@@ -91,11 +91,10 @@ public class UserController {
         JSONObject jsonObject = (JSONObject) JSONObject.parse(req);
         //获取点击前的按钮状态，该修改的id
         Integer id = Integer.parseInt(((String) jsonObject.get("id")));
-        System.out.println("id"+id);
+//        System.out.println("从前端获取的id"+id);
         //转换为Integer
         Integer uStatus = (Integer) jsonObject.get("uStatus");
         uStatus = uStatus==0?1:0;
-        System.out.println("最终修改为状态："+uStatus);
         UpdateWrapper<User> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",id);
         wrapper.set("u_status",uStatus);
@@ -103,8 +102,7 @@ public class UserController {
         if (update){
             Map<String, Object> rep = new HashMap<String, Object>();
             rep.put("code", 200);
-            rep.put("msg", "成功");
-            System.out.println("成功");
+            rep.put("status",uStatus);//返回按钮状态，前端根据状态修改按钮的文本内容
             return rep;
         }
         else{

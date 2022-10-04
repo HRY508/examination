@@ -74,6 +74,7 @@ public class ShiroConfig {
         map.put("/login","anon");
         //注册放行
         map.put("/registration","anon");
+        map.put("/register","anon");
         map.put("/","anon");
         //登录请求放行
         map.put("/loginInto","anon");
