@@ -79,9 +79,7 @@ public class UserController {
    }
 
 
-//    @PostMapping("/admin/statusChange")
-//    public String statusChange(){
-//
+
     // 修改状态
     @ResponseBody
     @PostMapping("/admin/statusChange")
@@ -91,7 +89,6 @@ public class UserController {
         JSONObject jsonObject = (JSONObject) JSONObject.parse(req);
         //获取点击前的按钮状态，该修改的id
         Integer id = Integer.parseInt(((String) jsonObject.get("id")));
-//        System.out.println("从前端获取的id"+id);
         //转换为Integer
         Integer uStatus = (Integer) jsonObject.get("uStatus");
         uStatus = uStatus==0?1:0;

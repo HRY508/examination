@@ -38,5 +38,9 @@ class ExaminationApplicationTests {
         boolean b = userService.save(user);
         System.out.println("添加："+b);
     }
+    @Test
+    void testGlobalUser(){
+
+    }
 
 }

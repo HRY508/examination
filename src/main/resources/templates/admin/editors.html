@@ -116,7 +116,7 @@
                                 <!--onclick函数，当管理员点击题干表单时题干表单设置不可见，显示富文本编辑器，-->
                                 <div class="form-group">
                                     <label for="textarea" class="">题干:</label>
-                                    <input type="text" tabindex="1" name="tg" id="subject2" class="form-control"
+                                    <input type="text" tabindex="1" name="content" id="subject2" class="form-control"
                                            onclick="$(this).parent().addClass('hidden');//当前表单设置不可见
                                            $('#textarea').parent().removeClass('hidden');//富文本编辑器设置可见
                                            $('#textarea-button').removeClass('hidden');//富文本编辑器按钮设置可见
@@ -170,65 +170,65 @@
 
                                         <div class="flat-grey ">
                                             <div class="radio " >
-                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_A" value="A">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_A" value="A">
                                                 A
                                             </div>
                                         </div>
                                         <div class="flat-red ">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio" name="choiceKey" id="r_B" value="B">
+                                                <input tabindex="3" type="radio" name="correct" id="r_B" value="B">
                                                 B
                                             </div>
                                         </div>
 
                                         <div class="flat-green ">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio" name="choiceKey" id="r_C" value="C">
+                                                <input tabindex="3" type="radio" name="correct" id="r_C" value="C">
                                                 C
                                             </div>
                                         </div>
 
                                         <div class="flat-blue " id="choice_D">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_D" value="D">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_D" value="D">
                                                 D
                                             </div>
                                         </div>
 
                                         <div class="flat-yellow hidden" id="choice_E">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_E" value="E">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_E" value="E">
                                                 E
                                             </div>
                                         </div>
 
                                         <div class="flat-purple hidden" id="choice_F">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_F" value="F">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_F" value="F">
                                                F
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_G">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_G" value="G">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_G" value="G">
                                                 G
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_H">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_H" value="H">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_H" value="H">
                                                 H
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_I">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_I" value="I">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_I" value="I">
                                                 I
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_J">
                                             <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="choiceKey" id="r_J" value="J">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_J" value="J">
                                                 J
                                             </div>
                                         </div>
@@ -242,7 +242,7 @@
 
                                 <div class="form-group">
                                     <label  class="">解析</label>
-                                    <input type="text" name="jx" tabindex="2" id="Answer" class="form-control" required>
+                                    <input type="text" name="analysis" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
 <!--                                分数开始-->
                                 <div class="form-group">
@@ -272,7 +272,7 @@
                                         <a class="btn btn-info" type="button" name="b2" onclick="cd2()"  id="b2" value="2" style="width:29%" >中等</a>
                                         <a class="btn btn-danger" type="button" name="b3" onclick="cd3()"  id="b3" value="3" style="width:39%">困难</a>
                                         <a class="btn btn-default hidden" type="button" name="b32" onclick="cd4()"  id="b4" >重置</a>
-                                        <input type="text" name="nd" style="display: none" id="nd" value='1' >
+                                        <input type="text" name="difficult" style="display: none" id="nd" value='1' >
                                     </div>
                                 </div>
                                 &nbsp;
@@ -341,8 +341,6 @@
                             <!--提示结束-->
                         </div>
                     </section>
-
-
                 </section>
             </div>
 
@@ -392,7 +390,7 @@
     }
 
 
-    // 增加form表单
+    // 增加form表单、选项
     function addForm() {
         var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
         //通过类获取选项的个数
@@ -421,6 +419,8 @@
             document.getElementById("tip1").click()
         }
     }
+
+    //减少Form表单、选项
     function reduceForm(){
         $('#tip1').addClass('hidden')
         var arr1 = ['D','E', 'F', 'G', 'H','I','J'];

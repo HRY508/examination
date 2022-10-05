@@ -1,13 +1,10 @@
 package com.examination.bean;
 
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -41,6 +38,7 @@ public class User implements Serializable{
     private String perms;
 
     private Integer uStatus;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

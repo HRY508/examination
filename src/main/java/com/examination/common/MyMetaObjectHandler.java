@@ -20,6 +20,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-
+        metaObject.setValue("updateTime", LocalDateTime.now());
     }
 }
