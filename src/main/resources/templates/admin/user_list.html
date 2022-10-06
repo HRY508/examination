@@ -54,16 +54,16 @@
                 <section class="panel">
                     <header class="panel-heading">
                         <form action="/admin/searchName" method="post">
-                                用户名:<input type="text" value="" name="searchName" th:value="${searchName}">
+                                用户名 / 真实姓名:<input type="text" value="" name="searchName" th:value="${searchName}" placeholder="请输入用户名或真实姓名">
                                 <!--                            真实姓名：<input type="text" value="" name="realName" th:value="${realName}">-->
                                 <!--                            学号:<input type="text" value="" name="uId" th:value="${uId}">-->
 
                                 <button value="查询" class="btn btn-sm btn-default" ><i class="fa fa-plus"></i>查询</button>
                                 <!--                            <a th:href="${/admin/searchSubmit}">查询</a>-->
-                                <tr></tr>
-                                <button type="button" class="btn btn-sm btn-lg" data-toggle="modal" href="#addModal">添加用户</button>
-                                <button class="btn btn-sm btn-danger" onclick="DelSelect()"><i class="fa fa-archive"></i>批量删除</button>
 
+
+                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#addModal"><i class="fa fa-plus"></i>添加用户</button>
+                                <button class="btn btn-sm btn-danger" onclick="DelSelect()"><i class="fa fa-archive" ></i>批量删除</button>
                         </form>
 
                     </header>
@@ -74,7 +74,7 @@
                             <table class="display table table-hover" id="dynamic-table">
                                 <thead>
                                 <tr>
-                                    <th>id</th>
+                                    <th>id <input type="checkbox" name="id[]" id="check" onclick="checkAll(this,'id[]');"/> <a type="button" onclick="$('#check').click()">全选</a></th>
                                     <th>用户名</th>
                                     <th>密码</th>
                                     <th>学号</th>
@@ -89,7 +89,7 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="user : ${page.records}">
-                                    <td class="center">  <input type="checkbox" name="id[]" value="" id="id[]" th:value="${user.id}"/></td>
+                                    <td class="center">  <input type="checkbox" name="id[]" value="" id="id[]"></td>
                                     <td th:text="${user.userName}"></td>
                                     <td th:text="${user.password}"></td>
                                     <td th:text="${user.uId}"></td>
@@ -287,6 +287,18 @@
 
 
 <script type="text/javascript">
+
+
+    function checkAll(obj,cName){
+        var checkboxs = document.getElementsByName(cName);
+        for(var i = 0; i< checkboxs.length; i+=1){
+            checkboxs[i].checked = obj.checked;
+        }
+    }
+
+
+
+
     // 单个删除
     function del() {
         if (confirm("您确定要删除吗？")) {
