@@ -31,6 +31,22 @@
     <div th:replace="~{/admin/commons/common :: commonheader}"></div>
     <!--头部结束-->
 
+
+
+    <!--当前位置介绍开始-->
+    <div class="page-heading">
+        <h3>
+            题目列表
+        </h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#">题库管理</a>
+            </li>
+            <li class="active"> 题目列表 </li>
+        </ul>
+    </div>
+    <!-- 当前位置介绍结束-->
+
     <!--body wrapper start-->
     <div class="wrapper">
         <div class="row">
@@ -40,18 +56,23 @@
                         <!--form表单开始-->
                         <form class="form-horizontal adminex-form" method="get">
                             <div class="form-inline">
-                                    <input type="text" class="form-control">
-                                    <button class="btn btn-default" type="button" >查询</button>
+                                    <input type="text" class="form-control" th:value="${qNameValue}" name="name" placeholder="输入关键字查询" style="font-weight:lighter">
+                                    <button class="btn btn-default" th:href="@{${typeUrl}+${qName}+${qNameValue}}">查询</button>
                                     <div class="btn-group ">
-                                        <button  class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==0" data-toggle="dropdown"  type="button">题目类型 <span class="caret"></span></button>
+                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==1" data-toggle="dropdown"  type="button">单选题 <span class="caret"></span></button>
+                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==2" data-toggle="dropdown"  type="button">多选题 <span class="caret"></span></button>
+                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==3" data-toggle="dropdown"  type="button">判断题 <span class="caret"></span></button>
+                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==4" data-toggle="dropdown"  type="button">填空题 <span class="caret"></span></button>
+                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==5" data-toggle="dropdown"  type="button">简答题 <span class="caret"></span></button>
                                         <ul role="menu" class="dropdown-menu">
-                                            <li><a th:href="@{${typeUrl}+1}">单选题</a></li>
-                                            <li><a href="#">多选题</a></li>
-                                            <li><a href="#">判断题</a></li>
-                                            <li><a href="#">填空题</a></li>
-                                            <li><a href="#">简答题</a></li>
+                                            <li ><a th:href="@{${typeUrl}+1+${qName}+${qNameValue}}">单选题</a></li>
+                                            <li ><a th:href="@{${typeUrl}+2+${qName}+${qNameValue}}">多选题</a></li>
+                                            <li ><a th:href="@{${typeUrl}+3+${qName}+${qNameValue}}">判断题</a></li>
+                                            <li ><a th:href="@{${typeUrl}+4+${qName}+${qNameValue}}">填空题</a></li>
+                                            <li ><a th:href="@{${typeUrl}+5+${qName}+${qNameValue}}">简答题</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="#">全部题型</a></li>
+                                            <li><a th:href="@{${typeUrl}}">全部题型</a></li>
                                         </ul>
                                     </div>
                                     <div class="btn-group ">
@@ -115,7 +136,38 @@
 
                             </table>
                             <!--分页-->
-                            <div th:replace="~{/admin/commons/page :: page}"></div>
+                            <div th:fragment="page"><!--定义用于被显示列表页包含-->
+                                <head>
+                                    <style>
+                                        .page-item {
+                                            padding: 1px 5px;
+                                            border: 1px solid #afafaf;
+                                            margin-left: 3px
+                                        }
+
+                                        .page-item.active {
+                                            color: red;
+                                            border: 1px solid red;
+                                        }
+                                    </style>
+                                </head>
+                                <div style="float: left" th:if="${page.pages>0}">
+                                    当前第<span th:text="${page.current}"></span>页,共<span
+                                        th:text="${page.pages}"></span>页,总记录数<span th:text="${page.total}"></span>
+                                </div>
+                                <div style="float: right" th:if="${page.pages>0}">
+                                    <a th:href="@{${jumpUrl}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
+                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qType}+${qTypeValue}+${qName}+${qNameValue}}" th:text="上一页" th:class="page-item"
+                                       th:if="${page.current>1}"></a>
+                                    <a th:href="@{${jumpUrl}+${i}+${qType}+${qTypeValue}+${qName}+${qNameValue}}"
+                                       th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
+                                       th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
+                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qType}+${qTypeValue}+${qName}+${qNameValue}}" th:text="下一页" th:class="page-item"
+                                       th:if="${page.current<page.pages}"></a> <a
+                                        th:href="@{${jumpUrl}+${page.pages}+${qType}+${qTypeValue}+${qName}+${qNameValue}}" th:text="尾页" th:class="page-item"
+                                        th:if="${page.current<page.pages}"></a>
+                                </div>
+                            </div>
                             <!--分页结束-->
 
                         </div>
@@ -163,16 +215,6 @@
 
 
 <script type="text/javascript">
-    //点击分类查询按钮
-    // function a11() {
-    //     alert($(this).parent().hasClass('open'))
-    //     if($(this).parent().hasClass('open')){
-    //         $(this).parent().removeClass('open')
-    //     }else{
-    //         $(this).parent().addClass('open')
-    //     }
-    //
-    // }
 function checkAll(obj,cName){
     var checkboxs = document.getElementsByName(cName);
     for(var i = 0; i< checkboxs.length; i+=1){

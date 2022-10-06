@@ -12,10 +12,28 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface QuestionVMMapper extends BaseMapper<QuestionVM> {
-    //全部查询
-    String selectAllSql = "select q.id,q.question_type  questionType,q.score,q.difficult,q.create_user createUser,q.create_time,q.status,c.content from t_question q,t_content c where q.id = c.id ${ew.customSqlSegment}";
+    //固定开头
+    String start = "select q.id,q.question_type  questionType,q.score,q.difficult,q.create_user createUser,q.create_time,q.status,c.content from t_question q,t_content c where q.id = c.id ";
+    //固定结尾
+    String end = "${ew.customSqlSegment}";
 
-    @Select(selectAllSql)
+    //全部查询
+    @Select(start+end)
     Page<QuestionVM> selectAllQuestionVM(Page page, @Param("ew") QueryWrapper<QuestionVM> queryWrapper);
+
+
+    //题目关键字查询
+    @Select(start+"and c.content like concat('%',#{questionName},'%')")
+    Page<QuestionVM> selectByQuestionName(Page page, @Param("questionName")String questionName);
+
+    //通过题型查询
+    @Select(start+"and q.question_type = #{questionType}")
+    Page<QuestionVM> selectByQuestionType(Page page, @Param("questionType")Integer questionType);
+
+    //使用拼接sql自定义sql语句,${}有sql注入的风险
+    @Select(start+"and q.question_type = #{questionType} and c.content like concat('%',#{questionName},'%')")
+    Page<QuestionVM> selectByConditionQuestionVM(Page page,
+                                                 @Param("questionType")Integer questionType,
+                                                 @Param("questionName") String questionName);
 
 }

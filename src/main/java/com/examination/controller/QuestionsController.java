@@ -35,26 +35,65 @@ public class QuestionsController {
     @RequestMapping("/admin/questionsList")
     public String questionView(HttpServletRequest request, Model model,
                                @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,
-                               @RequestParam(required = false,defaultValue = "0",value = "type") Integer type){
+                               @RequestParam(required = false, defaultValue = "0", value = "name") String questionName,
+                               @RequestParam(required = false,defaultValue = "0",value = "type") Integer questionType){
+        System.out.println("参数pn------"+pn+"参数questionName---"+questionName+"参数---"+questionType);
+        //默认显示第1页，显示5个数据
         Page page = new Page(pn,5);
-        Page<QuestionVM> result = questionVMService.getQuestionList(page);
-        List<QuestionVM> records = result.getRecords();
-        //获取Content中的标题
-        for (int i=0;i<records.size();i++){
-            QuestionObject questionObject = null;
-            if((!records.get(i).getQuestionType().equals(type))&&type!=0) {
-                System.out.println("正在移除"+records.get(i));
-                records.remove(i);
-                i--;
-            }
-            else {
-                questionObject = JSON.parseObject(records.get(i).getContent(), QuestionObject.class);
-                records.get(i).setContent(questionObject.getTitleContent());
-            }
+
+        Page<QuestionVM> result = null;
+
+        //未选择题型，未输入题目关键字，进行全部查询
+        if((questionName.equals("null")||questionName.equals("0"))&&questionType.equals(0))
+        {
+            System.out.println("未选择题型，未输入题目关键字，进行全部查询");
+            result = questionVMService.getQuestionList(page);
         }
+
+        //进行了题目关键字搜索而没进行题型检索
+        else if((!questionName.equals("0"))&&(questionType.equals(0)))
+        {
+            System.out.println("进行了题目关键字搜索而没进行题型检索");
+            result = questionVMService.selectByQuestionName(page, questionName);
+        }
+
+        //进行了题型检索而没进行题目关键字检索
+        else if((!questionType.equals(0))&&(questionName.equals("null")))
+        {
+            System.out.println("进行了题型检索而没进行题目关键字检索");
+            result = questionVMService.selectByQuestionType(page, questionType);
+        }
+        //进行了题目关键字检索和题型检索
+        else
+        {
+            System.out.println("进行了题目关键字检索和题型检索");
+            result = questionVMService.selectByConditionQuestionVM(page, questionType, questionName);
+        }
+
+        //获取Content中的标题
+        List<QuestionVM> records = result.getRecords();
+        for(int i=0;i<records.size();i++)
+        {
+            QuestionObject questionObject = null;
+            questionObject = JSON.parseObject(records.get(i).getContent(), QuestionObject.class);
+            records.get(i).setContent(questionObject.getTitleContent());
+        }
+
+        //设置model、返回视图
         model.addAttribute("questionList",records);
         request.setAttribute("jumpUrl","/admin/questionsList?pn=");
         request.setAttribute("typeUrl","/admin/questionsList?type=");
+        request.setAttribute("nameUrl","/admin/questionsList?name=");
+        request.setAttribute("qType","&type=");
+        request.setAttribute("qTypeValue",questionType);
+        request.setAttribute("qName","&name=");
+        if(questionName.equals("null")||questionName.equals("0"))
+        {
+            request.setAttribute("qNameValue",null);
+        }
+        else {
+            request.setAttribute("qNameValue",questionName);
+        }
         request.setAttribute("page",result);
         return "admin/questions_list";
     }

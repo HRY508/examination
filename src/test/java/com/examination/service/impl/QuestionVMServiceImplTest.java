@@ -19,7 +19,16 @@ public class QuestionVMServiceImplTest {
         Page page = new Page(1,5);
         Page<QuestionVM> questionList = questionVMService.getQuestionList(page);
         List<QuestionVM> records = questionList.getRecords();
-
         System.out.println(records);
     }
+//    @Test
+//    void test2(){
+//        QueryQuestionInfModel model = new QueryQuestionInfModel();
+//        model.setQuestionType(1);
+////        model.setKeyWord("测");
+//        Page page = new Page(1,2);
+//        Page<QuestionVM> questionList = questionVMService.selectByConditionQuestionVM(page,model);
+//        List<QuestionVM> records = questionList.getRecords();
+//        System.out.println(questionList);
+//    }
 }

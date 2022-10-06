@@ -1,17 +1,13 @@
 package com.examination.service.impl;
 
-import com.alibaba.fastjson.JSON;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.examination.bean.Question;
-import com.examination.bean.QuestionObject;
 import com.examination.bean.QuestionVM;
 import com.examination.mapper.QuestionVMMapper;
 import com.examination.service.QuestionVMService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @Description
@@ -28,4 +24,29 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
         Page<QuestionVM> questionVM = baseMapper.selectAllQuestionVM(page,wrapper);
         return questionVM;
     }
+
+    @Override
+    public Page<QuestionVM> selectByQuestionType(Page page, Integer questionType) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        Page<QuestionVM> questionVM = baseMapper
+                .selectByQuestionType(page,questionType);
+        return questionVM;
+    }
+
+    @Override
+    public Page<QuestionVM> selectByQuestionName(Page page, String questionName) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        Page<QuestionVM> questionVM = baseMapper
+                .selectByQuestionName(page,questionName);
+        return questionVM;
+    }
+
+    @Override
+    public Page<QuestionVM> selectByConditionQuestionVM(Page page, Integer questionType, String questionName) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        Page<QuestionVM> questionVM = baseMapper
+                .selectByConditionQuestionVM(page,questionType,questionName);
+        return  questionVM;
+    }
+
 }

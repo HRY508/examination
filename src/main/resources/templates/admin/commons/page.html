@@ -24,7 +24,7 @@
         <a th:href="@{${jumpUrl}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
         <a th:href="@{${jumpUrl}+${page.current-1}}" th:text="上一页" th:class="page-item"
            th:if="${page.current>1}"></a>
-        <a th:href="@{${jumpUrl}+ ${i}}"
+        <a th:href="@{${jumpUrl}+${i}}"
            th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
            th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
         <a th:href="@{${jumpUrl}+${page.current+1}}" th:text="下一页" th:class="page-item"
