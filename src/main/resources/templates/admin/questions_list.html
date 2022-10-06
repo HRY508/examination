@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <title>题目列表</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
+    <!--dashboard calendar-->
+    <link href="/css/clndr.css" rel="stylesheet">
+    <!--common-->
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+</head>
+
+<body class="sticky-header">
+
+<!--左侧开始-->
+<div th:replace="~{/admin/commons/common :: commonleft}"></div>
+<!--左侧结束-->
+
+<!--主页面开始-->
+<div class="main-content" >
+    <!--头部开始-->
+    <div th:replace="~{/admin/commons/common :: commonheader}"></div>
+    <!--头部结束-->
+
+    <!--body wrapper start-->
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <!--form表单开始-->
+                        <form class="form-horizontal adminex-form" method="get">
+                            <div class="form-inline">
+                                    <input type="text" class="form-control">
+                                    <button class="btn btn-default" type="button" >查询</button>
+                                    <div class="btn-group ">
+                                        <button  class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                        <ul role="menu" class="dropdown-menu">
+                                            <li><a th:href="@{${typeUrl}+1}">单选题</a></li>
+                                            <li><a href="#">多选题</a></li>
+                                            <li><a href="#">判断题</a></li>
+                                            <li><a href="#">填空题</a></li>
+                                            <li><a href="#">简答题</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">全部题型</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="btn-group ">
+                                        <button  class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">题目创建 <span class="caret"></span></button>
+                                        <ul role="menu" class="dropdown-menu">
+                                            <li><a th:href="@{/admin/singleEditors}">单选题创建</a></li>
+                                            <li><a href="#">多选题创建</a></li>
+                                            <li><a href="#">判断题创建</a></li>
+                                            <li><a href="#">填空题创建</a></li>
+                                            <li><a href="#">简答题创建</a></li>
+                                        </ul>
+                                    </div>
+                                    <button class="btn btn-danger" onclick="DelSelect()" type="button" >批量删除</button>
+                                </div>
+
+                        </form>
+                        <!--form表单结束-->
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="adv-table" style="height: 55em">
+                            <div class="space15"></div>
+                            <table class="display table table-hover" id="dynamic-table">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="id[]" id="check" onclick="checkAll(this,'id[]');"/> <a type="button" onclick="$('#check').click()">全选</a></th>
+                                    <th>id</th>
+                                    <th>题型</th>
+                                    <th>题干</th>
+                                    <th>分数</th>
+                                    <th>难度</th>
+                                    <th>创建人</th>
+                                    <th>创建时间</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="question : ${questionList}">
+                                    <td class="center">  <input type="checkbox" name="id[]" value="" id="id[]" /></td>
+                                    <td th:text="${question.id}"></td>
+                                    <td  th:if="${question.questionType}==1" th:text="单选题"></td>
+                                    <td  th:if="${question.questionType}==2" th:text="多选题"></td>
+                                    <td  th:if="${question.questionType}==3" th:text="判断题"></td>
+                                    <td  th:if="${question.questionType}==4" th:text="填空题"></td>
+                                    <td  th:if="${question.questionType}==5" th:text="简答题"></td>
+                                    <td th:text="${question.content}"></td>
+                                    <td th:text="${question.score}"></td>
+                                    <td th:text="${question.difficult}"></td>
+                                    <td th:text="${question.createUser}"></td>
+                                    <td th:text="${question.createTime}"></td>
+                                    <td th:text="${question.status}">
+                                        <button th:if="${question.status}==1" type="button" th:value="${question.status}" class="btn btn-sm btn-success"  name="statusButton"  id="statusButton1" ><i class="fa "></i>启用</button>
+                                        <button th:if="${question.status}==0" type="button" th:value="${question.status}" class="btn btn-sm btn-danger"  name="statusButton"  id="statusButton" ><i class="fa "></i>禁用</button>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                            <!--分页-->
+                            <div th:replace="~{/admin/commons/page :: page}"></div>
+                            <!--分页结束-->
+
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <!--body wrapper end-->
+
+    <!--footer section start-->
+    <footer>
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--footer section end-->
+
+
+</div>
+<!--主页面结束-->
+
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.nicescroll.js"></script>
+
+<!--data table-->
+<script type="text/javascript" src="/js/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+
+<!--表单校验-->
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+<script src="/js/validation-init.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/js/scripts.js"></script>
+<!--script for editable table-->
+<script src="/js/editable-table.js"></script>
+
+
+<script type="text/javascript">
+    //点击分类查询按钮
+    // function a11() {
+    //     alert($(this).parent().hasClass('open'))
+    //     if($(this).parent().hasClass('open')){
+    //         $(this).parent().removeClass('open')
+    //     }else{
+    //         $(this).parent().addClass('open')
+    //     }
+    //
+    // }
+function checkAll(obj,cName){
+    var checkboxs = document.getElementsByName(cName);
+    for(var i = 0; i< checkboxs.length; i+=1){
+        checkboxs[i].checked = obj.checked;
+    }
+}
+
+
+    // 单个删除
+    function del() {
+        if (confirm("您确定要删除吗？")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // 批量删除
+    function DelSelect() {
+        var Checkbox = false;
+        $("input[name='id[]']").each(function() {
+            if (this.checked == true) {
+                Checkbox = true;
+            }
+        });
+        if (Checkbox) {
+            var t = confirm("您确认要删除选中的内容吗？");
+            if (t == false) {
+                return false;
+            } else {
+                var ids="";
+                $("input[name='id[]']").each(function() {
+                    if (this.checked == true) {
+                        ids += this.value + ",";
+
+                    }
+                });
+                window.location.replace("/admin/deleteCounts?ids="+ids);
+            }
+        } else {
+            alert("请选择您要删除的内容!");
+            return false;
+        }
+    }
+
+
+    $("#updateModal").modal("hide");
+    function Values(ID) {
+        $("#id").val(ID);
+    }
+
+
+    //获取按钮数组
+    var len = document.getElementsByName("statusButton").length;
+    //通过循环给每个按钮添加点击事件
+    var temp = document.getElementsByName("statusButton")
+    // alert(len)
+
+    for(var i = 0; i < document.getElementsByName("statusButton").length ; i++){
+        document.getElementsByName("statusButton")[i].onclick = (function() {
+            var id = this.value
+            var statusValue = this.innerText=='启用'?1:0
+            var _this = $(this)
+            $.ajax({
+                //请求路径
+                url: "/admin/statusChange",
+                //请求类型
+                type: "POST",
+                //data表示发送的数据
+                data: JSON.stringify({
+                    uStatus: statusValue,
+                    id: id
+                }), //定义发送请求的数据格式为JSON字符串
+                contentType: "application/json;charset=utf-8",
+                //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                dataType: "json",
+                //成功响应的结果
+                success: function (data) {
+                    if(data.status==1){
+                        _this.removeClass('btn-danger').addClass('btn-success').html('启用')
+                    }else if(data.status==0) {
+                        _this.removeClass('btn-success').addClass('btn-danger').html('禁用')
+                    }
+                    else {
+                        alert('修改失败')
+                    }
+                },
+
+            })
+        });
+    }
+
+    function values(id,userName,password,uId,realName,sex,profession,perms){
+        $('#id').val(id)
+        $('#userNameUpdate').val(userName)
+        $('#passwordUpdate').val(password)
+        $('#uIdUpdate').val(uId)
+        $('#realNameUpdate').val(realName)
+        $("input[name='sexUpdate'][value='" + sex + "']").prop("checked", true);
+        $('#professionUpdate').val(profession)
+        $("input[name='permsUpdate'][value='" + perms + "']").prop("checked", true);
+    }
+
+
+    jQuery(document).ready(function() {
+        EditableTable.init();
+    });
+    document.getElementById("question-list").className="active";
+    document.getElementById("menu4").className="menu-list nav-active";
+</script>
+
+</body>
+
+
+</html>
+<script>
+    import Form_advanced_components from "./form_advanced_components.html";
+    import Index from "../user/index.html";
+    export default {
+        components: {Index, Form_advanced_components}
+    }
+
+</script>

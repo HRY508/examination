@@ -1,8 +1,13 @@
 package com.examination;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.examination.bean.Content;
+import com.examination.bean.Question;
 import com.examination.bean.User;
+import com.examination.service.ContentService;
+import com.examination.service.QuestionService;
 import com.examination.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +20,10 @@ import java.util.List;
 class ExaminationApplicationTests {
     @Autowired
     UserService userService;
+    @Autowired
+    QuestionService questionService;
+    @Autowired
+    ContentService contentService;
     @Test
     void contextLoads() {
         BaseMapper<User> mapper = userService.getBaseMapper();

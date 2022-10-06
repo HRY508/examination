@@ -65,7 +65,7 @@
                 <!--导航四开始-->
                 <li id="menu4" class="menu-list"><a href=""><i class="fa fa-align-justify"></i> <span>题库管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="grids.html"><i class="fa fa-list"></i>题目列表</a></li>
+                        <li id="question-list"><a th:href="@{/admin/questionsList}"><i class="fa fa-list"></i>题目列表</a></li>
                         <li id="single-choice"><a th:href="@{/admin/singleEditors}"><i class="fa fa-minus"></i>单选题创建</a></li>
                         <li><a href="calendar.html"><i class="fa fa-check-square-o"></i>多选题创建</a></li>
                         <li><a href="tree_view.html"><i class="fa fa-square-o"></i>判断题创建</a></li>

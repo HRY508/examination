@@ -11,7 +11,6 @@ import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -33,21 +32,20 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
     @Override
     public Question insertQuestion(HttpServletRequest request, String userName) {
+
         Question question = new Question();
+
         question.setDifficult(Integer.parseInt(request.getParameterValues("difficult")[0]));
         question.setCorrect(request.getParameterValues("correct")[0]);
         question.setScore( Integer.parseInt(request.getParameterValues("score")[0]));
         question.setCreateUser(GlobalUserUtil.getUser().getUserName());
         question.setStatus(StaticVariableUtil.status);
-        BaseMapper<Question> mapper = questionService.getBaseMapper();
         boolean save = questionService.save(question);
-        System.out.println("公共属性question"+question);
-        System.out.println();
-        //
         Integer id = question.getId();
         question.setContentId(id);
-        String param[] = {"A","B","C","D","E","F","G","H","I","J"};
 
+        //动态获取题的详细信息插入到表t_content中
+        String param[] = {"A","B","C","D","E","F","G","H","I","J"};
         HashMap<String,Object> map = new HashMap<>();
         QuestionObject questionObject = new QuestionObject();
         List<QuestionItemObject> list = new ArrayList<>();
@@ -66,17 +64,18 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
                 }
             }
         }
-        System.out.println("QuestionItemObjectList"+list);
+        //设置题的题目、解析、正文（先转换为Json格式再存入数据库）
         questionObject.setTitleContent(request.getParameterValues("content")[0]);
         questionObject.setAnalyze(request.getParameterValues("analysis")[0]);
         questionObject.setQuestionItemObjects(list);
-        String content = JSON.toJSONString(questionObject);
+        String selectContents = JSON.toJSONString(questionObject);
         Content content1 = new Content();
-        content1.setContent(content);
+        content1.setContent(selectContents);
+        //保证主键一致性
         content1.setId(id);
-        BaseMapper<Content> mapper2 = contentService.getBaseMapper();
+        BaseMapper<Content> contentMapper = contentService.getBaseMapper();
         System.out.println("正文内容content"+content1);
-        int insert2 = mapper2.insert(content1);
+        int insert2 = contentMapper.insert(content1);
         return question;
     }
 }
