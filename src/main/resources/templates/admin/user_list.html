@@ -31,6 +31,22 @@
     <div th:replace="~{/admin/commons/common :: commonheader}"></div>
     <!--头部结束-->
 
+
+    <!--当前位置介绍开始-->
+    <div class="page-heading">
+        <h3>
+            用户列表
+        </h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#">用户管理</a>
+            </li>
+            <li class="active"> 用户列表 </li>
+        </ul>
+    </div>
+    <!-- 当前位置介绍结束-->
+
+
     <!--body wrapper start-->
     <div class="wrapper">
         <div class="row">
@@ -117,19 +133,19 @@
                                         <form class="form-horizontal" role="form" th:action="@{/admin/addUser}" method="post">
                                             <div class="form-inline">
                                                 <label for="userName">用户名:</label><br/>
-                                                <input type="text" id="userName" name="userName" class="form-control" />
+                                                <input type="text" id="userName" name="userName" class="form-control" placeholder="请输入用户名，用户名不可重复"/>
                                             </div>
                                             <div class="form-inline">
                                                 <label for="password">密 码:</label><br/>
-                                                <input type="password" id="password" name="password" class="form-control" />
+                                                <input type="password" id="password" name="password" class="form-control" placeholder="请输入密码"/>
                                             </div>
                                             <div class="form-inline">
                                                 <label for="uId">学 号:</label><br/>
-                                                <input type="text" id="uId" name="uId" class="form-control" />
+                                                <input type="text" id="uId" name="uId" class="form-control" placeholder="请输入学号"/>
                                             </div>
                                             <div class="form-inline">
                                                 <label for="realName">姓 名:</label><br/>
-                                                <input type="text" id="realName" name="realName" class="form-control" />
+                                                <input type="text" id="realName" name="realName" class="form-control" placeholder="请输入姓名"/>
                                             </div>
 
                                             <div class="form-group">
@@ -140,7 +156,7 @@
 
                                             <div class="form-inline">
                                                 <label for="profession">专 业:</label><br/>
-                                                <input type="text" id="profession" name="profession" class="form-control" />
+                                                <input type="text" id="profession" name="profession" class="form-control" placeholder="请输入专业" />
                                             </div>
                                             <div class="form-group">
                                                 <label for="perms" class="control-label">权 限:</label><br/>
@@ -198,7 +214,6 @@
                                                         <input checked="checked" type="radio" class="control-label"  value="2"  id="sexUpdate2" name="sexUpdate" required/>女
                                                     </label>
                                                 </div>
-
                                             </div>
 
                                             <div class="form-inline">
@@ -319,11 +334,6 @@
     //
     //     })
     // }
-
-    $("#updateModal").modal("hide");
-    function Values(ID) {
-        $("#id").val(ID);
-    }
 
 
     //获取按钮数组

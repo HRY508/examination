@@ -11,6 +11,7 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,20 @@ import java.util.LinkedHashMap;
 //配置类
 @Configuration
 public class ShiroConfig {
+
+    /**
+     * 解决shiro的URL中出现sessionID的情况
+     * EG: localhost:8080/toLogin;jsessionid=D5C1EE61B97EE2D7098F58A837B82BD4
+     * @return
+     */
+    @Bean
+    @Qualifier("webSessionManager")
+    public DefaultWebSessionManager sessionManager() {
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
+        return defaultWebSessionManager;
+    }
+
 
     //记住我Cookie配置
     @Bean
@@ -96,9 +111,10 @@ public class ShiroConfig {
     }
     //2、@Qualifier("adminRealm")将容器中的adminRealm注入到安全管理器中,设置安全管理器的Realm
     @Bean
-    public DefaultWebSecurityManager defaultWebSecurityManager(@Qualifier("adminRealm") AdminRealm adminRealm){
+    public DefaultWebSecurityManager defaultWebSecurityManager(@Qualifier("adminRealm") AdminRealm adminRealm,@Qualifier("webSessionManager") DefaultWebSessionManager sessionManager){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(adminRealm);
+        defaultWebSecurityManager.setSessionManager(sessionManager);
         return defaultWebSecurityManager;
     }
     //1、注入Realm
