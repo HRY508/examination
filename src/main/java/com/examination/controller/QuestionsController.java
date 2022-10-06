@@ -1,21 +1,23 @@
 package com.examination.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.examination.bean.Question;
 import com.examination.bean.QuestionObject;
 import com.examination.bean.QuestionVM;
+import com.examination.bean.User;
 import com.examination.mapper.QuestionVMMapper;
+import com.examination.service.QuestionService;
 import com.examination.service.QuestionVMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Description
@@ -28,6 +30,9 @@ public class QuestionsController {
 
     @Autowired
     private QuestionVMService questionVMService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @Autowired
     private QuestionVMMapper questionVMMapper;
@@ -96,6 +101,34 @@ public class QuestionsController {
         }
         request.setAttribute("page",result);
         return "admin/questions_list";
+    }
+
+
+    // 修改状态
+    @ResponseBody
+    @PostMapping("/admin/questionStatusChange")
+    public Object statusChange(@RequestBody String req){
+        User u = new User();
+        //转化为json数据
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(req);
+        //获取点击前的按钮状态，该修改的id
+        Integer id = Integer.parseInt(((String) jsonObject.get("id")));
+        //转换为Integer
+        Integer qStatus = (Integer) jsonObject.get("qStatus");
+        qStatus = qStatus==0?1:0;
+        UpdateWrapper<Question> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",id);
+        wrapper.set("status",qStatus);
+        boolean update = questionService.update(wrapper);
+        if (update){
+            Map<String, Object> rep = new HashMap<String, Object>();
+            rep.put("code", 200);
+            rep.put("status",qStatus);//返回按钮状态，前端根据状态修改按钮的文本内容
+            return rep;
+        }
+        else{
+            return null;
+        }
     }
 
 }

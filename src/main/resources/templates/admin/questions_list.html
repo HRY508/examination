@@ -124,9 +124,9 @@
                                     <td th:text="${question.difficult}"></td>
                                     <td th:text="${question.createUser}"></td>
                                     <td th:text="${question.createTime}"></td>
-                                    <td th:text="${question.status}">
-                                        <button th:if="${question.status}==1" type="button" th:value="${question.status}" class="btn btn-sm btn-success"  name="statusButton"  id="statusButton1" ><i class="fa "></i>启用</button>
-                                        <button th:if="${question.status}==0" type="button" th:value="${question.status}" class="btn btn-sm btn-danger"  name="statusButton"  id="statusButton" ><i class="fa "></i>禁用</button>
+                                    <td >
+                                        <button th:if="${question.status}==1" type="button" th:value="${question.id}" class="btn btn-sm btn-success"  name="statusButton"  id="statusButton1" ><i class="fa "></i>启用</button>
+                                        <button th:if="${question.status}==0" type="button" th:value="${question.id}" class="btn btn-sm btn-danger"  name="statusButton"  id="statusButton" ><i class="fa "></i>禁用</button>
                                     </td>
                                     <td>
 
@@ -280,12 +280,12 @@ function checkAll(obj,cName){
             var _this = $(this)
             $.ajax({
                 //请求路径
-                url: "/admin/statusChange",
+                url: "/admin/questionStatusChange",
                 //请求类型
                 type: "POST",
                 //data表示发送的数据
                 data: JSON.stringify({
-                    uStatus: statusValue,
+                    qStatus: statusValue,
                     id: id
                 }), //定义发送请求的数据格式为JSON字符串
                 contentType: "application/json;charset=utf-8",
