@@ -21,13 +21,14 @@ import java.util.*;
  * @Author he
  * @Data 2022/10/4 18:31
  */
+
 @Service
 public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> implements QuestionService {
 
     @Autowired
     private QuestionService questionService;
     @Autowired
-    ContentService contentService;
+    private ContentService contentService;
 
     @Override
     public Question insertQuestion(HttpServletRequest request, String userName,Integer questionType) {
@@ -47,7 +48,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
         boolean save = questionService.save(question);
         Integer id = question.getId();
-        question.setContentId(id);
 
         //动态获取题的详细信息插入到表t_content中
         String param[] = {"A","B","C","D","E","F","G","H","I","J"};

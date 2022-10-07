@@ -22,8 +22,6 @@ public class Question {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private Integer  contentId;
-
     private Integer questionType;
 
     private Integer score;
