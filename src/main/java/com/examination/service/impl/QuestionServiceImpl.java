@@ -40,7 +40,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
      */
     @Override
     public Question insertSelectQuestion(HttpServletRequest request, String userName,Integer questionType) {
-
         Question question = new Question();
         question.setQuestionType(questionType);
         question.setDifficult(Integer.parseInt(request.getParameter("difficult")));
@@ -147,4 +146,5 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
         return question;
     }
+
 }

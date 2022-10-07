@@ -98,7 +98,7 @@
                             <table class="display table table-hover" id="dynamic-table">
                                 <thead>
                                 <tr>
-                                    <th><input type="checkbox" name="id[]" id="check" onclick="checkAll(this,'id[]');"/> <a type="button" onclick="$('#check').click()">全选</a></th>
+                                    <th><input type="checkbox" name="id[]" id="check" onclick="checkAll(this,'id[]');"/> <a type="button" onclick="$('#check').click()" href="javascript:void(0);" >全选</a></th>
                                     <th>id</th>
                                     <th>题型</th>
                                     <th>题干</th>
@@ -112,7 +112,7 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="question : ${questionList}">
-                                    <td class="center">  <input type="checkbox" name="id[]" value="" id="id[]" /></td>
+                                    <td class="center">  <input type="checkbox" name="id[]"  th:value="${question.id}" id="id[]" /></td>
                                     <td th:text="${question.id}"></td>
                                     <td  th:if="${question.questionType}==1" th:text="单选题"></td>
                                     <td  th:if="${question.questionType}==2" th:text="多选题"></td>
@@ -129,7 +129,12 @@
                                         <button th:if="${question.status}==0" type="button" th:value="${question.id}" class="btn btn-sm btn-danger"  name="statusButton"  id="statusButton" ><i class="fa "></i>禁用</button>
                                     </td>
                                     <td>
-
+                                        <a  th:href="@{/admin/updateQuestion/{id}(id=${question.id})}"
+                                            th:value="${question.id}">修改
+                                        </a>
+                                        <a  th:href="@{/admin/deleteQuestion/{id}(id=${question.id})}"
+                                            onclick="return del()" th:value="${question.id}" value="1">删除
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -247,12 +252,12 @@ function checkAll(obj,cName){
             } else {
                 var ids="";
                 $("input[name='id[]']").each(function() {
-                    if (this.checked == true) {
+                    if (this.checked == true &&this.value!="on") {
                         ids += this.value + ",";
 
                     }
                 });
-                window.location.replace("/admin/deleteCounts?ids="+ids);
+                window.location.replace("/admin/deleteQuestionsCounts?ids="+ids);
             }
         } else {
             alert("请选择您要删除的内容!");
