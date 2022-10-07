@@ -392,7 +392,7 @@
 
     // 增加form表单、选项
     function addForm() {
-        var arr1 = ['E', 'F', 'G', 'H','I','J'];
+        var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
         //通过类获取选项的个数
         var num = document.getElementsByClassName('a').length
         //设置选项数目最多不能大于10个选项
@@ -430,7 +430,7 @@
             document.getElementById("tip2").click()
         }
         else{//js写的，获取该节点，用js获取的用jquery也能获取，见上文
-            var d =  document.getElementsByName(arr1[num-4])[0]
+            var d =  document.getElementsByName(arr1[num-5])[0]
             //将该节点对应的选项设置为不可见
             $("#choice_"+arr1[num-5]+"").addClass('hidden')
             //移除该节点
