@@ -31,7 +31,7 @@ public class SingleSelectController {
     @RequestMapping("/admin/singleSelect")
     public String singleSelect(HttpServletRequest request){
         Integer questionType = StaticVariableUtil.singleSelectType;
-        questionService.insertQuestion(request,GlobalUserUtil.getUser().getUserName(),questionType);
+        questionService.insertSelectQuestion(request,GlobalUserUtil.getUser().getUserName(),questionType);
         return "admin/index";
     }
 }

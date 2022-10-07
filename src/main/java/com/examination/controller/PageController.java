@@ -25,6 +25,11 @@ public class PageController {
         return "admin/calendar";
     }
 
+    @RequestMapping("/admin/judgmentalEditors")
+    public String tojudgmentals(){
+        return "admin/tree_view";
+    }
+
 //    @GetMapping({"/admin/{url}"})
 //    public String toPage(@PathVariable("url") String url){
 //        return "admin/"+url;
