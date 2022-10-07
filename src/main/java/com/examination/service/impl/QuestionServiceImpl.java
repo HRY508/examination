@@ -9,13 +9,12 @@ import com.examination.service.ContentService;
 import com.examination.service.QuestionService;
 import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Description
@@ -31,15 +30,21 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     ContentService contentService;
 
     @Override
-    public Question insertQuestion(HttpServletRequest request, String userName) {
+    public Question insertQuestion(HttpServletRequest request, String userName,Integer questionType) {
 
         Question question = new Question();
-
+        question.setQuestionType(questionType);
         question.setDifficult(Integer.parseInt(request.getParameterValues("difficult")[0]));
-        question.setCorrect(request.getParameterValues("correct")[0]);
+        if(questionType == StaticVariableUtil.singleSelectType){
+            question.setCorrect(request.getParameterValues("correct")[0]);
+        }else if(questionType == StaticVariableUtil.moreSelectType){
+            String[] corrects = request.getParameterValues("correct");
+            question.setCorrect(StringUtils.join(corrects));
+        }
         question.setScore( Integer.parseInt(request.getParameterValues("score")[0]));
         question.setCreateUser(GlobalUserUtil.getUser().getUserName());
         question.setStatus(StaticVariableUtil.status);
+
         boolean save = questionService.save(question);
         Integer id = question.getId();
         question.setContentId(id);

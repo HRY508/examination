@@ -8,7 +8,7 @@ package com.examination.utils;
 
 public class StaticVariableUtil {
     public final static int singleSelectType = 1;
-    public final static int multipleChoiceType = 2;
+    public final static int moreSelectType = 2;
     public final static int JudgmentalType = 3;
     public final static int CompletionType = 4;
     public final static int ShortAnswerType = 5;

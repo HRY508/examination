@@ -20,6 +20,11 @@ public class PageController {
         return "admin/editors";
     }
 
+    @RequestMapping("/admin/moreEditors")
+    public String toMoreChoicePage(){
+        return "admin/calendar";
+    }
+
 //    @GetMapping({"/admin/{url}"})
 //    public String toPage(@PathVariable("url") String url){
 //        return "admin/"+url;
