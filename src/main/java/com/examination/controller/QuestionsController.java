@@ -4,11 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.examination.bean.Question;
-import com.examination.bean.QuestionObject;
-import com.examination.bean.QuestionVM;
-import com.examination.bean.User;
+import com.examination.bean.*;
 import com.examination.mapper.QuestionVMMapper;
+import com.examination.service.ContentService;
+import com.examination.service.QuestionEditVMService;
 import com.examination.service.QuestionService;
 import com.examination.service.QuestionVMService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,13 @@ public class QuestionsController {
     private QuestionService questionService;
 
     @Autowired
+    private ContentService contentService;
+
+    @Autowired
     private QuestionVMMapper questionVMMapper;
+
+    @Autowired
+    private QuestionEditVMService questionEditVMService;
 
     @RequestMapping("/admin/questionsList")
     public String questionView(HttpServletRequest request, Model model,
@@ -68,6 +73,7 @@ public class QuestionsController {
             System.out.println("进行了题型检索而没进行题目关键字检索");
             result = questionVMService.selectByQuestionType(page, questionType);
         }
+
         //进行了题目关键字检索和题型检索
         else
         {
@@ -130,5 +136,61 @@ public class QuestionsController {
             return null;
         }
     }
+
+    //批量删除
+    // 批量删除
+    @RequestMapping("admin/deleteQuestionsCounts")
+    public String deleteCount(@RequestParam String ids){//ids是复选框名字
+        System.out.println("进入了删除"+ids);
+        List<String> delList = new ArrayList<>();
+        String[] strs = ids.split(",");
+        for (String str : strs) {
+            delList.add(str);
+        }
+        boolean b = questionService.removeByIds(delList);
+        boolean b1 = contentService.removeByIds(delList);
+        System.out.println("删除-----------------------------"+b);
+        return "redirect:/admin/questionsList";
+    }
+
+    //删除
+    @GetMapping("admin/deleteQuestion/{id}")
+    public String deleteQuestion(@PathVariable Integer id) {
+        questionService.removeById(id);
+        contentService.removeById(id);
+        return "redirect:/admin/questionsList";
+    }
+
+    @GetMapping("/admin/updateQuestion/{id}")
+    public String toUpdateQuestionPage(@PathVariable("id") Integer id, Model model)
+    {
+        System.out.println("进入了更新方法");
+        QuestionEditVM questionEditVM = questionEditVMService.selectByConditionQuestionVM(id);
+        //获取题目、选项相关内容
+        String content = questionEditVM.getContent();
+        QuestionObject questionObject = JSON.parseObject(content, QuestionObject.class);
+        if (questionEditVM.getQuestionType()==1)
+        {
+            model.addAttribute("questionEditVM",questionEditVM);
+            int size = questionObject.getQuestionItemObjects().size();
+            System.out.println("题目选项长度"+size);
+            model.addAttribute("size",size);
+            model.addAttribute("questionObject",questionObject);
+            return "admin/update_singleChoice";
+        }
+        else if(questionEditVM.getQuestionType()==2){
+            return "redirect:/admin/questionsList";
+        }
+        else if(questionEditVM.getQuestionType()==3){
+            return "redirect:/admin/questionsList";
+        }
+        else if(questionEditVM.getQuestionType()==4){
+            return "redirect:/admin/questionsList";
+        }
+        else{
+            return "redirect:/admin/questionsList";
+        }
+    }
+
 
 }

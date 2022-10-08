@@ -7,7 +7,7 @@
     <meta name="author" content="ThemeBucket">
     <link rel="shortcut icon" href="#" type="image/png">
 
-    <title>多选题创编</title>
+    <title>单选题创编</title>
 
     <link rel="stylesheet" type="text/css" href="/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
     <link href="/css/style.css" rel="stylesheet">
@@ -62,13 +62,13 @@
         <!--当前位置介绍开始-->
         <div class="page-heading">
             <h3>
-               多选题创编
+                单选题创编
             </h3>
             <ul class="breadcrumb">
                 <li>
                     <a href="#">题库管理</a>
                 </li>
-                <li class="active">多选题创建 </li>
+                <li class="active"> 单选题创建 </li>
             </ul>
         </div>
         <!-- 当前位置介绍结束-->
@@ -80,7 +80,7 @@
                     <header class="header">
                         <div class="btn-toolbar">
                             <h4 class="pull-left">
-                                多选题创建中......
+                                单选题创建中......
                             </h4>
                         </div>
 
@@ -88,26 +88,11 @@
 
                     <section class="mail-list">
                         <div class="compose-mail">
-                            <form role="form-horizontal" th:action="@{/admin/moreSelect}" method="post">
+                            <form role="form-horizontal" th:action="@{/admin/singleSelect}" method="post">
                                 <div class="form-group">
                                     <label for="to" class="">To:</label>
                                     <input type="text" tabindex="1" id="to" name="to" class="form-control" required>
-                                    <!--                                    <div class="compose-options">-->
-                                    <!--                                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>-->
-                                    <!--                                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>-->
-                                    <!--                                    </div>-->
                                 </div>
-
-                                <!--                                <div class="form-group hidden">-->
-                                <!--                                    <label for="cc" class="0">Cc:</label>-->
-                                <!--                                    <input type="text" tabindex="2" id="cc" class="form-control">-->
-                                <!--                                </div>-->
-
-                                <!--                                <div class="form-group hidden">-->
-                                <!--                                    <label for="bcc" class="">Bcc:</label>-->
-                                <!--                                    <input type="text" tabindex="2" id="bcc" class="form-control">-->
-                                <!--                                </div>-->
-
                                 <div class="form-group">
                                     <label for="subject" class="">Subject:</label>
                                     <input type="text" name="subject" tabindex="1" id="subject" class="form-control">
@@ -116,7 +101,7 @@
                                 <!--onclick函数，当管理员点击题干表单时题干表单设置不可见，显示富文本编辑器，-->
                                 <div class="form-group">
                                     <label for="textarea" class="">题干:</label>
-                                    <input type="text" tabindex="1" name="content" id="subject2" class="form-control"
+                                    <input type="text" th:value="${questionObject.getTitleContent()}" tabindex="1" name="content" id="subject2" class="form-control"
                                            onclick="$(this).parent().addClass('hidden');//当前表单设置不可见
                                            $('#textarea').parent().removeClass('hidden');//富文本编辑器设置可见
                                            $('#textarea-button').removeClass('hidden');//富文本编辑器按钮设置可见
@@ -127,7 +112,7 @@
                                 &nbsp;
                                 <!--富文本编辑器开始，包括按钮-->
                                 <div class="compose-editor hidden">
-                                    <textarea id="textarea" class="wysihtml5 form-control" rows="5" th:text="请在此输入题干"></textarea>
+                                    <textarea id="textarea" class="wysihtml5 form-control" rows="5" th:text="${questionObject.getTitleContent()}"></textarea>
                                 </div>
                                 <div class="compose-btn hidden" id="textarea-button">
                                     <button type="button" class="btn btn-primary btn-sm"
@@ -140,95 +125,138 @@
                                 </div>
                                 <!--富文本编辑器结束-->
                                 <div id="p">
-                                    <div class="form-group">
-                                        <label for="subject" class="a">A</label>
-                                        <input type="text" tabindex="1" id="A" class="form-control" name="A" required>
+
+                                    <div th:each="q : ${questionObject.getQuestionItemObjects()}">
+                                        <div class="form-group" >
+                                            <input style="display: none" id="size" th:value="${size}">
+                                            <label for="subject" class="a" th:text="${q.getPrefix()}"></label>
+                                            <input type="text" th:value="${q.getContent()}" tabindex="1" th:id="${q.getPrefix()}" class="form-control" th:name="${q.getPrefix()}" required>
+                                        </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="subject" class="a">B</label>
-                                        <input type="text" tabindex="1" id="B" class="form-control" name="B" required>
-                                    </div>
 
-                                    <div class="form-group" id="cloneForm">
+<!--                                    <div class="form-group">-->
+<!--                                        <input style="display: none" id="size" th:value="${size}">-->
+<!--                                        <label for="subject" class="a">A</label>-->
+<!--                                        <input type="text" th:value="${questionObject.getQuestionItemObjects()[0].getContent()}" tabindex="1" id="A" class="form-control" name="A" required>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="form-group">-->
+<!--                                        <label for="subject" class="a">B</label>-->
+<!--                                        <input type="text" th:value="${questionObject.getQuestionItemObjects()[1].getContent()}" tabindex="1" id="B" class="form-control" name="B" required>-->
+<!--                                    </div>-->
+
+                                    <div class="form-group" id="cloneForm" style="display: none">
                                         <label for="subject" class="a" >C</label>
-                                        <input type="text" tabindex="1" id="C" class="form-control" name="C" required>
+                                        <input type="text"  tabindex="1"  class="form-control"  required>
                                     </div>
 
-                                    <div class="form-group" >
-                                        <label for="subject" class="a" >D</label>
-                                        <input type="text" tabindex="1" id="D"  class="form-control" name="D" required>
-                                    </div>
+<!--                                    <div class="form-group" >-->
+<!--                                        <label for="subject" class="a" >D</label>-->
+<!--                                        <input type="text" th:value="${questionObject.getQuestionItemObjects()[3].getContent()}" tabindex="1" id="D"  class="form-control" name="D" required>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group" >-->
+<!--                                        <label for="subject" class="a" >E</label>-->
+<!--                                        <input type="text"  th:value="${size>=4}?${questionObject.getQuestionItemObjects()[4].getContent()}:${null}" tabindex="1" id="E"  class="form-control" name="D" required>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group" >-->
+<!--                                        <label for="subject" class="a" >F</label>-->
+<!--                                        <input type="text" th:value="${size>=4}?${questionObject.getQuestionItemObjects()[5].getContent()}:${null}" tabindex="1" id="F"  class="form-control" name="D" required>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group" >-->
+<!--                                        <label for="subject" class="a" >G</label>-->
+<!--                                        <input type="text" th:value="${size>=4}?${questionObject.getQuestionItemObjects()[6].getContent()}:${null}" tabindex="1" id="G"  class="form-control" name="D" required>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group" >-->
+<!--                                        <label for="subject" class="a" >H</label>-->
+<!--                                        <input type="text" th:value="${size>=4}?${questionObject.getQuestionItemObjects()[7].getContent()}:${null}" tabindex="1" id="H"  class="form-control" name="D" required>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group" >-->
+<!--                                        <label for="subject" class="a" >I</label>-->
+<!--                                        <input type="text"  th:value="${size>=4}?${questionObject.getQuestionItemObjects()[8].getContent()}:${null}" tabindex="1" id="I"  class="form-control" name="D" required>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group" >-->
+<!--                                        <label for="subject" class="a" >J</label>-->
+<!--                                        <input type="text" th:value="${size>=4}?${questionObject.getQuestionItemObjects()[9].getContent()}:${null}" tabindex="1" id="J"  class="form-control" name="D" required>-->
+<!--                                    </div>-->
 
                                 </div>
 
                                 &nbsp;
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">答案</label>
-
+                                    <input class="hidden" id="hiddenKey" th:value="${questionEditVM.getCorrect()}">
                                     <div class="col-sm-9 icheck ">
+<!--                                        <div th:each="q : ${questionObject.getQuestionItemObjects()}">-->
+<!--                                            <div class="flat-grey ">-->
+<!--                                                <div class="radio " >-->
+<!--                                                    <input tabindex="3" type="radio"  name="correct" th:id="'r_'+${q.getPrefix()}" th:value="${q.getPrefix()}">-->
+<!--                                                    <a th:text="${q.getPrefix()}"></a>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
 
                                         <div class="flat-grey ">
-                                            <div class="checkbox " >
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_A" value="A">
+                                            <div class="radio checked" >
+                                                <input tabindex="3" type="radio"  name="correct" id="r_A" value="A">
                                                 A
                                             </div>
                                         </div>
                                         <div class="flat-red ">
-                                            <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox" name="correct" id="r_B" value="B">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio" name="correct" id="r_B" value="B">
                                                 B
                                             </div>
                                         </div>
 
                                         <div class="flat-green ">
-                                            <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox" name="correct" id="r_C" value="C">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio" name="correct" id="r_C" value="C">
                                                 C
                                             </div>
                                         </div>
 
-                                        <div class="flat-blue " id="choice_D">
-                                            <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_D" value="D">
+                                        <div class="flat-blue hidden" id="choice_D">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_D" value="D">
                                                 D
                                             </div>
                                         </div>
 
                                         <div class="flat-yellow hidden" id="choice_E">
-                                            <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_E" value="E">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_E" value="E">
                                                 E
                                             </div>
                                         </div>
 
                                         <div class="flat-purple hidden" id="choice_F">
-                                            <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_F" value="F">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_F" value="F">
                                                 F
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_G">
-                                            <div class="checkbox">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_G" value="G">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_G" value="G">
                                                 G
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_H">
-                                            <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_H" value="H">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_H" value="H">
                                                 H
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_I">
-                                            <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_I" value="I">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_I" value="I">
                                                 I
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_J">
-                                            <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_J" value="J">
+                                            <div class="radio ">
+                                                <input tabindex="3" type="radio"  name="correct" id="r_J" value="J">
                                                 J
                                             </div>
                                         </div>
@@ -242,7 +270,7 @@
 
                                 <div class="form-group">
                                     <label  class="">解析</label>
-                                    <input type="text" name="analysis" tabindex="2" id="Answer" class="form-control" required>
+                                    <input type="text" th:value="${questionObject.getAnalyze()}" name="analysis" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
                                 <!--                                分数开始-->
                                 <div class="form-group">
@@ -254,7 +282,7 @@
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </div>
-                                            <input type="text" name="score" id="score" class="spinner-input form-control" maxlength="3" style="text-align: center;">
+                                            <input type="text" th:value="${questionEditVM.getScore()}" name="score" id="score" class="spinner-input form-control" maxlength="3" style="text-align: center;">
                                             <div class="spinner-buttons input-group-btn">
                                                 <button type="button" class="btn spinner-down btn-warning">
                                                     <i class="fa fa-minus"></i>
@@ -264,11 +292,9 @@
                                     </div>
                                 </div>
                                 <!--                                分数结束-->
-                                <!--题型开始-->
-                                <input name="questionType" style="display: none" value="2">
-                                <!--题型结束-->
                                 <!--                                难度选择开始-->
                                 <div class="form-group">
+                                    <input class="hidden" id="diff" th:value="${questionEditVM.getDifficult()}">
                                     <label  class="">难度</label>
                                     <div class="btn-group btn-group-justified" style="width: 90%">
                                         <a class="btn btn-success" type="button" name="b1" onclick="cd1()" id="b1" value="1" style="width:20%">简单</a>
@@ -279,8 +305,12 @@
                                     </div>
                                 </div>
                                 &nbsp;
-                                <!--                                难度选择结束-->
-                                <!--                                充当换行-->
+                                <!--难度选择结束-->
+                                <!--题型开始-->
+                                <input name="questionType" style="display: none" value="2">
+                                <!--题型结束-->
+
+                                <!--充当换行-->
                                 <div class="form-group " style="display: none"></div>
 
                                 <div class="compose-btn1">
@@ -331,7 +361,7 @@
                                                 <h4 class="modal-title">提示</h4>
                                             </div>
                                             <div class="modal-body">
-                                                最少四个选项
+                                                最少三个选项
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -392,12 +422,48 @@
         $('#subject2').parent().removeClass('hidden')
     }
 
+    $(document).ready( function() {
+        var arr = ['A','B','C','D','E', 'F', 'G', 'H','I','J']
+        //通过类获取选项的个数
+        var num = document.getElementsByClassName('a').length-1
+        alert(num)
+        var key = document.getElementById('hiddenKey').value
+        for(var i = 0;i<num;i++){
+            //将该表单对应的选项设置为可见
+            alert("增在进行"+arr[i]+"显示")
+            $("#choice_"+arr[i]).removeClass('hidden')
+            if (arr[i]==key){
+                alert("相等----------------"+key)
+                $("#r_"+arr[i]+"").parent().addClass('checked')
+            }
+        }
+        var diff = $('#diff').val()
+        alert("diff"+diff)
+        if(diff==1){
+            alert("cd1")
+            cd1()
+        }
+        else if (diff==2){
+            alert("cd2")
+            cd2()
+        }
+        else if(diff==3){
+            alert("cd3")
+            cd3()
+        }
+        else {
+            alert("cd4")
+            cd4()
+        }
+    });
+
 
     // 增加form表单、选项
     function addForm() {
         var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
         //通过类获取选项的个数
-        var num = document.getElementsByClassName('a').length
+        var num = document.getElementsByClassName('a').length-1
+        alert("class=a选项个数"+num)
         //设置选项数目最多不能大于10个选项
         if(num<10){
             // alert(document.getElementsByClassName('a').length)
@@ -408,6 +474,7 @@
             //设置选项name属性，label标签的文本内容通过动态获取jquery的id设置的
             clone.childNodes[1].innerHTML = arr1[num-3]
             clone.childNodes[3].id=arr1[num-3]
+            clone.style=""
             // alert(clone.childNodes[1].innerHTML)
             //获取父节点，用来将子节点追加到其后
             var p = document.getElementById('p')
@@ -423,19 +490,21 @@
         }
     }
 
+
     //减少Form表单、选项
     function reduceForm(){
         $('#tip1').addClass('hidden')
-        var arr1 = ['E', 'F', 'G', 'H','I','J'];
-        var num = document.getElementsByClassName('a').length
-        if(num<5){
+        var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
+        var num = document.getElementsByClassName('a').length-1
+        alert("a.length"+num)
+        if(num<4){
             //弹出提示框
             document.getElementById("tip2").click()
         }
         else{//js写的，获取该节点，用js获取的用jquery也能获取，见上文
-            var d =  document.getElementsByName(arr1[num-5])[0]
+            var d =  document.getElementsByName(arr1[num-4])[0]
             //将该节点对应的选项设置为不可见
-            $("#choice_"+arr1[num-5]+"").addClass('hidden')
+            $("#choice_"+arr1[num-4]+"").addClass('hidden')
             //移除该节点
             var dp=d.parentNode
             dp.remove()
@@ -471,6 +540,7 @@
         $('#b3').removeClass('hidden')
         $('#b4').addClass('hidden')
     }
+    //重置函数
     function reSetQuestion() {
         //移除选定状态
         var arrR =['A','B','C','D','E','F','G','H','I','J']
@@ -492,7 +562,7 @@
         $('#score').attr('value',0)
         cd4()
         //获取input的个数
-        var len = document.getElementsByClassName('a').length
+        var len = document.getElementsByClassName('a').length-1
         if(len==3){
             //调用增加的函数增加一个表单
             addForm()

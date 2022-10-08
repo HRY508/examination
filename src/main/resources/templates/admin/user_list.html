@@ -74,7 +74,10 @@
                             <table class="display table table-hover" id="dynamic-table">
                                 <thead>
                                 <tr>
-                                    <th>id <input type="checkbox" name="id[]" id="check" onclick="checkAll(this,'id[]');"/> <a type="button" onclick="$('#check').click()">全选</a></th>
+                                    <th>
+                                        <input type="checkbox" name="id[]" id="check" onclick="checkAll(this,'id[]');"/> <a type="button" onclick="$('#check').click()">全选</a>
+                                    </th>
+                                    <th>id </th>
                                     <th>用户名</th>
                                     <th>密码</th>
                                     <th>学号</th>
@@ -90,6 +93,7 @@
                                 <tbody>
                                 <tr th:each="user : ${page.records}">
                                     <td class="center">  <input type="checkbox" name="id[]" value="" id="id[]"></td>
+                                    <td th:text="${user.id}"></td>
                                     <td th:text="${user.userName}"></td>
                                     <td th:text="${user.password}"></td>
                                     <td th:text="${user.uId}"></td>
