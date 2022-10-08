@@ -2,7 +2,7 @@ package com.examination.controller;
 
 import com.examination.service.QuestionService;
 import com.examination.utils.GlobalUserUtil;
-import com.examination.utils.StaticVariableUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,20 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 判断题
+ * 填空题
  * @Author:晓风残月Lx
- * @Date: 2022/10/7 14:04
+ * @Date: 2022/10/7 17:35
  */
 @Controller
-public class JudgmentalController {
+@Slf4j
+public class CompletionController {
 
     @Autowired
     private QuestionService questionService;
 
-    @RequestMapping("/admin/judgmentals")
-    public String judgmentals(HttpServletRequest request){
-        questionService.insertJudgeQuestion(request, GlobalUserUtil.getUser().getUserName());
-        return "admin/tree_view";
+    @RequestMapping("/admin/completions")
+    public String completions(HttpServletRequest request){
+        questionService.insertCompletionQuestion(request, GlobalUserUtil.getUser().getUserName());
+        return "admin/nestable";
     }
 
 

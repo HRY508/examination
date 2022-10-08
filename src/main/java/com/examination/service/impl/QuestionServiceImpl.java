@@ -40,10 +40,9 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
      */
     @Override
     public Question insertSelectQuestion(HttpServletRequest request, String userName,Integer questionType) {
-
         Question question = new Question();
         question.setQuestionType(questionType);
-        question.setDifficult(Integer.parseInt(request.getParameter("difficult")));
+        question.setDifficult(Integer.parseInt(request.getParameterValues("difficult")[0]));
         if(questionType == StaticVariableUtil.singleSelectType){
             question.setCorrect(request.getParameterValues("correct")[0]);
         }else if(questionType == StaticVariableUtil.moreSelectType){
@@ -53,13 +52,12 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         question.setScore( Integer.parseInt(request.getParameterValues("score")[0]));
         question.setCreateUser(userName);
         question.setStatus(StaticVariableUtil.status);
-
+        System.out.println(request.getParameter("difficult"));
         boolean save = questionService.save(question);
         Integer id = question.getId();
 
         //动态获取题的详细信息插入到表t_content中
         String param[] = {"A","B","C","D","E","F","G","H","I","J"};
-        HashMap<String,Object> map = new HashMap<>();
         QuestionObject questionObject = new QuestionObject();
         List<QuestionItemObject> list = new ArrayList<>();
         Enumeration parameterNames = request.getParameterNames();
@@ -115,7 +113,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
         //动态获取题的详细信息插入到表t_content中
         String param[] = {"√","×"};
-        HashMap<String,Object> map = new HashMap<>();
+
         QuestionObject questionObject = new QuestionObject();
         List<QuestionItemObject> list = new ArrayList<>();
         Enumeration parameterNames = request.getParameterNames();
@@ -145,6 +143,35 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         System.out.println("正文内容content"+content1);
         int insert2 = contentMapper.insert(content1);
 
+        return question;
+    }
+
+    /**
+     * 添加填空题
+     * @param request
+     * @param userName
+     * @return
+     */
+    public Question insertCompletionQuestion(HttpServletRequest request, String userName) {
+        Question question=new Question();
+        question.setCorrect(request.getParameter("correct"));
+        question.setDifficult(Integer.parseInt(request.getParameter("difficult")));
+        question.setScore(Integer.parseInt(request.getParameter("score")));
+        question.setQuestionType(StaticVariableUtil.CompletionType);
+        question.setStatus(StaticVariableUtil.status);
+        question.setCreateUser(userName);
+        boolean save = questionService.save(question);
+        Integer id = question.getId();
+        QuestionObject questionObject=new QuestionObject();
+        questionObject.setTitleContent(request.getParameterValues("cotent")[0]);
+        questionObject.setAnalyze(request.getParameterValues("analysis")[0]);
+        String selectContents = JSON.toJSONString(questionObject);
+        Content content=new Content();
+        content.setContent(selectContents);
+        // 保证主键一致性
+        content.setId(id);
+        BaseMapper<Content> contentMapper = contentService.getBaseMapper();
+        int i = contentMapper.insert(content);
         return question;
     }
 }

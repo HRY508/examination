@@ -10,4 +10,6 @@ public interface QuestionService extends IService<Question> {
     Question insertSelectQuestion(HttpServletRequest request, String userName,Integer questionType);
 
     Question insertJudgeQuestion(HttpServletRequest request, String userName);
+
+    Question insertCompletionQuestion(HttpServletRequest request, String userName);
 }

@@ -26,8 +26,13 @@ public class PageController {
     }
 
     @RequestMapping("/admin/judgmentalEditors")
-    public String tojudgmentals(){
+    public String tojudgmentalPage(){
         return "admin/tree_view";
+    }
+
+    @RequestMapping("/admin/completionEditors")
+    public String tocompletionPage(){
+        return "admin/nestable";
     }
 
 //    @GetMapping({"/admin/{url}"})

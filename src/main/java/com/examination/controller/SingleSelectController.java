@@ -32,6 +32,6 @@ public class SingleSelectController {
     public String singleSelect(HttpServletRequest request){
         Integer questionType = StaticVariableUtil.singleSelectType;
         questionService.insertSelectQuestion(request,GlobalUserUtil.getUser().getUserName(),questionType);
-        return "admin/index";
+        return "admin/editors";
     }
 }

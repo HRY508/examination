@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Question {
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.AUTO,value = "id")
     private Integer id;
 
     private Integer questionType;

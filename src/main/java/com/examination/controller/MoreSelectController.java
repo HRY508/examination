@@ -25,6 +25,7 @@ public class MoreSelectController {
     public String moreSelect(HttpServletRequest request){
         Integer questionType = StaticVariableUtil.moreSelectType;
         questionService.insertSelectQuestion(request, GlobalUserUtil.getUser().getUserName(),questionType);
+        log.info("===================="+request.getParameter("difficult"));
         return "admin/calendar";
     }
 }
