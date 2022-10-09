@@ -12,4 +12,6 @@ import com.examination.bean.QuestionVM;
 
 public interface QuestionEditVMService  extends IService<QuestionEditVM> {
     QuestionEditVM selectByConditionQuestionVM(Integer questionId);
+
+    int updateQuestion(QuestionEditVM questionEditVM);
 }
