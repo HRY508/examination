@@ -168,20 +168,20 @@
 
                                     <div class="col-sm-9 icheck ">
 
-                                        <div class="flat-grey ">
+                                        <div class="flat-grey " id="choice_A">
                                             <div class="radio " >
                                                 <input tabindex="3" type="radio"  name="correct" id="r_A" value="A">
                                                 A
                                             </div>
                                         </div>
-                                        <div class="flat-red ">
+                                        <div class="flat-red " id="choice_B">
                                             <div class="radio ">
                                                 <input tabindex="3" type="radio" name="correct" id="r_B" value="B">
                                                 B
                                             </div>
                                         </div>
 
-                                        <div class="flat-green ">
+                                        <div class="flat-green " id="choice_C">
                                             <div class="radio ">
                                                 <input tabindex="3" type="radio" name="correct" id="r_C" value="C">
                                                 C
@@ -427,16 +427,16 @@
     //减少Form表单、选项
     function reduceForm(){
         $('#tip1').addClass('hidden')
-        var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
+        var arr1 = ['C','D','E', 'F', 'G', 'H','I','J'];
         var num = document.getElementsByClassName('a').length
-        if(num<4){
+        if(num<3){
             //弹出提示框
             document.getElementById("tip2").click()
         }
         else{//js写的，获取该节点，用js获取的用jquery也能获取，见上文
-           var d =  document.getElementsByName(arr1[num-4])[0]
+           var d =  document.getElementsByName(arr1[num-3])[0]
             //将该节点对应的选项设置为不可见
-            $("#choice_"+arr1[num-4]+"").addClass('hidden')
+            $("#choice_"+arr1[num-3]+"").addClass('hidden')
             //移除该节点
             var dp=d.parentNode
             dp.remove()

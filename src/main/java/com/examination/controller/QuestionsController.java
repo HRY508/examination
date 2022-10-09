@@ -3,7 +3,6 @@ package com.examination.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.*;
 import com.examination.mapper.QuestionVMMapper;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -217,6 +215,47 @@ public class QuestionsController {
         questionEditVM.setContent(selectContents);
         int i = questionEditVMService.updateQuestion(questionEditVM);
         return "redirect:/admin/questionsList";
+    }
+
+
+    //进入更新页面
+    @GetMapping("/admin/updateQuestionPage/{id}")
+    public String toUpdateQuestionPage(@PathVariable("id") Integer id, Model model)
+    {
+        System.out.println("进入了更新方法");
+        QuestionEditVM questionEditVM = questionEditVMService.selectByConditionQuestionVM(id);
+        //获取题目、选项相关内容
+        String content = questionEditVM.getContent();
+        QuestionObject questionObject = JSON.parseObject(content, QuestionObject.class);
+        if (questionEditVM.getQuestionType()==1)
+        {
+            model.addAttribute("questionEditVM",questionEditVM);
+            int size = questionObject.getQuestionItemObjects().size();
+            model.addAttribute("size",size);
+            model.addAttribute("questionObject",questionObject);
+            return "admin/update_singleChoice";
+        }
+        else if(questionEditVM.getQuestionType()==2){
+            model.addAttribute("questionEditVM",questionEditVM);
+            int size = questionObject.getQuestionItemObjects().size();
+            model.addAttribute("size",size);
+            model.addAttribute("questionObject",questionObject);
+            return "admin/update_moreChoice";
+        }
+        else if(questionEditVM.getQuestionType()==3){
+            model.addAttribute("questionEditVM",questionEditVM);
+            int size = questionObject.getQuestionItemObjects().size();
+            List<QuestionItemObject> questionItemObjects =
+                    questionObject.getQuestionItemObjects();
+            model.addAttribute("questionObject",questionObject);
+            return "admin/update_judgemental";
+        }
+        else if(questionEditVM.getQuestionType()==4){
+            return "redirect:/admin/questionsList";
+        }
+        else{
+            return "redirect:/admin/questionsList";
+        }
     }
 
 
