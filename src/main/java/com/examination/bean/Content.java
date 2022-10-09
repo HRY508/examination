@@ -25,7 +25,7 @@ public class Content {
 
     private String content;
 
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @TableField(fill = FieldFill.INSERT)

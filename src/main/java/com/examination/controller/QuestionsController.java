@@ -140,7 +140,7 @@ public class QuestionsController {
         }
     }
 
-    //批量删除
+
     // 批量删除
     @RequestMapping("admin/deleteQuestionsCounts")
     public String deleteCount(@RequestParam String ids){//ids是复选框名字
@@ -163,7 +163,6 @@ public class QuestionsController {
         contentService.removeById(id);
         return "redirect:/admin/questionsList";
     }
-
 
     //更新
     @RequestMapping("/admin/updateQuestion")

@@ -20,6 +20,11 @@ public class JudgmentalController {
     @Autowired
     private QuestionService questionService;
 
+    @RequestMapping("/admin/judgmentalEditors")
+    public String tojudgmentalPage(){
+        return "admin/tree_view";
+    }
+
     @RequestMapping("/admin/judgmentals")
     public String judgmentals(HttpServletRequest request){
         questionService.insertJudgeQuestion(request, GlobalUserUtil.getUser().getUserName());

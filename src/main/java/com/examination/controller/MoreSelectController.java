@@ -21,6 +21,11 @@ public class MoreSelectController {
     @Autowired
     private QuestionService questionService;
 
+    @RequestMapping("/admin/moreEditors")
+    public String toMoreChoicePage(){
+        return "admin/calendar";
+    }
+
     @RequestMapping("/admin/moreSelect")
     public String moreSelect(HttpServletRequest request){
         Integer questionType = StaticVariableUtil.moreSelectType;

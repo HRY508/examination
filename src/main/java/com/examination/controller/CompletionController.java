@@ -21,6 +21,12 @@ public class CompletionController {
     @Autowired
     private QuestionService questionService;
 
+
+    @RequestMapping("/admin/completionEditors")
+    public String tocompletionPage(){
+        return "admin/nestable";
+    }
+
     @RequestMapping("/admin/completions")
     public String completions(HttpServletRequest request){
         questionService.insertCompletionQuestion(request, GlobalUserUtil.getUser().getUserName());

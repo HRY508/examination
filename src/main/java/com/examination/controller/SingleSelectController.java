@@ -28,6 +28,12 @@ public class SingleSelectController {
     @Autowired
     private QuestionService questionService;
 
+    @RequestMapping("/admin/singleEditors")
+    public String toSingleChoicePage(){
+        return "admin/editors";
+    }
+
+
     @RequestMapping("/admin/singleSelect")
     public String singleSelect(HttpServletRequest request){
         Integer questionType = StaticVariableUtil.singleSelectType;
