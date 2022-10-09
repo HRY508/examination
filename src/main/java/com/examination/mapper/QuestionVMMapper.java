@@ -30,7 +30,7 @@ public interface QuestionVMMapper extends BaseMapper<QuestionVM> {
     @Select(start+"and q.question_type = #{questionType}")
     Page<QuestionVM> selectByQuestionType(Page page, @Param("questionType")Integer questionType);
 
-    //使用拼接sql自定义sql语句,${}有sql注入的风险
+    //通过题型、关键字查询，使用拼接sql自定义sql语句,${}有sql注入的风险
     @Select(start+"and q.question_type = #{questionType} and c.content like concat('%',#{questionName},'%')")
     Page<QuestionVM> selectByConditionQuestionVM(Page page,
                                                  @Param("questionType")Integer questionType,

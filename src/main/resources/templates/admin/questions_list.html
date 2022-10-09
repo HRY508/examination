@@ -129,7 +129,7 @@
                                         <button th:if="${question.status}==0" type="button" th:value="${question.id}" class="btn btn-sm btn-danger"  name="statusButton"  id="statusButton" ><i class="fa "></i>禁用</button>
                                     </td>
                                     <td>
-                                        <a  th:href="@{/admin/updateQuestion/{id}(id=${question.id})}"
+                                        <a  th:href="@{/admin/updateQuestionPage/{id}(id=${question.id})}"
                                             th:value="${question.id}">修改
                                         </a>
                                         <a  th:href="@{/admin/deleteQuestion/{id}(id=${question.id})}"

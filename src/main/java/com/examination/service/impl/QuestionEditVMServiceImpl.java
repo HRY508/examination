@@ -25,4 +25,12 @@ public class QuestionEditVMServiceImpl extends ServiceImpl<QuestionEditVMMapper,
         QuestionEditVM questionEditVM = baseMapper.selectByConditionQuestionVM(questionId);
         return questionEditVM;
     }
+
+    @Override
+    public int updateQuestion(QuestionEditVM questionEditVM) {
+        QueryWrapper<QuestionEditVM> wrapper = new QueryWrapper<>();
+        QuestionEditVMMapper baseMapper = this.baseMapper;
+        int res = baseMapper.updateQuestion(questionEditVM);
+        return res;
+    }
 }

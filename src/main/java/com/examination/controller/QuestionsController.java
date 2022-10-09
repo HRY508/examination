@@ -3,6 +3,7 @@ package com.examination.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.*;
 import com.examination.mapper.QuestionVMMapper;
@@ -10,6 +11,9 @@ import com.examination.service.ContentService;
 import com.examination.service.QuestionEditVMService;
 import com.examination.service.QuestionService;
 import com.examination.service.QuestionVMService;
+import com.examination.utils.GlobalUserUtil;
+import com.examination.utils.StaticVariableUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +46,7 @@ public class QuestionsController {
     @Autowired
     private QuestionEditVMService questionEditVMService;
 
+    //查询
     @RequestMapping("/admin/questionsList")
     public String questionView(HttpServletRequest request, Model model,
                                @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,
@@ -161,35 +166,57 @@ public class QuestionsController {
         return "redirect:/admin/questionsList";
     }
 
-    @GetMapping("/admin/updateQuestion/{id}")
-    public String toUpdateQuestionPage(@PathVariable("id") Integer id, Model model)
-    {
-        System.out.println("进入了更新方法");
-        QuestionEditVM questionEditVM = questionEditVMService.selectByConditionQuestionVM(id);
-        //获取题目、选项相关内容
-        String content = questionEditVM.getContent();
-        QuestionObject questionObject = JSON.parseObject(content, QuestionObject.class);
-        if (questionEditVM.getQuestionType()==1)
-        {
-            model.addAttribute("questionEditVM",questionEditVM);
-            int size = questionObject.getQuestionItemObjects().size();
-            System.out.println("题目选项长度"+size);
-            model.addAttribute("size",size);
-            model.addAttribute("questionObject",questionObject);
-            return "admin/update_singleChoice";
+
+    //更新
+    @RequestMapping("/admin/updateQuestion")
+    public String updateSingleQuestion(HttpServletRequest request){
+        System.out.println(request.getParameterValues("id")[0]);
+        Integer id = Integer.parseInt(request.getParameterValues("id")[0]);
+        QuestionEditVM questionEditVM = new QuestionEditVM();
+        questionEditVM.setId(id);
+        Integer questionType = Integer.parseInt(request.getParameter("questionType"));
+        questionEditVM.setQuestionType(questionType);
+        System.out.println("类型+++++++++++++"+questionType);
+        if(questionType == StaticVariableUtil.singleSelectType){
+            questionEditVM.setCorrect(request.getParameterValues("correct")[0]);
+        }else if(questionType == StaticVariableUtil.moreSelectType){
+            String[] corrects = request.getParameterValues("correct");
+            questionEditVM.setCorrect(StringUtils.join(corrects));
         }
-        else if(questionEditVM.getQuestionType()==2){
-            return "redirect:/admin/questionsList";
+        else if (questionType == StaticVariableUtil.JudgmentalType){
+            questionEditVM.setCorrect(request.getParameterValues("correct")[0]);
         }
-        else if(questionEditVM.getQuestionType()==3){
-            return "redirect:/admin/questionsList";
+        questionEditVM.setScore(Integer.parseInt(request.getParameter("score")));
+        questionEditVM.setDifficult(Integer.parseInt(request.getParameter("difficult")));
+        questionEditVM.setCreateUser(GlobalUserUtil.getUser().getUserName());
+        //动态获取题的详细信息插入到表t_content中
+        String param[] = {"A","B","C","D","E","F","G","H","I","J"};
+        HashMap<String,Object> map = new HashMap<>();
+        QuestionObject questionObject = new QuestionObject();
+        List<QuestionItemObject> list = new ArrayList<>();
+        Enumeration parameterNames = request.getParameterNames();
+        String[] pr = {};
+        while (parameterNames.hasMoreElements()) {
+            String name = (String) parameterNames.nextElement();
+            String value = request.getParameter(name);
+            for (int i =0;i<param.length;i++){
+                if(name.equals(param[i]))
+                {
+                    QuestionItemObject object = new QuestionItemObject();
+                    object.setPrefix(param[i]);
+                    object.setContent(request.getParameter(param[i]));
+                    list.add(object);
+                }
+            }
         }
-        else if(questionEditVM.getQuestionType()==4){
-            return "redirect:/admin/questionsList";
-        }
-        else{
-            return "redirect:/admin/questionsList";
-        }
+        //设置题的题目、解析、正文（先转换为Json格式再存入数据库）
+        questionObject.setTitleContent(request.getParameterValues("content")[0]);
+        questionObject.setAnalyze(request.getParameterValues("analysis")[0]);
+        questionObject.setQuestionItemObjects(list);
+        String selectContents = JSON.toJSONString(questionObject);
+        questionEditVM.setContent(selectContents);
+        int i = questionEditVMService.updateQuestion(questionEditVM);
+        return "redirect:/admin/questionsList";
     }
 
 
