@@ -62,15 +62,15 @@
                                         <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==0" data-toggle="dropdown"  type="button">题目类型 <span class="caret"></span></button>
                                         <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==1" data-toggle="dropdown"  type="button">单选题 <span class="caret"></span></button>
                                         <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==2" data-toggle="dropdown"  type="button">多选题 <span class="caret"></span></button>
-                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==3" data-toggle="dropdown"  type="button">判断题 <span class="caret"></span></button>
-                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==4" data-toggle="dropdown"  type="button">填空题 <span class="caret"></span></button>
-                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==5" data-toggle="dropdown"  type="button">简答题 <span class="caret"></span></button>
+<!--                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==3" data-toggle="dropdown"  type="button">判断题 <span class="caret"></span></button>-->
+<!--                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==4" data-toggle="dropdown"  type="button">填空题 <span class="caret"></span></button>-->
+<!--                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==5" data-toggle="dropdown"  type="button">简答题 <span class="caret"></span></button>-->
                                         <ul role="menu" class="dropdown-menu">
                                             <li ><a th:href="@{${typeUrl}+1+${qName}+${qNameValue}}">单选题</a></li>
                                             <li ><a th:href="@{${typeUrl}+2+${qName}+${qNameValue}}">多选题</a></li>
-                                            <li ><a th:href="@{${typeUrl}+3+${qName}+${qNameValue}}">判断题</a></li>
-                                            <li ><a th:href="@{${typeUrl}+4+${qName}+${qNameValue}}">填空题</a></li>
-                                            <li ><a th:href="@{${typeUrl}+5+${qName}+${qNameValue}}">简答题</a></li>
+<!--                                            <li ><a th:href="@{${typeUrl}+3+${qName}+${qNameValue}}">判断题</a></li>-->
+<!--                                            <li ><a th:href="@{${typeUrl}+4+${qName}+${qNameValue}}">填空题</a></li>-->
+<!--                                            <li ><a th:href="@{${typeUrl}+5+${qName}+${qNameValue}}">简答题</a></li>-->
                                             <li class="divider"></li>
                                             <li><a th:href="@{${typeUrl}}">全部题型</a></li>
                                         </ul>
@@ -79,10 +79,10 @@
                                         <button  class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">题目创建 <span class="caret"></span></button>
                                         <ul role="menu" class="dropdown-menu">
                                             <li><a th:href="@{/admin/singleEditors}">单选题创建</a></li>
-                                            <li><a href="#">多选题创建</a></li>
-                                            <li><a href="#">判断题创建</a></li>
-                                            <li><a href="#">填空题创建</a></li>
-                                            <li><a href="#">简答题创建</a></li>
+                                            <li><a th:href="@{/admin/moreEditors}">多选题创建</a></li>
+<!--                                            <li><a href="#">判断题创建</a></li>-->
+<!--                                            <li><a href="#">填空题创建</a></li>-->
+<!--                                            <li><a href="#">简答题创建</a></li>-->
                                         </ul>
                                     </div>
                                     <button class="btn btn-danger" onclick="DelSelect()" type="button" >批量删除</button>
