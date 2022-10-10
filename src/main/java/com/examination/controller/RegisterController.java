@@ -51,12 +51,12 @@ public class RegisterController {
         if (userService.getOne(wrapper)!=null){
             model.addAttribute("regMsg","该用户名已存在");
             model.addAttribute("reg",user);
-            return "/registration";
+            return "registration";
         }
 
         else if(!repassword.equals(password)){
             model.addAttribute("regMsg","两次输入密码不一致");
-            return "/registration";
+            return "registration";
         }
 
         else{
@@ -71,7 +71,7 @@ public class RegisterController {
             }
             else{
                 model.addAttribute("regMsg","未知错误，请联系管理员！");
-                return "/registration";
+                return "registration";
             }
         }
 
