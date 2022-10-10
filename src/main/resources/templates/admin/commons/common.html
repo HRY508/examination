@@ -293,7 +293,7 @@
                     <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
                         <li><a href="#"><i class="fa fa-user"></i>  Profile</a></li>
                         <li><a href="#"><i class="fa fa-cog"></i>  Settings</a></li>
-                        <li><a href="#"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                        <li><a th:href="@{/admin/logout}"><i class="fa fa-sign-out"></i> Log Out</a></li>
                     </ul>
                 </li>
 
@@ -301,11 +301,58 @@
         </div>
         <!--notification menu end -->
 
+<!--        修改密码   -->
+<!--        <form action=" ">-->
+<!--            <div class="data_form" >-->
+<!--                <table align="center">-->
+<!--                    <tr>-->
+<!--                        <td><font color="red">*</font>原密码：</td>-->
+<!--                        <td><input type="password"  id="oldPassword"  name="oldPassword" onblur="onblurFn(this.value)"  style="margin-top:5px;height:30px;" /></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td><font color="red">*</font>新密码：</td>-->
+<!--                        <td><input type="password" id="newPassword"  name="newPassword" value="" style="margin-top:5px;height:30px;" /></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td><font color="red">*</font>重复密码：</td>-->
+<!--                        <td><input type="password" id="rPassword"  name="rPassword" value="" style="margin-top:5px;height:30px;" /></td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--                <div align="center">-->
+<!--                    <input type="button" class="btn btn-primary" onclick="checkForm()" value="提交"/>-->
+<!--                </div>-->
+<!--                <div align="center">-->
+<!--                    <font id="error" color="red"></font>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+
+
+<!--        <script type="text/javascript">-->
+<!--            function checkForm(){-->
+<!--                var oldPassword=document.getElementById("oldPassword").value;-->
+<!--                var newPassword=document.getElementById("newPassword").value;-->
+<!--                var rPassword=document.getElementById("rPassword").value;-->
+
+<!--                $("#error").html("");-->
+<!--                if(oldPassword==""||newPassword==""||rPassword==""){-->
+<!--                    document.getElementById("error").innerHTML="信息填写不完整！";-->
+<!--                    return false;-->
+<!--                } else if(newPassword == oldPassword){-->
+<!--                    document.getElementById("error").innerHTML="修改前后密码不能一致！";-->
+<!--                    return false;-->
+<!--                }else if(newPassword!=rPassword){-->
+<!--                    document.getElementById("error").innerHTML="新密码两次填写不一致！";-->
+<!--                    return false;-->
+<!--                }-->
+<!--                window.location.href="password.action?action=change&newPassword="+newPassword;-->
+<!--            }-->
+
+
+<!--        </script>-->
+
+
     </div>
     <!--头部结束-->
-
-
-
-
 <!--</body>-->
 </html>
