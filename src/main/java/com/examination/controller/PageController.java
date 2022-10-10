@@ -44,11 +44,5 @@ public class PageController {
         return "login";
     }
 
-    /**
-     * 修改密码
-     */
-//    public String updatePassword(){
-//        User user = GlobalUserUtil.getUser();
-//    }
 
 }

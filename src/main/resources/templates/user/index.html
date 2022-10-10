@@ -1,64 +1,116 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>用户页面</title>
-    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
-    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
-    <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
-    <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
-    <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
-    <!--dashboard calendar-->
-    <link href="/css/clndr.css" rel="stylesheet">
-    <!--common-->
-    <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style-responsive.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>在线考试系统</title>
+
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="/js/html5shiv.js"></script>
+  <script src="/js/respond.min.js"></script>
+  <![endif]-->
 </head>
 
-<body style="" class="sticky-header">
-<!--左侧开始-->
-<div th:replace="~{/admin/commons/common :: commonleft}"></div>
-<!--左侧结束-->
+<body class="horizontal-menu-page">
 
-<!--头部开始-->
-<div th:replace="~{/admin/commons/common :: commonheader}"></div>
-<!--头部结束-->
+<section>
+
+    <div th:replace="~{/user/commons/common :: commonhead}"></div>
 
 
+    <!--正文开始-->
+    <div class="wrapper">
+        <div class="col-md-12">
+            <!--考试/公告开始-->
+            <div class="col-md-8">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            统计图
+                            <span class="tools pull-right">
+                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                        <a href="javascript:;" class="fa fa-times"></a>
+                                     </span>
+                        </div>
+                            <div id="pie-chart-donut" class="pie-chart">
+                                <div id="pie-donutContainer" style="width: 100%;height:400px; text-align: left;">
+                                </div>
+                            </div>
+                    </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        考试/通告
+                        <span class="tools pull-right">
+                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                        <a href="javascript:;" class="fa fa-times"></a>
+                                     </span>
+                    </div>
+                    <div class="panel-body">
+                        内容
+                    </div>
+                </div>
+            </div>
+            <!--统计开始-->
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">统计</h3>
+                        </div>
+                        <div class="panel-body">
+                            内容
+                        </div>
+                    </div>
+                </div>
+                <!--排名开始-->
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">排名</h3>
+                        </div>
+                        <div class="panel-body">
+                            内容
+                        </div>
+                    </div>
+                </div>
+                <!--排名结束-->
+            </div>
+            <!--统计结束-->
 
-<!-- Placed js at the end of the document so the pages load faster -->
+
+
+            <!--考试/公告结束-->
+        </div>
+
+    </div>
+    <!--正文结束-->
+
+    <!--底部开始-->
+    <footer class="sticky-footer">
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--底部结束-->
+
+</section>
+
+
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/modernizr.min.js"></script>
 <script src="/js/jquery.nicescroll.js"></script>
+<!--图表-->
 
-<!--easy pie chart-->
-<script src="/js/easypiechart/jquery.easypiechart.js"></script>
-<script src="/js/easypiechart/easypiechart-init.js"></script>
 
-<!--Sparkline Chart-->
-<script src="/js/sparkline/jquery.sparkline.js"></script>
-<script src="/js/sparkline/sparkline-init.js"></script>
-
-<!--icheck -->
-<script src="/js/iCheck/jquery.icheck.js"></script>
-<script src="/js/icheck-init.js"></script>
-
-<!-- jQuery Flot Chart-->
-<script src="/js/flot-chart/jquery.flot.js"></script>
-<script src="/js/flot-chart/jquery.flot.tooltip.js"></script>
-<script src="/js/flot-chart/jquery.flot.resize.js"></script>
-<script src="/js/flot-chart/jquery.flot.pie.resize.js"></script>
-<script src="/js/flot-chart/jquery.flot.selection.js"></script>
-<script src="/js/flot-chart/jquery.flot.stack.js"></script>
-<script src="/js/flot-chart/jquery.flot.time.js"></script>
-<script src="/js/main-chart.js"></script>
-
-<!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
-
 
 </body>
 </html>
