@@ -32,31 +32,52 @@ public class UserController {
     @RequestMapping("/admin/userList")
     //pn是每次传回来的当前页
     public Object view(HttpServletRequest request,
-                       @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn) {
-//        IPage<User> page = userService.selectByAllPage(pn, 5);
-        Page<User> userPage=new Page<>(pn,2);
-        Page<User> result=userService.page(userPage);
+                       @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,
+                       @RequestParam(required = false , defaultValue = "" , value = "searchName") String searchName,
+                       @RequestParam(required = false,defaultValue = "", value = "perms")String perms
+                       ) {
+        Page userPage = new Page(pn,2);
+        Page<User> result =null;
+        LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
+        if(searchName.equals("")&&perms.equals("")){
+            result = userService.page(userPage,queryWrapper);
+        }else if(!searchName.equals("")&&perms.equals("")){
+            queryWrapper.like(User::getUserName,searchName).or().like(User::getRealName,searchName).or().like(User::getUId,searchName);
+            result = userService.page(userPage,queryWrapper);
+        }else if(searchName.equals("")&&!perms.equals("")){
+            queryWrapper.eq(User::getPerms,perms);
+            result = userService.page(userPage,queryWrapper);
+        }else{
+            queryWrapper.like(User::getUserName,searchName).or().like(User::getRealName,searchName).or().like(User::getUId,searchName).eq(User::getPerms,perms);
+            result = userService.page(userPage, queryWrapper);
+        }
+
         request.setAttribute("jumpUrl", "/admin/userList?pn=");
+        request.setAttribute("qName", "&name=");
+        request.setAttribute("qPerms", "&perms=");
+        request.setAttribute("searchName", searchName);
+        request.setAttribute("permsValue", perms);
         //此处得到的page对象,包含了current（当前页）,pages（总页数），total（总记录数），records（记录，就是查询到的List集合）
         request.setAttribute("page", result);
         return "admin/user_list";
     }
 
-    @RequestMapping("/admin/searchName")
-    public String searchSubmit(@RequestParam(value = "searchName",required = false,defaultValue = "")String searchName,
-                               HttpServletRequest request,
-                               @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn
-                               ) {
-//        IPage<User> page = userService.searchByPage(pn, 5, searchName);
-        Page<User> userPage=new Page<>(pn,2);
-        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
-        request.setAttribute("searchName",searchName);
-        queryWrapper.like("user_name",searchName).or().like("real_name",searchName);
-        Page<User> result = userService.page(userPage, queryWrapper);
-        request.setAttribute("jumpUrl", "/admin/searchName?searchName="+searchName+"&pn=");
-        request.setAttribute("page", result);
-        return "admin/user_list";
-    }
+//    @RequestMapping("/admin/searchList")
+//    public String searchSubmit(@RequestParam(value = "searchName",required = false,defaultValue = "")String searchName,
+//                               @RequestParam(value = "")
+//                               HttpServletRequest request,
+//                               @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn
+//                               ) {
+////        IPage<User> page = userService.searchByPage(pn, 5, searchName);
+//        Page<User> userPage=new Page<>(pn,2);
+//        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+//        request.setAttribute("searchName",searchName);
+//        queryWrapper.like("user_name",searchName).or().like("real_name",searchName).or().like("uId",searchName);
+//        Page<User> result = userService.page(userPage, queryWrapper);
+//        request.setAttribute("jumpUrl", "/admin/searchName?searchName="+searchName+"&pn=");
+//        request.setAttribute("page", result);
+//        return "admin/user_list";
+//    }
 
 
     // 批量删除

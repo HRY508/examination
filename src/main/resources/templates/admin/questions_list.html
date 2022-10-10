@@ -58,7 +58,7 @@
                             <div class="form-inline">
                                     <input type="text" class="form-control" th:value="${qNameValue}" name="name" placeholder="输入关键字查询" style="font-weight:lighter">
                                     <button class="btn btn-default" th:href="@{${typeUrl}+${qName}+${qNameValue}}">查询</button>
-                                    <div class="btn-group ">
+                                    <div class="btn-group" >
                                         <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==0" data-toggle="dropdown"  type="button">题目类型 <span class="caret"></span></button>
                                         <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==1" data-toggle="dropdown"  type="button">单选题 <span class="caret"></span></button>
                                         <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==2" data-toggle="dropdown"  type="button">多选题 <span class="caret"></span></button>

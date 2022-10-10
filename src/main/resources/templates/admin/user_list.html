@@ -55,14 +55,19 @@
             <div class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <form action="/admin/searchName" method="post">
-                                用户名 / 真实姓名:<input type="text" value="" name="searchName" th:value="${searchName}" placeholder="请输入用户名或真实姓名" style="font-weight:lighter">
-                                <!--                            真实姓名：<input type="text" value="" name="realName" th:value="${realName}">-->
-                                <!--                            学号:<input type="text" value="" name="uId" th:value="${uId}">-->
+                        <form class="form-horizontal adminex-form" method="get">
+                                <input type="text" value="" name="searchName" th:value="${searchName}" placeholder="请输入关键字" style="font-weight:lighter">
+                                <button class="btn btn-default" th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}}">查询</button>
 
-                                <button value="查询" class="btn btn-sm btn-default" ><i class="fa fa-plus"></i>查询</button>
-                                <!--                            <a th:href="${/admin/searchSubmit}">查询</a>-->
-
+                            <div class="btn-group">
+                                <button  class="btn btn-success dropdown-toggle" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq ''" data-toggle="dropdown"  type="button">权限 <span class="caret"></span></button>
+                                <button  class="btn btn-success dropdown-toggle" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq 'admin' " data-toggle="dropdown"  type="button">管理员 <span class="caret"></span></button>
+                                <button  class="btn btn-success dropdown-toggle" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq 'user'" data-toggle="dropdown"  type="button">用户 <span class="caret"></span></button>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li ><a th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}+'admin'}">管理员</a></li>
+                                    <li ><a th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}+'user'}">用户</a></li>
+                                </ul>
+                            </div>
 
                                 <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#addModal"><i class="fa fa-plus"></i>添加用户</button>
                                 <button class="btn btn-sm btn-danger" onclick="DelSelect()"><i class="fa fa-archive" ></i>批量删除</button>
@@ -119,9 +124,38 @@
                                 </tbody>
 
                             </table>
-                            <!--分页-->
-                            <div th:replace="~{/admin/commons/page :: page}"></div>
-                            <!--分页结束-->
+                            <div><!--定义用于被显示列表页包含-->
+                                <head>
+                                    <style>
+                                        .page-item {
+                                            padding: 1px 5px;
+                                            border: 1px solid #afafaf;
+                                            margin-left: 3px
+                                        }
+
+                                        .page-item.active {
+                                            color: red;
+                                            border: 1px solid red;
+                                        }
+                                    </style>
+                                </head>
+                                <div style="float: left" th:if="${page.pages>0}">
+                                    当前第<span th:text="${page.current}"></span>页,共<span
+                                        th:text="${page.pages}"></span>页,总记录数<span th:text="${page.total}"></span>
+                                </div>
+                                <div style="float: right" th:if="${page.pages>0}">
+                                    <a th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}+${permsValue}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
+                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qName}+${searchName}+${qPerms}+${permsValue}}" th:text="上一页" th:class="page-item"
+                                       th:if="${page.current>1}"></a>
+                                    <a th:href="@{${jumpUrl}+${i}+${qName}+${searchName}+${qPerms}+${permsValue}}"
+                                       th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
+                                       th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
+                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qName}+${searchName}+${qPerms}+${permsValue}}" th:text="下一页" th:class="page-item"
+                                       th:if="${page.current<page.pages}"></a> <a
+                                        th:href="@{${jumpUrl}+${page.pages}+${qName}+${searchName}+${qPerms}+${permsValue}}" th:text="尾页" th:class="page-item"
+                                        th:if="${page.current<page.pages}"></a>
+                                </div>
+                            </div>
 
                         </div>
 
