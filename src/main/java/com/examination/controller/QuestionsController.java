@@ -144,7 +144,6 @@ public class QuestionsController {
     // 批量删除
     @RequestMapping("admin/deleteQuestionsCounts")
     public String deleteCount(@RequestParam String ids){//ids是复选框名字
-        System.out.println("进入了删除"+ids);
         List<String> delList = new ArrayList<>();
         String[] strs = ids.split(",");
         for (String str : strs) {
@@ -152,7 +151,6 @@ public class QuestionsController {
         }
         boolean b = questionService.removeByIds(delList);
         boolean b1 = contentService.removeByIds(delList);
-        System.out.println("删除-----------------------------"+b);
         return "redirect:/admin/questionsList";
     }
 
@@ -167,13 +165,11 @@ public class QuestionsController {
     //更新
     @RequestMapping("/admin/updateQuestion")
     public String updateSingleQuestion(HttpServletRequest request){
-        System.out.println(request.getParameterValues("id")[0]);
         Integer id = Integer.parseInt(request.getParameterValues("id")[0]);
         QuestionEditVM questionEditVM = new QuestionEditVM();
         questionEditVM.setId(id);
         Integer questionType = Integer.parseInt(request.getParameter("questionType"));
         questionEditVM.setQuestionType(questionType);
-        System.out.println("类型+++++++++++++"+questionType);
         if(questionType == StaticVariableUtil.singleSelectType){
             questionEditVM.setCorrect(request.getParameterValues("correct")[0]);
         }else if(questionType == StaticVariableUtil.moreSelectType){
@@ -221,7 +217,6 @@ public class QuestionsController {
     @GetMapping("/admin/updateQuestionPage/{id}")
     public String toUpdateQuestionPage(@PathVariable("id") Integer id, Model model)
     {
-        System.out.println("进入了更新方法");
         QuestionEditVM questionEditVM = questionEditVMService.selectByConditionQuestionVM(id);
         //获取题目、选项相关内容
         String content = questionEditVM.getContent();
