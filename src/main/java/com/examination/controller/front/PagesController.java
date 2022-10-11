@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class PagesController {
 
-    @RequestMapping("/questionList")
-    public String getQuestionList(){
-        return "user/problem";
-    }
 
     @RequestMapping("/questionDetail")
     public String toQuestionDetailPage(){
