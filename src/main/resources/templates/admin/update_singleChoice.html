@@ -210,7 +210,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="flat-green ">
+                                        <div class="flat-green " id="choice_C">
                                             <div class="radio ">
                                                 <input tabindex="3" type="radio" name="correct" id="r_C" value="C">
                                                 C
@@ -453,7 +453,7 @@
 
     // 增加form表单、选项
     function addForm() {
-        var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
+        var arr1 = ['C','D','E', 'F', 'G', 'H','I','J'];
         //通过类获取选项的个数
         var num = document.getElementsByClassName('a').length-1
         //设置选项数目最多不能大于10个选项
@@ -464,17 +464,17 @@
             //他的属性全部会被克隆
             var clone = document.getElementById('cloneForm').cloneNode(true)
             //设置选项name属性，label标签的文本内容通过动态获取jquery的id设置的
-            clone.childNodes[1].innerHTML = arr1[num-3]
-            clone.childNodes[3].id=arr1[num-3]
+            clone.childNodes[1].innerHTML = arr1[num-2]
+            clone.childNodes[3].id=arr1[num-2]
             clone.style=""
             // alert(clone.childNodes[1].innerHTML)
             //获取父节点，用来将子节点追加到其后
             var p = document.getElementById('p')
             p.appendChild(clone)
             //最后在修改name属性value属性（放在前面不生效，巨坑）
-            $("#"+arr1[num-3]+"").attr('name',arr1[num-3]).attr('value',null)
+            $("#"+arr1[num-2]+"").attr('name',arr1[num-2]).attr('value',null)
             //将该表单对应的选项设置为可见
-            $("#choice_"+arr1[num-3]+"").removeClass('hidden')
+            $("#choice_"+arr1[num-2]+"").removeClass('hidden')
         }
         //大于十个选项设置提示
         else{
@@ -486,16 +486,16 @@
     //减少Form表单、选项
     function reduceForm(){
         $('#tip1').addClass('hidden')
-        var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
+        var arr1 = ['C','D','E', 'F', 'G', 'H','I','J'];
         var num = document.getElementsByClassName('a').length-1
-        if(num<4){
+        if(num<3){
             //弹出提示框
             document.getElementById("tip2").click()
         }
         else{//js写的，获取该节点，用js获取的用jquery也能获取，见上文
-            var d =  document.getElementsByName(arr1[num-4])[0]
+            var d =  document.getElementsByName(arr1[num-3])[0]
             //将该节点对应的选项设置为不可见
-            $("#choice_"+arr1[num-4]+"").addClass('hidden')
+            $("#choice_"+arr1[num-3]+"").addClass('hidden')
             //移除该节点
             var dp=d.parentNode
             dp.remove()
