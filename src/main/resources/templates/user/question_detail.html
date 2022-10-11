@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>在线考试系统</title>
+
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+<body class="horizontal-menu-page">
+
+<section>
+
+    <div th:replace="~{/user/commons/common :: commonhead('questionList.html')}"></div>
+
+
+    <!--正文开始-->
+    <div class="wrapper">
+        <div class="col-md-12">
+            <!--问题列表开始-->
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        正在答题......
+                        <span class="tools pull-right">
+                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                        <a href="javascript:;" class="fa fa-times"></a>
+                        </span>
+                    </div>
+                    <div id="pie-chart-donut" class="pie-chart">
+                        <div class="panel-body">
+                            <div class="text-center price-head">
+                                <h1 class="color-terques"> 1000：  </h1>
+                                <h3 class="color-terques"> 这是题目描述  </h3>
+<!--                                选项开始-->
+
+                                <div class="panel panel-success col-md-6">
+                                    <div class="panel-heading">
+                                        <button style="width: 100%" value="A"></button>
+                                    </div>
+                                    <div class="panel-body">
+                                        Panel content
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-info col-md-6">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Panel title</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Panel content
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-warning col-md-6">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Panel title</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Panel content
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-danger col-md-6">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Panel title</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Panel content
+                                    </div>
+                                </div>
+
+
+<!--                                选项结束-->
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--正文结束-->
+
+    <!--底部开始-->
+    <footer class="sticky-footer">
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--底部结束-->
+
+</section>
+
+
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.nicescroll.js"></script>
+<!--图表-->
+
+
+<script src="/js/scripts.js"></script>
+
+</body>
+</html>

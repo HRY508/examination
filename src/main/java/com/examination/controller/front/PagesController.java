@@ -14,4 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PagesController {
 
 
+    @RequestMapping("/questionDetail")
+    public String toQuestionDetailPage(){
+        return "user/question_detail";
+    }
 }
