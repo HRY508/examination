@@ -18,4 +18,8 @@ public class PagesController {
         return "user/problem";
     }
 
+    @RequestMapping("/questionDetail")
+    public String toQuestionDetailPage(){
+        return "user/question_detail";
+    }
 }
