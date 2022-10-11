@@ -63,21 +63,7 @@
                         <!--                    分类/标签结束-->
                         <a href="javascript:;" id="add-sticky" class="btn btn-success  btn-sm">所有分类/标签</a>
                     </div>
-                    <!--分页开始-->
-                    <div class="col-md-12">
-                        <nav style="text-align: center;">
-                            <ul class="pagination ">
-                                <li><a href="#">«</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li class="active"><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <!--分页结束-->
+
                     <div id="pie-chart-donut" class="pie-chart">
                         <div id="panel-body">
 <!--                            内容开始-->
@@ -86,12 +72,23 @@
                                 <tr>
                                     <th>题目标号</th>
                                     <th class="hidden-phone">标题</th>
+                                    <th>题型</th>
+                                    <th>难度</th>
                                     <th>解决</th>
-                                    <th>提交</th>
                                     <th>通过率</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+
+                                    <tr th:each="question :${questionList}">
+                                        <td th:text="${question.id}"></td>
+                                        <td th:text="${question.content}"></td>
+                                        <td th:if="${question.questionType}==1" th:text="单选题"></td>
+                                        <td th:if="${question.questionType}==2" th:text="多选题"></td>
+                                        <td th:text="${question.difficult}"></td>
+<!--                                        <td th:text="${question.solutionNumber}"></td>-->
+<!--                                        <td th:text="${question.successRate}"></td>-->
+                                    </tr>
 
                                 <tr>
                                     <td>
