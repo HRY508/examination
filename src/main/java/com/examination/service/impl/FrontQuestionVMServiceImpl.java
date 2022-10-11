@@ -29,12 +29,14 @@ public class FrontQuestionVMServiceImpl extends ServiceImpl<FrontQuestionVMMappe
     public Page<FrontQuestionVM> getList(Page page,Integer userId) {
         QueryWrapper<FrontQuestionVM> wrapper = new QueryWrapper<>();
         FrontQuestionVMMapper baseMapper = this.baseMapper;
-        Page<FrontQuestionVM> FrontquestionVM = baseMapper.selectAllFrontQuestionVM(page,wrapper,userId);
+        Page<FrontQuestionVM> FrontquestionVM = baseMapper.selectAllFrontQuestionVM(page,userId);
         return FrontquestionVM;
     }
 
     @Override
     public Page<FrontQuestionVM> getListByName(Page page, String searchName,Integer userId) {
+        FrontQuestionVMMapper baseMapper = this.baseMapper;
+        Page<FrontQuestionVM> FrontquestionVM = baseMapper.selectAllFrontQuestionVM(page,userId);
         return null;
     }
 

@@ -22,5 +22,5 @@ public interface FrontQuestionVMMapper extends BaseMapper<FrontQuestionVM> {
             " left join t_question q on c.id = q.id";
 
     @Select(querryList)
-    Page<FrontQuestionVM> selectAllFrontQuestionVM(Page page, QueryWrapper<FrontQuestionVM> wrapper, @Param("userId") Integer userId);
+    Page<FrontQuestionVM> selectAllFrontQuestionVM(Page page, @Param("userId") Integer userId);
 }
