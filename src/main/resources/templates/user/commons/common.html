@@ -22,8 +22,8 @@
 <body class="horizontal-menu-page">
 
 <section>
-    <!--头部开始-->
-    <nav th:fragment="commonhead" class="navbar navbar-default" role="navigation">
+    <!--头部开始 commonhead传入参数判断进入的页面高亮显示-->
+    <nav th:fragment="commonhead(active)" class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -41,8 +41,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">首页</a></li>
-                    <li ><a th:href="@{/user/questionList}">问题</a></li>
+                    <li th:class="${active=='index.html'?'active':''}"><a th:href="@{/user/index}">首页</a></li>
+                    <li th:class="${active=='questionList.html'?'active':''}"><a th:href="@{/user/questionList}">问题</a></li>
                     <li ><a href="#">来源/分类</a></li>
                     <li ><a href="#">状态</a></li>
                     <li ><a href="#"></a></li>

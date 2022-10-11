@@ -21,14 +21,14 @@
 
 <section>
 
-    <div th:replace="~{/user/commons/common :: commonhead}"></div>
+    <div th:replace="~{/user/commons/common :: commonhead('questionList.html')}"></div>
 
 
     <!--正文开始-->
     <div class="wrapper">
         <div class="col-md-12">
             <!--问题列表开始-->
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         问题
@@ -37,42 +37,189 @@
                                         <a href="javascript:;" class="fa fa-times"></a>
                                      </span>
                     </div>
+                    <!--搜索开始-->
+                    <div style="margin-top: 15px; " class="col-md-3">
+                        <div class="input-group m-bot15">
+                                              <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                              </span>
+                            <input type="text" class="form-control" placeholder="输入关键字搜索">
+                        </div>
 
+                    </div>
+                    <div style="margin-top: 15px; " class="col-md-3">
+                        <div class="input-group m-bot15">
+                                              <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                              </span>
+                            <input type="text" class="form-control" placeholder="输入ID搜索">
+                        </div>
+
+                    </div>
+                    <!--搜索结束-->
+                    <!--分类/标签开始-->
+                    <div style="margin-top: 15px; " class="col-lg-4"></div>
+                    <div style="margin-top: 15px; " class="col-lg-2">
+                        <!--                    分类/标签结束-->
+                        <a href="javascript:;" id="add-sticky" class="btn btn-success  btn-sm">所有分类/标签</a>
+                    </div>
+                    <!--分页开始-->
+                    <div class="col-md-12">
+                        <nav style="text-align: center;">
+                            <ul class="pagination ">
+                                <li><a href="#">«</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li class="active"><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!--分页结束-->
                     <div id="pie-chart-donut" class="pie-chart">
-                        <div id="pie-donutContainer" style="width: 100%;height:1000px; text-align: left;">
+                        <div id="panel-body">
+<!--                            内容开始-->
+                            <table class="table  table-hover general-table">
+                                <thead>
+                                <tr>
+                                    <th>题目标号</th>
+                                    <th class="hidden-phone">标题</th>
+                                    <th>解决</th>
+                                    <th>提交</th>
+                                    <th>通过率</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            <div>内容</div>
+                                <tr>
+                                    <td>
+                                        <a href="#">ThemeBucket</a>
+                                    </td>
+                                    <td class="hidden-phone">Lorem Ipsum dorolo</td>
+                                    <td>556.00$</td>
+                                    <td>
+                                        <span class="label label-warning label-mini">中等</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-striped progress-xs">
+                                            <div style="width: 70%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-danger">
+                                                <span class="sr-only">70% Complete (success)</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">XYZ</a>
+                                    </td>
+                                    <td class="hidden-phone">Lorem Ipsum dorolo</td>
+                                    <td>13240.00$</td>
+                                    <td>
+                                        <span class="label label-success label-mini">Paid</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-striped progress-xs">
+                                            <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-warning">
+                                                <span class="sr-only">55% Complete (success)</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Graphics</a>
+                                    </td>
+                                    <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
+                                    <td>1320.00$</td>
+                                    <td>
+                                        <span class="label label-info label-mini">简单</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-striped progress-xs">
+                                            <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
+                                                <span class="sr-only">40% Complete (success)</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">BCSE</a>
+                                    </td>
+                                    <td class="hidden-phone">Lorem Ipsum dorolo</td>
+                                    <td>3455.50$</td>
+                                    <td>
+                                        <span class="label label-danger label-mini">困难</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-striped progress-xs">
+                                            <div style="width: 90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-info">
+                                                <span class="sr-only">90% Complete (success)</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">AVC Ltd</a>
+                                    </td>
+                                    <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
+                                    <td>110.00$</td>
+                                    <td>
+                                        <span class="label label-primary label-mini">简单</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-striped progress-xs">
+                                            <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
+                                                <span class="sr-only">60% Complete (success)</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Themeforest</a>
+                                    </td>
+                                    <td class="hidden-phone">Lorem Ipsum dorolo</td>
+                                    <td>456.00$</td>
+                                    <td>
+                                        <span class="label label-warning label-mini">简单</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-striped progress-xs">
+                                            <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-danger">
+                                                <span class="sr-only">40% Complete (success)</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+<!--                            内容结束-->
+                            <!--分页开始-->
+                            <div class="">
+                                <nav style="text-align: center;">
+                                    <ul class="pagination ">
+                                        <li><a href="#">«</a></li>
+                                        <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li class="active"><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li><a href="#">»</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!--分页结束-->
 
                         </div>
+
                     </div>
                 </div>
             </div>
-            <!--统计开始-->
-            <div class="col-md-4">
-                <div class="col-md-12">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">统计</h3>
-                        </div>
-                        <div class="panel-body">
-                            内容
-                        </div>
-                    </div>
-                </div>
-                <!--排名开始-->
-                <div class="col-md-12">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">排名</h3>
-                        </div>
-                        <div class="panel-body">
-                            内容
-                        </div>
-                    </div>
-                </div>
-                <!--排名结束-->
-            </div>
-            <!--统计结束-->
             <!-- 问题列表结束-->
         </div>
 
