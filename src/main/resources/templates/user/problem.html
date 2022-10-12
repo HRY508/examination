@@ -85,8 +85,12 @@
                                 <tbody>
 
                                     <tr th:each="question :${questionList}">
-                                        <td th:text="${question.id}"></td>
-                                        <td th:text="${question.content}"></td>
+                                        <td>
+                                            <a th:text="${question.id}" th:href="@{/user/questionDetail/{id}(id=${question.id})}"></a>
+                                        </td>
+                                        <td>
+                                            <a th:text="${question.content}" th:href="@{/user/questionDetail/{id}(id=${question.id})}" style="color: #65CEA7;"></a>
+                                        </td>
                                         <td th:if="${question.questionType}==1" th:text="单选题"></td>
                                         <td th:if="${question.questionType}==2" th:text="多选题"></td>
                                         <td th:if="${question.difficult}==1" th:text="简单">简单</td>

@@ -40,48 +40,91 @@
                     <div id="pie-chart-donut" class="pie-chart">
                         <div class="panel-body">
                             <div class="text-center price-head">
-                                <h1 class="color-terques"> 1000：  </h1>
-                                <h3 class="color-terques"> 这是题目描述  </h3>
-<!--                                选项开始-->
+                                <h1 class="color-terques" id="qId" th:text="${qId}+':'"  th:value="${qId}"></h1>
+                                <h4 class="color-terques" id="title" th:text="'题目:'+${questionObject.getTitleContent()}"></h4>
+                                <!--选项开始-->
 
-                                <div class="col-md-3">
+                                <div class="col-md-3" id="choiceA">
                                     <div class="panel-body">
-                                        <button class="btn btn-default btn-lg btn-block" type="button">A</button>
-                                        <h5>这是选项的内容测试</h5>
+                                        <button class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(0).getPrefix()}"></button>
+                                        <h5 id="h5_A" th:text="${questionObject.getQuestionItemObjects().get(0).getContent()}"></h5>
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-3" id="choiceB">
                                     <div class="panel-body">
-                                        <button class="btn btn-default btn-lg btn-block" type="button">B</button>
-                                        <h5>这是选项的内容测试，这是选项的内容测试这是选项的内容测试，这是选项的内容测试这是选项的内容测试，这是选项的内容测试这是选项的内容测试，这是选选项的内容测试这是选项的内容测试，这是选项的内容测试这是选项的内容测试，这是选项的内容测试</h5>
+                                        <button class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
+                                        <h5 id="h5_B" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
-
+                                <div class="col-md-3 hidden" id="choiceC">
                                     <div class="panel-body">
-                                        <button class="btn btn-default btn-lg btn-block" type="button">C</button>
-                                        <h5>这是选项的内容测试</h5>
+                                        <button id="btn_C" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(2).getPrefix()}"></button>
+                                        <h5 id="h5_C" th:text="${questionObject.getQuestionItemObjects().get(2).getContent()}"></h5>
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
-
+                                <div class="col-md-3 hidden" id="choiceD">
                                     <div class="panel-body">
-                                        <button class="btn btn-default btn-lg btn-block" type="button">D</button>
-                                        <h5>这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试这是选项的内容测试</h5>
+                                        <button  id="btn_D" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(3).getPrefix()}"></button>
+                                        <h5 id="h5_D" th:text="${questionObject.getQuestionItemObjects().get(3).getContent()}"></h5>
                                     </div>
                                 </div>
-<!--                                选项结束-->
-<!--                                下一题上一题开始-->
+
+                                <div class="col-md-3 hidden" id="choiceE">
+                                    <div class="panel-body">
+                                        <button id="btn_E" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
+                                        <h5 id="h5_E" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 hidden" id="choiceF">
+                                    <div class="panel-body">
+                                        <button id="btn_F" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
+                                        <h5 id="h5_F" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 hidden" id="choiceG" >
+                                    <div class="panel-body">
+                                        <button id="btn_G" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
+                                        <h5 id="h5_G" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 hidden" id="choiceH">
+                                    <div class="panel-body">
+                                        <button id="btn_H" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
+                                        <h5 id="h5_H" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 hidden" id="choiceI">
+                                <div class="panel-body">
+                                    <button id="btn_I" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
+                                    <h5 id="h5_I" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                </div>
+                                </div>
+
+                                <div class="col-md-3 hidden" id="choiceJ">
+                                    <div class="panel-body">
+                                        <button id="btn_J" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
+                                        <h5 id="h5_J" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                    </div>
+                                </div>
+
+
+
+                                <!--选项结束-->
+                                <!--下一题上一题开始-->
                                 <div class="col-md-12">
                                     <ul class="pager">
-                                        <li class="previous col-md-6 "><a class="col-md-3" href="#">← 上一题</a></li>
-                                        <li class="next col-md-6"><a href="#" class="col-md-3">下一题 →</a></li>
+                                        <li class="previous col-md-6 "><a class="col-md-3" th:href="@{/user/questionDetail/{id}(id=${qId}-1)}">← 上一题</a></li>
+                                        <li class="next col-md-6" th:value="${qId}+1" id="nextQ"><a class="col-md-3" href="javascript:;" onclick="nextQuestion(this.parentNode.value,this)">下一题 →</a></li>
                                     </ul>
                                 </div>
-<!--                                下一题上一题结束-->
+                                <!--下一题上一题结束-->
                             </div>
                         </div>
                     </div>
@@ -110,8 +153,48 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/modernizr.min.js"></script>
 <script src="/js/jquery.nicescroll.js"></script>
-<!--图表-->
+<script type="text/javascript">
 
+    //下一题：
+    function nextQuestion(value,_this) {
+        $.ajax({
+            //请求路径
+            url: "/user/questionDetails",
+            //请求类型
+            type: "POST",
+            //data表示发送的数据
+            data: JSON.stringify({
+                id: value
+            }), //定义发送请求的数据格式为JSON字符串
+            contentType: "application/json;charset=utf-8",
+            //定义回调响应的数据格式为JSON字符串，该属性可以省略
+            dataType: "json",
+            // 成功响应的结果
+            success: function (data) {
+                //改变标号
+                $('#qId').attr("value",data.id).attr("text",data.id).html(data.id+":")
+                //改变题目
+                $('#title').html(data.questionObject.titleContent)
+                //设置id
+                $('#nextQ').attr("value",data.id+1)
+                var len = data.questionObject.questionItemObjects.length
+                for(var i = 0; i<len;i++){
+                    //移除隐藏状态、
+                    $("#choice"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
+
+                    $("#btn_"+data.questionObject.questionItemObjects[i].prefix+"").
+                    attr("text",data.questionObject.questionItemObjects[i].prefix).
+                    html(data.questionObject.questionItemObjects[i].prefix)
+
+                    $("#h5_"+data.questionObject.questionItemObjects[i].prefix+"").
+                    attr("text",data.questionObject.questionItemObjects[i].content).
+                    html(data.questionObject.questionItemObjects[i].content)
+                }
+            },
+
+        })
+    }
+</script>
 
 <script src="/js/scripts.js"></script>
 
