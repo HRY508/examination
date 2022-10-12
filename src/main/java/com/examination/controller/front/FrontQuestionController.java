@@ -9,10 +9,8 @@ import com.examination.utils.GlobalUserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -57,6 +55,7 @@ public class FrontQuestionController {
             questionObject = JSON.parseObject(records.get(i).getContent(), QuestionObject.class);
             records.get(i).setContent(questionObject.getTitleContent());
         }
+
         request.setAttribute("questionList",records);
         request.setAttribute("page",questionVMPage);
         request.setAttribute("jumpUrl","/user/questionList?pn=");
@@ -74,4 +73,6 @@ public class FrontQuestionController {
         }
         return "user/problem";
     }
+
+
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface QuestionVMMapper extends BaseMapper<QuestionVM> {
     //固定开头
-    String start = "select q.id,q.question_type  questionType,q.score,q.difficult,q.create_user createUser,q.create_time,q.status,c.content from t_question q,t_content c where q.id = c.id ";
+    String start = "select q.id,q.question_type  questionType,q.score,q.difficult,q.solutioned solutioned,q.create_user createUser,q.create_time,q.status,c.content from t_question q,t_content c where q.id = c.id ";
     //固定结尾
     String end = "${ew.customSqlSegment}";
 

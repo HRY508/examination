@@ -79,7 +79,6 @@
                                     <th>题型</th>
                                     <th>难度</th>
                                     <th>解决</th>
-                                    <th>通过率</th>
                                     <th>状态</th>
                                 </tr>
                                 </thead>
@@ -93,8 +92,12 @@
                                         <td th:if="${question.difficult}==1" th:text="简单">简单</td>
                                         <td th:if="${question.difficult}==2" th:text="中等">中等</td>
                                         <td th:if="${question.difficult}==3" th:text="困难">困难</td>
-<!--                                        <td th:text="${question.solutionNumber}"></td>-->
-<!--                                        <td th:text="${question.successRate}"></td>-->
+                                        <td th:text="${question.solutioned}"></td>
+                                        <td>
+                                            <button th:unless="${question.result}" class="btn btn-primary" th:text="未做过"></button>
+                                            <button th:if="${question.result == 1}" class="btn btn-info " th:text="未完成"></button>
+                                            <button th:if="${question.result == 2}" class="btn btn-success" th:text="已完成"></button>
+                                        </td>
                                     </tr>
 
                                 </tbody>
@@ -129,7 +132,7 @@
                                        th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
                                     <a th:href="@{${jumpUrl}+${page.current+1}+${qName}+${searchNameValue}+${qId}+${searchIdValue}}" th:text="下一页" th:class="page-item"
                                        th:if="${page.current<page.pages}"></a> <a
-                                        th:href="@{${jumpUrl}+${page.pages}}" th:text="尾页" th:class="page-item"
+                                        th:href="@{${jumpUrl}+${page.pages}+${qName}+${searchNameValue}+${qId}+${searchIdValue}}" th:text="尾页" th:class="page-item"
                                         th:if="${page.current<page.pages}"></a>
                                 </div>
                             </div>

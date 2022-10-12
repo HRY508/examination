@@ -30,6 +30,8 @@ public class Question {
 
     private String correct;
 
+    private Integer solutioned;
+
     private String createUser;
 
     private Integer status;

@@ -23,11 +23,14 @@ public class FrontQuestionVM {
 
     private String content;
 
-    private Integer result;
+    private Integer result;  // 0是未作过 1 是做过没对  2是做了对了
 
     private Integer difficult;
 
+    private Integer solutioned;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime time;
+
 
 }

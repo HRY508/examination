@@ -17,15 +17,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FrontQuestionVMMapper extends BaseMapper<FrontQuestionVM> {
 
-    String queryList = "select c.id id,c.content content,tqpd.result result,q.difficult difficult ,q.question_type questionType  from t_content c " +
+    String queryList = "select c.id id,c.content content,tqpd.result result,q.solutioned solutioned,q.difficult difficult,q.question_type questionType from t_content c " +
             "left join t_question_practice_detail tqpd on c.id = tqpd.question_id and tqpd.user_id =#{userId}" +
             " left join t_question q on c.id = q.id";
 
-    String queryById = queryList + " where c.id = #{qId}";
+    String queryById = queryList + " where c.id = #{qId} order BY `id` ASC";
 
-    String queryByName = queryList +" where c.content like concat('%',#{qName},'%')";
+    String queryByName = queryList +" where c.content like concat('%',#{qName},'%') order BY `id` ASC";
 
-    @Select(queryList)
+    @Select(queryList+"  order BY `id` ASC")
     Page<FrontQuestionVM> selectAllFrontQuestionVM(Page page, @Param("userId") Integer userId);
 
     @Select(queryById)
