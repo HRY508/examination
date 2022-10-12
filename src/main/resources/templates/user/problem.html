@@ -90,9 +90,9 @@
                                         <td th:text="${question.content}"></td>
                                         <td th:if="${question.questionType}==1" th:text="单选题"></td>
                                         <td th:if="${question.questionType}==2" th:text="多选题"></td>
-                                        <td th:text="${question.difficult}==1">简单</td>
-                                        <td th:text="${question.difficult}==2">中等</td>
-                                        <td th:text="${question.difficult}==3">困难</td>
+                                        <td th:if="${question.difficult}==1" th:text="简单">简单</td>
+                                        <td th:if="${question.difficult}==2" th:text="中等">中等</td>
+                                        <td th:if="${question.difficult}==3"th:text="困难">困难</td>
 <!--                                        <td th:text="${question.solutionNumber}"></td>-->
 <!--                                        <td th:text="${question.successRate}"></td>-->
                                     </tr>
