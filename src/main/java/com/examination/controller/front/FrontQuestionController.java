@@ -35,7 +35,7 @@ public class FrontQuestionController {
                                   @RequestParam(required = false, defaultValue = "", value = "searchId") Integer searchId,
                                   Integer userId){
         userId = GlobalUserUtil.getUser().getId();
-        Page page=new Page(pn,20);
+        Page page=new Page(pn,15);
         Page<FrontQuestionVM> questionVMPage=null;
         if("".equals(searchName) && searchId == null){
             System.out.println("无条件全部查询");
@@ -58,9 +58,20 @@ public class FrontQuestionController {
             records.get(i).setContent(questionObject.getTitleContent());
         }
         request.setAttribute("questionList",records);
+        request.setAttribute("page",questionVMPage);
         request.setAttribute("jumpUrl","/user/questionList?pn=");
-        request.setAttribute("typeUrl","/admin/questionList?searchName=");
-        request.setAttribute("nameUrl","/admin/questionList?searchId=");
+        request.setAttribute("searchNameValue","");
+        request.setAttribute("qId","");
+        request.setAttribute("qName","");
+        request.setAttribute("searchIdValue","");
+        if(searchId == null && !"".equals(searchName)){
+            request.setAttribute("qName","&searchName=");
+            request.setAttribute("searchNameValue",searchName);
+        }
+        if ("".equals(searchName) && searchId != null){
+            request.setAttribute("searchIdValue",searchId);
+            request.setAttribute("qId","&searchId=");
+        }
         return "user/problem";
     }
 }
