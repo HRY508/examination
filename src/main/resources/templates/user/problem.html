@@ -43,7 +43,9 @@
                                               <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
                                               </span>
-                            <input type="text" class="form-control" placeholder="输入关键字搜索">
+                            <form th:action="@{/user/questionList}">
+                                <input type="text" class="form-control" name="searchName" placeholder="输入关键字搜索">
+                            </form>
                         </div>
 
                     </div>
@@ -52,7 +54,9 @@
                                               <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
                                               </span>
-                            <input type="text" class="form-control" placeholder="输入ID搜索">
+                            <form th:action="@{/user/questionList}">
+                            <input type="text" class="form-control" name="searchId" placeholder="输入ID搜索">
+                            </form>
                         </div>
 
                     </div>
@@ -92,127 +96,6 @@
 <!--                                        <td th:text="${question.solutionNumber}"></td>-->
 <!--                                        <td th:text="${question.successRate}"></td>-->
                                     </tr>
-
-                                <tr>
-                                    <td>
-                                        <a href="#">状态</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">ThemeBucket</a>
-                                    </td>
-                                    <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                    <td>556.00$</td>
-                                    <td>
-                                        <span class="label label-warning label-mini">中等</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress progress-striped progress-xs">
-                                            <div style="width: 70%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-danger">
-                                                <span class="sr-only">70% Complete (success)</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">状态</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">XYZ</a>
-                                    </td>
-                                    <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                    <td>13240.00$</td>
-                                    <td>
-                                        <span class="label label-success label-mini">Paid</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress progress-striped progress-xs">
-                                            <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-warning">
-                                                <span class="sr-only">55% Complete (success)</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">状态</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">Graphics</a>
-                                    </td>
-                                    <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                                    <td>1320.00$</td>
-                                    <td>
-                                        <span class="label label-info label-mini">简单</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress progress-striped progress-xs">
-                                            <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
-                                                <span class="sr-only">40% Complete (success)</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">状态</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">BCSE</a>
-                                    </td>
-                                    <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                    <td>3455.50$</td>
-                                    <td>
-                                        <span class="label label-danger label-mini">困难</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress progress-striped progress-xs">
-                                            <div style="width: 90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-info">
-                                                <span class="sr-only">90% Complete (success)</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">状态</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">AVC Ltd</a>
-                                    </td>
-                                    <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                                    <td>110.00$</td>
-                                    <td>
-                                        <span class="label label-primary label-mini">简单</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress progress-striped progress-xs">
-                                            <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
-                                                <span class="sr-only">60% Complete (success)</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">状态</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">Themeforest</a>
-                                    </td>
-                                    <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                    <td>456.00$</td>
-                                    <td>
-                                        <span class="label label-warning label-mini">简单</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress progress-striped progress-xs">
-                                            <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-danger">
-                                                <span class="sr-only">40% Complete (success)</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
 
                                 </tbody>
                             </table>

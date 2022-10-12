@@ -34,15 +34,19 @@ public class FrontQuestionVMServiceImpl extends ServiceImpl<FrontQuestionVMMappe
     }
 
     @Override
-    public Page<FrontQuestionVM> getListByName(Page page, String searchName,Integer userId) {
+    public Page<FrontQuestionVM> getListByName(Page page, Integer userId, String searchName) {
+        QueryWrapper<FrontQuestionVM> wrapper = new QueryWrapper<>();
         FrontQuestionVMMapper baseMapper = this.baseMapper;
-        Page<FrontQuestionVM> FrontquestionVM = baseMapper.selectAllFrontQuestionVM(page,userId);
-        return null;
+        Page<FrontQuestionVM> frontQuestionVMPage = baseMapper.selectFrontQuestionVMByName(page, userId, searchName );
+        return frontQuestionVMPage;
     }
 
     @Override
-    public Page<FrontQuestionVM> getListById(Page page, Integer searchId,Integer userId) {
-        return null;
+    public Page<FrontQuestionVM> getListById(Page page, Integer userId, Integer searchId) {
+        QueryWrapper<FrontQuestionVM> wrapper = new QueryWrapper<>();
+        FrontQuestionVMMapper baseMapper = this.baseMapper;
+        Page<FrontQuestionVM> frontQuestionVMPage = baseMapper.selectFrontQuestionVMById(page, userId, searchId);
+        return frontQuestionVMPage;
     }
 
     @Override

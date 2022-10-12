@@ -42,10 +42,10 @@ public class FrontQuestionController {
             questionVMPage=frontQuestionVMService.getList(page,userId);
         }else if(!"".equals(searchName) && searchId == null){
             System.out.println("搜索题干，无id查询");
-            questionVMPage=frontQuestionVMService.getListByName(page,searchName,userId);
+            questionVMPage=frontQuestionVMService.getListByName(page,userId,searchName);
         }else if("".equals(searchName) && searchId != null){
             System.out.println("无题干，搜索id查询");
-            questionVMPage=frontQuestionVMService.getListById(page,searchId,userId);
+            questionVMPage=frontQuestionVMService.getListById(page,userId,searchId);
         }else if(!"".equals(searchName) && searchId != null){
             System.out.println("搜索id，题干查询");
             questionVMPage=frontQuestionVMService.getListByList(page,searchId,searchName,userId);
