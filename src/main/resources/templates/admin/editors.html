@@ -414,9 +414,9 @@
             var p = document.getElementById('p')
             p.appendChild(clone)
             //最后在修改name属性value属性（放在前面不生效，巨坑）
-            $("#"+arr1[num-3]+"").attr('name',arr1[num-2]).attr('value',null)
+            $("#"+arr1[num-2]+"").attr('name',arr1[num-2]).attr('value',null)
             //将该表单对应的选项设置为可见
-            $("#choice_"+arr1[num-3]+"").removeClass('hidden')
+            $("#choice_"+arr1[num-2]+"").removeClass('hidden')
         }
         //大于十个选项设置提示
         else{

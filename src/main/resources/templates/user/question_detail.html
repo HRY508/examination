@@ -40,77 +40,80 @@
                     <div id="pie-chart-donut" class="pie-chart">
                         <div class="panel-body">
                             <div class="text-center price-head">
+<!--                                隐藏域-->
+                                <input class="hidden" id="size" th:value="${questionObject.getQuestionItemObjects().size()}">
+<!--                                隐藏域-->
                                 <h1 class="color-terques" id="qId" th:text="${qId}+':'"  th:value="${qId}"></h1>
                                 <h4 class="color-terques" id="title" th:text="'题目:'+${questionObject.getTitleContent()}"></h4>
                                 <!--选项开始-->
 
-                                <div class="col-md-3" id="choiceA">
+                                <div class="col-md-3 hidden" id="choiceA">
                                     <div class="panel-body">
                                         <button class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(0).getPrefix()}"></button>
                                         <h5 id="h5_A" th:text="${questionObject.getQuestionItemObjects().get(0).getContent()}"></h5>
                                     </div>
                                 </div>
 
-                                <div class="col-md-3" id="choiceB">
+                                <div class="col-md-3 hidden" id="choiceB">
                                     <div class="panel-body">
                                         <button class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
                                         <h5 id="h5_B" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 hidden" id="choiceC">
+                                <div class="col-md-3 hidden" id="choiceC" >
                                     <div class="panel-body">
-                                        <button id="btn_C" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(2).getPrefix()}"></button>
-                                        <h5 id="h5_C" th:text="${questionObject.getQuestionItemObjects().get(2).getContent()}"></h5>
+                                        <button id="btn_C" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().size()>2?questionObject.getQuestionItemObjects().get(2).getPrefix():''}"></button>
+                                        <h5 id="h5_C" th:text="${questionObject.getQuestionItemObjects().size()>2?questionObject.getQuestionItemObjects().get(2).getContent():''}"></h5>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3 hidden" id="choiceD">
                                     <div class="panel-body">
-                                        <button  id="btn_D" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(3).getPrefix()}"></button>
-                                        <h5 id="h5_D" th:text="${questionObject.getQuestionItemObjects().get(3).getContent()}"></h5>
+                                        <button  id="btn_D" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().size()>3?questionObject.getQuestionItemObjects().get(3).getPrefix():''}"></button>
+                                        <h5 id="h5_D" th:text="${questionObject.getQuestionItemObjects().size()>3?questionObject.getQuestionItemObjects().get(3).getContent():''}"></h5>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3 hidden" id="choiceE">
                                     <div class="panel-body">
-                                        <button id="btn_E" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
-                                        <h5 id="h5_E" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                        <button id="btn_E" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().size()>4?questionObject.getQuestionItemObjects().get(4).getPrefix():''}"></button>
+                                        <h5 id="h5_E" th:text="${questionObject.getQuestionItemObjects().size()>4?questionObject.getQuestionItemObjects().get(4).getContent():''}"></h5>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3 hidden" id="choiceF">
                                     <div class="panel-body">
-                                        <button id="btn_F" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
-                                        <h5 id="h5_F" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                        <button id="btn_F" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().size()>5?questionObject.getQuestionItemObjects().get(5).getPrefix():''}"></button>
+                                        <h5 id="h5_F" th:text="${questionObject.getQuestionItemObjects().size()>5?questionObject.getQuestionItemObjects().get(5).getContent():''}"></h5>
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 hidden" id="choiceG" >
+                                <div class="col-md-3 hidden" id="choiceG">
                                     <div class="panel-body">
-                                        <button id="btn_G" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
-                                        <h5 id="h5_G" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                        <button id="btn_G" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().size()>6?questionObject.getQuestionItemObjects().get(6).getPrefix():''}"></button>
+                                        <h5 id="h5_G" th:text="${questionObject.getQuestionItemObjects().size()>6?questionObject.getQuestionItemObjects().get(6).getContent():''}"></h5>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3 hidden" id="choiceH">
                                     <div class="panel-body">
-                                        <button id="btn_H" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
-                                        <h5 id="h5_H" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                        <button id="btn_H" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().size()>7?questionObject.getQuestionItemObjects().get(7).getPrefix():''}"></button>
+                                        <h5 id="h5_H" th:text="${questionObject.getQuestionItemObjects().size()>7?questionObject.getQuestionItemObjects().get(7).getContent():''}"></h5>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3 hidden" id="choiceI">
                                 <div class="panel-body">
-                                    <button id="btn_I" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
-                                    <h5 id="h5_I" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                    <button id="btn_I" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().size()>8?questionObject.getQuestionItemObjects().get(8).getPrefix():''}"></button>
+                                    <h5 id="h5_I" th:text="${questionObject.getQuestionItemObjects().size()>8?questionObject.getQuestionItemObjects().get(8).getContent():''}"></h5>
                                 </div>
                                 </div>
 
                                 <div class="col-md-3 hidden" id="choiceJ">
                                     <div class="panel-body">
-                                        <button id="btn_J" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"></button>
-                                        <h5 id="h5_J" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></h5>
+                                        <button id="btn_J" class="btn btn-default btn-lg btn-block" type="button" th:text="${questionObject.getQuestionItemObjects().size()>9?questionObject.getQuestionItemObjects().get(9).getPrefix():''}"></button>
+                                        <h5 id="h5_J" th:text="${questionObject.getQuestionItemObjects().size()>9?questionObject.getQuestionItemObjects().get(9).getContent():''}"></h5>
                                     </div>
                                 </div>
 
@@ -120,7 +123,7 @@
                                 <!--下一题上一题开始-->
                                 <div class="col-md-12">
                                     <ul class="pager">
-                                        <li class="previous col-md-6 "><a class="col-md-3" th:href="@{/user/questionDetail/{id}(id=${qId}-1)}">← 上一题</a></li>
+                                        <li class="previous col-md-6" th:value="${qId}-1" id="lastQ"><a class="col-md-3" href="javascript:;" onclick="nextQuestion(this.parentNode.value,this)">← 上一题</a></li>
                                         <li class="next col-md-6" th:value="${qId}+1" id="nextQ"><a class="col-md-3" href="javascript:;" onclick="nextQuestion(this.parentNode.value,this)">下一题 →</a></li>
                                     </ul>
                                 </div>
@@ -146,7 +149,6 @@
 
 </section>
 
-
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="/js/jquery-migrate-1.2.1.min.js"></script>
@@ -154,7 +156,15 @@
 <script src="/js/modernizr.min.js"></script>
 <script src="/js/jquery.nicescroll.js"></script>
 <script type="text/javascript">
-
+    //初始化操作
+    $(document).ready( function() {
+        var arr = ['A','B','C','D','E', 'F', 'G', 'H','I','J']
+        var len = $('#size').val()
+        for(var i =0;i<len;i++){
+            //移除隐藏状态、
+            $("#choice"+arr[i]+"").removeClass("hidden")
+        }
+    });
     //下一题：
     function nextQuestion(value,_this) {
         $.ajax({
@@ -177,9 +187,16 @@
                 $('#title').html(data.questionObject.titleContent)
                 //设置id
                 $('#nextQ').attr("value",data.id+1)
+                $('#lastQ').attr("value",data.id-1)
                 var len = data.questionObject.questionItemObjects.length
+                var arr = ['A','B','C','D','E', 'F', 'G', 'H','I','J']
+                for(var i = 0; i<arr.length;i++){
+                    $("#choice"+arr[i]+"").addClass("hidden")
+                }
+
+
                 for(var i = 0; i<len;i++){
-                    //移除隐藏状态、
+
                     $("#choice"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
 
                     $("#btn_"+data.questionObject.questionItemObjects[i].prefix+"").
