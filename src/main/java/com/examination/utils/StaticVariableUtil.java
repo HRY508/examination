@@ -11,6 +11,5 @@ public class StaticVariableUtil {
     public final static int moreSelectType = 2;
     public final static int JudgmentalType = 3;
     public final static int CompletionType = 4;
-    public final static int ShortAnswerType = 5;
     public final  static int status = 1;
 }

@@ -33,6 +33,9 @@ public class FrontQuestionController {
                                   @RequestParam(required = false, defaultValue = "", value = "searchId") Integer searchId,
                                   Integer userId){
         userId = GlobalUserUtil.getUser().getId();
+        if(userId == null){
+            return "error/4xx";
+        }
         Page page=new Page(pn,15);
         Page<FrontQuestionVM> questionVMPage=null;
         if("".equals(searchName) && searchId == null){
@@ -73,6 +76,4 @@ public class FrontQuestionController {
         }
         return "user/problem";
     }
-
-
 }

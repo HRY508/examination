@@ -91,16 +91,18 @@
                                         <td>
                                             <a th:text="${question.content}" th:href="@{/user/questionDetail/{id}(id=${question.id})}" style="color: #65CEA7;"></a>
                                         </td>
-                                        <td th:if="${question.questionType}==1" th:text="单选题"></td>
-                                        <td th:if="${question.questionType}==2" th:text="多选题"></td>
-                                        <td th:if="${question.difficult}==1" th:text="简单">简单</td>
-                                        <td th:if="${question.difficult}==2" th:text="中等">中等</td>
-                                        <td th:if="${question.difficult}==3" th:text="困难">困难</td>
+                                        <td th:if="${question.questionType}==1" th:text="单选题" class="text-secondary"></td>
+                                        <td th:if="${question.questionType}==2" th:text="多选题" class="text-primary"></td>
+                                        <td>
+                                            <span th:if="${question.difficult}==1" th:text="简单" class="label label-success">简单</span>
+                                            <span th:if="${question.difficult}==2" th:text="中等" class="label label-primary">中等</span>
+                                            <span th:if="${question.difficult}==3" th:text="困难" class="label label-danger">困难</span>
+                                        </td>
                                         <td th:text="${question.solutioned}"></td>
                                         <td>
-                                            <button th:unless="${question.result}" class="btn btn-primary" th:text="未做过"></button>
-                                            <button th:if="${question.result == 1}" class="btn btn-info " th:text="未完成"></button>
-                                            <button th:if="${question.result == 2}" class="btn btn-success" th:text="已完成"></button>
+                                            <span th:unless="${question.result}" class="label label-default" th:text="未做过"></span>
+                                            <span th:if="${question.result == 1}" class="label label-warning" th:text="未完成"></span>
+                                            <span th:if="${question.result == 2}" class="label label-success" th:text="已完成"></span>
                                         </td>
                                     </tr>
 

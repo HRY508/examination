@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>在线考试系统</title>
+
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+<body class="horizontal-menu-page">
+
+<section>
+
+    <div th:replace="~{/user/commons/common :: commonhead('paper.html')}"></div>
+
+
+    <!--正文开始-->
+    <div class="wrapper">
+        <div class="col-md-12">
+            <!--问题列表开始-->
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        正在考试......
+
+                        <span class="tools pull-right">
+                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                        <a href="javascript:;" class="fa fa-times"></a>
+                        </span>
+                    </div>
+
+                    <div class="panel-body">
+
+    <!--                    题目描述-->
+                        <div class="col-lg-12">
+                           <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">题目描述</h3>
+                                </div>
+                                <div class="panel-body">
+
+                                </div>
+                            </div>
+                        </div>
+
+    <!--                    作答区-->
+                        <div class="col-lg-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">作答区</div>
+                                    <div class="panel-body">
+                                        <div class="col-sm-12 icheck ">
+
+                                            <div class="minimal single-row">
+                                                <div class="radio ">
+                                                    <input tabindex="3" type="radio"  name="demo-radio">
+                                                    <label>A </label>
+                                                </div>
+                                            </div>
+                                            <div class="minimal-red single-row">
+                                                <div class="radio">
+                                                    <input tabindex="3" type="radio"  name="demo-radio" checked>
+                                                    <label>B </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="minimal-green single-row">
+                                                <div class="radio ">
+                                                    <input tabindex="3" type="radio"  name="demo-radio">
+                                                    <label>C </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="minimal-blue single-row">
+                                                <div class="radio ">
+                                                    <input tabindex="3" type="radio"  name="demo-radio">
+                                                    <label>D </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="minimal-yellow single-row">
+                                                <div class="radio ">
+                                                    <input tabindex="3" type="radio"  name="demo-radio">
+                                                    <label>E </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="minimal-purple single-row">
+                                                <div class="radio ">
+                                                    <input tabindex="3" type="radio"  name="demo-radio">
+                                                    <label>F </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <!--上一题开始-->
+                                                <button class="btn btn-info pull-left" type="button"><i class="fa fa-mail-reply">上一题</i></button>
+                                            <!--下一题开始-->
+                                                <button class="btn btn-info pull-right" type="button"><i class="fa fa-mail-forward">下一题</i></button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+    <!--                    题目导航-->
+                        <div class="col-lg-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">题目导航</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+                                        <p><strong>一.单选题</strong></p>
+                                            <ul class="pagination">
+                                                <li>
+                                                    <a class="active">1</a>
+                                                </li>
+                                                <li>
+                                                    <a class="active">2</a>
+                                                </li>
+                                                <li>
+                                                    <a class="active">3</a>
+                                                </li>
+                                             </ul>
+                                    </div>
+
+                                    <div>
+                                          <p><strong>二.多选题</strong></p>
+                                            <ul class="pagination">
+                                                <li>
+                                                    <a class="active">1</a>
+                                                </li>
+                                                <li>
+                                                    <a class="active">2</a>
+                                                </li>
+                                                <li>
+                                                    <a class="active">3</a>
+                                                </li>
+                                            </ul>
+
+                                    </div>
+
+                                    <div style="text-align: center">
+                                        <button class="btn btn-sm btn-success" type="button">提交</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--正文结束-->
+
+    <!--底部开始-->
+    <footer class="sticky-footer">
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--底部结束-->
+
+</section>
+
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.nicescroll.js"></script>
+<script type="text/javascript">
+    //初始化操作
+    $(document).ready( function() {
+        var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        var len = $('#size').val()
+        for (var i = 0; i < len; i++) {
+            //移除隐藏状态、
+            $("#choice" + arr[i] + "").removeClass("hidden")
+        }
+    })
+
+
+
+
+
+</script>
+
+<script src="/js/scripts.js"></script>
+
+</body>
+</html>
