@@ -85,11 +85,11 @@
                                 <tbody>
 
                                     <tr th:each="question :${questionList}">
-                                        <td>
-                                            <a th:text="${question.id}" th:href="@{/user/questionDetail/{id}(id=${question.id})}"></a>
+                                        <td class="c">
+                                            <a  th:text="${question.id}" th:href="@{/user/questionDetail/{id}(id=${question.id})}"></a>
                                         </td>
                                         <td>
-                                            <a th:text="${question.content}" th:href="@{/user/questionDetail/{id}(id=${question.id})}" style="color: #65CEA7;"></a>
+                                            <a th:text="${question.content}" th:href="@{/user/questionDetail/{id}(id=${question.id})}"></a>
                                         </td>
                                         <td th:if="${question.questionType}==1" th:text="单选题" class="text-secondary"></td>
                                         <td th:if="${question.questionType}==2" th:text="多选题" class="text-primary"></td>
@@ -163,6 +163,12 @@
 
 </section>
 
+<!--悬停样式-->
+<script type="text/css">
+    .c a:hover,a:focus {
+        color: #65CEA7
+    }
+</script>
 
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
@@ -170,8 +176,6 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/modernizr.min.js"></script>
 <script src="/js/jquery.nicescroll.js"></script>
-<!--图表-->
-
 
 <script src="/js/scripts.js"></script>
 
