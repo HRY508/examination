@@ -21,6 +21,4 @@ public class QuestionObject {
 
     private List<QuestionItemObject> questionItemObjects;
 
-    private String correct;
-
 }

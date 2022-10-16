@@ -1,14 +1,16 @@
 package com.examination;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.Content;
+import com.examination.bean.PaperDetails;
 import com.examination.bean.Question;
 import com.examination.bean.User;
-import com.examination.service.ContentService;
-import com.examination.service.QuestionService;
-import com.examination.service.UserService;
+import com.examination.mapper.PaperDetailsMapper;
+import com.examination.mapper.PaperDetailsVMMapper;
+import com.examination.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +27,12 @@ class ExaminationApplicationTests {
     QuestionService questionService;
     @Autowired
     ContentService contentService;
+    @Autowired
+    PaperDetailsVMMapper paperDetailsVMMapper;
+    @Autowired
+    PaperDetailsMapper paperDetailsMapper;
+    @Autowired
+    PaperDetailsVMService paperDetailsService;
     @Test
     void contextLoads() {
         BaseMapper<User> mapper = userService.getBaseMapper();
@@ -57,6 +65,16 @@ class ExaminationApplicationTests {
         Scanner scanner = new Scanner(System.in);
         int i = scanner.nextInt();
         System.out.println(i);
+    }
+
+    @Test
+    void test(){
+
+    }
+
+    @Test
+    void testPaper(){
+
     }
 
 }

@@ -13,15 +13,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaperDetailsVM {
 
+
     private Integer num; // 新生成的题号
 
     private String content;
 
-    private Integer singSelect;
+    private Integer singleSelect;
 
     private Integer moreSelect;
 
-    private Integer type; // 单选 1  多选 2
+    private Integer questionType; // 单选 1  多选 2
 
     private Integer score; //分值
 

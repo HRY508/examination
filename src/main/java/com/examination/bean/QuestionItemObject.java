@@ -18,7 +18,5 @@ public class QuestionItemObject {
 
     private String content;
 
-    private Integer score;
 
-    private String itemUuid;
 }
