@@ -47,13 +47,16 @@ public class FrontQuestionDetailController {
         QueryWrapper<Content> wrapper = new QueryWrapper<>();
         QueryWrapper<Question> wrapper0 = new QueryWrapper<>();
         wrapper.select("content","id").eq("id", id);
-        wrapper0.select("difficult").eq("id",id);
-        Integer difficult = questionService.getOne(wrapper0).getDifficult();
+        wrapper0.select("difficult","question_type").eq("id",id);
+        Question qu = questionService.getOne(wrapper0);
+        Integer questionType = qu.getQuestionType();
+        Integer difficult = qu.getDifficult();
         Content question = contentService.getOne(wrapper);
         String contentStr  = question.getContent();
         QuestionObject questionObject = JSON.parseObject(contentStr, QuestionObject.class);
         model.addAttribute("qId",question.getId());
         model.addAttribute("difficult",difficult);
+        model.addAttribute("questionType",questionType);
         model.addAttribute("questionObject",questionObject);
         return "user/question_detail";
     }
@@ -65,17 +68,20 @@ public class FrontQuestionDetailController {
         JSONObject jsonObject = (JSONObject) JSONObject.parse(req);
         //获取点击前的按钮状态，该修改的id
         Integer qId = (Integer) jsonObject.get("id");
-        //获取题目难度、正文
+        //获取题目难度、正文、题型
         QueryWrapper<Question> wrapper0 = new QueryWrapper<>();
         QueryWrapper<Content> wrapper = new QueryWrapper<>();
         wrapper.select("content").eq("id", qId);
-        wrapper0.select("difficult").eq("id",qId);
-        Integer difficult = questionService.getOne(wrapper0).getDifficult();
+        wrapper0.select("difficult","question_type").eq("id",qId);
+        Question qu = questionService.getOne(wrapper0);
+        Integer questionType = qu.getQuestionType();
+        Integer difficult = qu.getDifficult();
         Content question = contentService.getOne(wrapper);
         String contentStr  = question.getContent();
         QuestionObject questionObject = JSON.parseObject(contentStr, QuestionObject.class);
         HashMap<String,Object> rep = new HashMap<>();
         rep.put("difficult",difficult);
+        rep.put("questionType",questionType);
         rep.put("id",qId);
         rep.put("questionObject",questionObject);
         return rep;

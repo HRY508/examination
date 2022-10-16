@@ -41,82 +41,95 @@
                     </div>
                     <div id="pie-chart-donut" class="pie-chart">
                         <div class="panel-body">
-                            <div class="text-center price-head">
-<!--                                隐藏域-->
-                                <input class="hidden" id="size" th:value="${questionObject.getQuestionItemObjects().size()}">
-                                <input class="hidden" id="hqId" th:value="${qId}">
-<!--                                隐藏域-->
-                                <h1 class="color-terques" id="qId" th:text="${qId}+':'"  th:value="${qId}" ></h1>
-                                <h4 class="color-terques" id="title" th:text="'题目:'+${questionObject.getTitleContent()}"></h4>
+
+
+                            <div class="panel">
+<!--                                题型开始-->
+                                <div class="panel-heading">
+                                    <span class="label hidden" id="questionType" th:text="${questionType}"></span>
+                                </div>
+<!--                                题型结束-->
+                                <div class="panel-body">
+                                    <div class="">
+                                        <!--                                隐藏域-->
+                                        <input class="hidden" id="size" th:value="${questionObject.getQuestionItemObjects().size()}">
+                                        <input class="hidden" id="hqId" th:value="${qId}">
+<!--                                        <input class="hidden" id="questionType" th:value="${questionType}">-->
+                                        <!--                                隐藏域-->
+                                        <h1 class="color-terques" id="qId" th:text="${qId}+':'"  th:value="${qId}" ></h1>
+                                        <h4 class="color-terques" id="title" th:text="'题目:'+${questionObject.getTitleContent()}"></h4>
+                                    </div>
+                                </div>
                             </div>
+
                             <!--选项开始-->
 
                                 <div class="col-md-12 hidden" id="choiceA">
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().get(0).getPrefix()}" th:value="${questionObject.getQuestionItemObjects().get(0).getPrefix()}" style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)" id="btn_A" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().get(0).getPrefix()}" th:value="${questionObject.getQuestionItemObjects().get(0).getPrefix()}" style="border-radius: 20px"></button>
                                         <label id="h5_A" th:text="${questionObject.getQuestionItemObjects().get(0).getContent()}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceB">
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)" class="btn btn-default " type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}" th:value="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"  style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)" id="btn_B" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().get(1).getPrefix()}" th:value="${questionObject.getQuestionItemObjects().get(1).getPrefix()}"  style="border-radius: 20px"></button>
                                         <label id="h5_B" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceC" >
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)" id="btn_C" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>2?questionObject.getQuestionItemObjects().get(2).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>2?questionObject.getQuestionItemObjects().get(2).getPrefix():null}"  style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)" id="btn_C" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>2?questionObject.getQuestionItemObjects().get(2).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>2?questionObject.getQuestionItemObjects().get(2).getPrefix():null}"  style="border-radius: 20px"></button>
                                         <label id="h5_C" th:text="${questionObject.getQuestionItemObjects().size()>2?questionObject.getQuestionItemObjects().get(2).getContent():''}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceD">
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)"  id="btn_D" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>3?questionObject.getQuestionItemObjects().get(3).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>3?questionObject.getQuestionItemObjects().get(3).getPrefix():null}"  style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)"  id="btn_D" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>3?questionObject.getQuestionItemObjects().get(3).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>3?questionObject.getQuestionItemObjects().get(3).getPrefix():null}"  style="border-radius: 20px"></button>
                                         <label id="h5_D" th:text="${questionObject.getQuestionItemObjects().size()>3?questionObject.getQuestionItemObjects().get(3).getContent():''}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceE">
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)" id="btn_E" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>4?questionObject.getQuestionItemObjects().get(4).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>4?questionObject.getQuestionItemObjects().get(4).getPrefix():null}" style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)" id="btn_E" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>4?questionObject.getQuestionItemObjects().get(4).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>4?questionObject.getQuestionItemObjects().get(4).getPrefix():null}" style="border-radius: 20px"></button>
                                         <label id="h5_E" th:text="${questionObject.getQuestionItemObjects().size()>4?questionObject.getQuestionItemObjects().get(4).getContent():''}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceF">
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)" id="btn_F" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>5?questionObject.getQuestionItemObjects().get(5).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>5?questionObject.getQuestionItemObjects().get(5).getPrefix():null}" style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)" id="btn_F" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>5?questionObject.getQuestionItemObjects().get(5).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>5?questionObject.getQuestionItemObjects().get(5).getPrefix():null}" style="border-radius: 20px"></button>
                                         <label id="h5_F" th:text="${questionObject.getQuestionItemObjects().size()>5?questionObject.getQuestionItemObjects().get(5).getContent():''}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceG">
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)" id="btn_G" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>6?questionObject.getQuestionItemObjects().get(6).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>6?questionObject.getQuestionItemObjects().get(6).getPrefix():null}" style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)" id="btn_G" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>6?questionObject.getQuestionItemObjects().get(6).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>6?questionObject.getQuestionItemObjects().get(6).getPrefix():null}" style="border-radius: 20px"></button>
                                         <label id="h5_G" th:text="${questionObject.getQuestionItemObjects().size()>6?questionObject.getQuestionItemObjects().get(6).getContent():''}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceH">
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)" id="btn_H" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>7?questionObject.getQuestionItemObjects().get(7).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>7?questionObject.getQuestionItemObjects().get(7).getPrefix():null}" style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)" id="btn_H" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>7?questionObject.getQuestionItemObjects().get(7).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>7?questionObject.getQuestionItemObjects().get(7).getPrefix():null}" style="border-radius: 20px"></button>
                                         <label id="h5_H" th:text="${questionObject.getQuestionItemObjects().size()>7?questionObject.getQuestionItemObjects().get(7).getContent():''}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceI">
                                 <div class="panel-body">
-                                    <button onclick="answer(this.value)" id="btn_I" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>8?questionObject.getQuestionItemObjects().get(8).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>8?questionObject.getQuestionItemObjects().get(8).getPrefix():null}" style="border-radius: 20px"></button>
+                                    <button onclick="clicked(this.value,this)" id="btn_I" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>8?questionObject.getQuestionItemObjects().get(8).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>8?questionObject.getQuestionItemObjects().get(8).getPrefix():null}" style="border-radius: 20px"></button>
                                     <label id="h5_I" th:text="${questionObject.getQuestionItemObjects().size()>8?questionObject.getQuestionItemObjects().get(8).getContent():''}" style="font-weight: normal"></label>
                                 </div>
                                 </div>
 
                                 <div class="col-md-12 hidden" id="choiceJ">
                                     <div class="panel-body">
-                                        <button onclick="answer(this.value)" id="btn_J" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>9?questionObject.getQuestionItemObjects().get(9).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>9?questionObject.getQuestionItemObjects().get(9).getPrefix():null}" style="border-radius: 20px"></button>
+                                        <button onclick="clicked(this.value,this)" id="btn_J" class="btn btn-default" type="button" th:text="${questionObject.getQuestionItemObjects().size()>9?questionObject.getQuestionItemObjects().get(9).getPrefix():''}" th:value="${questionObject.getQuestionItemObjects().size()>9?questionObject.getQuestionItemObjects().get(9).getPrefix():null}" style="border-radius: 20px"></button>
                                         <label id="h5_J" th:text="${questionObject.getQuestionItemObjects().size()>9?questionObject.getQuestionItemObjects().get(9).getContent():''}" style="font-weight: normal"></label>
                                     </div>
                                 </div>
@@ -129,7 +142,7 @@
                                             <i class="fa fa-times"></i>
                                         </button>
                                         <h4 id="answerMsg" style="text-align: left">
-                                            <i class="icon-ok-sign" ></i>
+                                            <i class="icon-ok-sign"></i>
                                         </h4>
                                         <p id="correct" style="text-align: left"></p>
                                         <p id="analysis" style="text-align: left"></p>
@@ -138,12 +151,28 @@
                                 <!--解析及答案结束-->
 
                                 <!--下一题上一题开始-->
-                                <div class="col-md-12">
-                                    <ul class="pager">
-                                        <li class="previous col-md-6" th:value="${qId}-1" id="lastQ"><a class="col-md-3" href="javascript:;" onclick="nextQuestion(this.parentNode.value,this)">← 上一题</a></li>
-                                        <li class="next col-md-6" th:value="${qId}+1" id="nextQ"><a class="col-md-3" href="javascript:;" onclick="nextQuestion(this.parentNode.value,this)">下一题 →</a></li>
-                                    </ul>
+
+                            <div class="col-md-12">
+                                <div class="panel-body" style="float: left;">
+                                    <button onclick="sub()" id="sub" type="button" class="btn btn-info hidden"><i class="fa fa-check"></i> 提交</button>
                                 </div>
+                                <div class="panel-body" style="float: right;">
+                                    <button onclick="nextQuestion(this.value,this)" th:value="${qId}-1" id="lastQ" type="button" class="btn btn-info " ><i class="fa fa-arrow-left"></i> 上一题</button>
+                                    <button onclick="nextQuestion(this.value,this)" th:value="${qId}+1" id="nextQ" type="button" class="btn btn-info ">下一题 <i class="fa fa-arrow-right"></i> </button>
+                                </div>
+                            </div>
+
+
+
+<!--                                <div class="col-md-12">-->
+<!--                                    <ul class="pager">-->
+<!--                                        <li class="previous col-md-6" th:value="${qId}-1" id="lastQ"><a class="col-md-3" href="javascript:;" onclick="nextQuestion(this.parentNode.value,this)">← 上一题</a></li>-->
+
+<!--                                        <a href="javascript:;" onclick="sub()" class="col-md-3">确定</a>-->
+
+<!--                                        <li class="next col-md-6" th:value="${qId}+1" id="nextQ"><a class="col-md-3" href="javascript:;" onclick="nextQuestion(this.parentNode.value,this)">下一题 →</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
                                 <!--下一题上一题结束-->
                         </div>
                     </div>
@@ -199,21 +228,41 @@
         //题目难度状态
         var dif = document.getElementById('difficult').innerHTML
         if(dif=='1'){
-            $('#difficult').addClass("label-success").text("简单题")
-
+            $('#difficult').addClass("label-success").text("简单")
         }else if(dif=='2'){
-            $('#difficult').addClass("label-warning").text("中等题")
+            $('#difficult').addClass("label-warning").text("中等")
         }else if(dif=='3'){
-            $('#difficult').addClass("label-danger").text("困难题")
+            $('#difficult').addClass("label-danger").text("困难")
         }else{
-            $('#difficult').addClass("label-default").text("未分类")
+            $('#difficult').addClass("label-default").text("未分")
         }
         $('#difficult').removeClass('hidden')
+        //题型
+        var qType = document.getElementById('questionType').innerHTML
+        if(qType=='1'){
+            $('#questionType').addClass("label-success").text("单选题")
+            $("#sub").addClass('hidden')
+        }else if(qType=='2'){
+            $('#questionType').addClass("label-warning").text("多选题")
+            $("#sub").removeClass('hidden')
+        }else if(qType=='3'){
+            $('#questionType').addClass("label-danger").text("判断题")
+            $("#sub").addClass('hidden')
+        }else{
+            $('#questionType').addClass("label-default").text("未分类")
+        }
+        $('#questionType').removeClass('hidden')
     });
     //下一题：
     function nextQuestion(value,_this) {
         //使按钮失去焦点,不设置会导致按钮持续高亮
         _this.blur()
+        //用户选择失去高亮
+        var arr = ['A','B','C','D','E', 'F', 'G', 'H','I','J']
+        for(var i=0;i<arr.length;i++){
+            $("#btn_"+arr[i]+"").attr('class','btn btn-default')
+        }
+        value = Number(value)
         //解析隐藏状态
         $('#answerDiv').addClass('hidden')
         $.ajax({
@@ -237,15 +286,30 @@
                 $('#title').html(data.questionObject.titleContent)
                 //改变题目显示的难度
                 if(data.difficult=='1'){
-                    $('#difficult').removeClass("label-warning","label-danger","label-default").addClass("label-success").text("简单题")
+                    $('#difficult').attr('class','label label-success').text("简单")
                 }else if(data.difficult=='2'){
-                    $('#difficult').removeClass("label-success","label-danger","label-default").addClass("label-warning").text("中等题")
+                    $('#difficult').attr('class','label label-warning').text("中等")
                 }else if(data.difficult=='3'){
-                    $('#difficult').removeClass("label-warning","label-success","label-default").addClass("label-danger").text("困难题")
+                    $('#difficult').attr('class','label label-danger').text("困难")
                 }else{
-                    $('#difficult').removeClass("label-warning","label-danger","label-success").addClass("label-default").text("未分类")
+                    $('#difficult').attr('class','label label-default').text("未分类")
                 }
                 $('#difficult').removeClass('hidden')
+                //改变题目显示的类型
+                if(data.questionType==1){
+                    $('#questionType').attr('class','label label-success').text("单选题")
+                    $("#sub").addClass('hidden')
+                }else if(data.questionType==2){
+                    $('#questionType').attr('class','label label-warning').text("多选题")
+                    $("#sub").removeClass('hidden')
+                }else if(data.questionType==3){
+                    $('#questionType').attr('class','label label-danger').text("判断题")
+                    $("#sub").addClass('hidden')
+                }else{
+                    $('#questionType').attr('class','label label-default').text("未分类")
+                }
+                $('#questionType').removeClass('hidden')
+
                 //设置下一题上一题id
                 $('#nextQ').attr("value",data.id+1)
                 $('#lastQ').attr("value",data.id-1)
@@ -258,7 +322,8 @@
                     $("#choice"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
 
                     $("#btn_"+data.questionObject.questionItemObjects[i].prefix+"").
-                    attr("text",data.questionObject.questionItemObjects[i].prefix).
+                    attr("text",data.questionObject.questionItemObjects[i].prefix)
+                        .attr("value",data.questionObject.questionItemObjects[i].prefix).
                     html(data.questionObject.questionItemObjects[i].prefix)
 
                     $("#h5_"+data.questionObject.questionItemObjects[i].prefix+"").
@@ -269,9 +334,40 @@
         })
     }
 
-    //按钮点击事件，uChoice为用户选择的选项
-    function answer(uChoice) {
-        //题号
+    function clicked(uChoice,_this) {
+        var qType = document.getElementById('questionType').innerHTML
+        if(qType=='单选题'||qType=='判断题'){
+            $("#sub").addClass('hidden')
+            var arr = ['A','B','C','D','E','F','G','H','I','J']
+            for(var i=0;i<arr.length;i++){
+                $("#btn_"+arr[i]+"").attr('class','btn btn-default')
+            }
+            $("#btn_"+uChoice+"").attr('class','btn btn-success')
+            answer(uChoice)
+        }else if(qType=='多选题'){
+            $("#sub").removeClass('hidden')
+            var btnColor = $("#btn_"+uChoice+"").attr('class')
+            if(btnColor=='btn btn-default'){
+                $("#btn_"+uChoice+"").attr('class','btn btn-success')
+            }
+            if(btnColor=='btn btn-success'){
+                $("#btn_"+uChoice+"").attr('class','btn btn-default')
+            }
+        }
+        _this.blur()
+    }
+    function sub() {
+        var arr = ['A','B','C','D','E','F','G','H','I','J']
+        var uChoice = '';
+        for(var i=0;i<arr.length;i++){
+            if($("#btn_"+arr[i]+"").attr('class')=='btn btn-success'){
+                uChoice=uChoice+arr[i];
+            }
+        }
+        answer(uChoice)
+    }
+
+    function singleChoice(uChoice) {
         var qId = $('#hqId').val()
         $.ajax({
             //请求路径
@@ -303,8 +399,21 @@
                     $('#answerDiv').removeClass("hidden")
                 }
             },
-
         })
+    }
+    //按钮点击事件，uChoice为用户选择的选项
+    function answer(uChoice) {
+        //获取题型
+        var qType = document.getElementById('questionType').innerHTML
+        //单选多选通用
+        singleChoice(uChoice)
+        // if(qType=='单选题'||qType=='判断题'){
+        //     singleChoice(uChoice)
+        // }
+        // //多选题操作：
+        // if(qType=='多选题'){
+        //     singleChoice(uChoice)
+        // }
     }
 
 </script>

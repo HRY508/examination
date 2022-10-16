@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 @SpringBootTest
 class ExaminationApplicationTests {
@@ -50,6 +51,12 @@ class ExaminationApplicationTests {
     @Test
     void testGlobalUser(){
 
+    }
+    @Test
+    void testChanger(){
+        Scanner scanner = new Scanner(System.in);
+        int i = scanner.nextInt();
+        System.out.println(i);
     }
 
 }
