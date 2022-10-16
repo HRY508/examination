@@ -369,9 +369,9 @@
             async:true,
             //data表示发送的数据
             data: JSON.stringify({
-                "pid" : ""+pId+"",
-                "num" : ""+value+"",
-                "answer" : ""+selects+""
+                pid : pId,
+                num : value,
+                answer : selects
             }), //定义发送请求的数据格式为JSON字符串
             contentType: "json/application",
             //定义回调响应的数据格式为JSON字符串，该属性可以省略

@@ -31,9 +31,8 @@ public class FrontPaperDetailsController {
     @Autowired
     private PaperDetailsVMService paperDetailsVMService;
 
-    @RequestMapping("/paperDetail/{pid}")
-    public String toPaperDetails(//@RequestParam(value = "pid",defaultValue = "0",required = false)Integer pId,
-                                 @PathVariable("pid") Integer pId,
+    @RequestMapping("/paperDetail")
+    public String toPaperDetails(@RequestParam(value = "pid",defaultValue = "0",required = false)Integer pId,
                                  Model model){
         if(pId == null || pId == 0){
             return "error/4xx";
