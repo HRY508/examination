@@ -83,7 +83,7 @@ public class FrontPaperDetailsController {
         PaperDetailsVM paperDetailsVM = paperDetailsVMService.getOneByPIdAndNum(pId , numNext); // 下一道或上一道题的内容
         QuestionObject questionObject = JSONObject.parseObject(paperDetailsVM.getContent(), QuestionObject.class);
 
-        PaperDetailsVM p = paperDetailsVMService.getOneByPIdAndNum(pId,currentNum);
+        PaperDetailsVM p = paperDetailsVMService.getOneByPIdAndNum(pId,currentNum); // 查本题
         if (doStatus == 0){   // 直接存入数据库
             // 将本题存入数据库
             Answer answer = new Answer();
@@ -113,13 +113,14 @@ public class FrontPaperDetailsController {
             // 将本题更新
             Integer value = 0;
             LambdaUpdateWrapper<Answer> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-            lambdaUpdateWrapper.set(Answer::getPdId , paperDetailsVM.getPdId()-1);
+            lambdaUpdateWrapper.eq(Answer::getPdId,p.getPdId());
             if (!"".equals(single) && "".equals(more)){
                 if(single.equals(paperDetailsVM.getCorrect())){
                      value = p.getScore();
                 }else{
                     value = 0;
                 }
+                lambdaUpdateWrapper.set(Answer::getChecked,single).set(Answer::getValue,value);
                 answerService.update(lambdaUpdateWrapper);
             }else if ("".equals(single) && !"".equals(more)){
                 if (more.equals(paperDetailsVM.getCorrect())) {
@@ -127,6 +128,7 @@ public class FrontPaperDetailsController {
                 } else {
                     value = 0;
                 }
+                lambdaUpdateWrapper.set(Answer::getChecked,more).set(Answer::getValue,value);
                 answerService.update(lambdaUpdateWrapper);
             }
         }
