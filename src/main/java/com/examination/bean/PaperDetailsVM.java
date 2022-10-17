@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaperDetailsVM {
 
+    private Integer pdId;
 
     private Integer num; // 新生成的题号
 

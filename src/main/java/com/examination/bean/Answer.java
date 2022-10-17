@@ -1,5 +1,7 @@
 package com.examination.bean;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "t_answer")
 public class Answer {
-
+    @TableId(type = IdType.AUTO,value = "id")
     private Integer id;
 
     private Integer user_id;

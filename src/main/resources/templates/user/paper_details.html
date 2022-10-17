@@ -46,8 +46,9 @@
                         <input class="hidden" id="pid" th:value="${pId}">
                         <input class="hidden" id="singleNum" th:value="${singleNum}">
                         <input class="hidden" id="moreNum" th:value="${moreNum}">
-                        <input class="hidden" id="num" th:value="${num}">
                         <input class="hidden" id="questionType" th:value="${questionType}">
+                        <input class="hidden" id="num" th:value="${num}">
+                        <input class="hidden" id="status" th:value="${status}">
 
                         <!--                                隐藏域-->
 
@@ -58,7 +59,7 @@
                                     <h3 class="panel-title">题目描述</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <h4 th:text="${questionObject.getTitleContent()}"></h4>
+                                    <h4 id="title" th:text="${num}+'.'+${questionObject.getTitleContent()}"></h4>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +69,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">作答区</div>
                                     <div class="panel-body">
-
+<!--                                        单选-->
                                         <div class="form-group hidden" id="s_radio">
 
                                             <div class="col-sm-12 icheck">
@@ -77,14 +78,14 @@
                                                     <div class="radio">
                                                         <input tabindex="3" type="radio"   name="r_choice" value="A">
                                                         <div> A </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().get(0).getContent()}"></div>
+                                                        <div id="radio_A" th:text="${questionObject.getQuestionItemObjects().get(0).getContent()}"></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-check  single-row hidden" id="r_B">
                                                     <div class="radio">
                                                         <input tabindex="3" type="radio"  name="r_choice" value="B">
                                                         <div> B </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></div>
+                                                        <div id="radio_B" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></div>
                                                     </div>
                                                 </div>
 
@@ -92,7 +93,7 @@
                                                     <div class="radio ">
                                                         <input tabindex="3" type="radio"   name="r_choice" value="C">
                                                         <div> C </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 2 ? questionObject.getQuestionItemObjects().get(2).getContent() : ''}"></div>
+                                                        <div id="radio_C" th:text="${questionObject.getQuestionItemObjects().size() > 2 ? questionObject.getQuestionItemObjects().get(2).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -100,7 +101,7 @@
                                                     <div class="radio ">
                                                         <input tabindex="3" type="radio"   name="r_choice" value="D">
                                                         <div> D </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 3 ? questionObject.getQuestionItemObjects().get(3).getContent() : ''}"></div>
+                                                        <div id="radio_D" th:text="${questionObject.getQuestionItemObjects().size() > 3 ? questionObject.getQuestionItemObjects().get(3).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -108,7 +109,7 @@
                                                     <div class="radio ">
                                                         <input tabindex="3" type="radio"  name="r_choice" value="E">
                                                         <div> E </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 4 ? questionObject.getQuestionItemObjects().get(4).getContent() : ''}"></div>
+                                                        <div id="radio_E" th:text="${questionObject.getQuestionItemObjects().size() > 4 ? questionObject.getQuestionItemObjects().get(4).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -116,7 +117,7 @@
                                                     <div class="radio ">
                                                         <input tabindex="3" type="radio" name="r_choice" value="F">
                                                         <div> F </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 5 ? questionObject.getQuestionItemObjects().get(5).getContent() : ''}"></div>
+                                                        <div id="radio_F" th:text="${questionObject.getQuestionItemObjects().size() > 5 ? questionObject.getQuestionItemObjects().get(5).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -124,22 +125,22 @@
                                                     <div class="radio ">
                                                         <input tabindex="3" type="radio" name="r_choice" value="G">
                                                         <div> G </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 6 ? questionObject.getQuestionItemObjects().get(6).getContent() : ''}"></div>
+                                                        <div id="radio_G" th:text="${questionObject.getQuestionItemObjects().size() > 6 ? questionObject.getQuestionItemObjects().get(6).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-check  single-row hidden" id="r_H">
                                                     <div class="radio ">
                                                         <input tabindex="3" type="radio"  name="r_choice" value="H">
-                                                        < <div> A </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 7 ? questionObject.getQuestionItemObjects().get(7).getContent() : ''}"></div>
+                                                        < <div> H </div>
+                                                        <div id="radio_H" th:text="${questionObject.getQuestionItemObjects().size() > 7 ? questionObject.getQuestionItemObjects().get(7).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
                                             </div>
 
                                         </div>
-
+ <!--                                                多选-->
                                         <div class="form-group hidden" id="s_checkBox">
                                             <div class="col-sm-12 icheck">
 
@@ -147,14 +148,14 @@
                                                     <div class="checkbox">
                                                         <input tabindex="3" type="checkbox"  name="c_choice" value="A">
                                                         <div> A </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().get(0).getContent()}"></div>
+                                                        <div id="check_A" th:text="${questionObject.getQuestionItemObjects().get(0).getContent()}"></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-check  single-row hidden" id="c_B">
                                                     <div class="checkbox">
                                                         <input tabindex="3" type="checkbox"   name="c_choice" value="B">
                                                         <div> B </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></div>
+                                                        <div id="check_B" th:text="${questionObject.getQuestionItemObjects().get(1).getContent()}"></div>
                                                     </div>
                                                 </div>
 
@@ -162,7 +163,7 @@
                                                     <div class="checkbox ">
                                                         <input tabindex="3" type="checkbox"  name="c_choice" value="C">
                                                         <div> C </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 2 ? questionObject.getQuestionItemObjects().get(2).getContent() : ''}"></div>
+                                                        <div id="check_C" th:text="${questionObject.getQuestionItemObjects().size() > 2 ? questionObject.getQuestionItemObjects().get(2).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -170,7 +171,7 @@
                                                     <div class="checkbox ">
                                                         <input tabindex="3" type="checkbox" name="c_choice" value="D">
                                                         <div> D </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 3 ? questionObject.getQuestionItemObjects().get(3).getContent() : ''}"></div>
+                                                        <div id="check_D" th:text="${questionObject.getQuestionItemObjects().size() > 3 ? questionObject.getQuestionItemObjects().get(3).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -178,7 +179,7 @@
                                                     <div class="checkbox ">
                                                         <input tabindex="3" type="checkbox"   name="c_choice" value="E">
                                                         <div> E </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 4 ? questionObject.getQuestionItemObjects().get(4).getContent() : ''}"></div>
+                                                        <div id="check_E" th:text="${questionObject.getQuestionItemObjects().size() > 4 ? questionObject.getQuestionItemObjects().get(4).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -186,7 +187,7 @@
                                                     <div class="checkbox ">
                                                         <input tabindex="3" type="checkbox"  name="c_choice" value="F">
                                                         <div> F </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 5 ? questionObject.getQuestionItemObjects().get(5).getContent() : ''}"></div>
+                                                        <div id="check_F" th:text="${questionObject.getQuestionItemObjects().size() > 5 ? questionObject.getQuestionItemObjects().get(5).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -194,15 +195,15 @@
                                                     <div class="checkbox ">
                                                         <input tabindex="3" type="checkbox" name="c_choice" value="G">
                                                         <div> G </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 6 ? questionObject.getQuestionItemObjects().get(6).getContent() : ''}"></div>
+                                                        <div id="check_G" th:text="${questionObject.getQuestionItemObjects().size() > 6 ? questionObject.getQuestionItemObjects().get(6).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-check  single-row hidden" id="c_H">
                                                     <div class="checkbox ">
                                                         <input tabindex="3" type="checkbox"  name="c_choice" value="H">
-                                                        < <div> A </div>
-                                                        <div th:text="${questionObject.getQuestionItemObjects().size() > 7 ? questionObject.getQuestionItemObjects().get(7).getContent() : ''}"></div>
+                                                         <div> H </div>
+                                                        <div id="check_H" th:text="${questionObject.getQuestionItemObjects().size() > 7 ? questionObject.getQuestionItemObjects().get(7).getContent() : ''}"></div>
                                                     </div>
                                                 </div>
 
@@ -211,7 +212,7 @@
 
                                         <div class="col-md-12">
                                             <!--上一题开始-->
-                                                <button class="btn btn-info pull-left" id="lastQ" type="button" th:if="${num} != 1" th:value="${num} - 1" onclick="lastNum(this.value,this)"><i class="fa fa-mail-reply">上一题</i></button>
+                                                <button class="btn btn-info pull-left" id="lastQ" type="button"  th:value="${num} - 1" onclick="nextNum(this.value,this)"><i class="fa fa-mail-reply">上一题</i></button>
                                             <!--下一题开始-->
                                                 <button class="btn btn-info pull-right" id="nextQ" type="button" th:value="${num} + 1" onclick="nextNum(this.value,this)"><i class="fa fa-mail-forward">下一题</i></button>
 
@@ -230,32 +231,55 @@
                                 <div class="panel-body">
                                     <div>
                                         <p><strong>一.单选题</strong></p>
-                                            <ul class="pagination">
-                                                <li>
-                                                    <a class="active">1</a>
-                                                </li>
-                                                <li>
-                                                    <a class="active">2</a>
-                                                </li>
-                                                <li>
-                                                    <a class="active">3</a>
-                                                </li>
-                                             </ul>
+                                           <div role="toolbar" class="btn-toolbar">
+                                               <div class="btn-group">
+                                                   <button class="btn btn-default" type="button">1</button>
+                                                   <button class="btn btn-default" type="button">2</button>
+                                                   <button class="btn btn-default" type="button">3</button>
+                                                   <button class="btn btn-default" type="button">4</button>
+                                                   <button class="btn btn-default" type="button">5</button>
+                                                   <button class="btn btn-default" type="button">6</button>
+                                                   <button class="btn btn-default" type="button">7</button>
+                                                   <button class="btn btn-default" type="button">8</button>
+                                                   <button class="btn btn-default" type="button">9</button>
+                                                   <button class="btn btn-default" type="button">10</button>
+                                                   <button class="btn btn-default" type="button">11</button>
+                                                   <button class="btn btn-default" type="button">12</button>
+                                                   <button class="btn btn-default" type="button">13</button>
+                                                   <button class="btn btn-default" type="button">14</button>
+                                                   <button class="btn btn-default" type="button">15</button>
+                                                   <button class="btn btn-default" type="button">16</button>
+                                                   <button class="btn btn-default" type="button">17</button>
+                                                   <button class="btn btn-default" type="button">18</button>
+                                                   <button class="btn btn-default" type="button">19</button>
+                                                   <button class="btn btn-default" type="button">20</button>
+                                                   <button class="btn btn-default" type="button">21</button>
+                                                   <button class="btn btn-default" type="button">22</button>
+                                                   <button class="btn btn-default" type="button">23</button>
+                                                   <button class="btn btn-default" type="button">24</button>
+                                                   <button class="btn btn-default" type="button">25</button>
+                                                   <button class="btn btn-default" type="button">26</button>
+                                                   <button class="btn btn-default" type="button">27</button>
+                                                   <button class="btn btn-default" type="button">28</button>
+                                                   <button class="btn btn-default" type="button">29</button>
+                                                   <button class="btn btn-default" type="button">30</button>
+                                                   <button class="btn btn-default" type="button">31</button>
+                                                   <button class="btn btn-default" type="button">32</button>
+                                                   <button class="btn btn-default" type="button">33</button>
+                                                   <button class="btn btn-default" type="button">34</button>
+                                                   <button class="btn btn-default" type="button">35</button>
+                                                   <button class="btn btn-default" type="button">36</button>
+                                                   <button class="btn btn-default" type="button">37</button>
+                                                   <button class="btn btn-default" type="button">38</button>
+                                                   <button class="btn btn-default" type="button">39</button>
+                                                   <button class="btn btn-default" type="button">40</button>
+                                               </div>
+                                           </div>
                                     </div>
 
                                     <div>
                                           <p><strong>二.多选题</strong></p>
-                                            <ul class="pagination">
-                                                <li>
-                                                    <a class="active">1</a>
-                                                </li>
-                                                <li>
-                                                    <a class="active">2</a>
-                                                </li>
-                                                <li>
-                                                    <a class="active">3</a>
-                                                </li>
-                                            </ul>
+
 
                                     </div>
 
@@ -293,13 +317,11 @@
     var pId = $("#pid").val()
     var moreNum = $("#singleNum").val()
     var questionType = $("#questionType").val()
-    var num = $('#num').val()
-    var len = $('#size').val()
-
     //初始化操作
     $(document).ready( function() {
         var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-
+        var len = $('#size').val()
+        var num = $('#num').val()
         if(questionType == 1){ // 单选题
             $("#s_radio").removeClass("hidden");
             for (var i = 0; i < len; i++) {
@@ -316,49 +338,40 @@
         }
         // 下一题 条件显示
         if(num == singleNum+moreNum){
+            $("#nextQ").addClass("hidden")
+        }
+
+        // 上一题 条件显示
+        if(num == 1){
             $("#lastQ").addClass("hidden")
         }
+
     })
 
-    // 获取单选框的值
-    function getRadiotVal(nameVal){
-        var inputs=document.getElementsByName(nameVal);
-        var checkVal="";
-        for(var i=0, len=inputs.length;i<len;i++){
-            if(inputs[i].checked){
-                checkVal=input[i].value;
-            }
-        }
-        return checkVal;
-    }
 
-    // 获取多选框的值
-    function getCheckBoxVal(nameVal){
-        var inputs=document.getElementsByName(nameVal);
-        var checkVal=[];
-        var k=0;//用来作checkVal数组的下标
-        for(var i=0, len=inputs.length;i<len;i++){
-            if(inputs[i].checked){
-                checkVal[k]=inputs[i].value;
-                k++;
-            }
-        }
-        return checkVal;
-    }
 
     // 下一题 并将本题所答存入数据库
     function nextNum(value,_this) {
-
         //使按钮失去焦点,不设置会导致按钮持续高亮
         _this.blur()
+
         // 获取单选框和多选框的值
+        var answerList = [];//保存数据信息
         var selects = "";
+        var doStatus = $("#status").val();
+        var currentNum =$("#num").val()
         if (questionType == 1){
-            let r = "r_choice"
-            selects = getRadiotVal(r)
+            //获取选中信息
+            $("input[name='r_choice']:checked").each(function (index) {
+               selects = $(this).val();
+               this.checked = false;
+            });
         }else if(questionType == 2){
-            let c = "c_choice"
-            selects = getCheckBoxVal(c)
+            //获取选中信息
+            $("input[name='c_choice']:checked").each(function (index) {
+                answerList[index] = $(this).val();
+                this.checked = false;
+            });
         }
         $.ajax({
             // 请求路径
@@ -370,15 +383,74 @@
             //data表示发送的数据
             data: JSON.stringify({
                 pid : pId,
-                num : value,
-                answer : selects
+                num : currentNum,
+                numNext : value,
+                answer : selects,
+                answerList : answerList,
+                isNew : doStatus               // 传回一个状态值 表示本题是否做过
             }), //定义发送请求的数据格式为JSON字符串
             contentType: "json/application",
             //定义回调响应的数据格式为JSON字符串，该属性可以省略
             dataType: "json",
             // 成功响应的结果
             success: function (data) {
-                console.log("成功")
+                // 更改隐藏域
+                $("#questionType").val(data.questionType)
+                $("#size").attr("value",data.questionObject.questionItemObjects.length)
+                $("#status").attr("value",data.status)    // 是否已经做过
+                // 更改题号
+                var num = $("#num").attr("value",data.num)
+                //改变题目
+                $('#title').attr("text",data.num+'.'+data.questionObject.titleContent)
+                    .html(data.num+'.'+data.questionObject.titleContent)
+
+                //初始化
+                $("#s_radio").addClass("hidden")
+                $("#s_checkBox").addClass("hidden")
+                $("#lastQ").removeClass("hidden")
+                $("#nextQ").removeClass("hidden")
+                var arr = ['A','B','C','D','E', 'F', 'G', 'H','I','J']
+                for (var i = 0; i<arr.length;i++){
+                    $("#c_"+arr[i]+"").addClass("hidden")
+                    $("#r_"+arr[i]+"").addClass("hidden")
+                }
+                // 获取选项个数
+                var size = data.questionObject.questionItemObjects.length
+
+                // 判断单选还是多选
+                if (data.questionType == 1){
+                    $("#s_radio").removeClass("hidden")
+                    for(var i = 0; i<size;i++){
+                        $("#r_"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
+
+                        $("#radio_"+data.questionObject.questionItemObjects[i].prefix+"")
+                        .attr("text",data.questionObject.questionItemObjects[i].content)
+                        .html(data.questionObject.questionItemObjects[i].content)
+                    }
+                }else if (data.questionType == 2){
+                    $("#s_checkBox").removeClass("hidden")
+                    for(var i = 0; i<size;i++){
+                        $("#c_"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
+
+                        $("#check_"+data.questionObject.questionItemObjects[i].prefix+"")
+                        .attr("text",data.questionObject.questionItemObjects[i].content)
+                        .html(data.questionObject.questionItemObjects[i].content)
+                    }
+                }
+
+                //设置下一题上一题id
+                $('#nextQ').attr("value",data.num+1)
+                $('#lastQ').attr("value",data.num-1)
+
+                // 下一题 条件显示
+                if(num == singleNum+moreNum){
+                    $("#nextQ").addClass("hidden")
+                }
+                // 上一题 条件显示
+                if(num == 1){
+                    $("#lastQ").addClass("hidden")
+                }
+
             },
         })
     }

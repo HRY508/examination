@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PaperDetailsVMMapper extends BaseMapper<PaperDetailsVM> {
 
-      String queryNum="SELECT pd.num , p.`single_select` ,p.more_select ,q.`question_type`,q.score,q.correct,c.`content` " +
+      String queryNum="SELECT pd.pd_id, pd.num , p.`single_select` ,p.more_select ,q.`question_type`,q.score,q.correct,c.`content` " +
               "FROM t_papaer_details pd " +
               "LEFT JOIN t_paper p ON pd.`p_id`=p.`p_id` " +
               "LEFT JOIN t_question q ON pd.`q_id`=q.id " +

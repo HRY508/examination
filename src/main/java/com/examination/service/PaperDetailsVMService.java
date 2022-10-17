@@ -10,4 +10,6 @@ import com.examination.bean.PaperDetailsVM;
 
 public interface PaperDetailsVMService extends IService<PaperDetailsVM> {
     PaperDetailsVM getOneByPIdAndNum(Integer pId, Integer num);
+
+
 }

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @TableName(value = "t_paper")
 public class Paper {
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.AUTO ,value = "p_id")
     private Integer pId;
 
     private String pName;

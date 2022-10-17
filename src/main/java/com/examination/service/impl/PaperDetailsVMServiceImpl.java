@@ -26,6 +26,12 @@ public class PaperDetailsVMServiceImpl extends ServiceImpl<PaperDetailsVMMapper,
     @Resource
     private PaperDetailsMapper paperDetailsMapper;
 
+    /**
+     * 查询下一题或上一题内容
+     * @param pId
+     * @param num
+     * @return
+     */
     @Override
     public PaperDetailsVM getOneByPIdAndNum(Integer pId, Integer num) {
         LambdaQueryWrapper<PaperDetails> queryWrapper = new LambdaQueryWrapper<>();
@@ -34,4 +40,5 @@ public class PaperDetailsVMServiceImpl extends ServiceImpl<PaperDetailsVMMapper,
         PaperDetailsVM oneByPIdAndNum = paperDetailsVMMapper.getOneByPIdAndNum(pId, num, paperDetails.getQId());
         return oneByPIdAndNum;
     }
+
 }
