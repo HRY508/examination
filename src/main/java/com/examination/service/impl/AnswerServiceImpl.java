@@ -20,10 +20,13 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer> impleme
 
     @Override
     public String ishave(Integer pdId) {
+        String checked = "";
         LambdaUpdateWrapper<Answer> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         lambdaUpdateWrapper.eq(Answer::getPdId , pdId);
         Answer answer = answerMapper.selectOne(lambdaUpdateWrapper);
-        String checked = answer.getChecked();
+        if (answer != null){
+            checked = answer.getChecked();
+        }
         return checked;
     }
 }
