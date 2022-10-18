@@ -10,6 +10,7 @@ import com.examination.bean.*;
 import com.examination.service.AnswerService;
 import com.examination.service.PaperDetailsService;
 import com.examination.service.PaperDetailsVMService;
+import com.examination.service.ScoreService;
 import com.examination.utils.GlobalUserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class FrontPaperDetailsController {
     private PaperDetailsVMService paperDetailsVMService;
     @Autowired
     private AnswerService answerService;
+    @Autowired
+    private ScoreService scoreService;
 
     @RequestMapping("/paperDetail")
     public String toPaperDetails(@RequestParam(value = "pid",defaultValue = "0",required = false)Integer pId,
@@ -46,13 +49,16 @@ public class FrontPaperDetailsController {
         PaperDetailsVM paperDetailsVM = paperDetailsVMService.getOneByPIdAndNum(pId , num);
         QuestionObject questionObject = JSONObject.parseObject(paperDetailsVM.getContent(), QuestionObject.class);
 
+        // 判断本题是否已做
+        Integer isDo = 0;
+
         model.addAttribute("questionType",paperDetailsVM.getQuestionType());
         model.addAttribute("singleNum",paperDetailsVM.getSingleSelect());
         model.addAttribute("moreNum",paperDetailsVM.getMoreSelect());
         model.addAttribute("pId",pId);
         model.addAttribute("num",num);
         model.addAttribute("questionObject",questionObject);
-        model.addAttribute("status",0);
+        model.addAttribute("status",isDo);
         return "user/paper_details";
     }
 
@@ -88,10 +94,11 @@ public class FrontPaperDetailsController {
             // 将本题存入数据库
             Answer answer = new Answer();
             answer.setPdId(p.getPdId()); // 本题的pdId
+            answer.setPId(pId);
             // 单选
             if (!"".equals(single) && "".equals(more)){
                 answer.setChecked(single);
-                answer.setUser_id(GlobalUserUtil.getUser().getId());
+                answer.setUserId(GlobalUserUtil.getUser().getId());
                 if(single.equals(p.getCorrect())){
                     answer.setValue(p.getScore());
                 }else{
@@ -101,9 +108,9 @@ public class FrontPaperDetailsController {
                 answerService.save(answer);
             }else if ("".equals(single) && !"".equals(more)) { // 多选
                 answer.setChecked(more);
-                answer.setUser_id(GlobalUserUtil.getUser().getId());
-                if (more.equals(paperDetailsVM.getCorrect())) {
-                    answer.setValue(paperDetailsVM.getScore());
+                answer.setUserId(GlobalUserUtil.getUser().getId());
+                if (more.equals(p.getCorrect())) {
+                    answer.setValue(p.getScore());
                 } else {
                     answer.setValue(0);
                 }
@@ -115,7 +122,7 @@ public class FrontPaperDetailsController {
             LambdaUpdateWrapper<Answer> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
             lambdaUpdateWrapper.eq(Answer::getPdId,p.getPdId());
             if (!"".equals(single) && "".equals(more)){
-                if(single.equals(paperDetailsVM.getCorrect())){
+                if(single.equals(p.getCorrect())){
                      value = p.getScore();
                 }else{
                     value = 0;
@@ -123,7 +130,7 @@ public class FrontPaperDetailsController {
                 lambdaUpdateWrapper.set(Answer::getChecked,single).set(Answer::getValue,value);
                 answerService.update(lambdaUpdateWrapper);
             }else if ("".equals(single) && !"".equals(more)){
-                if (more.equals(paperDetailsVM.getCorrect())) {
+                if (more.equals(p.getCorrect())) {
                    value = p.getScore();
                 } else {
                     value = 0;
@@ -133,18 +140,103 @@ public class FrontPaperDetailsController {
             }
         }
 
+        HashMap<String,Object> rep = new HashMap<>();
+
         // 判断下一题或上一题是否已做
         Integer isDo = 0;
         String checked = answerService.ishave(paperDetailsVM.getPdId());
         if (!"".equals(checked) && checked != null){
-            isDo = 1;
+             isDo = 1;
+             rep.put("checked",checked);
         }
 
-        HashMap<String,Object> rep = new HashMap<>();
         rep.put("status",isDo);
         rep.put("questionType",paperDetailsVM.getQuestionType());
         rep.put("num",numNext);
         rep.put("questionObject",questionObject);
+        return rep;
+    }
+
+
+    @ResponseBody
+    @PostMapping("/paperFinish")
+    public Object finishExam(@RequestBody String req){
+        Integer userId = GlobalUserUtil.getUser().getId();
+
+        Integer pId = Integer.parseInt((String) JSONObject.parseObject(req).get("pid"));
+        Integer currentNum = Integer.parseInt((String) JSONObject.parseObject(req).get("num")); // 当前题号
+        Integer doStatus = Integer.parseInt((String) JSONObject.parseObject(req).get("isNew"));
+        String single = (String) JSONObject.parseObject(req).getString("answer");
+        String more ="";
+        JSONArray jsonArray = JSON.parseObject(req).getJSONArray("answerList");
+        for (int i = 0; i < jsonArray.size(); i++){
+            more = more + jsonArray.get(i) +"";
+        }
+
+        PaperDetailsVM p = paperDetailsVMService.getOneByPIdAndNum(pId,currentNum); // 查本题
+        if (doStatus == 0){ // 未做过
+            Answer answer = new Answer();
+            answer.setPId(pId);
+            answer.setPdId(p.getPdId()); // 本题的pdId
+            // 单选
+            if (!"".equals(single) && "".equals(more)){
+                answer.setChecked(single);
+                answer.setUserId(GlobalUserUtil.getUser().getId());
+                if(single.equals(p.getCorrect())){
+                    answer.setValue(p.getScore());
+                }else{
+                    answer.setValue(0);
+                }
+                // 将本题存入数据库
+                answerService.save(answer);
+            }else if ("".equals(single) && !"".equals(more)) { // 多选
+                answer.setChecked(more);
+                answer.setUserId(GlobalUserUtil.getUser().getId());
+                if (more.equals(p.getCorrect())) {
+                    answer.setValue(p.getScore());
+                } else {
+                    answer.setValue(0);
+                }
+                answerService.save(answer);
+            }
+        }else if (doStatus == 1){ // 已做过
+            // 将本题更新
+            Integer value = 0;
+            LambdaUpdateWrapper<Answer> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+            lambdaUpdateWrapper.eq(Answer::getPdId,p.getPdId());
+            if (!"".equals(single) && "".equals(more)){
+                if(single.equals(p.getCorrect())){
+                    value = p.getScore();
+                }else{
+                    value = 0;
+                }
+                lambdaUpdateWrapper.set(Answer::getChecked,single).set(Answer::getValue,value);
+                answerService.update(lambdaUpdateWrapper);
+            }else if ("".equals(single) && !"".equals(more)){
+                if (more.equals(p.getCorrect())) {
+                    value = p.getScore();
+                } else {
+                    value = 0;
+                }
+                lambdaUpdateWrapper.set(Answer::getChecked,more).set(Answer::getValue,value);
+                answerService.update(lambdaUpdateWrapper);
+            }
+        }
+        // 总得分
+        Integer totalScore = answerService.getTotalScore(pId , userId);
+        // 存入得分表
+        Score score = new Score();
+        score.setMark(totalScore);
+        score.setPId(pId);
+        score.setUserId(userId);
+        boolean save = scoreService.save(score);
+
+        HashMap<String,Object> rep = new HashMap<>();
+        rep.put("isCheck" , 0);
+        rep.put("score",totalScore);
+        if (save){
+            rep.put("isCheck" , 1);
+        }
         return rep;
     }
 

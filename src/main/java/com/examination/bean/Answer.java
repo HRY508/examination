@@ -20,7 +20,9 @@ public class Answer {
     @TableId(type = IdType.AUTO,value = "id")
     private Integer id;
 
-    private Integer user_id;
+    private Integer userId;
+
+    private Integer pId;
 
     private Integer PdId;
 

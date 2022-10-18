@@ -1,6 +1,6 @@
 package com.examination.bean;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @TableName(value = "t_score")
 public class Score {
-
+    @TableId(value = "s_id", type = IdType.AUTO)
     private Integer sId;
 
     private Integer userId; // 用户id
@@ -28,6 +28,6 @@ public class Score {
     private Integer mark; // 分数
 
     private LocalDateTime examTime;
-
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 }

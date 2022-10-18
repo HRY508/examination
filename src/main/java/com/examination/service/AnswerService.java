@@ -10,4 +10,6 @@ import com.examination.bean.Answer;
 
 public interface AnswerService extends IService<Answer> {
     String ishave(Integer pdId);
+
+    Integer getTotalScore(Integer pId, Integer id);
 }

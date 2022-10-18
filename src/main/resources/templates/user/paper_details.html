@@ -49,6 +49,9 @@
                         <input class="hidden" id="questionType" th:value="${questionType}">
                         <input class="hidden" id="num" th:value="${num}">
                         <input class="hidden" id="status" th:value="${status}">
+                        <!--  从ajax响应中获取-->
+                        <input class="hidden" id="checkAnswer" value="">
+
 
                         <!--                                隐藏域-->
 
@@ -233,36 +236,36 @@
                                         <p><strong>一.单选题</strong></p>
                                            <div role="toolbar" class="btn-toolbar">
                                                <div class="btn-group">
-                                                   <button class="btn btn-default" type="button">1</button>
-                                                   <button class="btn btn-default" type="button">2</button>
-                                                   <button class="btn btn-default" type="button">3</button>
-                                                   <button class="btn btn-default" type="button">4</button>
-                                                   <button class="btn btn-default" type="button">5</button>
-                                                   <button class="btn btn-default" type="button">6</button>
-                                                   <button class="btn btn-default" type="button">7</button>
-                                                   <button class="btn btn-default" type="button">8</button>
-                                                   <button class="btn btn-default" type="button">9</button>
-                                                   <button class="btn btn-default" type="button">10</button>
-                                                   <button class="btn btn-default" type="button">11</button>
-                                                   <button class="btn btn-default" type="button">12</button>
-                                                   <button class="btn btn-default" type="button">13</button>
-                                                   <button class="btn btn-default" type="button">14</button>
-                                                   <button class="btn btn-default" type="button">15</button>
-                                                   <button class="btn btn-default" type="button">16</button>
-                                                   <button class="btn btn-default" type="button">17</button>
-                                                   <button class="btn btn-default" type="button">18</button>
-                                                   <button class="btn btn-default" type="button">19</button>
-                                                   <button class="btn btn-default" type="button">20</button>
-                                                   <button class="btn btn-default" type="button">21</button>
-                                                   <button class="btn btn-default" type="button">22</button>
-                                                   <button class="btn btn-default" type="button">23</button>
-                                                   <button class="btn btn-default" type="button">24</button>
-                                                   <button class="btn btn-default" type="button">25</button>
-                                                   <button class="btn btn-default" type="button">26</button>
-                                                   <button class="btn btn-default" type="button">27</button>
-                                                   <button class="btn btn-default" type="button">28</button>
-                                                   <button class="btn btn-default" type="button">29</button>
-                                                   <button class="btn btn-default" type="button">30</button>
+                                                   <button id="btn_1" class="btn btn-default" type="button">1</button>
+                                                   <button id="btn_2" class="btn btn-default" type="button">2</button>
+                                                   <button id="btn_3" class="btn btn-default" type="button">3</button>
+                                                   <button id="btn_4" class="btn btn-default" type="button">4</button>
+                                                   <button id="btn_5" class="btn btn-default" type="button">5</button>
+                                                   <button id="btn_6" class="btn btn-default" type="button">6</button>
+                                                   <button id="btn_7" class="btn btn-default" type="button">7</button>
+                                                   <button id="btn_8" class="btn btn-default" type="button">8</button>
+                                                   <button id="btn_9" class="btn btn-default" type="button">9</button>
+                                                   <button id="btn_10" class="btn btn-default" type="button">10</button>
+                                                   <button id="btn_11" class="btn btn-default" type="button">11</button>
+                                                   <button id="btn_12" class="btn btn-default" type="button">12</button>
+                                                   <button id="btn_13" class="btn btn-default" type="button">13</button>
+                                                   <button id="btn_14" class="btn btn-default" type="button">14</button>
+                                                   <button id="btn_15" class="btn btn-default" type="button">15</button>
+                                                   <button id="btn_16" class="btn btn-default" type="button">16</button>
+                                                   <button id="btn_17" class="btn btn-default" type="button">17</button>
+                                                   <button id="btn_18" class="btn btn-default" type="button">18</button>
+                                                   <button id="btn_19" class="btn btn-default" type="button">19</button>
+                                                   <button id="btn_20" class="btn btn-default" type="button">20</button>
+                                                   <button id="btn_21" class="btn btn-default" type="button">21</button>
+                                                   <button id="btn_22" class="btn btn-default" type="button">22</button>
+                                                   <button id="btn_23" class="btn btn-default" type="button">23</button>
+                                                   <button id="btn_24" class="btn btn-default" type="button">24</button>
+                                                   <button id="btn_25" class="btn btn-default" type="button">25</button>
+                                                   <button id="btn_26" class="btn btn-default" type="button">26</button>
+                                                   <button id="btn_27" class="btn btn-default" type="button">27</button>
+                                                   <button id="btn_28" class="btn btn-default" type="button">28</button>
+                                                   <button id="btn_29" class="btn btn-default" type="button">29</button>
+                                                   <button id="btn_30" class="btn btn-default" type="button">30</button>
                                                    <button class="btn btn-default" type="button">31</button>
                                                    <button class="btn btn-default" type="button">32</button>
                                                    <button class="btn btn-default" type="button">33</button>
@@ -282,10 +285,11 @@
 
 
                                     </div>
-
-                                    <div style="text-align: center">
-                                        <button class="btn btn-sm btn-success" type="button">提交</button>
-                                    </div>
+                                    <form>
+                                        <div style="text-align: center">
+                                            <button class="btn btn-sm btn-success" type="button" href="javascript:;" onclick="finishExam()">提交</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -316,11 +320,12 @@
     var singleNum = $("#singleNum").val()
     var pId = $("#pid").val()
     var moreNum = $("#singleNum").val()
-    var questionType = $("#questionType").val()
+
     //初始化操作
     $(document).ready( function() {
         var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
         var len = $('#size').val()
+        var questionType = $("#questionType").val()
         var num = $('#num').val()
         if(questionType == 1){ // 单选题
             $("#s_radio").removeClass("hidden");
@@ -349,23 +354,21 @@
     })
 
 
-
-    // 下一题 并将本题所答存入数据库
+    // 下一题 上一题 题目导航  并将本题所答存入数据库
     function nextNum(value,_this) {
         //使按钮失去焦点,不设置会导致按钮持续高亮
         _this.blur()
 
         // 获取单选框和多选框的值
         var answerList = [];//保存数据信息
-        var selects = "";
+        var answers = "";
         var doStatus = $("#status").val();
+        var questionType = $("#questionType").val()
         var currentNum =$("#num").val()
         if (questionType == 1){
             //获取选中信息
-            $("input[name='r_choice']:checked").each(function (index) {
-               selects = $(this).val();
-               this.checked = false;
-            });
+            answers = $("input[name='r_choice']:checked").val();
+            $("input[name='r_choice']:checked").attr("checked",false);
         }else if(questionType == 2){
             //获取选中信息
             $("input[name='c_choice']:checked").each(function (index) {
@@ -385,8 +388,8 @@
                 pid : pId,
                 num : currentNum,
                 numNext : value,
-                answer : selects,
-                answerList : answerList,
+                answer : answers,   // 单选
+                answerList : answerList,  // 多选
                 isNew : doStatus               // 传回一个状态值 表示本题是否做过
             }), //定义发送请求的数据格式为JSON字符串
             contentType: "json/application",
@@ -397,6 +400,7 @@
                 // 更改隐藏域
                 $("#questionType").val(data.questionType)
                 $("#size").attr("value",data.questionObject.questionItemObjects.length)
+                $("#checkAnswer").attr("value",data.checked)
                 $("#status").attr("value",data.status)    // 是否已经做过
 
                 // 更改题号
@@ -410,6 +414,7 @@
                 $("#s_checkBox").addClass("hidden")
                 $("#lastQ").removeClass("hidden")
                 $("#nextQ").removeClass("hidden")
+
                 var arr = ['A','B','C','D','E', 'F', 'G', 'H','I','J']
                 for (var i = 0; i<arr.length;i++){
                     $("#c_"+arr[i]+"").addClass("hidden")
@@ -419,7 +424,7 @@
                 var size = data.questionObject.questionItemObjects.length
 
                 // 判断单选还是多选
-                if (data.questionType == 1){
+                if (data.questionType == 1){ //单选
                     $("#s_radio").removeClass("hidden")
                     for(var i = 0; i<size;i++){
                         $("#r_"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
@@ -428,7 +433,11 @@
                         .attr("text",data.questionObject.questionItemObjects[i].content)
                         .html(data.questionObject.questionItemObjects[i].content)
                     }
-                }else if (data.questionType == 2){
+                    // 单选框数据回显
+                    if (data.status == 1){
+                        $(':radio[name=\'r_choice\'][value=\'' + data.checked+ '\']').prop('checked', 'checked');
+                    }
+                }else if (data.questionType == 2){ //多选
                     $("#s_checkBox").removeClass("hidden")
                     for(var i = 0; i<size;i++){
                         $("#c_"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
@@ -436,6 +445,23 @@
                         $("#check_"+data.questionObject.questionItemObjects[i].prefix+"")
                         .attr("text",data.questionObject.questionItemObjects[i].content)
                         .html(data.questionObject.questionItemObjects[i].content)
+                    }
+                    // 多选框数据回显
+                    if (data.status == 1) {
+                        //获得所要回显的值
+                        var checkeds = $("#checkAnswer").val();
+                        //拆分为字符串数组
+                        var checkArray =checkeds.split("");
+                        //获得所有的复选框对象
+                        var checkBoxAll = $("input[name='c_choice']");
+
+                        $.each(checkArray , function (index , expressValue) {
+                            checkBoxAll.each(function () {
+                                if ($(this).val() == expressValue){
+                                    $(this).attr("checked",true)
+                                }
+                            })
+                        })
                     }
                 }
 
@@ -457,6 +483,53 @@
     }
 
 
+    // 提交
+    function finishExam() {
+        if (confirm("是否要提交?")){
+            // 获取单选框和多选框的值
+            var answerList = [];//保存数据信息
+            var answers = "";
+            var questionType = $("#questionType").val()
+            var currentNum =$("#num").val()
+            var doStatus = $("#status").val();
+            console.log("进入了提交")
+            if (questionType == 1){
+                //获取选中信息
+                answers = $("input[name='r_choice']:checked").val();
+                $("input[name='r_choice']:checked").attr("checked",false);
+            }else if(questionType == 2){
+                //获取选中信息
+                $("input[name='c_choice']:checked").each(function (index) {
+                    answerList[index] = $(this).val();
+                    this.checked = false;
+                });
+            }
+            $.ajax({
+                url : "/user/paper/paperFinish",
+                method : "POST",
+                async : true,
+                data : JSON.stringify({
+                    pid : pId,
+                    num : currentNum,
+                    answer : answers,   // 单选
+                    answerList : answerList,  // 多选
+                    isNew : doStatus           // 传回一个状态值 表示本题是否做过
+                }),
+                contentType: "json/application",
+                dataType: "json",
+                success : function (data) {
+                    if (data.isCheck){
+                        alert("考试提交成功，您的总成绩为"+data.score+"!")
+                        window.location.href = "/user/paper"
+                    }else{
+                        alert("提交失败，请重试！")
+                    }
+                }
+            })
+        }else{
+            return
+        }
+    }
 
 
 

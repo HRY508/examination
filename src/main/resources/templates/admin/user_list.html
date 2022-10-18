@@ -117,7 +117,7 @@
                                         <a href="#updateModal" data-toggle="modal" th:onclick="values([[${user.id}]],[[${user.userName}]],[[${user.password}]],[[${user.uId}]],[[${user.realName}]],
                                     [[${user.sex}]],[[${user.profession}]],[[${user.perms}]])">edit</a>
                                         <a  th:href="@{/admin/delete/{id}(id=${user.id})}"
-                                           onclick="return del()" th:value="${user.id}" value="1">Delete
+                                           onclick="return del()" th:value="${user.id}">Delete
                                         </a>
                                     </td>
                                 </tr>
