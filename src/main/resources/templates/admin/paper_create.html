@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+    <title>试卷创编</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!--dashboard calendar-->
+    <link href="/css/clndr.css" rel="stylesheet">
+
+    <!--pickers css-->
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap-datepicker/css/datepicker-custom.css" />
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap-timepicker/css/timepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap-datetimepicker/css/datetimepicker-custom.css" />
+
+    <!--common-->
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+    <script type="text/css">
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+            cursor: not-allowed;
+            background-color: #fff;
+            opacity: 1;
+            text-align: center;
+        }
+    </script>
+</head>
+
+<body class="sticky-header">
+
+<!--左侧开始-->
+<div th:replace="~{/admin/commons/common :: commonleft}"></div>
+<!--左侧结束-->
+
+<!--主页面开始-->
+<div class="main-content" >
+    <!--头部开始-->
+    <div th:replace="~{/admin/commons/common :: commonheader}"></div>
+    <!--头部结束-->
+
+
+    <!--当前位置介绍开始-->
+    <div class="page-heading">
+        <h3>
+            试卷创编
+        </h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#">卷库管理</a>
+            </li>
+            <li class="active"> 试卷创编 </li>
+        </ul>
+    </div>
+    <!-- 当前位置介绍结束-->
+
+
+    <!--    body wrapper start-->
+    <div class="wrapper">
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    随机创建......
+                    <span class="tools pull-right">
+                                <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                <a class="fa fa-times" href="javascript:;"></a>
+                             </span>
+                </header>
+                <div class="panel-body">
+                    <form class="form-horizontal" id="for" th:action="@{/admin/createPaperOpt}">
+
+                        <div class="form-group ">
+                            <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" name="paperName" id="paperName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">单选题数</label>
+                            <div class="col-md-4">
+                                <div id="single">
+                                    <div class="input-group input-small">
+<!--                                        设置只能输入数字-->
+                                        <input type="text" class="spinner-input form-control" maxlength="3" value="0" name="singleSelectNumber" id="singleSelectNumber"
+                                               onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                        <div class="spinner-buttons input-group-btn btn-group-vertical">
+                                            <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber($('#singleSelectNumber'))">
+                                                <i class="fa fa-angle-up"></i>
+                                            </button>
+                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber($('#singleSelectNumber'))">
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+<!--                                <label class="control-label col-md-1">单选分值</label>-->
+<!--                                <div class="col-md-4">-->
+<!--                                    <div id="singleScore">-->
+<!--                                        <div class="input-group input-small">-->
+<!--                                            <input type="text" class="spinner-input form-control" maxlength="3" value="1" name="singleSelectScore" id="singleSelectScore" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >-->
+<!--                                            <div class="spinner-buttons input-group-btn btn-group-vertical">-->
+<!--                                                <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incScore($('#singleSelectScore'))">-->
+<!--                                                    <i class="fa fa-angle-up"></i>-->
+<!--                                                </button>-->
+<!--                                                <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disScore($('#singleSelectScore'))">-->
+<!--                                                    <i class="fa fa-angle-down"></i>-->
+<!--                                                </button>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                            </div>-->
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-1">多选题数</label>
+                            <div class="col-md-4">
+                                <div id="moreSelectNum">
+                                    <div class="input-group input-small">
+                                        <input type="text" class="spinner-input form-control" maxlength="3" value="0" name="moreNumber" id="moreNumber" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                        <div class="spinner-buttons input-group-btn btn-group-vertical">
+                                            <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber($('#moreNumber'))">
+                                                <i class="fa fa-angle-up"></i>
+                                            </button>
+                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber($('#moreNumber'))">
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+<!--                            <label class="control-label col-md-1">多选题分值</label>-->
+<!--                            <div class="col-md-4">-->
+<!--                                <div id="moreSelectD">-->
+<!--                                    <div class="input-group input-small">-->
+<!--                                        <input type="text" class="spinner-input form-control" maxlength="3" value="1" name="moreSelectScore" id="moreSelectScore" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">-->
+<!--                                        <div class="spinner-buttons input-group-btn btn-group-vertical">-->
+<!--                                            <button type="button" class="btn spinner-up btn-xs btn-default"  onclick="incScore($('#moreSelectScore'))">-->
+<!--                                                <i class="fa fa-angle-up"></i>-->
+<!--                                            </button>-->
+<!--                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disScore($('#moreSelectScore'))">-->
+<!--                                                <i class="fa fa-angle-down"></i>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">判断题数</label>
+                            <div class="col-md-4">
+                                <div >
+                                    <div class="input-group input-small">
+                                        <input type="text" class="spinner-input form-control" maxlength="3" value="0" name="judgeNumber" id="judgeNumber" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                        <div class="spinner-buttons input-group-btn btn-group-vertical">
+                                            <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber($('#judgeNumber'))">
+                                                <i class="fa fa-angle-up"></i>
+                                            </button>
+                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber($('#judgeNumber'))">
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+<!--                            <label class="control-label col-md-1">判断题分值</label>-->
+<!--                            <div class="col-md-4">-->
+<!--                                <div id="judgeScoreD">-->
+<!--                                    <div class="input-group input-small">-->
+<!--                                        <input type="text" class="spinner-input form-control" maxlength="3" value="1" name="judgeScore" id="judgeScore" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">-->
+<!--                                        <div class="spinner-buttons input-group-btn btn-group-vertical">-->
+<!--                                            <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incScore($('#judgeScore'))">-->
+<!--                                                <i class="fa fa-angle-up"></i>-->
+<!--                                            </button>-->
+<!--                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disScore($('#judgeScore'))">-->
+<!--                                                <i class="fa fa-angle-down"></i>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-1"> 开始时间</label>
+                            <div class="col-md-4">
+                                <div class="input-group date form_datetime-component">
+                                    <input type="text" class="form-control" readonly="" size="16" name="startTime" id="startTime">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">结束时间</label>
+                            <div class="col-md-4">
+                                <div class="input-group date form_datetime-component">
+                                    <input type="text" class="form-control" readonly="" size="16" name="endTime" id="endTime">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" style="float:right">
+                            <a target="_blank" href="#">Tips：随机从题库中抽取题目进行创建，且题目项不会重复，注意题目数最多100题。</a>
+                            <a class="btn btn-success btn-sm " style="float:right" onclick="createPaper()"><i class="fa fa-check"></i> 开始创建 </a>
+                        </div>
+
+                        <a href="#myModal1" data-toggle="modal" class="btn btn-warning hidden" id="tip1">
+                            提示按钮
+                        </a>
+                    </form>
+                    <!--                        弹出框开始-->
+                    <div class="col-md-12 ">
+                        <a href="#myModal2" data-toggle="modal" class="btn btn-warning hidden" id="tip2">
+                            提示按钮
+                        </a>
+                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header" id="modelColor" style="background:#65CEA7">
+                                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                        <h4 class="modal-title">提示</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="paperCreateTips"></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default hidden" data-dismiss="modal" onclick="toLook()" id="toLook">去查看</button>
+                                        <button type="button" class="btn btn-default hidden" data-dismiss="modal" id="cancel">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<!--                    弹出框结束-->
+<!--                    隐藏域-->
+                    <input id="successPaperName" class="hidden">
+                </div>
+            </section>
+        </div>
+    </div>
+    <!--    body wrapper end-->
+
+    <!--footer section start-->
+    <footer>
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--footer section end-->
+
+
+</div>
+<!--主页面结束-->
+
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.nicescroll.js"></script>
+
+<!--pickers plugins-->
+<script type="text/javascript" src="/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/js/bootstrap-daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="/js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<!--pickers initialization-->
+<script src="/js/pickers-init.js"></script>
+
+<!--spinner-->
+<script type="text/javascript" src="/js/fuelux/js/spinner.min.js"></script>
+<script src="/js/spinner-init.js"></script>
+
+
+<!--表单校验-->
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script src="js/validation-init.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/js/scripts.js"></script>
+<script type="text/javascript">
+
+    function createPaper() {
+        var paperName = $('#paperName').val()
+        var singleSelectNumber = $('#singleSelectNumber').val()
+        var moreSelectNumber = $('#moreNumber').val()
+        var judgeNumber = $('#judgeNumber').val()
+        var startTime0 = $('#startTime').val()
+        var endTime0 = $('#endTime').val()
+        startTime = dateFormat(startTime0)
+        endTime = dateFormat(endTime0)
+        alert(singleSelectNumber)
+        alert(moreSelectNumber)
+        var sum = parseInt(singleSelectNumber) + parseInt(moreSelectNumber)
+        if(parseInt(singleSelectNumber) < 1 || parseInt(moreSelectNumber) < 1){
+            $('#toLook').addClass('hidden')
+            $('#cancel').text('确定').removeClass('hidden')
+            if(parseInt(singleSelectNumber) < 1){
+                $('#modelColor').attr('style','background : #bb1f1f')
+                $('#paperCreateTips').text('单选题数小于1，无法创建！')
+                $('#tip2').click()
+            }
+            else if(parseInt(moreSelectNumber) < 1){
+                $('#modelColor').attr('style','background : #bb1f1f')
+                $('#paperCreateTips').text('多选题数小于1，无法创建！')
+                $('#tip2').click()
+            }
+            else {
+                $('#modelColor').attr('style','background : #bb1f1f')
+                $('#paperCreateTips').text('题数过少，无法创建！')
+                $('#tip2').click()
+            }
+        }
+        else if(sum > 100){
+            $('#cancel').text('确定').removeClass('hidden')
+            $('#modelColor').attr('style','background : #bb1f1f')
+            $('#paperCreateTips').text('试题数大于100，无法创建！')
+            $('#tip2').click()
+        }
+        else{
+            $.ajax({
+                //请求路径
+                url: "/admin/createPaperOperate",
+                //请求类型
+                type: "POST",
+                //data表示发送的数据
+                data: JSON.stringify({
+                    paperName:paperName,
+                    singleSelectNumber:singleSelectNumber,
+                    moreSelectNumber:moreSelectNumber,
+                    judgeNumber:judgeNumber,
+                    startTime:startTime,
+                    endTime:endTime
+                }), //定义发送请求的数据格式为JSON字符串
+                contentType: "application/json;charset=utf-8",
+                //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                dataType: "json",
+                //成功响应的结果
+                success: function (data) {
+                    if(data.code==200){
+                        $('#toLook').removeClass('hidden')
+                        $('#cancel').text('确定').removeClass('hidden')
+                        alert("success")
+                        $('#modelColor').attr('style','background : #65CEA7')
+                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建成功！')
+                        $('#tip2').click()
+                    }
+                    if(data.code == 500){
+                        $('#modelColor').attr('style','background : #bb1f1f')
+                        if(data.hasPaper == true){
+                            $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因：该试卷已存在，不可重复创建。')
+                            $('#tip2').click()
+                            $('#toLook').removeClass('hidden')
+                            $('#cancel').text('确定').removeClass('hidden')
+                        }
+                        else if (data.hasError!=null){
+                            $('#toLook').addClass('hidden')
+                            $('#cancel').text('确定').removeClass('hidden')
+                            $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因:'+data.hasError)
+                            $('#tip2').click()
+                        }
+                    }
+                },
+
+            })
+        }
+    }
+
+    function toLook() {
+        var pName = $('#successPaperName').val()
+        window.location.replace('/admin/toPaperList'+'?searchName='+pName)
+    }
+    
+    //日期格式化
+    function dateFormat(date) {
+        var arr = date.split(' ')
+        var dd = arr[0]
+        var monthArr = ['January','February','March','April','May','June','July','August','September','October','November','December']
+        var month = 0
+        var year = arr[2]
+        var time = arr[4]+':00'
+        for(var i =0; i<12; i++){
+            if(arr[1]==monthArr[i]){
+                month = month+i+1
+            }
+        }
+        var Time =  year+'-'+month+'-'+dd+'T'+time
+        return Time;
+    }
+
+    //增加题目数
+    function incNumber(object){
+        if (object.val()==null||object.val()==''){
+            object.attr('value',0)
+        }
+        //获取数值，转int
+        var num = parseInt(object.val())
+        num = num+5
+        //题数[0,100]范围
+        if(num >= 0 && num <= 100){
+            object.attr('value',num)
+        }
+
+    }
+    //减少题目数
+    function disNumber(object){
+        if (object.val()==null||object.val()==''){
+            object.attr('value',0)
+        }
+        //获取数值，转int
+        var num = parseInt(object.val())
+        num = num-5
+        if(num >= 0){
+            object.attr('value',num)
+        }
+    }
+    //增加分数
+    function incScore(object) {
+        if (object.val()==null||object.val()==''){
+            object.attr('value',0)
+        }
+        //获取数值，转int
+        var score = parseInt(object.val())
+        score = score+1
+        //题数[0,20]范围
+        if(score >= 0){
+            object.attr('value',score)
+        }
+    }
+    //减少分数
+    function disScore(object) {
+        if (object.val()==null||object.val()==''){
+            object.attr('value',0)
+        }
+        //获取数值，转int
+        var score = parseInt(object.val())
+        score = score-1
+        //题数[0,20]范围
+        if(score >= 0){
+            object.attr('value',score)
+        }
+    }
+
+
+    jQuery(document).ready(function() {
+        EditableTable.init();
+    });
+    document.getElementById("paper-create").className="active";
+    document.getElementById("menu3").className="menu-list nav-active";
+</script>
+
+</body>
+
+
+</html>
+<script>
+    import Form_advanced_components from "./form_advanced_components.html";
+    export default {
+        components: {Form_advanced_components}
+    }
+</script>

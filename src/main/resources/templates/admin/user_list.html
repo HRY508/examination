@@ -365,7 +365,6 @@
                 $("input[name='id[]']").each(function() {
                     if (this.checked == true) {
                         ids += this.value + ",";
-
                     }
                 });
                 window.location.replace("/admin/deleteCounts?ids="+ids);
