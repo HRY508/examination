@@ -12,6 +12,7 @@ import com.examination.service.PaperDetailsService;
 import com.examination.service.PaperDetailsVMService;
 import com.examination.service.ScoreService;
 import com.examination.utils.GlobalUserUtil;
+import com.examination.utils.LocalDateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +53,10 @@ public class FrontPaperDetailsController {
         // 判断本题是否已做
         Integer isDo = 0;
 
+        // 转换时间格式 将结束时间转换为字符串
+        String endTime = LocalDateUtil.localDateToString(paperDetailsVM.getEndTime());
+
+        model.addAttribute("endTime",endTime);
         model.addAttribute("questionType",paperDetailsVM.getQuestionType());
         model.addAttribute("singleNum",paperDetailsVM.getSingleSelect());
         model.addAttribute("moreNum",paperDetailsVM.getMoreSelect());
@@ -85,6 +90,7 @@ public class FrontPaperDetailsController {
         }
 
         log.info(more);
+        Integer isSaveAndUpdate = 0; // 是否添加和更新
 
         PaperDetailsVM paperDetailsVM = paperDetailsVMService.getOneByPIdAndNum(pId , numNext); // 下一道或上一道题的内容
         QuestionObject questionObject = JSONObject.parseObject(paperDetailsVM.getContent(), QuestionObject.class);
@@ -96,7 +102,7 @@ public class FrontPaperDetailsController {
             answer.setPdId(p.getPdId()); // 本题的pdId
             answer.setPId(pId);
             // 单选
-            if (!"".equals(single) && "".equals(more)){
+            if ((!"".equals(single) && single != null)  && "".equals(more)){
                 answer.setChecked(single);
                 answer.setUserId(GlobalUserUtil.getUser().getId());
                 if(single.equals(p.getCorrect())){
@@ -106,7 +112,8 @@ public class FrontPaperDetailsController {
                 }
                 // 将本题存入数据库
                 answerService.save(answer);
-            }else if ("".equals(single) && !"".equals(more)) { // 多选
+                isSaveAndUpdate = 1;
+            }else if (("".equals(single) || single == null) && !"".equals(more)) { // 多选
                 answer.setChecked(more);
                 answer.setUserId(GlobalUserUtil.getUser().getId());
                 if (more.equals(p.getCorrect())) {
@@ -115,6 +122,7 @@ public class FrontPaperDetailsController {
                     answer.setValue(0);
                 }
                 answerService.save(answer);
+                isSaveAndUpdate = 1;
             }
         }else if (doStatus == 1){
             // 将本题更新
@@ -129,6 +137,7 @@ public class FrontPaperDetailsController {
                 }
                 lambdaUpdateWrapper.set(Answer::getChecked,single).set(Answer::getValue,value);
                 answerService.update(lambdaUpdateWrapper);
+                isSaveAndUpdate = 1;
             }else if ("".equals(single) && !"".equals(more)){
                 if (more.equals(p.getCorrect())) {
                    value = p.getScore();
@@ -137,6 +146,7 @@ public class FrontPaperDetailsController {
                 }
                 lambdaUpdateWrapper.set(Answer::getChecked,more).set(Answer::getValue,value);
                 answerService.update(lambdaUpdateWrapper);
+                isSaveAndUpdate = 1;
             }
         }
 
@@ -150,6 +160,7 @@ public class FrontPaperDetailsController {
              rep.put("checked",checked);
         }
 
+        rep.put("isSave",isSaveAndUpdate);
         rep.put("status",isDo);
         rep.put("questionType",paperDetailsVM.getQuestionType());
         rep.put("num",numNext);
@@ -158,6 +169,11 @@ public class FrontPaperDetailsController {
     }
 
 
+    /**
+     * 提交
+     * @param req
+     * @return
+     */
     @ResponseBody
     @PostMapping("/paperFinish")
     public Object finishExam(@RequestBody String req){
@@ -179,7 +195,7 @@ public class FrontPaperDetailsController {
             answer.setPId(pId);
             answer.setPdId(p.getPdId()); // 本题的pdId
             // 单选
-            if (!"".equals(single) && "".equals(more)){
+            if ((!"".equals(single) && single != null) && "".equals(more)){
                 answer.setChecked(single);
                 answer.setUserId(GlobalUserUtil.getUser().getId());
                 if(single.equals(p.getCorrect())){
@@ -189,7 +205,7 @@ public class FrontPaperDetailsController {
                 }
                 // 将本题存入数据库
                 answerService.save(answer);
-            }else if ("".equals(single) && !"".equals(more)) { // 多选
+            }else if (("".equals(single) || single == null) && !"".equals(more)) { // 多选
                 answer.setChecked(more);
                 answer.setUserId(GlobalUserUtil.getUser().getId());
                 if (more.equals(p.getCorrect())) {

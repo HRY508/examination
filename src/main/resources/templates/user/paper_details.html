@@ -33,9 +33,8 @@
                     <div class="panel-heading">
                         正在考试......
 
-                        <span class="tools pull-right">
-                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                        <a href="javascript:;" class="fa fa-times"></a>
+                        <span class="pull-right">
+                                     <a id="countTime" value=""></a>
                         </span>
                     </div>
 
@@ -49,6 +48,7 @@
                         <input class="hidden" id="questionType" th:value="${questionType}">
                         <input class="hidden" id="num" th:value="${num}">
                         <input class="hidden" id="status" th:value="${status}">
+                        <input class="hidden" id="endTime" th:value="${endTime}">
                         <!--  从ajax响应中获取-->
                         <input class="hidden" id="checkAnswer" value="">
 
@@ -234,59 +234,26 @@
                                 <div class="panel-body">
                                     <div>
                                         <p><strong>一.单选题</strong></p>
-                                           <div role="toolbar" class="btn-toolbar">
-                                               <div class="btn-group">
-                                                   <button id="btn_1" class="btn btn-default" type="button">1</button>
-                                                   <button id="btn_2" class="btn btn-default" type="button">2</button>
-                                                   <button id="btn_3" class="btn btn-default" type="button">3</button>
-                                                   <button id="btn_4" class="btn btn-default" type="button">4</button>
-                                                   <button id="btn_5" class="btn btn-default" type="button">5</button>
-                                                   <button id="btn_6" class="btn btn-default" type="button">6</button>
-                                                   <button id="btn_7" class="btn btn-default" type="button">7</button>
-                                                   <button id="btn_8" class="btn btn-default" type="button">8</button>
-                                                   <button id="btn_9" class="btn btn-default" type="button">9</button>
-                                                   <button id="btn_10" class="btn btn-default" type="button">10</button>
-                                                   <button id="btn_11" class="btn btn-default" type="button">11</button>
-                                                   <button id="btn_12" class="btn btn-default" type="button">12</button>
-                                                   <button id="btn_13" class="btn btn-default" type="button">13</button>
-                                                   <button id="btn_14" class="btn btn-default" type="button">14</button>
-                                                   <button id="btn_15" class="btn btn-default" type="button">15</button>
-                                                   <button id="btn_16" class="btn btn-default" type="button">16</button>
-                                                   <button id="btn_17" class="btn btn-default" type="button">17</button>
-                                                   <button id="btn_18" class="btn btn-default" type="button">18</button>
-                                                   <button id="btn_19" class="btn btn-default" type="button">19</button>
-                                                   <button id="btn_20" class="btn btn-default" type="button">20</button>
-                                                   <button id="btn_21" class="btn btn-default" type="button">21</button>
-                                                   <button id="btn_22" class="btn btn-default" type="button">22</button>
-                                                   <button id="btn_23" class="btn btn-default" type="button">23</button>
-                                                   <button id="btn_24" class="btn btn-default" type="button">24</button>
-                                                   <button id="btn_25" class="btn btn-default" type="button">25</button>
-                                                   <button id="btn_26" class="btn btn-default" type="button">26</button>
-                                                   <button id="btn_27" class="btn btn-default" type="button">27</button>
-                                                   <button id="btn_28" class="btn btn-default" type="button">28</button>
-                                                   <button id="btn_29" class="btn btn-default" type="button">29</button>
-                                                   <button id="btn_30" class="btn btn-default" type="button">30</button>
-                                                   <button class="btn btn-default" type="button">31</button>
-                                                   <button class="btn btn-default" type="button">32</button>
-                                                   <button class="btn btn-default" type="button">33</button>
-                                                   <button class="btn btn-default" type="button">34</button>
-                                                   <button class="btn btn-default" type="button">35</button>
-                                                   <button class="btn btn-default" type="button">36</button>
-                                                   <button class="btn btn-default" type="button">37</button>
-                                                   <button class="btn btn-default" type="button">38</button>
-                                                   <button class="btn btn-default" type="button">39</button>
-                                                   <button class="btn btn-default" type="button">40</button>
+                                           <div>
+                                               <div id="single" >
+
+
                                                </div>
                                            </div>
                                     </div>
 
                                     <div>
                                           <p><strong>二.多选题</strong></p>
+                                        <div>
+                                            <div id="more">
 
+
+                                            </div>
+                                        </div>
 
                                     </div>
                                     <form>
-                                        <div style="text-align: center">
+                                        <div style="text-align: center" div="goSingle">
                                             <button class="btn btn-sm btn-success" type="button" href="javascript:;" onclick="finishExam()">提交</button>
                                         </div>
                                     </form>
@@ -342,7 +309,7 @@
             }
         }
         // 下一题 条件显示
-        if(num == singleNum+moreNum){
+        if(num == singleNum + moreNum){
             $("#nextQ").addClass("hidden")
         }
 
@@ -350,6 +317,15 @@
         if(num == 1){
             $("#lastQ").addClass("hidden")
         }
+
+        // 调用计时函数
+        var endDateStr = $("#endTime").val()
+        TimeDown("countTime",endDateStr)
+
+        // 添加按钮
+        addButton(singleNum,moreNum)
+
+        document.getElementById("btn_"+num).style.backgroundColor="#DCDCDC"
 
     })
 
@@ -359,6 +335,12 @@
         //使按钮失去焦点,不设置会导致按钮持续高亮
         _this.blur()
 
+        // 切换题目
+        toNUm(value)
+    }
+
+    // 切换题目
+    function toNUm(value) {
         // 获取单选框和多选框的值
         var answerList = [];//保存数据信息
         var answers = "";
@@ -397,6 +379,7 @@
             dataType: "json",
             // 成功响应的结果
             success: function (data) {
+
                 // 更改隐藏域
                 $("#questionType").val(data.questionType)
                 $("#size").attr("value",data.questionObject.questionItemObjects.length)
@@ -404,10 +387,18 @@
                 $("#status").attr("value",data.status)    // 是否已经做过
 
                 // 更改题号
-                var num = $("#num").attr("value",data.num)
+                var numC = $("#num").attr("value",data.num)
                 //改变题目
                 $('#title').attr("text",data.num+'.'+data.questionObject.titleContent)
                     .html(data.num+'.'+data.questionObject.titleContent)
+
+
+                if (data.isSave == 1){
+                    document.getElementById("btn_"+currentNum).style.backgroundColor="#F0FFF0";
+                }else{
+                    document.getElementById("btn_"+currentNum).style.backgroundColor=""
+                }
+                document.getElementById("btn_"+data.num).style.backgroundColor="#DCDCDC"
 
                 //初始化
                 $("#s_radio").addClass("hidden")
@@ -430,8 +421,8 @@
                         $("#r_"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
 
                         $("#radio_"+data.questionObject.questionItemObjects[i].prefix+"")
-                        .attr("text",data.questionObject.questionItemObjects[i].content)
-                        .html(data.questionObject.questionItemObjects[i].content)
+                            .attr("text",data.questionObject.questionItemObjects[i].content)
+                            .html(data.questionObject.questionItemObjects[i].content)
                     }
                     // 单选框数据回显
                     if (data.status == 1){
@@ -443,8 +434,8 @@
                         $("#c_"+data.questionObject.questionItemObjects[i].prefix+"").removeClass("hidden")
 
                         $("#check_"+data.questionObject.questionItemObjects[i].prefix+"")
-                        .attr("text",data.questionObject.questionItemObjects[i].content)
-                        .html(data.questionObject.questionItemObjects[i].content)
+                            .attr("text",data.questionObject.questionItemObjects[i].content)
+                            .html(data.questionObject.questionItemObjects[i].content)
                     }
                     // 多选框数据回显
                     if (data.status == 1) {
@@ -470,11 +461,11 @@
                 $('#lastQ').attr("value",data.num-1)
 
                 // 下一题 条件显示
-                if(num == singleNum+moreNum){
+                if(numC == singleNum + moreNum){
                     $("#nextQ").addClass("hidden")
                 }
                 // 上一题 条件显示
-                if(num == 1){
+                if(numC == 1){
                     $("#lastQ").addClass("hidden")
                 }
 
@@ -483,53 +474,118 @@
     }
 
 
+
     // 提交
     function finishExam() {
         if (confirm("是否要提交?")){
-            // 获取单选框和多选框的值
-            var answerList = [];//保存数据信息
-            var answers = "";
-            var questionType = $("#questionType").val()
-            var currentNum =$("#num").val()
-            var doStatus = $("#status").val();
-            console.log("进入了提交")
-            if (questionType == 1){
-                //获取选中信息
-                answers = $("input[name='r_choice']:checked").val();
-                $("input[name='r_choice']:checked").attr("checked",false);
-            }else if(questionType == 2){
-                //获取选中信息
-                $("input[name='c_choice']:checked").each(function (index) {
-                    answerList[index] = $(this).val();
-                    this.checked = false;
-                });
-            }
-            $.ajax({
-                url : "/user/paper/paperFinish",
-                method : "POST",
-                async : true,
-                data : JSON.stringify({
-                    pid : pId,
-                    num : currentNum,
-                    answer : answers,   // 单选
-                    answerList : answerList,  // 多选
-                    isNew : doStatus           // 传回一个状态值 表示本题是否做过
-                }),
-                contentType: "json/application",
-                dataType: "json",
-                success : function (data) {
-                    if (data.isCheck){
-                        alert("考试提交成功，您的总成绩为"+data.score+"!")
-                        window.location.href = "/user/paper"
-                    }else{
-                        alert("提交失败，请重试！")
-                    }
-                }
-            })
+          toFinish();
         }else{
             return
         }
     }
+
+    // 提交最后一道题
+    function toFinish() {
+        // 获取单选框和多选框的值
+        var answerList = [];//保存数据信息
+        var answers = "";
+        var questionType = $("#questionType").val()
+        var currentNum =$("#num").val()
+        var doStatus = $("#status").val();
+        console.log("进入了提交")
+        if (questionType == 1){
+            //获取选中信息
+            answers = $("input[name='r_choice']:checked").val();
+            $("input[name='r_choice']:checked").attr("checked",false);
+        }else if(questionType == 2){
+            //获取选中信息
+            $("input[name='c_choice']:checked").each(function (index) {
+                answerList[index] = $(this).val();
+                this.checked = false;
+            });
+        }
+        $.ajax({
+            url : "/user/paper/paperFinish",
+            method : "POST",
+            async : true,
+            data : JSON.stringify({
+                pid : pId,
+                num : currentNum,
+                answer : answers,   // 单选
+                answerList : answerList,  // 多选
+                isNew : doStatus           // 传回一个状态值 表示本题是否做过
+            }),
+            contentType: "json/application",
+            dataType: "json",
+            success : function (data) {
+                if (data.isCheck){
+                    alert("考试提交成功，您的总成绩为"+data.score+"!")
+                    window.location.href = "/user/paper"
+                }else{
+                    alert("提交失败，请重试！")
+                }
+            }
+        })
+    }
+
+    // 考试倒计时
+    function TimeDown(id , endDateStr) {
+        console.log(endDateStr)
+        //结束时间
+        var endDate = new Date(endDateStr);
+        //当前时间
+        var nowDate = new Date();
+        //相差的总秒数
+        var totalSeconds = parseInt((endDate - nowDate) / 1000);
+        //取模（余数）
+        var modulo = totalSeconds % (60 * 60 * 24);
+        //小时数
+        var hours = Math.floor(modulo / (60 * 60));
+        modulo = modulo % (60 * 60);
+        //分钟
+        var minutes = Math.floor(modulo / 60);
+        //秒
+        var seconds = modulo % 60;
+        //输出到页面
+        //document.getElementById(id).innerHTML = "还剩:" + days + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒";
+        document.getElementById(id).innerHTML = "距离结束还有"+ hours+ "小时"+ minutes + "分钟"+ seconds + "秒";
+        if(minutes+seconds <= 0){
+            alert("时间已到！");
+            toFinish();
+        }else{
+            //延迟一秒执行自己
+            setTimeout(function () {
+                TimeDown(id, endDateStr);
+            }, 1000)
+        }
+
+    }
+
+
+    // 动态生成按钮
+    function addButton(single, more) {
+        console.log(single)
+        console.log(more)
+        var n = parseInt(single) + parseInt(more);
+        console.log(n)
+       for (var i =1; i <= n; i++){
+           var btn = document.createElement("input");
+           btn.type = "button";
+           btn.value = i;
+           btn.className = "btn btn-default";
+           btn.id = "btn_"+i;
+           console.log(i)
+           btn.onclick = function(){
+               toNUm(this.value)
+           };
+           if (i > single){
+               document.getElementById("more").appendChild(btn)
+           }else{
+               document.getElementById("single").appendChild(btn)
+           }
+       }
+    }
+
 
 
 

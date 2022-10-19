@@ -80,10 +80,10 @@
 
                             <tr th:each="papers :${paperList}">
                                 <td>
-                                    <a id="pid" th:text="${papers.pId}" href="javascript:;" onclick="isStartTime(this.text)"></a>
+                                    <a id="pid" th:text="${papers.pId}" href="javascript:;" th:onclick="isStartTime([[${papers.pId}]],[[${papers.startTime}]],[[${papers.endTime}]])"></a>
                                 </td>
                                 <td>
-                                    <a th:text="${papers.pName}" href="javascript:;" onclick="isStartTime(this.text)" style="color: #65CEA7;"></a>
+                                    <a th:text="${papers.pName}" href="javascript:;" th:onclick="isStartTime([[${papers.pId}]],[[${papers.startTime}]],[[${papers.endTime}]])" style="color: #65CEA7;"></a>
                                 </td>
                                 <td>
                                   <span th:if="${papers.pStatus}==0" th:text="未开始" class="label label-info"></span>
@@ -164,16 +164,15 @@
 <script src="/js/scripts.js"></script>
 
 <script type="text/javascript">
-    function isStartTime(text) {
-        var startTime = document.getElementById("startTime").textContent;
-        var endTime = document.getElementById("endTime").textContent;
-
-        start = new Date(startTime).getTime();
-        end = new Date(endTime).getTime();
-        str = new Date().getTime();
-
-        if(start <= str <= end){
-            window.location.href = "/user/paper/paperDetail?pid="+text;
+    function isStartTime(pid,startTime,endTime) {
+        var start = new Date(startTime).getTime();
+        var end = new Date(endTime).getTime();
+        var str = new Date().getTime();
+        console.log(start)
+        console.log(end)
+        console.log(str)
+        if(start <= str && str <= end){
+            window.location.href = "/user/paper/paperDetail?pid="+pid;
         }else{
             alert("还没有到指定时间,请稍后重试!")
         }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @Author:晓风残月Lx
  * @Date: 2022/10/15 16:40
@@ -28,4 +30,6 @@ public class PaperDetailsVM {
     private Integer score; //分值
 
     private String correct; // 正确答案
+
+    private LocalDateTime endTime;
 }
