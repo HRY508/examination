@@ -32,10 +32,6 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             统计图
-                            <span class="tools pull-right">
-                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                        <a href="javascript:;" class="fa fa-times"></a>
-                                     </span>
                         </div>
                             <div id="pie-chart-donut" class="pie-chart">
                                 <div id="pie-donutContainer" style="width: 100%;height:400px; text-align: left;">
@@ -45,13 +41,19 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         考试/通告
-                        <span class="tools pull-right">
-                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                        <a href="javascript:;" class="fa fa-times"></a>
-                                     </span>
                     </div>
-                    <div class="panel-body">
-                        <label>2022年无人机科目一考试</label>
+                    <div class="panel-body" th:each="p : ${paper}">
+                        <input class="hidden" th:value="${p.pId}">
+                        <td>
+                            <a th:text="${p.pName}" href="javascript:;" th:onclick="goExam([[${p.pId}]],[[${p.pName}]],[[${p.pStatus}]],[[${p.startTime}]],[[${p.endTime}]])" style="color: #65CEA7;"></a>
+                        </td>
+                        <td>
+                            <span style="float: right" th:if="${p.pStatus}==0" th:text="未开始" class="label label-info"></span>
+                            <span style="float: right"  th:if="${p.pStatus}==1" th:text="进行中" class="label label-primary"></span>
+                            <span style="float: right"  th:if="${p.pStatus}==2" th:text="已结束" class="label label-danger"></span>
+                        </td>
+                        <td class="hidden" th:value="${#temporals.format(p.startTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td class="hidden"  th:value="${#temporals.format(p.endTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     </div>
                 </div>
             </div>
@@ -109,6 +111,31 @@
 
 
 <script src="/js/scripts.js"></script>
+
+<script type="text/javascript">
+
+    function isStartTime(pid,pName,pStatus,startTime,endTime) {
+    var start = new Date(startTime).getTime();
+    var end = new Date(endTime).getTime();
+    var str = new Date().getTime();
+
+    if (pStatus > 1) {
+        alert("考试已经结束！")
+    }else{
+        if(start <= str && str <= end){
+            if (confirm("是否要进入"+pName+"")) {
+                window.location.href = "/user/paper/paperDetail?pid=" + pid;
+            }else{
+                return
+            }
+        }else if (start > str){
+            alert("还没有到指定时间,请稍后重试!")
+        }else if (str > end){
+            alert("考试时间已过！")
+        }
+    }
+}
+</script>
 
 </body>
 </html>

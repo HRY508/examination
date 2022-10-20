@@ -120,8 +120,11 @@
                                         <input th:value="${paper.getPId()}" id="paperId" class="hidden">
                                         <button class="btn btn-sm btn-success" type="button"  id="see" name="see" th:value="${paper.getPId()}">查看</button>
                                         <a  th:href="@{/admin/deletePaper/{pId}(pId=${paper.getPId()})}"
-                                            onclick="return del()" th:value="${paper.getPId()}" value="1">删除
+                                            onclick="return del()" th:value="${paper.getPId()}" value="1">Delete
                                         </a>
+                                    </td>
+                                    <td>
+                                         <a  href="#selectMark" data-toggle="modal" th:value="${paper.getPId()}" th:onclick="queryScore([[${paper.pId}]])">成绩</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -209,6 +212,43 @@
                                 </div>
                             </div>
                             <!--分页结束-->
+
+                            <!--   成绩modal框开始-->
+                            <div aria-hidden="true" data-backdrop="static" data-keyboard="false"  aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="selectMark" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">成绩排名</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <div aria-hidden="true">&times;</div>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="display table table-hover" >
+                                                <input class="hidden" id="score" value="">
+                                                <thead>
+                                                    <tr>
+                                                        <th>排名</th>
+                                                        <th>用户名</th>
+                                                        <th>真实姓名</th>
+                                                        <th>学号</th>
+                                                        <th>分数</th>
+                                                        <th>交卷时间</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="scoreList">
+
+                                                </tbody>
+                                            </table>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                    <button type="button" class="btn btn-primary" onclick="downLoadExcel()">导出</button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+<!--                              成绩modal框结束-->
 
                         </div>
                     </div>
@@ -303,7 +343,7 @@
     var len = document.getElementsByName("statusButton").length;
     //通过循环给每个按钮添加点击事件
     var temp = document.getElementsByName("statusButton")
-
+    // alert(len)
 
     for(var i = 0; i < document.getElementsByName("statusButton").length ; i++){
         document.getElementsByName("statusButton")[i].onclick = (function() {
@@ -418,6 +458,80 @@
         $('#professionUpdate').val(profession)
         $("input[name='permsUpdate'][value='" + perms + "']").prop("checked", true);
     }
+
+
+    // 根据Id查分数
+    function queryScore(pid){
+        $.ajax({
+            url: "/admin/queryMark",
+            type: "POST",
+            data: JSON.stringify({
+                id : pid
+            }),
+            contentType: "application/json;charset=utf-8",
+            //定义回调响应的数据格式为JSON字符串，该属性可以省略
+            dataType: "json",
+            success: function (data) {
+                // $('#score').attr("value",data.scoreList)
+                $("#score").attr("value",data.pid)
+                $("#scoreList").empty();
+                var list = document.getElementById('scoreList')
+                var arry = data.scoreList
+                var str = '';
+                for(var i = 0; i < arry.length; i++){
+                    str += '<tr>'
+                    str += '<td>'+arry[i].sid+'</td>'
+                    str += '<td>'+arry[i].userName+'</td>'
+                    str += '<td>'+arry[i].realName+'</td>'
+                    str += '<td>'+arry[i].uid+'</td>'
+                    str += '<td>'+arry[i].mark+'</td>'
+                    str += '<td>'+arry[i].examTime+'</td>'
+                    str += '</tr>'
+                }
+                list.innerHTML = str
+            }
+        })
+    }
+    // 导出Excel
+    function downLoadExcel(){
+        // var list = $("#score").val()
+        // var scoreList = [];
+        // if (list.length > 0) {
+        //     for (var i = 0; i < list.length; i++) {
+        //         var scoreVM = new Object();
+        //         scoreVM.field1 = list[i].sid;
+        //         scoreVM.field2 = list[i].userName;
+        //         scoreVM.field3 = list[i].realName;
+        //         scoreVM.field4 = list[i].uid;
+        //         scoreVM.field5 = list[i].examTime;
+        //         scoreList[i] = scoreVM
+        //     }
+        var pid = $("#score").val()
+            $.ajax({
+                url: "/admin/dowmLoadExcel",
+                type: "POST",
+                data: JSON.stringify({
+                    id : pid
+                }),
+                contentType: "application/json;charset=utf-8",
+                //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        alert("导出成功！")
+                    } else {
+                        alert("导出失败，请稍候重试")
+                    }
+                }
+            })
+        // }
+        // else{
+        //     alert("没有数据!")
+        // }
+
+    }
+
+
 
 
     jQuery(document).ready(function() {

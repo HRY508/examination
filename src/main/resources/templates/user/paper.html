@@ -32,10 +32,6 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         考试
-                        <span class="tools pull-right">
-                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                        <a href="javascript:;" class="fa fa-times"></a>
-                                     </span>
                     </div>
                     <!--搜索开始-->
                     <!--                    <div style="margin-top: 15px; " class="col-md-3">-->
@@ -80,10 +76,10 @@
 
                             <tr th:each="papers :${paperList}">
                                 <td>
-                                    <a id="pid" th:text="${papers.pId}" href="javascript:;" th:onclick="isStartTime([[${papers.pId}]],[[${papers.startTime}]],[[${papers.endTime}]])"></a>
+                                    <a id="pid" th:text="${papers.pId}" href="javascript:;" th:onclick="isStartTime([[${papers.pId}]],[[${papers.pName}]],[[${papers.pStatus}]],[[${papers.startTime}]],[[${papers.endTime}]])"></a>
                                 </td>
                                 <td>
-                                    <a th:text="${papers.pName}" href="javascript:;" th:onclick="isStartTime([[${papers.pId}]],[[${papers.startTime}]],[[${papers.endTime}]])" style="color: #65CEA7;"></a>
+                                    <a th:text="${papers.pName}" href="javascript:;" th:onclick="isStartTime([[${papers.pId}]],[[${papers.pName}]],[[${papers.pStatus}]],[[${papers.startTime}]],[[${papers.endTime}]])" style="color: #65CEA7;"></a>
                                 </td>
                                 <td>
                                   <span th:if="${papers.pStatus}==0" th:text="未开始" class="label label-info"></span>
@@ -164,19 +160,28 @@
 <script src="/js/scripts.js"></script>
 
 <script type="text/javascript">
-    function isStartTime(pid,startTime,endTime) {
+    function isStartTime(pid,pName,pStatus,startTime,endTime) {
         var start = new Date(startTime).getTime();
         var end = new Date(endTime).getTime();
         var str = new Date().getTime();
-        console.log(start)
-        console.log(end)
-        console.log(str)
-        if(start <= str && str <= end){
-            window.location.href = "/user/paper/paperDetail?pid="+pid;
+
+        if (pStatus > 1) {
+            alert("考试已经结束！")
         }else{
-            alert("还没有到指定时间,请稍后重试!")
+            if(start <= str && str <= end){
+                if (confirm("是否要进入"+pName+"")) {
+                    window.location.href = "/user/paper/paperDetail?pid=" + pid;
+                }else{
+                    return
+                }
+            }else if (start > str){
+                alert("还没有到指定时间,请稍后重试!")
+            }else if (str > end){
+                alert("考试时间已过！")
+            }
         }
     }
+
 
 
 

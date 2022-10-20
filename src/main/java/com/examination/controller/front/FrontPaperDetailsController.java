@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,6 +53,12 @@ public class FrontPaperDetailsController {
 
         // 判断本题是否已做
         Integer isDo = 0;
+        String checked = answerService.ishave(paperDetailsVM.getPdId());
+        if (!"".equals(checked) && checked != null){
+            isDo = 1;
+            model.addAttribute("checked",checked);
+        }
+
 
         // 转换时间格式 将结束时间转换为字符串
         String endTime = LocalDateUtil.localDateToString(paperDetailsVM.getEndTime());
@@ -245,6 +252,7 @@ public class FrontPaperDetailsController {
         score.setMark(totalScore);
         score.setPId(pId);
         score.setUserId(userId);
+        score.setExamTime(LocalDateTime.now());
         boolean save = scoreService.save(score);
 
         HashMap<String,Object> rep = new HashMap<>();

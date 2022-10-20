@@ -1,6 +1,7 @@
 package com.examination.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,10 +13,14 @@ import com.examination.service.ContentService;
 import com.examination.service.PaperDetailsService;
 import com.examination.service.PaperService;
 import com.examination.service.QuestionService;
+import com.examination.bean.*;
+import com.examination.service.*;
 import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.RandomUtil;
 import com.examination.utils.StaticVariableUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +28,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -44,6 +52,10 @@ public class PaperController {
     PaperDetailsService paperDetailsService;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    private  ScoreVMService scoreVMService;
+    @Autowired
+    private PoiService poiService;
     @Autowired
     ContentService contentService;
 
@@ -247,6 +259,7 @@ public class PaperController {
             return map;
         }
     }
+
     //显示试卷
     @ResponseBody
     @RequestMapping("/lookPaperDetails")
@@ -288,5 +301,27 @@ public class PaperController {
     }
 
 
+    // 通过卷子id查找分数
+    @ResponseBody
+    @PostMapping("/queryMark")
+    public Object toSelectMark(@RequestBody String req){
+        Integer pId = Integer.parseInt(JSONObject.parseObject(req).get("id").toString());
+        List<ScoreVM> scoreVMS = scoreVMService.searchMark(pId);
+        Map map = new HashMap();
+        map.put("scoreList",scoreVMS);
+        map.put("pid",pId);
+        return map;
+    }
 
+    @ResponseBody
+    @PostMapping("/dowmLoadExcel")
+    public Object downLoadExcel(@RequestBody String req,HttpServletResponse response) throws IOException {
+
+        Integer pId = Integer.parseInt(JSONObject.parseObject(req).get("id").toString());
+        List<ScoreVM> scoreVMS = scoreVMService.searchMark(pId);
+        poiService.downLoadExcel(scoreVMS);
+        HashMap<Object,Object> map = new HashMap();
+        map.put("code",200);
+        return map;
+    }
 }

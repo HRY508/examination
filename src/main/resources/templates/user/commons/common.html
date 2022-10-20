@@ -43,19 +43,12 @@
                 <ul class="nav navbar-nav">
                     <li th:class="${active=='index.html'?'active':''}"><a th:href="@{/user/index}">首页</a></li>
                     <li th:class="${active=='questionList.html'?'active':''}"><a th:href="@{/user/questionList}">问题</a></li>
-                    <li th:class="${active=='paperTest.html'?'active':''}"><a th:href="@{/user/paperTest}">模拟考试</a></li>
+<!--                    <li th:class="${active=='paperTest.html'?'active':''}"><a th:href="@{/user/paperTest}">模拟考试</a></li>-->
                     <li th:class="${active=='paper.html'?'active':''}"><a th:href="@{/user/paper}">考试</a></li>
                     <li ><a href="#"></a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                        </form>
-                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img alt="" src="images/photos/user-avatar.png"> John Doe <b class="caret"></b></a>
                         <ul class="dropdown-menu">

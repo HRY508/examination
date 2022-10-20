@@ -1,17 +1,22 @@
 package com.examination.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.examination.bean.Paper;
 import com.examination.bean.User;
+import com.examination.service.PaperService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Description
@@ -21,6 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class LoginController {
 
+    @Autowired
+    private PaperService paperService;
+
     @RequestMapping({"/login","","/"})
     public String toLoginPage(Model model){
         model.addAttribute("check",false);
@@ -29,7 +37,9 @@ public class LoginController {
 
 
     @RequestMapping("/user/index")
-    public String toUserPage(){
+    public String toUserPage(Model model){
+        List<Paper> list = paperService.list(null);
+        model.addAttribute("paper",list);
         return "user/index";
     }
 

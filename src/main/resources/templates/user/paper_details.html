@@ -50,7 +50,7 @@
                         <input class="hidden" id="status" th:value="${status}">
                         <input class="hidden" id="endTime" th:value="${endTime}">
                         <!--  从ajax响应中获取-->
-                        <input class="hidden" id="checkAnswer" value="">
+                        <input class="hidden" id="checkAnswer" th:value="${checked}">
 
 
                         <!--                                隐藏域-->
@@ -309,7 +309,7 @@
             }
         }
         // 下一题 条件显示
-        if(num == singleNum + moreNum){
+        if(num == parseInt(singleNum) + parseInt(moreNum)){
             $("#nextQ").addClass("hidden")
         }
 
@@ -324,8 +324,36 @@
 
         // 添加按钮
         addButton(singleNum,moreNum)
-
+        // 题目导航框按钮回显
         document.getElementById("btn_"+num).style.backgroundColor="#DCDCDC"
+
+
+        // 回显
+        var status = $("#status").val()
+        var checked = $("#checked").val()
+
+        if (status == 1){
+            if (questionType == 1){
+                // 单选框数据回显
+                $(':radio[name=\'r_choice\'][value=\'' + checked+ '\']').prop('checked', 'checked');
+            }else if (questionType == 2){
+                //获得所要回显的值
+                var checkeds = $("#checkAnswer").val();
+                //拆分为字符串数组
+                var checkArray =checkeds.split("");
+                //获得所有的复选框对象
+                var checkBoxAll = $("input[name='c_choice']");
+
+                $.each(checkArray , function (index , expressValue) {
+                    checkBoxAll.each(function () {
+                        if ($(this).val() == expressValue){
+                            $(this).attr("checked",true)
+                        }
+                    })
+                })
+            }
+
+        }
 
     })
 
@@ -461,7 +489,7 @@
                 $('#lastQ').attr("value",data.num-1)
 
                 // 下一题 条件显示
-                if(numC == singleNum + moreNum){
+                if(numC == parseInt(singleNum) + parseInt(moreNum)){
                     $("#nextQ").addClass("hidden")
                 }
                 // 上一题 条件显示
@@ -585,9 +613,6 @@
            }
        }
     }
-
-
-
 
 
 </script>

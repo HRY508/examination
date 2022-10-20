@@ -32,10 +32,6 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         问题
-                        <span class="tools pull-right">
-                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                        <a href="javascript:;" class="fa fa-times"></a>
-                                     </span>
                     </div>
                     <!--搜索开始-->
                     <div style="margin-top: 15px; " class="col-md-3">
@@ -85,7 +81,7 @@
                                 <tbody>
 
                                     <tr th:each="question :${questionList}">
-                                        <td class="c">
+                                        <td>
                                             <a  th:text="${question.id}" th:href="@{/user/questionDetail/{id}(id=${question.id})}"></a>
                                         </td>
                                         <td>
