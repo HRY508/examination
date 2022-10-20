@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+    <title>用户列表</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
+    <!--dashboard calendar-->
+    <link href="/css/clndr.css" rel="stylesheet">
+    <!--common-->
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+</head>
+
+<body class="sticky-header">
+
+<!--左侧开始-->
+<div th:replace="~{/admin/commons/common :: commonleft}"></div>
+<!--左侧结束-->
+
+<!--主页面开始-->
+<div class="main-content" >
+    <!--头部开始-->
+    <div th:replace="~{/admin/commons/common :: commonheader}"></div>
+    <!--头部结束-->
+
+
+    <!--当前位置介绍开始-->
+    <div class="page-heading">
+        <h3>
+            答题情况
+        </h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#">答题管理</a>
+            </li>
+            <li class="active"> 答题情况 </li>
+        </ul>
+    </div>
+    <!-- 当前位置介绍结束-->
+
+
+    <!--    body wrapper start-->
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <!--搜索开始-->
+
+                        <form role="form" action="/admin/answerList">
+                            <select class="" id="pid" name="pid">
+                                <option value="0" th:selected="${paperId} == 0">请选择试卷</option>
+                                <option
+                                        th:each="paper:${paperList}"
+                                        th:value="${paper.getPId()}"
+                                        th:text="${paper.getPName()}"
+                                        th:selected="${paperId} == ${paper.getPId()}"
+                                >
+                                </option>
+                            </select>
+
+                            <input type="submit" value="提交">
+
+                        </form>
+
+                        <!--搜索结束-->
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="table-responsive" style="height: 55em">
+                            <div class="space15"></div>
+                            <table class="display table table-hover" id="dynamic-table">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>用户名</th>
+                                    <th>真实姓名</th>
+                                    <th>学号</th>
+                                    <th>试卷名</th>
+                                    <th>题号</th>
+                                    <th>得分</th>
+                                    <th>答题</th>
+<!--                                    <th>操作</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="answerVM : ${page.records}">
+                                    <td th:text="${answerVM.id}"></td>
+                                    <td th:text="${answerVM.userName}"></td>
+                                    <td th:text="${answerVM.realName}"></td>
+                                    <td th:text="${answerVM.uId}"></td>
+                                    <td th:text="${answerVM.pName}"></td>
+                                    <td th:text="${answerVM.num}"></td>
+                                    <td th:text="${answerVM.value}"></td>
+                                    <td th:text="${answerVM.checked}"></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <!--分页-->
+                            <div th:fragment="page"><!--定义用于被显示列表页包含-->
+                                <head>
+                                    <style>
+                                        .page-item {
+                                            padding: 1px 5px;
+                                            border: 1px solid #afafaf;
+                                            margin-left: 3px
+                                        }
+
+                                        .page-item.active {
+                                            color: red;
+                                            border: 1px solid red;
+                                        }
+                                    </style>
+                                </head>
+                                <div style="float: left" th:if="${page.pages>0}">
+                                    当前第<span th:text="${page.current}"></span>页,共<span
+                                        th:text="${page.pages}"></span>页,总记录数<span th:text="${page.total}"></span>
+                                </div>
+                                <div style="float: right" th:if="${page.pages>0}">
+                                    <a th:href="@{${jumpUrl}+${qid}+${paperId}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
+                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qid}+${paperId}}" th:text="上一页" th:class="page-item"
+                                       th:if="${page.current>1}"></a>
+                                    <a th:href="@{${jumpUrl}+${i}+${qid}+${paperId}}"
+                                       th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
+                                       th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
+                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qid}+${paperId}}" th:text="下一页" th:class="page-item"
+                                       th:if="${page.current<page.pages}"></a> <a
+                                        th:href="@{${jumpUrl}+${page.pages}+${qid}+${paperId}}" th:text="尾页" th:class="page-item"
+                                        th:if="${page.current<page.pages}"></a>
+                                </div>
+                            </div>
+                            <!--分页结束-->
+
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <!--    body wrapper end-->
+
+    <!--footer section start-->
+    <footer>
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--footer section end-->
+
+
+</div>
+<!--主页面结束-->
+
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.nicescroll.js"></script>
+
+<!--data table-->
+<script type="text/javascript" src="/js/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+
+
+<!--表单校验-->
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script src="js/validation-init.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/js/scripts.js"></script>
+<!--script for editable table-->
+<script src="/js/editable-table.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+    jQuery(document).ready(function() {
+        EditableTable.init();
+    });
+    document.getElementById("paper-list").className="active";
+    document.getElementById("menu3").className="menu-list nav-active";
+</script>
+
+</body>
+
+
+</html>
+<script>
+    import Form_advanced_components from "./form_advanced_components.html";
+    export default {
+        components: {Form_advanced_components}
+    }
+</script>

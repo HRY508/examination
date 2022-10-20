@@ -290,6 +290,22 @@
 
     //初始化操作
     $(document).ready( function() {
+
+        //初始化
+        $("#s_radio").addClass("hidden")
+        $("#s_checkBox").addClass("hidden")
+        $("#lastQ").removeClass("hidden")
+        $("#nextQ").removeClass("hidden")
+        document.getElementById("single").innerHTML = ""
+        document.getElementById("more").innerHTML = ""
+
+        var arr = ['A','B','C','D','E', 'F', 'G', 'H','I','J']
+        for (var i = 0; i<arr.length;i++){
+            $("#c_"+arr[i]+"").addClass("hidden")
+            $("#r_"+arr[i]+"").addClass("hidden")
+        }
+
+
         var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
         var len = $('#size').val()
         var questionType = $("#questionType").val()
@@ -506,7 +522,7 @@
     // 提交
     function finishExam() {
         if (confirm("是否要提交?")){
-          toFinish();
+            toFinish();
         }else{
             return
         }

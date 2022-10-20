@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 
 <!--<body style="" class="sticky-header">-->
@@ -75,10 +75,9 @@
                 <!--导航四结束-->
 
                 <!--导航五开始-->
-                <li class="menu-list"><a href=""><i class="fa fa-book"></i> <span>试卷管理</span></a>
+                <li class="menu-list"><a href=""><i class="fa fa-pencil"></i> <span>答题管理</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="general.html"><i class="fa fa-gavel"></i>试卷批改</a></li>
-                        <li><a href="buttons.html"><i class="fa fa-check"></i>判卷完成</a></li>
+                        <li id="answer_list"><a th:href="@{/admin/answerList}"><i class="fa fa-pencil-square"></i>答题清况</a></li>
                     </ul>
                 </li>
                 <!--导航五结束-->
