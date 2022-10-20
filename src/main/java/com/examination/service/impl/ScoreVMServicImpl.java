@@ -22,6 +22,11 @@ public class ScoreVMServicImpl extends ServiceImpl<ScoreVMMapper, ScoreVM> imple
     @Override
     public List<ScoreVM> searchMark(Integer pId) {
         List<ScoreVM> scoreVMS = scoreVMMapper.searchMark(pId);
+        Integer i = 1;
+        for (ScoreVM scoreVM : scoreVMS) {
+            scoreVM.setId(i);
+            i++;
+        }
         return scoreVMS;
     }
 }

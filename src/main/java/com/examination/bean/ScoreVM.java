@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ScoreVM {
 
-    private Integer sId;
+    private Integer id;
 
     private String userName;
 

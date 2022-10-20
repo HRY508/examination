@@ -472,23 +472,29 @@
             //定义回调响应的数据格式为JSON字符串，该属性可以省略
             dataType: "json",
             success: function (data) {
-                // $('#score').attr("value",data.scoreList)
-                $("#score").attr("value",data.pid)
-                $("#scoreList").empty();
-                var list = document.getElementById('scoreList')
-                var arry = data.scoreList
-                var str = '';
-                for(var i = 0; i < arry.length; i++){
-                    str += '<tr>'
-                    str += '<td>'+arry[i].sid+'</td>'
-                    str += '<td>'+arry[i].userName+'</td>'
-                    str += '<td>'+arry[i].realName+'</td>'
-                    str += '<td>'+arry[i].uid+'</td>'
-                    str += '<td>'+arry[i].mark+'</td>'
-                    str += '<td>'+arry[i].examTime+'</td>'
-                    str += '</tr>'
+                if (data.code == 200){
+                    // $('#score').attr("value",data.scoreList)
+                    $("#score").attr("value",data.pid)
+                    $("#scoreList").empty();
+                    var list = document.getElementById('scoreList')
+                    var arry = data.scoreList
+                    var str = '';
+                    for(var i = 0; i < arry.length; i++){
+                        str += '<tr>'
+                        str += '<td>'+arry[i].id+'</td>'
+                        str += '<td>'+arry[i].userName+'</td>'
+                        str += '<td>'+arry[i].realName+'</td>'
+                        str += '<td>'+arry[i].uid+'</td>'
+                        str += '<td>'+arry[i].mark+'</td>'
+                        str += '<td>'+arry[i].examTime+'</td>'
+                        str += '</tr>'
+                    }
+                    list.innerHTML = str
+                }else{
+                    $('#selectMark').modal("hidden");
+                    alert("暂时没有学生完成考试！")
                 }
-                list.innerHTML = str
+
             }
         })
     }

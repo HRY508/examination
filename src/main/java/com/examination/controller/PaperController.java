@@ -308,6 +308,10 @@ public class PaperController {
         Integer pId = Integer.parseInt(JSONObject.parseObject(req).get("id").toString());
         List<ScoreVM> scoreVMS = scoreVMService.searchMark(pId);
         Map map = new HashMap();
+        map.put("code",200);
+       if (scoreVMS.size() == 0){
+           map.put("code",500);
+       }
         map.put("scoreList",scoreVMS);
         map.put("pid",pId);
         return map;
