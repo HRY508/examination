@@ -7,10 +7,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.examination.bean.Paper;
-import com.examination.bean.PaperDetails;
-import com.examination.bean.Question;
-import com.examination.bean.User;
+import com.examination.bean.*;
+import com.examination.service.ContentService;
 import com.examination.service.PaperDetailsService;
 import com.examination.service.PaperService;
 import com.examination.service.QuestionService;
@@ -23,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +44,8 @@ public class PaperController {
     PaperDetailsService paperDetailsService;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    ContentService contentService;
 
     @RequestMapping("/toPaperList")
     public String getQuestionList(HttpServletRequest request,
@@ -246,4 +247,46 @@ public class PaperController {
             return map;
         }
     }
+    //显示试卷
+    @ResponseBody
+    @RequestMapping("/lookPaperDetails")
+    public Object lookPaperDetails(@RequestBody String request) {
+        JSONObject jsonObject = JSONObject.parseObject(request);
+        Integer pId = Integer.parseInt((String) jsonObject.get("pId"));
+        QueryWrapper<Paper> paperWrapper = new QueryWrapper<>();
+        paperWrapper.select("p_name").eq("p_id",pId);
+        String pName = paperService.getOne(paperWrapper).getPName();
+        //查出所有pId为指定id的数据
+        QueryWrapper<PaperDetails> wrapper = new QueryWrapper<>();
+        wrapper.select("q_id").eq("p_id",pId);
+        List<PaperDetails> list = paperDetailsService.list(wrapper);
+        List<Integer> qIdList = new ArrayList<>();
+        for(int i=0;i< list.size();i++){
+            qIdList.add(list.get(i).getQId());
+        }
+        BaseMapper<Content> contentBaseMapper = contentService.getBaseMapper();
+        //获取正文对象
+        List<Content> contentObjectList = contentBaseMapper.selectBatchIds(qIdList);
+        ArrayList<String> contentList = new ArrayList<>();
+        //获取正文对象中的content属性，封装了关于题的信息
+        for(int i = 0; i < contentObjectList.size(); i++){
+            contentList.add(contentObjectList.get(i).getContent());
+            System.out.println("-------------------------------------开始打印");
+            System.out.println(contentObjectList.get(i).getContent());
+            System.out.println("-------------------------------------结束打印");
+        }
+        //将所有信息转为QuestionObject对象
+        ArrayList<QuestionObject> questionObjectList = new ArrayList<>();
+        for(int i = 0; i < contentList.size(); i++){
+            QuestionObject questionObject = JSONObject.parseObject(contentList.get(i), QuestionObject.class);
+            questionObjectList.add(questionObject);
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("paperName",pName);
+        map.put("questionObjectList",questionObjectList);
+        return map;
+    }
+
+
+
 }
