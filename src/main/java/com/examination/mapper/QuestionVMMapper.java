@@ -35,5 +35,21 @@ public interface QuestionVMMapper extends BaseMapper<QuestionVM> {
     Page<QuestionVM> selectByConditionQuestionVM(Page page,
                                                  @Param("questionType")Integer questionType,
                                                  @Param("questionName") String questionName);
+    //通过题型、题目种类查询
+    @Select(start+"and q.question_type = #{questionType} and q.question_pool = #{questionPool}")
+    Page<QuestionVM> selectByQuestionTypeAndQuestionPool(Page page,
+                                                 @Param("questionType")Integer questionType,
+                                                 @Param("questionPool") Integer questionPool);
+
+    //通过题目种类查询
+    @Select(start+"and q.question_pool = #{questionPool}")
+    Page<QuestionVM> selectByQuestionPool(Page page, @Param("questionPool") Integer questionPool);
+
+    //全部条件搜索
+    @Select(start+"and q.question_type = #{questionType} q.question_pool = #{questionPool} and c.content like concat('%',#{questionName},'%') " )
+    Page<QuestionVM> selectByAllConditionQuestionVM(Page page,
+                                                    @Param("questionName") String questionName,
+                                                    @Param("questionType")Integer questionType,
+                                                    @Param("questionPool") Integer questionPool);
 
 }

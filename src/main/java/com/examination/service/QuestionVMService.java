@@ -14,4 +14,10 @@ public interface QuestionVMService extends IService<QuestionVM> {
     Page<QuestionVM> selectByQuestionName(Page page, String questionName);
 
     Page<QuestionVM> selectByConditionQuestionVM(Page page, Integer questionType, String questionName);
+
+    Page<QuestionVM> selectByQuestionTypeAndQuestionPool(Page page, Integer questionType, Integer questionPool);
+
+    Page<QuestionVM> selectByQuestionPool(Page page, Integer questionPool);
+
+    Page<QuestionVM> selectByAllConditionQuestionVM(Page page, String questionName, Integer questionType, Integer questionPool);
 }

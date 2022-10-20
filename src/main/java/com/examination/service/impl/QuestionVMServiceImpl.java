@@ -49,4 +49,28 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
         return  questionVM;
     }
 
+    @Override
+    public Page<QuestionVM> selectByQuestionTypeAndQuestionPool(Page page, Integer questionType, Integer questionPool) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        Page<QuestionVM> questionVM = baseMapper
+                .selectByQuestionTypeAndQuestionPool(page,questionType,questionPool);
+        return  questionVM;
+    }
+
+    @Override
+    public Page<QuestionVM> selectByQuestionPool(Page page, Integer questionPool) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        Page<QuestionVM> questionVM = baseMapper
+                .selectByQuestionPool(page,questionPool);
+        return  questionVM;
+    }
+
+    @Override
+    public Page<QuestionVM> selectByAllConditionQuestionVM(Page page, String questionName, Integer questionType, Integer questionPool) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        Page<QuestionVM> questionVM = baseMapper
+                .selectByAllConditionQuestionVM(page,questionName,questionType,questionPool);
+        return  questionVM;
+    }
+
 }

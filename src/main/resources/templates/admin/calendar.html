@@ -92,21 +92,7 @@
                                 <div class="form-group">
                                     <label for="to" class="">To:</label>
                                     <input type="text" tabindex="1" id="to" name="to" class="form-control" required>
-                                    <!--                                    <div class="compose-options">-->
-                                    <!--                                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>-->
-                                    <!--                                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>-->
-                                    <!--                                    </div>-->
                                 </div>
-
-                                <!--                                <div class="form-group hidden">-->
-                                <!--                                    <label for="cc" class="0">Cc:</label>-->
-                                <!--                                    <input type="text" tabindex="2" id="cc" class="form-control">-->
-                                <!--                                </div>-->
-
-                                <!--                                <div class="form-group hidden">-->
-                                <!--                                    <label for="bcc" class="">Bcc:</label>-->
-                                <!--                                    <input type="text" tabindex="2" id="bcc" class="form-control">-->
-                                <!--                                </div>-->
 
                                 <div class="form-group">
                                     <label for="subject" class="">Subject:</label>
@@ -244,6 +230,18 @@
                                     <label  class="">解析</label>
                                     <input type="text" name="analysis" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
+                                <!--                                题型开始-->
+                                <div class="form-group">
+                                    <label  class="">分类</label>
+                                    <div class="btn-group ">
+                                        <button id="qpV" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                        <ul role="menu" class="dropdown-menu">
+                                            <li  th:each=" type :${typeList}" th:value="${typeList}" id="typeList"><a id="pV" th:value="${type.getQPool()}" th:text="${type.getQType()}" th:onclick="questionPool([[${type.getQPool()}]],[[${type.getQType()}]])" ></a></li>
+                                        </ul>
+                                        <input class="hidden" id="questionPoolValue" name="questionPool">
+                                    </div>
+                                 </div>
+                                <!--                                题型结束-->
                                 <!--                                分数开始-->
                                 <div class="form-group">
                                     <label  class="">分数</label>
@@ -392,6 +390,14 @@
         $('#subject2').parent().removeClass('hidden')
     }
 
+    //选择分类触发
+    function questionPool(va,te){
+        alert(va)
+        alert(te)
+        $('#questionPoolValue').attr('value',va)
+        $('#qpV').text(te)
+        // questionPoolValue
+    }
 
     // 增加form表单、选项
     function addForm() {
@@ -464,6 +470,7 @@
         $(this).attr("name",3)
         $('#b4').css("width","48%").removeClass('hidden')
     }
+
     function cd4() {
         $('#nd').val(3)
         $('#b1').removeClass('hidden')
@@ -471,7 +478,13 @@
         $('#b3').removeClass('hidden')
         $('#b4').addClass('hidden')
     }
+
     function reSetQuestion() {
+        //增加子节点
+        $('#qpV').text('题目类型')
+        var span1 = $("<span class="+"caret"+"></span>");
+        $('#qpV').append(span1)
+
         //移除选定状态
         var arrR =['A','B','C','D','E','F','G','H','I','J']
         for(var i=0; i<arrR.length; i++){

@@ -5,17 +5,21 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.injector.methods.Insert;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.examination.bean.Question;
+import com.examination.bean.Type;
 import com.examination.bean.User;
 import com.examination.service.QuestionService;
+import com.examination.service.TypeService;
 import com.examination.service.UserService;
 import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Description
@@ -27,9 +31,16 @@ public class SingleSelectController {
 
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private TypeService typeService;
 
     @RequestMapping("/admin/singleEditors")
-    public String toSingleChoicePage(){
+    public String toSingleChoicePage(Model model){
+        //查询所有的题型
+        QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
+        typeQueryWrapper.select("q_type","q_pool");
+        List<Type> list = typeService.list(typeQueryWrapper);
+        model.addAttribute("typeList",list);
         return "admin/editors";
     }
 

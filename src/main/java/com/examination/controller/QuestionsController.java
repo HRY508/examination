@@ -2,14 +2,12 @@ package com.examination.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.*;
 import com.examination.mapper.QuestionVMMapper;
-import com.examination.service.ContentService;
-import com.examination.service.QuestionEditVMService;
-import com.examination.service.QuestionService;
-import com.examination.service.QuestionVMService;
+import com.examination.service.*;
 import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
 import org.apache.commons.lang.StringUtils;
@@ -44,44 +42,65 @@ public class QuestionsController {
     @Autowired
     private QuestionEditVMService questionEditVMService;
 
+    @Autowired
+    private TypeService typeService;
+
     //查询
     @RequestMapping("/admin/questionsList")
     public String questionView(HttpServletRequest request, Model model,
                                @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,
                                @RequestParam(required = false, defaultValue = "0", value = "name") String questionName,
-                               @RequestParam(required = false,defaultValue = "0",value = "type") Integer questionType){
-        System.out.println("参数pn------"+pn+"参数questionName---"+questionName+"参数---"+questionType);
+                               @RequestParam(required = false,defaultValue = "0",value = "type") Integer questionType,
+                               @RequestParam(required = false,defaultValue = "0",value = "qPool") Integer questionPool){
+
+        System.out.println("开始打印参数：questionName"+questionName);
+        System.out.println("开始打印参数：type"+questionType);
+        System.out.println("开始打印参数：qPool"+questionPool);
+        System.out.println("---------------------------------------------");
+
+
         //默认显示第1页，显示5个数据
         Page page = new Page(pn,5);
 
         Page<QuestionVM> result = null;
-
-        //未选择题型，未输入题目关键字，进行全部查询
-        if((questionName.equals("null")||questionName.equals("0"))&&questionType.equals(0))
+        //未选择题型，未输入题目关键字，未选择题目种类进行全部查询000
+        if((questionName.equals("null")||questionName.equals("0"))&&questionType.equals(0)&&questionPool.equals(0))
         {
-            System.out.println("未选择题型，未输入题目关键字，进行全部查询");
+            System.out.println("未选择题型，未输入题目关键字，未选择题目种类进行全部查询");
             result = questionVMService.getQuestionList(page);
         }
 
-        //进行了题目关键字搜索而没进行题型检索
-        else if((!questionName.equals("0"))&&(questionType.equals(0)))
+        //进行了题目关键字搜索而没进行题型、题目种类检索
+        else if((!questionName.equals("0"))&&(questionType.equals(0))&&questionPool.equals("0"))
         {
             System.out.println("进行了题目关键字搜索而没进行题型检索");
             result = questionVMService.selectByQuestionName(page, questionName);
         }
 
         //进行了题型检索而没进行题目关键字检索
-        else if((!questionType.equals(0))&&(questionName.equals("null")))
+        else if((!questionType.equals(0))&&(questionName.equals("null"))&&questionPool.equals(0))
         {
             System.out.println("进行了题型检索而没进行题目关键字检索");
             result = questionVMService.selectByQuestionType(page, questionType);
         }
 
-        //进行了题目关键字检索和题型检索
-        else
+        //001
+        else if(questionName.equals("null")&&(questionType.equals(0))&&(!"".equals(questionPool))){
+            System.out.println("进行了题目种类检索，没进行题型检索、关键字检索");
+            result = questionVMService.selectByQuestionPool(page,questionPool);
+        }
+
+        //011
+        else if((!questionType.equals(0))&&(!"".equals(questionPool))){
+            System.out.println("进行题型和题目种类检索");
+            result = questionVMService.selectByQuestionTypeAndQuestionPool(page,questionType,questionPool);
+        }
+
+        //111检索
+        else if((!questionType.equals(0))&&(!"".equals(questionPool))&&!questionType.equals(0))
         {
-            System.out.println("进行了题目关键字检索和题型检索");
-            result = questionVMService.selectByConditionQuestionVM(page, questionType, questionName);
+            System.out.println("进行了全部检索");
+            result = questionVMService.selectByAllConditionQuestionVM(page, questionName, questionType,questionPool);
         }
 
         //获取Content中的标题
@@ -92,8 +111,12 @@ public class QuestionsController {
             questionObject = JSON.parseObject(records.get(i).getContent(), QuestionObject.class);
             records.get(i).setContent(questionObject.getTitleContent());
         }
-
+        //查询所有的题型
+        QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
+        typeQueryWrapper.select("q_type","q_pool");
+        List<Type> list = typeService.list(typeQueryWrapper);
         //设置model、返回视图
+        model.addAttribute("typeList",list);
         model.addAttribute("questionList",records);
         request.setAttribute("jumpUrl","/admin/questionsList?pn=");
         request.setAttribute("typeUrl","/admin/questionsList?type=");
@@ -101,6 +124,8 @@ public class QuestionsController {
         request.setAttribute("qType","&type=");
         request.setAttribute("qTypeValue",questionType);
         request.setAttribute("qName","&name=");
+        request.setAttribute("qPool","&qPool=");
+        request.setAttribute("qPoolValue",questionPool);
         if(questionName.equals("null")||questionName.equals("0"))
         {
             request.setAttribute("qNameValue",null);

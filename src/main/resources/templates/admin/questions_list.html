@@ -85,6 +85,16 @@
 <!--                                            <li><a href="#">简答题创建</a></li>-->
                                         </ul>
                                     </div>
+                                <div class="btn-group ">
+                                    <button th:if="${qPoolValue==0}" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                    <div th:each=" type :${typeList}">
+                                        <button th:if="${type.getQPool()}==${qPoolValue}" th:text="${type.getQType()}" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button"> <span class="caret" ></span></button>
+                                    </div>
+
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li  th:each=" type :${typeList}"><a th:href="@{${typeUrl}+${qTypeValue}+${qPool}+${type.getQPool()}+${qName}+${qNameValue}}" th:text="${type.getQType()}"></a></li>
+                                    </ul>
+                                </div>
                                     <button class="btn btn-danger" onclick="DelSelect()" type="button" >批量删除</button>
                                 </div>
 
@@ -164,14 +174,14 @@
                                 </div>
                                 <div style="float: right" th:if="${page.pages>0}">
                                     <a th:href="@{${jumpUrl}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
-                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qType}+${qTypeValue}+${qName}+${qNameValue}}" th:text="上一页" th:class="page-item"
+                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qType}+${qTypeValue}+${qName}+${qNameValue}+${qPool}+${qPoolValue}}" th:text="上一页" th:class="page-item"
                                        th:if="${page.current>1}"></a>
-                                    <a th:href="@{${jumpUrl}+${i}+${qType}+${qTypeValue}+${qName}+${qNameValue}}"
+                                    <a th:href="@{${jumpUrl}+${i}+${qType}+${qTypeValue}+${qName}+${qNameValue}+${qPool}+${qPoolValue}}"
                                        th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
                                        th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
-                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qType}+${qTypeValue}+${qName}+${qNameValue}}" th:text="下一页" th:class="page-item"
+                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qType}+${qTypeValue}+${qName}+${qNameValue}+${qPool}+${qPoolValue}}" th:text="下一页" th:class="page-item"
                                        th:if="${page.current<page.pages}"></a> <a
-                                        th:href="@{${jumpUrl}+${page.pages}+${qType}+${qTypeValue}+${qName}+${qNameValue}}" th:text="尾页" th:class="page-item"
+                                        th:href="@{${jumpUrl}+${page.pages}+${qType}+${qTypeValue}+${qName}+${qNameValue}+${qPool}+${qPoolValue}}" th:text="尾页" th:class="page-item"
                                         th:if="${page.current<page.pages}"></a>
                                 </div>
                             </div>

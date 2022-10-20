@@ -42,7 +42,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     public Question insertSelectQuestion(HttpServletRequest request, String userName,Integer questionType) {
         Question question = new Question();
         question.setQuestionType(questionType);
-        question.setDifficult(Integer.parseInt(request.getParameter("difficult")));
+        question.setDifficult(Integer.parseInt(request.getParameterValues("difficult")[0]));
         if(questionType == StaticVariableUtil.singleSelectType){
             question.setCorrect(request.getParameterValues("correct")[0]);
         }else if(questionType == StaticVariableUtil.moreSelectType){
@@ -50,6 +50,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
             question.setCorrect(StringUtils.join(corrects));
         }
         question.setScore( Integer.parseInt(request.getParameterValues("score")[0]));
+        question.setQuestionPool( Integer.parseInt(request.getParameterValues("questionPool")[0]));
         question.setCreateUser(userName);
         question.setStatus(StaticVariableUtil.status);
 
