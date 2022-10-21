@@ -14,6 +14,7 @@ import com.examination.service.ScoreService;
 import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.LocalDateUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,8 +109,7 @@ public class FrontPaperDetailsController {
             Answer answer = new Answer();
             answer.setPdId(p.getPdId()); // 本题的pdId
             answer.setPId(pId);
-            // 单选
-            if ((!"".equals(single) && single != null)  && "".equals(more)){
+            if (single != null && !"".equals(single) && "".equals(more)){// 单选
                 answer.setChecked(single);
                 answer.setUserId(GlobalUserUtil.getUser().getId());
                 if(single.equals(p.getCorrect())){
@@ -120,7 +120,7 @@ public class FrontPaperDetailsController {
                 // 将本题存入数据库
                 answerService.save(answer);
                 isSaveAndUpdate = 1;
-            }else if (("".equals(single) || single == null) && !"".equals(more)) { // 多选
+            }else if ("".equals(single) && !"".equals(more)) { // 多选
                 answer.setChecked(more);
                 answer.setUserId(GlobalUserUtil.getUser().getId());
                 if (more.equals(p.getCorrect())) {
@@ -136,7 +136,10 @@ public class FrontPaperDetailsController {
             Integer value = 0;
             LambdaUpdateWrapper<Answer> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
             lambdaUpdateWrapper.eq(Answer::getPdId,p.getPdId());
-            if (!"".equals(single) && "".equals(more)){
+
+            if (single != null && !"".equals(single) && "".equals(more)){ //单选
+                log.info("========="+single);
+                log.info("========="+more);
                 if(single.equals(p.getCorrect())){
                      value = p.getScore();
                 }else{
@@ -145,7 +148,7 @@ public class FrontPaperDetailsController {
                 lambdaUpdateWrapper.set(Answer::getChecked,single).set(Answer::getValue,value);
                 answerService.update(lambdaUpdateWrapper);
                 isSaveAndUpdate = 1;
-            }else if ("".equals(single) && !"".equals(more)){
+            }else if ("".equals(single) && !"".equals(more)){ // 多选
                 if (more.equals(p.getCorrect())) {
                    value = p.getScore();
                 } else {
@@ -154,6 +157,9 @@ public class FrontPaperDetailsController {
                 lambdaUpdateWrapper.set(Answer::getChecked,more).set(Answer::getValue,value);
                 answerService.update(lambdaUpdateWrapper);
                 isSaveAndUpdate = 1;
+            }else if ((single == null || "".equals(single)) && "".equals(more)) { // 什么都没选
+                answerService.remove(lambdaUpdateWrapper);
+                isSaveAndUpdate = 0;
             }
         }
 

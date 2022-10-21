@@ -252,6 +252,9 @@
                                         </div>
 
                                     </div>
+                                    <br/>
+                                    <br/>
+                                    <br/>
                                     <form>
                                         <div style="text-align: center" div="goSingle">
                                             <button class="btn btn-sm btn-success" type="button" href="javascript:;" onclick="finishExam()">提交</button>
@@ -286,7 +289,7 @@
 
     var singleNum = $("#singleNum").val()
     var pId = $("#pid").val()
-    var moreNum = $("#singleNum").val()
+    var moreNum = $("#moreNum").val()
 
     //初始化操作
     $(document).ready( function() {
@@ -373,6 +376,17 @@
 
     })
 
+    // 单选框点击取消
+    var check;
+    $('input[type="radio"]').hover(function() {
+        check = $(this).is(':checked');
+    });
+
+    $('input[type="radio"]').click(function() {
+        check = !check;
+        $(this).attr("checked", check);
+    });
+
 
     // 下一题 上一题 题目导航  并将本题所答存入数据库
     function nextNum(value,_this) {
@@ -423,15 +437,14 @@
             dataType: "json",
             // 成功响应的结果
             success: function (data) {
-
                 // 更改隐藏域
                 $("#questionType").val(data.questionType)
                 $("#size").attr("value",data.questionObject.questionItemObjects.length)
                 $("#checkAnswer").attr("value",data.checked)
                 $("#status").attr("value",data.status)    // 是否已经做过
+                $("#num").attr("value",data.num) // 更改题号
 
-                // 更改题号
-                var numC = $("#num").attr("value",data.num)
+               var numC = $("#num").val()
                 //改变题目
                 $('#title').attr("text",data.num+'.'+data.questionObject.titleContent)
                     .html(data.num+'.'+data.questionObject.titleContent)
@@ -503,6 +516,11 @@
                 //设置下一题上一题id
                 $('#nextQ').attr("value",data.num+1)
                 $('#lastQ').attr("value",data.num-1)
+
+                console.log(numC)
+                console.log(parseInt(singleNum)+ parseInt(moreNum))
+                console.log(singleNum)
+                console.log(moreNum)
 
                 // 下一题 条件显示
                 if(numC == parseInt(singleNum) + parseInt(moreNum)){
@@ -593,7 +611,7 @@
         //输出到页面
         //document.getElementById(id).innerHTML = "还剩:" + days + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒";
         document.getElementById(id).innerHTML = "距离结束还有"+ hours+ "小时"+ minutes + "分钟"+ seconds + "秒";
-        if(minutes+seconds <= 0){
+        if( hours+minutes+seconds <= 0){
             alert("时间已到！");
             toFinish();
         }else{
