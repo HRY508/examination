@@ -10,6 +10,7 @@ import com.examination.mapper.QuestionVMMapper;
 import com.examination.service.*;
 import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
+import com.examination.utils.StrOperateUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -109,7 +110,7 @@ public class QuestionsController {
         {
             QuestionObject questionObject = null;
             questionObject = JSON.parseObject(records.get(i).getContent(), QuestionObject.class);
-            records.get(i).setContent(questionObject.getTitleContent());
+            records.get(i).setContent(StrOperateUtil.removeTag(questionObject.getTitleContent()));
         }
         //查询所有的题型
         QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();

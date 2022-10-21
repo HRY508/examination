@@ -9,6 +9,7 @@ import com.examination.bean.Type;
 import com.examination.service.FrontQuestionVMService;
 import com.examination.service.TypeService;
 import com.examination.utils.GlobalUserUtil;
+import com.examination.utils.StrOperateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,7 +69,8 @@ public class FrontQuestionController {
         {
             QuestionObject questionObject = null;
             questionObject = JSON.parseObject(records.get(i).getContent(), QuestionObject.class);
-            records.get(i).setContent(questionObject.getTitleContent());
+//            records.get(i).setContent(questionObject.getTitleContent());
+            records.get(i).setContent(StrOperateUtil.removeTag(questionObject.getTitleContent()));
         }
         //查询所有的题型
         QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();

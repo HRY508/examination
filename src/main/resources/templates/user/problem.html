@@ -59,10 +59,6 @@
                     <!--搜索结束-->
                     <!--分类/标签开始-->
                     <div style="margin-top: 15px; " class="col-lg-4"></div>
-                    <div style="margin-top: 15px; " class="col-lg-2">
-                        <!--                    分类/标签结束-->
-                        <a href="javascript:;" id="add-sticky" class="btn btn-success  btn-sm">所有分类/标签</a>
-                    </div>
 
                     <div id="pie-chart-donut" class="pie-chart">
                         <div id="panel-body">
@@ -147,6 +143,7 @@
             </div>
             <!-- 问题列表结束-->
         </div>
+        &nbsp;
         <div class="col-md-12">
             <!--分类开始-->
             <div class="col-md-12">
@@ -200,7 +197,6 @@
 <script type="text/javascript">
     $(document).ready( function() {
         var a = document.getElementsByClassName("btn btn-info btn-xs  ")
-        alert(a.length)
         for(var i=0;i<a.length;i++){
             a[i].setAttribute('class','btn btn-warning btn-xs  ')
             a[i+1].setAttribute('class','btn btn-success btn-xs  ')

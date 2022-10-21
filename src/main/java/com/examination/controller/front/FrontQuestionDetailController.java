@@ -11,6 +11,7 @@ import com.examination.service.QuestionDetailsService;
 import com.examination.service.QuestionEditVMService;
 import com.examination.service.QuestionService;
 import com.examination.utils.GlobalUserUtil;
+import com.examination.utils.StrOperateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,7 @@ public class FrontQuestionDetailController {
         Content question = contentService.getOne(wrapper);
         String contentStr  = question.getContent();
         QuestionObject questionObject = JSON.parseObject(contentStr, QuestionObject.class);
+        questionObject.setTitleContent(StrOperateUtil.removeTag(questionObject.getTitleContent()));
         model.addAttribute("qId",question.getId());
         model.addAttribute("difficult",difficult);
         model.addAttribute("questionType",questionType);
