@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="ThemeBucket">
-    <link rel="shortcut icon"  type="image/png">
+<!--    <link rel="shortcut icon"  type="image/png">-->
 
     <title>在线考试系统</title>
 
@@ -126,15 +126,15 @@
                                         th:text="${page.pages}"></span>页,总记录数<span th:text="${page.total}"></span>
                                 </div>
                                 <div style="float: right" th:if="${page.pages>0}">
-                                    <a th:href="@{${jumpUrl}+${qName}+${searchNameValue}+${qId}+${searchIdValue}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
-                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qName}+${searchNameValue}+${qId}+${searchIdValue}}" th:text="上一页" th:class="page-item"
+                                    <a th:href="@{${jumpUrl}+${qName}+${searchNameValue}+${qId}+${searchIdValue}+${pool}+${poolValue}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
+                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qName}+${searchNameValue}+${qId}+${searchIdValue}+${pool}+${poolValue}}" th:text="上一页" th:class="page-item"
                                        th:if="${page.current>1}"></a>
-                                    <a th:href="@{${jumpUrl}+${i}+${qName}+${searchNameValue}+${qId}+${searchIdValue}}"
+                                    <a th:href="@{${jumpUrl}+${i}+${qName}+${searchNameValue}+${qId}+${searchIdValue}+${pool}+${poolValue}}"
                                        th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
                                        th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
-                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qName}+${searchNameValue}+${qId}+${searchIdValue}}" th:text="下一页" th:class="page-item"
+                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qName}+${searchNameValue}+${qId}+${searchIdValue}+${pool}+${poolValue}}" th:text="下一页" th:class="page-item"
                                        th:if="${page.current<page.pages}"></a> <a
-                                        th:href="@{${jumpUrl}+${page.pages}+${qName}+${searchNameValue}+${qId}+${searchIdValue}}" th:text="尾页" th:class="page-item"
+                                        th:href="@{${jumpUrl}+${page.pages}+${qName}+${searchNameValue}+${qId}+${searchIdValue}+${pool}+${poolValue}}" th:text="尾页" th:class="page-item"
                                         th:if="${page.current<page.pages}"></a>
                                 </div>
                             </div>
@@ -147,7 +147,26 @@
             </div>
             <!-- 问题列表结束-->
         </div>
-
+        <div class="col-md-12">
+            <!--分类开始-->
+            <div class="col-md-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">问题分类</h3>
+                    </div>
+                    <div class="panel-body">
+                       <div class="">
+                           <!--内容开始-->
+                           <p style="text-align:center" class="col-md-1" th:each="type : ${typeList}">
+                               <a class="btn btn-info btn-xs  " th:href="@{/user/questionList(pool=${type.getQPool()})}" type="button" th:text="${type.getQType()}"></a>
+                           </p>
+                           <!--内容结束-->
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!--分类结束-->
+        </div>
     </div>
     <!--正文结束-->
 
@@ -166,6 +185,7 @@
     }
 </script>
 
+
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="/js/jquery-migrate-1.2.1.min.js"></script>
@@ -175,5 +195,19 @@
 
 <script src="/js/scripts.js"></script>
 
+
+
+<script type="text/javascript">
+    $(document).ready( function() {
+        var a = document.getElementsByClassName("btn btn-info btn-xs  ")
+        alert(a.length)
+        for(var i=0;i<a.length;i++){
+            a[i].setAttribute('class','btn btn-warning btn-xs  ')
+            a[i+1].setAttribute('class','btn btn-success btn-xs  ')
+            a[i+2].setAttribute('class','btn btn-warning btn-xs  ')
+            a[i+3].setAttribute('class','btn btn-danger btn-xs  ')
+        }
+    });
+</script>
 </body>
 </html>

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "t_answer")
-public class Answer {
+public class    Answer {
     @TableId(type = IdType.AUTO,value = "id")
     private Integer id;
 

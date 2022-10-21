@@ -31,6 +31,7 @@ public class SingleSelectController {
 
     @Autowired
     private QuestionService questionService;
+
     @Autowired
     private TypeService typeService;
 

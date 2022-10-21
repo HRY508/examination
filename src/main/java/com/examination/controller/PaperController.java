@@ -284,9 +284,7 @@ public class PaperController {
         //获取正文对象中的content属性，封装了关于题的信息
         for(int i = 0; i < contentObjectList.size(); i++){
             contentList.add(contentObjectList.get(i).getContent());
-            System.out.println("-------------------------------------开始打印");
             System.out.println(contentObjectList.get(i).getContent());
-            System.out.println("-------------------------------------结束打印");
         }
         //将所有信息转为QuestionObject对象
         ArrayList<QuestionObject> questionObjectList = new ArrayList<>();

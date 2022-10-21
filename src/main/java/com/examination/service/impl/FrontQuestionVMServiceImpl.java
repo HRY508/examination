@@ -53,4 +53,12 @@ public class FrontQuestionVMServiceImpl extends ServiceImpl<FrontQuestionVMMappe
     public Page<FrontQuestionVM> getListByList(Page page, Integer searchId, String searchName,Integer userId) {
         return null;
     }
+
+    @Override
+    public Page<FrontQuestionVM> selectFrontQuestionVMByPool(Page page, Integer userId, Integer searchPool) {
+        QueryWrapper<FrontQuestionVM> wrapper = new QueryWrapper<>();
+        FrontQuestionVMMapper baseMapper = this.baseMapper;
+        Page<FrontQuestionVM> frontQuestionVMPage = baseMapper.selectFrontQuestionVMByPool(page, userId, searchPool);
+        return frontQuestionVMPage;
+    }
 }

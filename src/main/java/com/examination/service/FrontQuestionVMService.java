@@ -21,4 +21,6 @@ public interface FrontQuestionVMService extends IService<FrontQuestionVM> {
     Page<FrontQuestionVM> getListById(Page page, Integer userId,  Integer searchId);
 
     Page<FrontQuestionVM> getListByList(Page page, Integer searchId, String searchName,Integer userId);
+
+    Page<FrontQuestionVM> selectFrontQuestionVMByPool(Page page, Integer userId,  Integer searchPool);
 }

@@ -1,11 +1,18 @@
 package com.examination.controller.front;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.examination.bean.Type;
+import com.examination.service.TypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * @Author:晓风残月Lx
@@ -15,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @RequestMapping("/user")
 public class PagesController {
+
+
 
 
     @RequestMapping("/questionDetail")

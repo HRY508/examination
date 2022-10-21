@@ -38,7 +38,6 @@ public class RegisterController {
                            @RequestParam("password")String password,
                            @RequestParam("repassword")String repassword,
                            Model model){
-
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("user_name",userName);
         User user = new User();
