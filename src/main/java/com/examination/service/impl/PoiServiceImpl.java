@@ -45,9 +45,7 @@ public class PoiServiceImpl implements PoiService {
         }
 
         //在表中存放查询到的数据放入对应的列
-
         for (ScoreVM scoreVM : scoreVMList) {
-
             HSSFRow row1 = sheet.createRow(rowNum);
             row1.createCell(0).setCellValue(rowNum);
             row1.createCell(1).setCellValue(scoreVM.getUserName());
@@ -63,4 +61,6 @@ public class PoiServiceImpl implements PoiService {
         workbook.write(fos);
         fos.close();
     }
+
+
 }

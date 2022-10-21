@@ -46,7 +46,7 @@ public class SingleSelectController {
 
 
     @RequestMapping("/admin/singleSelect")
-    public String singleSelect(HttpServletRequest request){
+    public String singleSelect(HttpServletRequest request) throws Exception {
         Integer questionType = StaticVariableUtil.singleSelectType;
         questionService.insertSelectQuestion(request,GlobalUserUtil.getUser().getUserName(),questionType);
         return "admin/editors";

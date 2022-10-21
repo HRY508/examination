@@ -30,4 +30,14 @@ public class AnswerVMServiceImpl extends ServiceImpl<AnswerVMMapper, AnswerVM> i
     public Page<AnswerVM> selectListByPId(Page page, Integer pId) {
         return answerVMMapper.queryListByPId(page,pId);
     }
+
+    @Override
+    public Page<AnswerVM> selectListByPIdAndUserName(Page page, Integer pId, String searchName) {
+        return answerVMMapper.queryListByPIdAndUserName(page, pId, searchName);
+    }
+
+    @Override
+    public Page<AnswerVM> selectListByUserName(Page page, String searchName) {
+        return answerVMMapper.queryListByUserName(page, searchName);
+    }
 }

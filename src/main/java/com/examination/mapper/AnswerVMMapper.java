@@ -32,4 +32,9 @@ public interface AnswerVMMapper extends BaseMapper<AnswerVM> {
     @Select(selectList+" where a.p_id = #{pId}")
     Page<AnswerVM> queryListByPId(Page page,@Param("pId") Integer pId);
 
+    @Select(selectList+"  where a.p_id = #{pId} and u.user_name = #{searchName}")
+    Page<AnswerVM> queryListByPIdAndUserName(Page page,@Param("pId") Integer pId, @Param("searchName") String searchName);
+
+    @Select(selectList+ "where u.user_name = #{searchName}")
+    Page<AnswerVM> queryListByUserName(Page page,@Param("searchName") String searchName);
 }

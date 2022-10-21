@@ -39,7 +39,7 @@ public class MoreSelectController {
     }
 
     @RequestMapping("/admin/moreSelect")
-    public String moreSelect(HttpServletRequest request){
+    public String moreSelect(HttpServletRequest request) throws Exception {
         Integer questionType = StaticVariableUtil.moreSelectType;
         questionService.insertSelectQuestion(request, GlobalUserUtil.getUser().getUserName(),questionType);
         log.info("===================="+request.getParameter("difficult"));

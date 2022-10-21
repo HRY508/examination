@@ -7,7 +7,7 @@ import com.examination.bean.QuestionVM;
 import javax.servlet.http.HttpServletRequest;
 
 public interface QuestionService extends IService<Question> {
-    Question insertSelectQuestion(HttpServletRequest request, String userName,Integer questionType);
+    Question insertSelectQuestion(HttpServletRequest request, String userName,Integer questionType) throws Exception;
 
     Question insertJudgeQuestion(HttpServletRequest request, String userName);
 

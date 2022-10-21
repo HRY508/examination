@@ -14,6 +14,10 @@ public interface AnswerVMService extends IService<AnswerVM> {
      Page<AnswerVM> selectList(Page page);
 
     Page<AnswerVM> selectListByPId(Page page, Integer pId);
+
+    Page<AnswerVM> selectListByPIdAndUserName(Page page, Integer pId, String searchName);
+
+    Page<AnswerVM> selectListByUserName(Page page, String searchName);
 }
 
 

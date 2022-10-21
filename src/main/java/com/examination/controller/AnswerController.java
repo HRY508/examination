@@ -33,26 +33,32 @@ public class AnswerController {
     @RequestMapping("/answerList")
     public String toAnswer(@RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,
                            @RequestParam(required = false, defaultValue = "0", value = "pid") Integer pId,
+                           @RequestParam(required = false, defaultValue = "", value = "username") String searchName,
                            Model model){
         //默认显示第1页，显示5个数据
-        Page page = new Page(pn,1);
+        Page page = new Page(pn,20);
         Page<AnswerVM> result = null;
-        if (pId == 0 || pId == null){
+        if (pId == 0 && "".equals(searchName)){
            result = answerVMService.selectList(page);
-           pId = 0;
-        }else if (pId != 0 && pId != null){
+        }else if (pId == 0 && !"".equals(searchName)){
+            result = answerVMService.selectListByUserName(page, searchName);
+        } else if (pId != 0 && "".equals(searchName)){
             result = answerVMService.selectListByPId(page,pId);
+        }else if (pId != 0 && !"".equals(searchName)){
+            result = answerVMService.selectListByPIdAndUserName(page, pId, searchName);
         }
         // 查询卷子
         LambdaQueryWrapper<Paper> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.select(Paper::getPId,Paper::getPName);
         List<Paper> list = paperService.list(queryWrapper);
 
+        model.addAttribute("searchName",searchName);
         model.addAttribute("page",result);
         model.addAttribute("jumpUrl","/admin/answerList?pn=");
         model.addAttribute("paperId",pId);
         model.addAttribute("paperList",list);
         model.addAttribute("qid","&pid=");
+        model.addAttribute("username","&username=");
         return "admin/paper_answer";
     }
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="ThemeBucket">
-    <link rel="shortcut icon" href="#" type="image/png">
+    <link rel="shortcut icon" type="image/png">
 
     <title>多选题创编</title>
 
@@ -89,15 +89,24 @@
                     <section class="mail-list">
                         <div class="compose-mail">
                             <form role="form-horizontal" th:action="@{/admin/moreSelect}" method="post">
-                                <div class="form-group">
-                                    <label for="to" class="">To:</label>
-                                    <input type="text" tabindex="1" id="to" name="to" class="form-control" required>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="subject" class="">Subject:</label>
-                                    <input type="text" name="subject" tabindex="1" id="subject" class="form-control">
-                                </div>
+
+                                    <!--                                    <div class="compose-options">-->
+                                    <!--                                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>-->
+                                    <!--                                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>-->
+                                    <!--                                    </div>-->
+
+
+                                <!--                                <div class="form-group hidden">-->
+                                <!--                                    <label for="cc" class="0">Cc:</label>-->
+                                <!--                                    <input type="text" tabindex="2" id="cc" class="form-control">-->
+                                <!--                                </div>-->
+
+                                <!--                                <div class="form-group hidden">-->
+                                <!--                                    <label for="bcc" class="">Bcc:</label>-->
+                                <!--                                    <input type="text" tabindex="2" id="bcc" class="form-control">-->
+                                <!--                                </div>-->
+
 
                                 <!--onclick函数，当管理员点击题干表单时题干表单设置不可见，显示富文本编辑器，-->
                                 <div class="form-group">

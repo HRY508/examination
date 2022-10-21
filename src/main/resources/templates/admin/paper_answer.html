@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="ThemeBucket">
-    <link rel="shortcut icon" href="#" type="image/png">
+    <link rel="shortcut icon" type="image/png">
     <title>用户列表</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
@@ -57,7 +57,10 @@
                     <header class="panel-heading">
                         <!--搜索开始-->
 
-                        <form role="form" action="/admin/answerList">
+                        <form role="form" class="form-horizontal" action="/admin/answerList">
+
+                            <input type="text"  style="font-weight:lighter" placeholder="请输入查询信息..." name="username" th:value="${searchName}">
+
                             <select class="" id="pid" name="pid">
                                 <option value="0" th:selected="${paperId} == 0">请选择试卷</option>
                                 <option
@@ -129,15 +132,15 @@
                                         th:text="${page.pages}"></span>页,总记录数<span th:text="${page.total}"></span>
                                 </div>
                                 <div style="float: right" th:if="${page.pages>0}">
-                                    <a th:href="@{${jumpUrl}+${qid}+${paperId}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
-                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qid}+${paperId}}" th:text="上一页" th:class="page-item"
+                                    <a th:href="@{${jumpUrl}+${qid}+${paperId}+${username}+${searchName}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
+                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qid}+${paperId}+${username}+${searchName}}" th:text="上一页" th:class="page-item"
                                        th:if="${page.current>1}"></a>
                                     <a th:href="@{${jumpUrl}+${i}+${qid}+${paperId}}"
                                        th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
                                        th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
-                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qid}+${paperId}}" th:text="下一页" th:class="page-item"
+                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qid}+${paperId}+${username}+${searchName}}" th:text="下一页" th:class="page-item"
                                        th:if="${page.current<page.pages}"></a> <a
-                                        th:href="@{${jumpUrl}+${page.pages}+${qid}+${paperId}}" th:text="尾页" th:class="page-item"
+                                        th:href="@{${jumpUrl}+${page.pages}+${qid}+${paperId}+${username}+${searchName}}" th:text="尾页" th:class="page-item"
                                         th:if="${page.current<page.pages}"></a>
                                 </div>
                             </div>
