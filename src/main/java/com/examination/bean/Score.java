@@ -28,6 +28,9 @@ public class Score {
     private Integer mark; // 分数
 
     private LocalDateTime examTime;
+
+    private LocalDateTime updateTime;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 }

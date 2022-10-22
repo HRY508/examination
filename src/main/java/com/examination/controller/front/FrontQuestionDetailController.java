@@ -112,14 +112,14 @@ public class FrontQuestionDetailController {
         questionDetails.setQuestionId(qId);
         questionDetails.setUserId(uId);
         boolean res = correct.equals(choice);
-        //保存解析、回答情况、答案,答对返回1，否则返回0
+        //保存解析、回答情况、答案,答对返回2，否则返回1
         HashMap<String,Object> rep = new HashMap<>();
         if (correct.equals(choice)){
-            questionDetails.setResult(1);
+            questionDetails.setResult(2);
             rep.put("res",1);
         }
         else {
-            questionDetails.setResult(2);
+            questionDetails.setResult(1);
             rep.put("res",0);
         }
         //保存答题详情

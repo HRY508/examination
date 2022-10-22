@@ -3,7 +3,6 @@ package com.examination.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -13,28 +12,23 @@ import com.examination.service.ContentService;
 import com.examination.service.PaperDetailsService;
 import com.examination.service.PaperService;
 import com.examination.service.QuestionService;
-import com.examination.bean.*;
 import com.examination.service.*;
 import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.RandomUtil;
 import com.examination.utils.StaticVariableUtil;
+import com.examination.utils.StrOperateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -58,6 +52,9 @@ public class PaperController {
     private PoiService poiService;
     @Autowired
     ContentService contentService;
+
+    @Autowired
+    TypeService typeService;
 
     @RequestMapping("/toPaperList")
     public String getQuestionList(HttpServletRequest request,
@@ -166,11 +163,19 @@ public class PaperController {
         return "redirect:/admin/toPaperList";
     }
 
+    //进入试卷创建页面
     @RequestMapping("/paperCreate")
-    public String createPaper(){
+    public String createPaper(Model model){
+        //查询所有的题型
+        QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
+        typeQueryWrapper.select("q_type","q_pool");
+        List<Type> list = typeService.list(typeQueryWrapper);
+        //设置model、返回视图
+        model.addAttribute("typeList",list);
         return "admin/paper_create";
     }
 
+    //试卷创建（随机创建）
     @ResponseBody
     @RequestMapping("/createPaperOperate")
     public Object creatPaperOpt(@RequestBody String request) throws ParseException {
@@ -216,6 +221,7 @@ public class PaperController {
         QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
         questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType);
         List<Question> list1 = questionService.list(questionQueryWrapperWrapper);
+        //数组用来存放抽取的题目id，RandomUtil.random回从指定数组抽取指定个数的随机题目，且不重复
         Integer array[] = new Integer[list1.size()];
         for(int i = 0; i < array.length; i++){
            array[i] = list1.get(i).getId();
@@ -238,6 +244,7 @@ public class PaperController {
         for(int i = 0; i < array2.length; i++){
             array2[i] = list2.get(i).getId();
         }
+
         ArrayList<Integer> randomList2 = RandomUtil.random(moreSelectNumber, array2);
         for(int i = 0; i < moreSelectNumber; i++){
             PaperDetails paperDetails = new PaperDetails();
@@ -259,6 +266,126 @@ public class PaperController {
             return map;
         }
     }
+
+    //自定义创建试卷
+    @ResponseBody
+    @RequestMapping("/createPaperDiy")
+    public Object createPaperDiy(@RequestBody String request){
+        JSONObject jsonObject = JSONObject.parseObject(request);
+        String paperName = (String) jsonObject.get("paperName");
+        String startTime = (String)jsonObject.get("startTime");
+        String endTime = (String)jsonObject.get("endTime");
+        JSONObject moreNumArray = jsonObject.getJSONObject("moreNumArray");
+        JSONObject morePoolArray = jsonObject.getJSONObject("morePoolArray");
+        JSONObject singleNumArray = jsonObject.getJSONObject("singleNumArray");
+        JSONObject singlePoolArray = jsonObject.getJSONObject("singlePoolArray");
+        //获取单选、多选题数
+        Integer singleSelect = 0;
+        Integer moreSelect = 0;
+        for(int i = 0; i < singleNumArray.size(); i++){
+            singleSelect+=Integer.parseInt((String) singleNumArray.get(String.valueOf(i)));
+        }
+        for(int i = 0; i < moreNumArray.size(); i++){
+            moreSelect+=Integer.parseInt((String) morePoolArray.get(String.valueOf(i)));
+        }
+        LocalDateTime start = LocalDateTime.parse(startTime);
+        LocalDateTime end = LocalDateTime.parse(endTime);
+        Paper paper = new Paper();
+        paper.setPName(paperName);
+        paper.setIsAuto(1);
+        paper.setPStatus(0);
+        paper.setSingleSelect(singleSelect);
+        paper.setMoreSelect(moreSelect);
+        paper.setStartTime(start);
+        paper.setEndTime(end);
+        LocalDateTime updateTime = LocalDateTime.parse(startTime);
+        paper.setUpdateTime(updateTime);
+        //储存返回给前端的数据
+        Map map = new HashMap();
+        //查询试卷，判断试卷是否已经存在，通过试卷名查询，试卷名需要保持唯一
+        QueryWrapper<Paper> queryWrapper = new QueryWrapper();
+        queryWrapper.select("p_id").eq("p_name",paperName);
+        List<Paper> paperList = paperService.list(queryWrapper);
+        //已经创建过，直接返回信息到前端
+        if(paperList.size()>=1){
+            map.put("code", 500);
+            map.put("hasPaper",true);
+            map.put("paperName",paperName);
+            return map;
+        }
+        else {
+            map.put("hasPaper",false);
+        }
+        //试卷不存在保存试卷信息
+        boolean savePaper = paperService.save(paper);
+        Integer pId = paperService.list(queryWrapper).get(0).getPId();
+        //试卷详情list，所有筛选的题目信息存入
+        List<PaperDetails> paperDetailsList = new ArrayList<>();
+        //单选：查出所有符合条件的单选题
+        for(int i =0;i<singlePoolArray.size();i++){
+            //先查出所有符合pool条件的--->再由random查出指定数目的-->添加道总和的paperDetailsList中
+            // 查询条件：question_pool
+            QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
+            questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType)
+                    .eq("question_pool",Integer.parseInt((String) singlePoolArray.get(String.valueOf(i))));
+            //查出满足某种题型、某种类型的题，并将该题的id存放在array中
+            List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
+            Integer array[] = new Integer[questionList.size()];
+            for(int j = 0; j < array.length; j++){
+                array[j] = questionList.get(j).getId();
+            }
+            //限定这种题型的数量
+            Integer number = Integer.parseInt((String) singleNumArray.get(String.valueOf(i)));
+            ArrayList<Integer> randomList = RandomUtil.random(number, array);
+            for(int m = 0; m < number; m++){
+                PaperDetails paperDetails = new PaperDetails();
+                paperDetails.setNum(paperDetailsList.size()+1);
+                paperDetails.setQId(randomList.get(m));
+                paperDetails.setPId(pId);
+                //添加道到和list中
+                paperDetailsList.add(paperDetails);
+            }
+        }
+        for(int i =0;i<morePoolArray.size();i++){
+            //先查出所有符合pool条件的--->再由random查出指定数目的-->添加道总和的paperDetailsList中
+            // 查询条件：question_pool
+            QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
+            questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType)
+                    .eq("question_pool",Integer.parseInt((String) morePoolArray.get(String.valueOf(i))));
+            //查出满足某种题型、某种类型的题，并将该题的id存放在array中
+            List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
+            Integer array[] = new Integer[questionList.size()];
+            for(int j = 0; j < array.length; j++){
+                array[j] = questionList.get(j).getId();
+            }
+            //限定这种题型的数量
+            Integer number = Integer.parseInt((String) moreNumArray.get(String.valueOf(i)));
+            ArrayList<Integer> randomList = RandomUtil.random(number, array);
+            for(int m = 0; m < number; m++){
+                PaperDetails paperDetails = new PaperDetails();
+                paperDetails.setNum(paperDetailsList.size()+1);
+                paperDetails.setQId(randomList.get(m));
+                paperDetails.setPId(pId);
+                //添加到总和list中
+                paperDetailsList.add(paperDetails);
+            }
+        }
+        //保存试卷
+        boolean savePaperDetails = paperDetailsService.saveBatch(paperDetailsList);
+        if(savePaper&&savePaperDetails){
+            map.put("code",200);
+            map.put("paperName",paperName);
+            return map;
+        }else {
+            map.put("code", 500);
+            map.put("paperName", paperName);
+            map.put("hasError","保存试卷出错!");
+            return map;
+        }
+
+
+    }
+
 
     //显示试卷
     @ResponseBody
@@ -290,6 +417,7 @@ public class PaperController {
         ArrayList<QuestionObject> questionObjectList = new ArrayList<>();
         for(int i = 0; i < contentList.size(); i++){
             QuestionObject questionObject = JSONObject.parseObject(contentList.get(i), QuestionObject.class);
+            questionObject.setTitleContent(StrOperateUtil.removeTag(questionObject.getTitleContent()));
             questionObjectList.add(questionObject);
         }
         Map<String,Object> map = new HashMap<>();
@@ -315,10 +443,10 @@ public class PaperController {
         return map;
     }
 
+    //导出excel文件
     @ResponseBody
     @PostMapping("/dowmLoadExcel")
     public Object downLoadExcel(@RequestBody String req,HttpServletResponse response) throws IOException {
-
         Integer pId = Integer.parseInt(JSONObject.parseObject(req).get("id").toString());
         List<ScoreVM> scoreVMS = scoreVMService.searchMark(pId);
         poiService.downLoadExcel(scoreVMS);

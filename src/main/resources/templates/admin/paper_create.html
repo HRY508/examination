@@ -21,6 +21,7 @@
 
     <!--common-->
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/jquery.stepy.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet">
     <script type="text/css">
         .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
@@ -69,7 +70,7 @@
                     <span class="tools pull-right">
                                 <a class="fa fa-chevron-down" href="javascript:;"></a>
                                 <a class="fa fa-times" href="javascript:;"></a>
-                             </span>
+                    </span>
                 </header>
                 <div class="panel-body">
                     <form class="form-horizontal" id="for" th:action="@{/admin/createPaperOpt}">
@@ -99,23 +100,6 @@
                                     </div>
                                 </div>
                             </div>
-
-<!--                                <label class="control-label col-md-1">单选分值</label>-->
-<!--                                <div class="col-md-4">-->
-<!--                                    <div id="singleScore">-->
-<!--                                        <div class="input-group input-small">-->
-<!--                                            <input type="text" class="spinner-input form-control" maxlength="3" value="1" name="singleSelectScore" id="singleSelectScore" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >-->
-<!--                                            <div class="spinner-buttons input-group-btn btn-group-vertical">-->
-<!--                                                <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incScore($('#singleSelectScore'))">-->
-<!--                                                    <i class="fa fa-angle-up"></i>-->
-<!--                                                </button>-->
-<!--                                                <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disScore($('#singleSelectScore'))">-->
-<!--                                                    <i class="fa fa-angle-down"></i>-->
-<!--                                                </button>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                            </div>-->
                         </div>
 
                         <div class="form-group">
@@ -135,24 +119,6 @@
                                     </div>
                                 </div>
                             </div>
-
-<!--                            <label class="control-label col-md-1">多选题分值</label>-->
-<!--                            <div class="col-md-4">-->
-<!--                                <div id="moreSelectD">-->
-<!--                                    <div class="input-group input-small">-->
-<!--                                        <input type="text" class="spinner-input form-control" maxlength="3" value="1" name="moreSelectScore" id="moreSelectScore" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">-->
-<!--                                        <div class="spinner-buttons input-group-btn btn-group-vertical">-->
-<!--                                            <button type="button" class="btn spinner-up btn-xs btn-default"  onclick="incScore($('#moreSelectScore'))">-->
-<!--                                                <i class="fa fa-angle-up"></i>-->
-<!--                                            </button>-->
-<!--                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disScore($('#moreSelectScore'))">-->
-<!--                                                <i class="fa fa-angle-down"></i>-->
-<!--                                            </button>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-1">判断题数</label>
@@ -252,7 +218,192 @@
                 </div>
             </section>
         </div>
+<!--        自定义创建开始-->
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        自定义创建......
+                        <span class="tools pull-right">
+                                <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                <a class="fa fa-times" href="javascript:;"></a>
+                        </span>
+                    </header>
+                    <div class="panel-body">
+                <h4 class="fw-title">按步骤完成即可创建试卷</h4>
+                <div class="box-widget">
+                    <div class="widget-head clearfix">
+                        <div id="top_tabby" class="block-tabby pull-left">
+                        </div>
+                    </div>
+                    <div class="widget-container">
+                        <div class="widget-block">
+                            <div class="widget-content box-padding">
+                                <form id="stepy_form" class=" form-horizontal left-align form-well">
+                                    <fieldset title="Step 1">
+                                        <legend>初始化</legend>
+                                        <div class="form-group ">
+                                            <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="paperName1" id="paperName1">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"> 开始时间</label>
+                                            <div class="col-md-4">
+                                                <div class="input-group date form_datetime-component">
+                                                    <input type="text" class="form-control" readonly="" size="16" name="startTime1" id="startTime1">
+                                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1">结束时间</label>
+                                            <div class="col-md-4">
+                                                <div class="input-group date form_datetime-component">
+                                                    <input type="text" class="form-control" readonly="" size="16" name="endTime1" id="endTime1">
+                                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset title="Step 2">
+                                        <legend>单选题选择</legend>
+
+                                            <div class="form-group s" th:each="type0 :${typeList}">
+                                                <div class="control-label col-md-5">
+                                                    <label class="control-label col-md-2">单选数</label><div class="col-md-3">
+                                                    <div id="singleChoice">
+                                                        <div class="input-group input-small" >
+                                                            <input type="text" class="spinner-input form-control valid" maxlength="3" value="0" th:name="'singNumber'+${type0.getQPool()}" th:id="'singId'+${type0.getQPool()}"
+                                                                   onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                                            <div class="spinner-buttons input-group-btn btn-group-vertical">
+                                                                <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber1(this.parentNode.parentNode.children[0])">
+                                                                    <i class="fa fa-angle-up"></i>
+                                                                </button>
+                                                                <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber1(this.parentNode.parentNode.children[0])">
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <label  class=" control-label col-md-2">分类</label>
+                                                    <div class="btn-group col-md-3">
+                                                        <button id="questionTypeButton1" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                                        <ul role="menu" class="dropdown-menu" style="text-align: left">
+                                                            <li  th:each="type :${typeList}" >
+                                                                <a th:value="${type.getQPool()}" th:text="${type.getQType()}"
+                                                                   th:onclick="questionPool1([[${type.getQPool()}]],[[${type.getQType()}]],
+                                                                   this.parentNode.parentNode.parentNode.children[2],this.parentNode.parentNode.parentNode.children[0])"
+                                                                   style="width: 100%" href="javascript:void(0);">
+                                                                </a></li>
+                                                        </ul>
+                                                        <input class="hidden" th:id="'singPool'+${type0.getQPool()}" th:name="'singPool'+${type0.getQPool()}" value="0">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-5">
+                                                <button type="button" class="btn btn-sm btn-success" onclick="addLine()"><i class="fa fa-plus"></i>添加选项</button>
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="reduceLine()"><i class="fa fa-minus"></i>减少选项</button>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+
+
+
+
+
+
+                                    <fieldset title="Step 3">
+                                        <legend>多选题选择</legend>
+
+                                        <div class="form-group m" th:each="type1 :${typeList}">
+                                            <div class="control-label col-md-5">
+                                                <label class="control-label col-md-2">多选数</label><div class="col-md-3">
+                                                <div id="moreChoice">
+                                                    <div class="input-group input-small" >
+                                                        <input type="text" class="spinner-input form-control valid" maxlength="3" value="0" th:name="'moreNumber'+${type1.getQPool()}" th:id="'moreId'+${type1.getQPool()}"
+                                                               onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                                        <div class="spinner-buttons input-group-btn btn-group-vertical">
+                                                            <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber1(this.parentNode.parentNode.children[0])">
+                                                                <i class="fa fa-angle-up"></i>
+                                                            </button>
+                                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber1(this.parentNode.parentNode.children[0])">
+                                                                <i class="fa fa-angle-down"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <label  class=" control-label col-md-2">分类</label>
+                                                <div class="btn-group col-md-3">
+                                                    <button id="questionTypeButton2" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                                    <ul role="menu" class="dropdown-menu" style="text-align: left">
+                                                        <li  th:each="type :${typeList}" >
+                                                            <a th:value="${type.getQPool()}" th:text="${type.getQType()}"
+                                                               th:onclick="questionPool1([[${type.getQPool()}]],[[${type.getQType()}]],
+                                                                   this.parentNode.parentNode.parentNode.children[2],this.parentNode.parentNode.parentNode.children[0])"
+                                                               style="width: 100%" href="javascript:void(0);">
+                                                            </a></li>
+                                                    </ul>
+                                                    <input class="hidden" th:id="'morePool'+${type1.getQPool()}" th:name="'morePool'+${type1.getQPool()}" value="0" >
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-5">
+                                                <button type="button" class="btn btn-sm btn-success" onclick="addLine2()"><i class="fa fa-plus"></i>添加选项</button>
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="reduceLine2()"><i class="fa fa-minus"></i>减少选项</button>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                    <fieldset title="Step 4">
+                                        <legend>完成创建</legend>
+                                        <div class="form-group">
+                                            <label class="col-md-2 col-sm-2 control-label">Text Input</label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <input type="text" placeholder="Text Input" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 col-sm-2 control-label">Checkbox</label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" value="">
+                                                    Option one is this and that—be sure to include why it's great </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 col-sm-2 control-label">Radio</label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <label class="radio">
+                                                    <input type="radio" name="optionsRadios" value="option1" checked>
+                                                    Option one is this and that—be sure to include why it's great </label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <button type="button" onclick="diySubmit()"  class="finish btn btn-info btn-extend"> 完成!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                </section>
+        </div>
     </div>
+    <!--        自定义创建结束-->
+
     <!--    body wrapper end-->
 
     <!--footer section start-->
@@ -271,6 +422,8 @@
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/jquery.stepy.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/modernizr.min.js"></script>
 <script src="/js/jquery.nicescroll.js"></script>
@@ -298,6 +451,53 @@
 <script src="/js/scripts.js"></script>
 <script type="text/javascript">
 
+
+
+    /*=====STEPY WIZARD====*/
+    $(function() {
+        $('#default').stepy({
+            backLabel: 'Previous',
+            block: true,
+            nextLabel: 'Next',
+            titleClick: true,
+            titleTarget: '.stepy-tab'
+        });
+    });
+    /*=====STEPY WIZARD WITH VALIDATION====*/
+    $(function() {
+        $('#stepy_form').stepy({
+            backLabel: '上一步',
+            nextLabel: '下一步',
+            errorImage: true,
+            block: true,
+            description: true,
+            legend: false,
+            titleClick: true,
+            titleTarget: '#top_tabby',
+            validate: true
+        });
+        $('#stepy_form').validate({
+            errorPlacement: function(error, element) {
+                $('#stepy_form div.stepy-error').append(error);
+            },
+            rules: {
+                'paperName': 'required',
+                'startTime': 'required',
+                'endTime': 'required'
+            },
+            messages: {
+                'paperName': {
+                    required: '试卷名未填写!'
+                },
+                'startTime': {
+                    required: '考试开始时间未填写!'
+                },
+                'endTime': {
+                    required: '考试结束时间未填写!'
+                }
+            }
+        });
+    });
     function createPaper() {
         var paperName = $('#paperName').val()
         var singleSelectNumber = $('#singleSelectNumber').val()
@@ -418,7 +618,6 @@
         if(num >= 0 && num <= 100){
             object.attr('value',num)
         }
-
     }
     //减少题目数
     function disNumber(object){
@@ -457,6 +656,199 @@
         if(score >= 0){
             object.attr('value',score)
         }
+    }
+
+    //自定义创建的初始化
+    $(document).ready( function() {
+        var arr = document.getElementsByClassName('form-group s')
+        for (var i =0; i < arr.length; i++){
+            arr[i].setAttribute('class','hidden form-group s')
+        }
+        for (var i =0; i < 3; i++){
+            arr[i].setAttribute('class','form-group s')
+        }
+
+        var arr2 = document.getElementsByClassName('form-group m')
+        for (var i =0; i < arr2.length; i++){
+            arr2[i].setAttribute('class','hidden form-group m')
+        }
+        for (var i =0; i < 3; i++){
+            arr2[i].setAttribute('class','form-group m')
+        }
+
+
+    })
+
+    //自定义创建增加题目数
+    function incNumber1(object){
+        //获取数值，转int
+        var num = parseInt(object.value)
+        num = num+5
+        //题数[0,100]范围
+        if(num >= 0 && num <= 100){
+            object.value = num
+        }
+    }
+
+    //自定义创建减少题目数
+    function disNumber1(object){
+        //获取数值，转int
+        var num = parseInt(object.value)
+        num = num-5
+        //题数[0,100]范围
+        if(num >= 0 && num <= 100){
+            object.value = num
+        }
+    }
+
+    //选择分类触发
+    function questionPool1(va,te,_input,_button){
+        $(_input).attr('value',va)
+        _button.innerHTML = te
+    }
+
+    //单选增加选项：
+    function addLine(){
+        var arr = document.getElementsByClassName('hidden form-group s')
+        if(arr.length==0){
+            $('#cancel').text('确定').removeClass('hidden')
+            $('#modelColor').attr('style','background : #65CEA7')
+            $('#paperCreateTips').text('种类数达到上限！')
+            $('#tip2').click()
+        }
+        if(arr.length>0){
+            arr[0].setAttribute('class','form-group s')
+        }
+    }
+
+    //多选增加选项：
+    function addLine2(){
+        var arr = document.getElementsByClassName('hidden form-group m')
+        if(arr.length==0){
+            $('#cancel').text('确定').removeClass('hidden')
+            $('#modelColor').attr('style','background : #65CEA7')
+            $('#paperCreateTips').text('种类数达到上限！')
+            $('#tip2').click()
+        }
+        if(arr.length>0){
+            arr[0].setAttribute('class','form-group m')
+        }
+    }
+
+
+    //单选减少选项
+    function  reduceLine(){
+        var arr = document.getElementsByClassName('form-group s')
+        var arr2 = document.getElementsByClassName('hidden form-group s')
+        if(arr.length-arr2.length==1){
+            $('#cancel').text('确定').removeClass('hidden')
+            $('#modelColor').attr('style','background : #bb1f1f')
+            $('#paperCreateTips').text('最少一个种类！')
+            $('#tip2').click()
+        }
+            for(var i =arr.length-1 ;i > 0;i--){
+                if(arr[i].getAttribute('class')=='form-group s'){
+                    arr[i].setAttribute('class','hidden form-group s')
+                    break;
+                }
+            }
+    }
+
+    //减少选项
+    function  reduceLine2(){
+        var arr = document.getElementsByClassName('form-group m')
+        var arr2 = document.getElementsByClassName('hidden form-group m')
+        if(arr.length-arr2.length==1){
+            $('#cancel').text('确定').removeClass('hidden')
+            $('#modelColor').attr('style','background : #bb1f1f')
+            $('#paperCreateTips').text('最少一个种类！')
+            $('#tip2').click()
+        }
+        for(var i =arr.length-1 ;i > 0;i--){
+            if(arr[i].getAttribute('class')=='form-group m'){
+                arr[i].setAttribute('class','hidden form-group m')
+                break;
+            }
+        }
+    }
+    //自定义创建
+    function diySubmit() {
+        //获取自定义创建考试名、开始时间、结束时间
+        var paperName = $('#paperName1').val()
+        var startTime0 = $('#startTime1').val()
+        var endTime0 = $('#endTime1').val()
+        startTime1 = dateFormat(startTime0)
+        endTime1 = dateFormat(endTime0)
+        //获取所有的单选题的数量跟对应的类型
+        var singleNumArray = {}
+        var singlePoolArray = {}
+        var singleInputNumber = document.getElementsByClassName('form-group s')
+        for(var i =0;i<singleInputNumber.length;i++){
+            var singNum = $("#singId"+parseInt(i+1)+"").val()
+            var singPool = $("#singPool"+parseInt(i+1)+"").val()
+            if(singNum!=0&&singPool!=0){
+                singleNumArray[i] = $("#singId"+parseInt(i+1)+"").val()
+                singlePoolArray[i] = $("#singPool"+parseInt(i+1)+"").val()
+            }
+        }
+        //获取所有的多选题的数量跟对应的类型
+        var moreNumArray = {}
+        var morePoolArray = {}
+        var moreInputNumber = document.getElementsByClassName('form-group m')
+        for(var i =0;i<moreInputNumber.length;i++)
+        {
+            var moreNum = $("#moreId"+parseInt(i+1)+"").val()
+            var morePool = $("#morePool"+parseInt(i+1)+"").val()
+            if(moreNum!=0&&morePool!=0){
+                moreNumArray[i] = $("#moreId"+parseInt(i+1)+"").val()
+                morePoolArray[i] = $("#morePool"+parseInt(i+1)+"").val()
+            }
+        }
+            $.ajax({
+                //请求路径
+                url: "/admin/createPaperDiy",
+                //请求类型
+                type: "POST",
+                //data表示发送的数据
+                data: JSON.stringify({
+                    paperName:paperName,
+                    startTime:startTime1,
+                    endTime:endTime1,
+                    singleNumArray:singleNumArray,
+                    singlePoolArray:singlePoolArray,
+                    moreNumArray:moreNumArray,
+                    morePoolArray:morePoolArray
+                }), //定义发送请求的数据格式为JSON字符串
+                contentType: "application/json;charset=utf-8",
+                //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                dataType: "json",
+                //成功响应的结果
+                success: function (data) {
+                    if(data.code==200){
+                        $('#toLook').removeClass('hidden')
+                        $('#cancel').text('确定').removeClass('hidden')
+                        alert("success")
+                        $('#modelColor').attr('style','background : #65CEA7')
+                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建成功！')
+                        $('#tip2').click()
+                    }
+                    if(data.code == 500){
+                        $('#modelColor').attr('style','background : #bb1f1f')
+                        if(data.hasPaper == true){
+                            $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因：该试卷已存在，不可重复创建。')
+                            $('#tip2').click()
+                            $('#toLook').removeClass('hidden')
+                            $('#cancel').text('确定').removeClass('hidden')
+                        }
+                        else if (data.hasError!=null){
+                            $('#toLook').addClass('hidden')
+                            $('#cancel').text('确定').removeClass('hidden')
+                            $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因:'+data.hasError)
+                            $('#tip2').click()
+                        }
+                    }
+                },
+            })
     }
 
 
