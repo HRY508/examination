@@ -5,6 +5,7 @@ import com.examination.utils.GlobalUserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +29,10 @@ public class CompletionController {
     }
 
     @RequestMapping("/admin/completions")
-    public String completions(HttpServletRequest request){
+    public String completions(HttpServletRequest request, Model model){
         questionService.insertCompletionQuestion(request, GlobalUserUtil.getUser().getUserName());
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/nestable";
     }
 

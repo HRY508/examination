@@ -1,19 +1,12 @@
 package com.examination.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.examination.bean.Content;
 import com.examination.bean.FrontQuestionVM;
-import com.examination.bean.QuestionPracticeDetails;
-import com.examination.bean.QuestionVM;
 import com.examination.mapper.FrontQuestionVMMapper;
-import com.examination.mapper.QuestionVMMapper;
 import com.examination.service.FrontQuestionVMService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @Author:晓风残月Lx

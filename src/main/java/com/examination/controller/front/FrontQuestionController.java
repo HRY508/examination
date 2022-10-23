@@ -99,6 +99,8 @@ public class FrontQuestionController {
             request.setAttribute("pool","&pool=");
             request.setAttribute("poolValue",searchPool);
         }
+        // 显示用户已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "user/problem";
     }
 }

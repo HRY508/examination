@@ -50,10 +50,9 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img alt="" src="images/photos/user-avatar.png"> John Doe <b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" th:text="${userName}"><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">个人信息</a></li>
-                            <li><a href="#">设置</a></li>
+                            <li><a data-toggle="modal" href="#updatePassword"><i class="fa fa-cog"></i>  修改密码</a></li>
                             <li><a th:href="@{/user/logout}">退出登录</a></li>
                         </ul>
                     </li>
@@ -76,6 +75,48 @@
     <!--底部结束-->
 
 </section>
+
+<!--   修改密码modal框开始-->
+<div th:fragment="commonupdatePwd">
+    <div data-backdrop="static" data-keyboard="false"  aria-labelledby="updatePassword" role="dialog" tabindex="-1" id="updatePassword" class="modal fade text-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">修改密码</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <div aria-hidden="true">&times;</div>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <br/>
+                    <div class="item form-group col-md-12  tip"   >
+                        <div class="col-md-offset-3 col-md-3" style="color:red;display:none;" id="tip"></div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label for="oldPwd" >输入原密码</label>
+                        <input id="oldPwd" type="password" name="oldPwd" required="required">
+                    </div>
+                    <div class="item form-group">
+                        <label for="newPwd" >输入新密码</label>
+                        <input id="newPwd" type="password" name="newPwd"  required="required">
+                    </div>
+                    <div class="item form-group">
+                        <label for="newPwd2">确认新密码</label>
+                        <input id="newPwd2" type="password" name="newPwd2" required="required">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="button" id="pwd_btn" name="dosubmit" class="btn btn-secondary" >确认修改</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--   修改密码modal框结束-->
 
 
 <script src="/js/jquery-1.10.2.min.js"></script>

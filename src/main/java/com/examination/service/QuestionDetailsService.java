@@ -5,4 +5,8 @@ import com.examination.bean.QuestionDetails;
 import com.examination.mapper.QuestionDetailsMapper;
 
 public interface QuestionDetailsService extends IService<QuestionDetails> {
+
+    Integer getFinishNum();
+
+    Integer getrightNum();
 }

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.User;
 import com.examination.service.UserService;
+import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.ShiroMd5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,6 +58,8 @@ public class UserController {
         request.setAttribute("permsValue", perms);
         //此处得到的page对象,包含了current（当前页）,pages（总页数），total（总记录数），records（记录，就是查询到的List集合）
         request.setAttribute("page", result);
+        // 显示管理员已登录
+        request.setAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/user_list";
     }
 

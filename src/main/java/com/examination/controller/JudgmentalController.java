@@ -5,6 +5,7 @@ import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +27,10 @@ public class JudgmentalController {
     }
 
     @RequestMapping("/admin/judgmentals")
-    public String judgmentals(HttpServletRequest request){
+    public String judgmentals(HttpServletRequest request, Model model){
         questionService.insertJudgeQuestion(request, GlobalUserUtil.getUser().getUserName());
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/tree_view";
     }
 

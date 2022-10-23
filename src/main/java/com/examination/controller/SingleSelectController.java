@@ -42,14 +42,18 @@ public class SingleSelectController {
         typeQueryWrapper.select("q_type","q_pool");
         List<Type> list = typeService.list(typeQueryWrapper);
         model.addAttribute("typeList",list);
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/editors";
     }
 
 
     @RequestMapping("/admin/singleSelect")
-    public String singleSelect(HttpServletRequest request) throws Exception {
+    public String singleSelect(HttpServletRequest request,Model model) throws Exception {
         Integer questionType = StaticVariableUtil.singleSelectType;
         questionService.insertSelectQuestion(request,GlobalUserUtil.getUser().getUserName(),questionType);
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/editors";
     }
 }

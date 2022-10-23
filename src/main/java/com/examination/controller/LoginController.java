@@ -1,9 +1,15 @@
 package com.examination.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.Paper;
+import com.examination.bean.QuestionDetails;
+import com.examination.bean.RankVM;
 import com.examination.bean.User;
-import com.examination.service.PaperService;
+import com.examination.service.*;
+import com.examination.utils.GlobalUserUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -15,6 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -28,6 +36,10 @@ public class LoginController {
 
     @Autowired
     private PaperService paperService;
+    @Resource
+    private RankVMService rankVMService;
+    @Resource
+    private QuestionDetailsService questionDetailsService;
 
     @RequestMapping({"/login","","/"})
     public String toLoginPage(Model model){
@@ -37,9 +49,27 @@ public class LoginController {
 
 
     @RequestMapping("/user/index")
-    public String toUserPage(Model model){
+    public String toUserPage(@RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,
+                             Model model){
+        // 查考试
         List<Paper> list = paperService.list(null);
         model.addAttribute("paper",list);
+
+        // 查排名
+        // 默认显示第1页，显示20个数据
+        Page page = new Page(pn,20);
+        Page<RankVM> rankVMList = rankVMService.getList(page);
+        model.addAttribute("userList",rankVMList.getRecords());
+        model.addAttribute("page",rankVMList);
+
+        // 查有多少人今日完成了
+        Integer finishNum = questionDetailsService.getFinishNum();
+        Integer rightNum = questionDetailsService.getrightNum();
+        model.addAttribute("finishNum",finishNum);
+        model.addAttribute("rightNum",rightNum);
+
+        // 显示用户已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "user/index";
     }
 

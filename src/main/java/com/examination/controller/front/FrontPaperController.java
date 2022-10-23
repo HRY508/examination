@@ -39,6 +39,9 @@ public class FrontPaperController{
         request.setAttribute("paperList",papers);
         request.setAttribute("page",paperPage);
         request.setAttribute("pNum",1);
+
+        // 显示用户已登录
+        request.setAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "user/paper";
     }
 

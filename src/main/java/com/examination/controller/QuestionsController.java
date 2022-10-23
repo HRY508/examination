@@ -135,6 +135,8 @@ public class QuestionsController {
             request.setAttribute("qNameValue",questionName);
         }
         request.setAttribute("page",result);
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/questions_list";
     }
 

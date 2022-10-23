@@ -65,7 +65,10 @@
                             <h3 class="panel-title">统计</h3>
                         </div>
                         <div class="panel-body">
-                            内容
+
+                            <p>今日参与答题数 ： <a style="color: #4E6CA3" th:text="${finishNum}"></a></p>
+                            <p>今日答题正确数 ： <a style="color: #4E6CA3"  th:text="${rightNum}"></a></p>
+
                         </div>
                     </div>
                 </div>
@@ -76,7 +79,61 @@
                             <h3 class="panel-title">排名</h3>
                         </div>
                         <div class="panel-body">
-                            内容
+                            <table  class="table  table-hover general-table">
+                                <thead>
+                                <tr>
+                                    <th>排名</th>
+                                    <th>用户名</th>
+                                    <th>专业</th>
+                                    <th>解决数</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="ranks : ${userList}">
+                                    <td th:text="${ranks.getRId()}"></td>
+                                    <td th:text="${ranks.getUserName()}"></td>
+                                    <td th:text="${ranks.getProfession()}"></td>
+                                    <td th:text="${ranks.getResultNum()}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <!--分页-->
+                            <div th:fragment="page"><!--定义用于被显示列表页包含-->
+                                <head>
+                                    <style>
+                                        .page-item {
+                                            padding: 1px 5px;
+                                            border: 1px solid #afafaf;
+                                            margin-left: 3px
+                                        }
+
+                                        .page-item.active {
+                                            color: red;
+                                            border: 1px solid red;
+                                        }
+                                    </style>
+                                </head>
+                                <div style="float: left" th:if="${page.pages>0}">
+                                    当前第<span th:text="${page.current}"></span>页,共<span
+                                        th:text="${page.pages}"></span>页,总记录数<span th:text="${page.total}"></span>
+                                </div>
+                                <div style="float: right" th:if="${page.pages>0}">
+                                    <a th:href="@{${jumpUrl}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
+                                    <a th:href="@{${jumpUrl}+${page.current-1}}" th:text="上一页" th:class="page-item"
+                                       th:if="${page.current>1}"></a>
+                                    <a th:href="@{${jumpUrl}+${i}}"
+                                       th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
+                                       th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
+                                    <a th:href="@{${jumpUrl}+${page.current+1}}" th:text="下一页" th:class="page-item"
+                                       th:if="${page.current<page.pages}"></a> <a
+                                        th:href="@{${jumpUrl}+${page.pages}}" th:text="尾页" th:class="page-item"
+                                        th:if="${page.current<page.pages}"></a>
+                                </div>
+                            </div>
+                            <!--分页结束-->
+
                         </div>
                     </div>
                 </div>
@@ -100,6 +157,7 @@
 
 </section>
 
+<div th:replace="~{/user/commons/common :: commonupdatePwd}"></div>
 
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
@@ -114,7 +172,7 @@
 
 <script type="text/javascript">
 
-    function isStartTime(pid,pName,pStatus,startTime,endTime) {
+    function goExam(pid,pName,pStatus,startTime,endTime) {
     var start = new Date(startTime).getTime();
     var end = new Date(endTime).getTime();
     var str = new Date().getTime();
@@ -135,6 +193,51 @@
         }
     }
 }
+
+
+    // 修改密码
+    $("#pwd_btn").click(function() {
+        $("#pwd_btn").blur();
+        if (confirm("是否确定修改?")){
+            var submit = true;
+            var oldPwd = $("#oldPwd").val(); //原始密码
+            var newPwd = $("#newPwd").val(); //新密码1
+            var newPwd2 = $("#newPwd2").val(); //新密码2
+
+            if ((oldPwd && newPwd && newPwd2) == '') {
+                $("#tip").html("密码不能为空");
+                $("#tip").show();
+                submit = false;
+            }
+            if(submit){
+                $.ajax({
+                    type:"post",
+                    url:"/user/updatePwd",
+                    data: JSON.stringify({
+                        oldPwd : oldPwd,
+                        newPwd : newPwd,
+                        newPwd2 : newPwd2
+                    }),
+                    contentType: "application/json;charset=utf-8",
+                    //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                    dataType: "json",
+                    success:function (data){
+                        if(data.status == 200 ){
+                            $("#tip").hide();
+                            $("#pwd_form").submit();
+                            alert("修改成功，请重新登录!")
+                            window.location.href = "/user/logout"
+                        }else if(data.status != 200){
+
+                            $("#tip").html(data.info);
+                            $("#tip").show();
+                        }
+                    }
+                });
+            }
+        }
+    });
+
 </script>
 
 </body>

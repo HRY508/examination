@@ -6,6 +6,7 @@ import com.examination.bean.AnswerVM;
 import com.examination.bean.Paper;
 import com.examination.service.AnswerVMService;
 import com.examination.service.PaperService;
+import com.examination.utils.GlobalUserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,8 @@ public class AnswerController {
         model.addAttribute("paperList",list);
         model.addAttribute("qid","&pid=");
         model.addAttribute("username","&username=");
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/paper_answer";
     }
 

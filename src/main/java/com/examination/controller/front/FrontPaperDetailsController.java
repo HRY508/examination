@@ -72,6 +72,8 @@ public class FrontPaperDetailsController {
         model.addAttribute("num",num);
         model.addAttribute("questionObject",questionObject);
         model.addAttribute("status",isDo);
+        // 显示用户已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "user/paper_details";
     }
 

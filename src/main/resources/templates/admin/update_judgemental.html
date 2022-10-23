@@ -293,6 +293,8 @@
     <!-- main content end-->
 </section>
 
+<div th:replace="~{/admin/commons/common :: commonupdatePwd}"></div>
+
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="/js/jquery-1.10.2.min.js"></script>
 <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
@@ -408,6 +410,51 @@
         $('#score').attr('value',0)
         cd4()
     }
+
+
+    // 修改密码
+    $("#pwd_btn").click(function() {
+        $("#pwd_btn").blur();
+        if (confirm("是否确定修改?")){
+            var submit = true;
+            var oldPwd = $("#oldPwd").val(); //原始密码
+            var newPwd = $("#newPwd").val(); //新密码1
+            var newPwd2 = $("#newPwd2").val(); //新密码2
+
+            if ((oldPwd && newPwd && newPwd2) == '') {
+                $("#tip").html("密码不能为空");
+                $("#tip").show();
+                submit = false;
+            }
+            if(submit){
+                $.ajax({
+                    type:"post",
+                    url:"/admin/updatePwd",
+                    data: JSON.stringify({
+                        oldPwd : oldPwd,
+                        newPwd : newPwd,
+                        newPwd2 : newPwd2
+                    }),
+                    contentType: "application/json;charset=utf-8",
+                    //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                    dataType: "json",
+                    success:function (data){
+                        if(data.status == 200 ){
+                            $("#tip").hide();
+                            $("#pwd_form").submit();
+                            alert("修改成功，请重新登录!")
+                            window.location.href = "/admin/logout"
+                        }else if(data.status != 200){
+
+                            $("#tip").html(data.info);
+                            $("#tip").show();
+                        }
+                    }
+                });
+            }
+        }
+
+    });
 
     jQuery(document).ready(function(){
         $('.wysihtml5').wysihtml5();

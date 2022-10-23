@@ -33,7 +33,7 @@ public class PoiServiceImpl implements PoiService {
         //新增数据行，并且设置单元格数据
         int rowNum = 1;
 
-        String[] headers = { "排名", "用户名", "真实姓名", "学号", "分数" , "交卷时间"};
+        String[] headers = { "排名", "用户名", "真实姓名", "学号", "院系" ,"分数" , "交卷时间"};
 
         HSSFRow row = sheet.createRow(0);
 
@@ -51,8 +51,9 @@ public class PoiServiceImpl implements PoiService {
             row1.createCell(1).setCellValue(scoreVM.getUserName());
             row1.createCell(2).setCellValue(scoreVM.getRealName());
             row1.createCell(3).setCellValue(scoreVM.getUId());
-            row1.createCell(4).setCellValue(scoreVM.getMark());
-            row1.createCell(5).setCellValue(LocalDateUtil.localDateToString(scoreVM.getExamTime()));
+            row1.createCell(4).setCellValue(scoreVM.getProfession());
+            row1.createCell(5).setCellValue(scoreVM.getMark());
+            row1.createCell(6).setCellValue(LocalDateUtil.localDateToString(scoreVM.getExamTime()));
             rowNum++;
         }
         //获取io流

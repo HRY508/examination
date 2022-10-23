@@ -20,19 +20,13 @@
 
             <!--缩小可见，适应手机开始-->
             <div class="visible-xs hidden-sm hidden-md hidden-lg">
-                <div class="media logged-user">
-                    <img alt="" src="/images/photos/user-avatar.png" class="media-object">
-                    <div class="media-body">
-                        <h4><a href="#">John Doe</a></h4>
-                        <span>"Hello There..."</span>
-                    </div>
+                <div class="media-body">
+                    <h4>  <a style="text-align: center"  th:text="${userName}"></a></h4>
                 </div>
 
-                <h5 class="left-nav-title">Account Information</h5>
                 <ul class="nav nav-pills nav-stacked custom-nav">
-                    <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
-                    <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+                    <li><a data-toggle="modal" href="#updatePassword"><i class="fa fa-cog"></i>  修改密码</a></li>
+                    <li><a th:href="@{/admin/logout}"><i class="fa fa-sign-out"></i> <span>退出登录</span></a></li>
                 </ul>
             </div>
             <!--缩小可见，适应手机结束-->
@@ -105,253 +99,66 @@
         <a class="toggle-btn"><i class="fa fa-bars"></i></a>
         <!--toggle button end-->
 
-        <!--search start-->
-        <form class="searchform" action="http://view.jqueryfuns.com/2014/4/10/7_df25ceea231ba5f44f0fc060c943cdae/index.html" method="post">
-            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
-        </form>
-        <!--search end-->
-
         <!--notification menu start -->
         <div class="menu-right">
             <ul class="notification-menu">
                 <li>
-                    <a href="#" class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
-                        <i class="fa fa-tasks"></i>
-                        <span class="badge">8</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-head pull-right">
-                        <h5 class="title">You have 8 pending task</h5>
-                        <ul class="dropdown-list user-list">
-                            <li class="new">
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div>Database update</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-warning">
-                                            <span class="">40%</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="new">
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div>Dashboard done</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div style="width: 90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" role="progressbar" class="progress-bar progress-bar-success">
-                                            <span class="">90%</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div>Web Development</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div style="width: 66%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="66" role="progressbar" class="progress-bar progress-bar-info">
-                                            <span class="">66% </span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div>Mobile App</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="33" role="progressbar" class="progress-bar progress-bar-danger">
-                                            <span class="">33% </span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div>Issues fixed</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div style="width: 80%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" role="progressbar" class="progress-bar">
-                                            <span class="">80% </span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="new"><a href="">See All Pending Task</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#" class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="badge">5</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-head pull-right">
-                        <h5 class="title">You have 5 Mails </h5>
-                        <ul class="dropdown-list normal-list">
-                            <li class="new">
-                                <a href="">
-                                    <span class="thumb"><img src="/images/photos/user1.png" alt="" /></span>
-                                    <span class="desc">
-                                          <span class="name">John Doe <span class="badge badge-success">new</span></span>
-                                          <span class="msg">Lorem ipsum dolor sit amet...</span>
-                                        </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <span class="thumb"><img src="/images/photos/user2.png" alt="" /></span>
-                                    <span class="desc">
-                                          <span class="name">Jonathan Smith</span>
-                                          <span class="msg">Lorem ipsum dolor sit amet...</span>
-                                        </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <span class="thumb"><img src="/images/photos/user3.png" alt="" /></span>
-                                    <span class="desc">
-                                          <span class="name">Jane Doe</span>
-                                          <span class="msg">Lorem ipsum dolor sit amet...</span>
-                                        </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <span class="thumb"><img src="/images/photos/user4.png" alt="" /></span>
-                                    <span class="desc">
-                                          <span class="name">Mark Henry</span>
-                                          <span class="msg">Lorem ipsum dolor sit amet...</span>
-                                        </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <span class="thumb"><img src="/images/photos/user5.png" alt="" /></span>
-                                    <span class="desc">
-                                          <span class="name">Jim Doe</span>
-                                          <span class="msg">Lorem ipsum dolor sit amet...</span>
-                                        </span>
-                                </a>
-                            </li>
-                            <li class="new"><a href="">Read All Mails</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#" class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                        <span class="badge">4</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-head pull-right">
-                        <h5 class="title">Notifications</h5>
-                        <ul class="dropdown-list normal-list">
-                            <li class="new">
-                                <a href="">
-                                    <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                                    <span class="name">Server #1 overloaded.  </span>
-                                    <em class="small">34 mins</em>
-                                </a>
-                            </li>
-                            <li class="new">
-                                <a href="">
-                                    <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                                    <span class="name">Server #3 overloaded.  </span>
-                                    <em class="small">1 hrs</em>
-                                </a>
-                            </li>
-                            <li class="new">
-                                <a href="">
-                                    <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                                    <span class="name">Server #5 overloaded.  </span>
-                                    <em class="small">4 hrs</em>
-                                </a>
-                            </li>
-                            <li class="new">
-                                <a href="">
-                                    <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                                    <span class="name">Server #31 overloaded.  </span>
-                                    <em class="small">4 hrs</em>
-                                </a>
-                            </li>
-                            <li class="new"><a href="">See All Notifications</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <img src="/images/photos/user-avatar.png" alt="" />
-                        John Doe
+                    <a href="" class="btn btn-default dropdown-toggle" data-toggle="dropdown" th:text="${userName}">
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                        <li><a href="#"><i class="fa fa-user"></i>  Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i>  Settings</a></li>
-                        <li><a th:href="@{/admin/logout}"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                        <li><a data-toggle="modal" href="#updatePassword"><i class="fa fa-cog"></i>  修改密码</a></li>
+                        <li><a th:href="@{/admin/logout}"><i class="fa fa-sign-out"></i> 退出登录</a></li>
                     </ul>
                 </li>
-
             </ul>
         </div>
         <!--notification menu end -->
-
-<!--        修改密码   -->
-<!--        <form action=" ">-->
-<!--            <div class="data_form" >-->
-<!--                <table align="center">-->
-<!--                    <tr>-->
-<!--                        <td><font color="red">*</font>原密码：</td>-->
-<!--                        <td><input type="password"  id="oldPassword"  name="oldPassword" onblur="onblurFn(this.value)"  style="margin-top:5px;height:30px;" /></td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><font color="red">*</font>新密码：</td>-->
-<!--                        <td><input type="password" id="newPassword"  name="newPassword" value="" style="margin-top:5px;height:30px;" /></td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><font color="red">*</font>重复密码：</td>-->
-<!--                        <td><input type="password" id="rPassword"  name="rPassword" value="" style="margin-top:5px;height:30px;" /></td>-->
-<!--                    </tr>-->
-<!--                </table>-->
-<!--                <div align="center">-->
-<!--                    <input type="button" class="btn btn-primary" onclick="checkForm()" value="提交"/>-->
-<!--                </div>-->
-<!--                <div align="center">-->
-<!--                    <font id="error" color="red"></font>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-
-
-<!--        <script type="text/javascript">-->
-<!--            function checkForm(){-->
-<!--                var oldPassword=document.getElementById("oldPassword").value;-->
-<!--                var newPassword=document.getElementById("newPassword").value;-->
-<!--                var rPassword=document.getElementById("rPassword").value;-->
-
-<!--                $("#error").html("");-->
-<!--                if(oldPassword==""||newPassword==""||rPassword==""){-->
-<!--                    document.getElementById("error").innerHTML="信息填写不完整！";-->
-<!--                    return false;-->
-<!--                } else if(newPassword == oldPassword){-->
-<!--                    document.getElementById("error").innerHTML="修改前后密码不能一致！";-->
-<!--                    return false;-->
-<!--                }else if(newPassword!=rPassword){-->
-<!--                    document.getElementById("error").innerHTML="新密码两次填写不一致！";-->
-<!--                    return false;-->
-<!--                }-->
-<!--                window.location.href="password.action?action=change&newPassword="+newPassword;-->
-<!--            }-->
-
-
-<!--        </script>-->
-
-
     </div>
     <!--头部结束-->
+
+
+<!--   修改密码modal框开始-->
+<div th:fragment="commonupdatePwd">
+    <div data-backdrop="static" data-keyboard="false"  aria-labelledby="updatePassword" role="dialog" tabindex="-1" id="updatePassword" class="modal fade text-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">修改密码</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <div aria-hidden="true">&times;</div>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <br/>
+                    <div class="item form-group col-md-12  tip"   >
+                        <div class="col-md-offset-3 col-md-3" style="color:red;display:none;" id="tip"></div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label for="oldPwd" >输入原密码</label>
+                        <input id="oldPwd" type="password" name="oldPwd" required="required">
+                    </div>
+                    <div class="item form-group">
+                        <label for="newPwd" >输入新密码</label>
+                        <input id="newPwd" type="password" name="newPwd"  required="required">
+                    </div>
+                    <div class="item form-group">
+                        <label for="newPwd2">确认新密码</label>
+                        <input id="newPwd2" type="password" name="newPwd2" required="required">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="button" id="pwd_btn" name="dosubmit" class="btn btn-secondary" >确认修改</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--   修改密码modal框结束-->
+
 <!--</body>-->
 </html>

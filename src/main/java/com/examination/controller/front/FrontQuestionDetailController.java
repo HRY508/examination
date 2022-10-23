@@ -60,6 +60,8 @@ public class FrontQuestionDetailController {
         model.addAttribute("difficult",difficult);
         model.addAttribute("questionType",questionType);
         model.addAttribute("questionObject",questionObject);
+        // 显示用户已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "user/question_detail";
     }
 

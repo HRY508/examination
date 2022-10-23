@@ -35,14 +35,18 @@ public class MoreSelectController {
         typeQueryWrapper.select("q_type","q_pool");
         List<Type> list = typeService.list(typeQueryWrapper);
         model.addAttribute("typeList",list);
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/calendar";
     }
 
     @RequestMapping("/admin/moreSelect")
-    public String moreSelect(HttpServletRequest request) throws Exception {
+    public String moreSelect(HttpServletRequest request,Model model) throws Exception {
         Integer questionType = StaticVariableUtil.moreSelectType;
         questionService.insertSelectQuestion(request, GlobalUserUtil.getUser().getUserName(),questionType);
         log.info("===================="+request.getParameter("difficult"));
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/calendar";
     }
 }

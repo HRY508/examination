@@ -3,6 +3,7 @@ package com.examination.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -106,6 +107,8 @@ public class PaperController {
             request.setAttribute("qId","&searchId=");
         }
         model.addAttribute("paperList",paperList);
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/paper_list";
     }
 
@@ -172,6 +175,8 @@ public class PaperController {
         List<Type> list = typeService.list(typeQueryWrapper);
         //设置model、返回视图
         model.addAttribute("typeList",list);
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/paper_create";
     }
 
