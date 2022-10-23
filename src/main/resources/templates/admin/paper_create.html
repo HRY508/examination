@@ -239,7 +239,7 @@
                         <div class="widget-block">
                             <div class="widget-content box-padding">
                                 <form id="stepy_form" class=" form-horizontal left-align form-well">
-                                    <fieldset title="Step 1">
+                                    <fieldset title="Step 1" onclick="paperInfo()">
                                         <legend>初始化</legend>
                                         <div class="form-group ">
                                             <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
@@ -270,12 +270,13 @@
                                             </div>
                                         </div>
                                     </fieldset>
-                                    <fieldset title="Step 2">
+                                    <fieldset title="Step 2" onclick="paperInfo()">
                                         <legend>单选题选择</legend>
 
                                             <div class="form-group s" th:each="type0 :${typeList}">
                                                 <div class="control-label col-md-5">
-                                                    <label class="control-label col-md-2">单选数</label><div class="col-md-3">
+                                                    <label class="control-label col-md-2">单选数</label>
+                                                    <div class="col-md-3">
                                                     <div id="singleChoice">
                                                         <div class="input-group input-small" >
                                                             <input type="text" class="spinner-input form-control valid" maxlength="3" value="0" th:name="'singNumber'+${type0.getQPool()}" th:id="'singId'+${type0.getQPool()}"
@@ -302,7 +303,7 @@
                                                                    style="width: 100%" href="javascript:void(0);">
                                                                 </a></li>
                                                         </ul>
-                                                        <input class="hidden" th:id="'singPool'+${type0.getQPool()}" th:name="'singPool'+${type0.getQPool()}" value="0">
+                                                        <input class="hidden" th:id="'singPool'+${type0.getQPool()}" th:name="'singPool'+${type0.getQPool()}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -315,14 +316,7 @@
                                         </div>
 
                                     </fieldset>
-
-
-
-
-
-
-
-                                    <fieldset title="Step 3">
+                                    <fieldset title="Step 3" onclick="paperInfo()">
                                         <legend>多选题选择</legend>
 
                                         <div class="form-group m" th:each="type1 :${typeList}">
@@ -354,7 +348,7 @@
                                                                style="width: 100%" href="javascript:void(0);">
                                                             </a></li>
                                                     </ul>
-                                                    <input class="hidden" th:id="'morePool'+${type1.getQPool()}" th:name="'morePool'+${type1.getQPool()}" value="0" >
+                                                    <input class="hidden" th:id="'morePool'+${type1.getQPool()}" th:name="'morePool'+${type1.getQPool()}"  >
                                                 </div>
                                             </div>
                                         </div>
@@ -367,32 +361,38 @@
                                         </div>
 
                                     </fieldset>
-                                    <fieldset title="Step 4">
+                                    <fieldset title="Step 4" onclick="paperInfo()">
                                         <legend>完成创建</legend>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-2 control-label">Text Input</label>
-                                            <div class="col-md-6 col-sm-6">
-                                                <input type="text" placeholder="Text Input" class="form-control">
-                                            </div>
+                                            <label class="control-label col-md-2" style="float: left;">本次考试试卷名:</label>
+                                            <label id="paperNameInf" class="control-label col-md-2" style="float: left;"></label>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-2 control-label">Checkbox</label>
-                                            <div class="col-md-6 col-sm-6">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" value="">
-                                                    Option one is this and that—be sure to include why it's great </label>
-                                            </div>
+                                            <label class="control-label col-md-2" style="float: left;">开始时间:</label>
+                                            <label id="startInf" class="control-label col-md-2" style="float: left;"></label>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-2 control-label">Radio</label>
-                                            <div class="col-md-6 col-sm-6">
-                                                <label class="radio">
-                                                    <input type="radio" name="optionsRadios" value="option1" checked>
-                                                    Option one is this and that—be sure to include why it's great </label>
-                                            </div>
+                                            <label class="control-label col-md-2" style="float: left;">结束时间:</label>
+                                            <label id="endInf" class="control-label col-md-2" style="float: left;"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" style="float: left;">单选数:</label>
+                                            <label id="singleInf" class="control-label col-md-2" style="float: left;"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" style="float: left;">多选数:</label>
+                                            <label id="moreInf" class="control-label col-md-2" style="float: left;"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" style="float: left;">共:</label>
+                                            <label id="questionTotal" class="control-label col-md-2" style="float: left;"></label>
+                                            <label class="control-label col-md-1" style="float: left;">题</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" style="float: left;">点击完成即可创建试卷——></label>
                                         </div>
                                     </fieldset>
-                                    <button type="button" onclick="diySubmit()"  class="finish btn btn-info btn-extend"> 完成!</button>
+                                    <button onclick="diySubmit()" type="button" class="finish btn btn-info btn-extend"> 完成!</button>
                                 </form>
                             </div>
                         </div>
@@ -451,7 +451,85 @@
 <script src="/js/scripts.js"></script>
 <script type="text/javascript">
 
-
+    //自定义创建
+    function diySubmit() {
+        //获取自定义创建考试名、开始时间、结束时间
+        var paperName = $('#paperName1').val()
+        var startTime0 = $('#startTime1').val()
+        var endTime0 = $('#endTime1').val()
+        startTime1 = dateFormat(startTime0)
+        endTime1 = dateFormat(endTime0)
+        //获取所有的单选题的数量跟对应的类型
+        var singleNumArray = {}
+        var singlePoolArray = {}
+        var singleInputNumber = document.getElementsByClassName('form-group s')
+        for(var i =0;i<singleInputNumber.length;i++){
+            var singNum = $("#singId"+parseInt(i+1)+"").val()
+            var singPool = $("#singPool"+parseInt(i+1)+"").val()
+            if(singNum!=0&&singPool!=0){
+                singleNumArray[i] = $("#singId"+parseInt(i+1)+"").val()
+                singlePoolArray[i] = $("#singPool"+parseInt(i+1)+"").val()
+            }
+        }
+        //获取所有的多选题的数量跟对应的类型
+        var moreNumArray = {}
+        var morePoolArray = {}
+        var moreInputNumber = document.getElementsByClassName('form-group m')
+        for(var i =0;i<moreInputNumber.length;i++)
+        {
+            var moreNum = $("#moreId"+parseInt(i+1)+"").val()
+            var morePool = $("#morePool"+parseInt(i+1)+"").val()
+            if(moreNum!=0&&morePool!=0){
+                moreNumArray[i] = $("#moreId"+parseInt(i+1)+"").val()
+                morePoolArray[i] = $("#morePool"+parseInt(i+1)+"").val()
+            }
+        }
+        $.ajax({
+            //请求路径
+            url: "/admin/createPaperDiy",
+            //请求类型
+            type: "POST",
+            //data表示发送的数据
+            data: JSON.stringify({
+                paperName:paperName,
+                startTime:startTime1,
+                endTime:endTime1,
+                singleNumArray:singleNumArray,
+                singlePoolArray:singlePoolArray,
+                moreNumArray:moreNumArray,
+                morePoolArray:morePoolArray
+            }), //定义发送请求的数据格式为JSON字符串
+            contentType: "application/json;charset=utf-8",
+            //定义回调响应的数据格式为JSON字符串，该属性可以省略
+            dataType: "json",
+            //成功响应的结果
+            success: function (data) {
+                if(data.code==200){
+                    $('#toLook').removeClass('hidden')
+                    $('#cancel').text('确定').removeClass('hidden')
+                    alert("success")
+                    $('#modelColor').attr('style','background : #65CEA7')
+                    $('#paperCreateTips').text('试卷：'+data.paperName+'创建成功！')
+                    $('#tip2').click()
+                }
+                if(data.code == 500){
+                    $('#modelColor').attr('style','background : #bb1f1f')
+                    if(data.hasPaper == true){
+                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因：该试卷已存在，不可重复创建。')
+                        $('#tip2').click()
+                        $('#toLook').removeClass('hidden')
+                        $('#cancel').text('确定').removeClass('hidden')
+                    }
+                    else if (data.hasError!=null){
+                        $('#toLook').addClass('hidden')
+                        $('#cancel').text('确定').removeClass('hidden')
+                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因:'+data.hasError)
+                        $('#tip2').click()
+                    }
+                }
+            },
+        })
+    }
 
     /*=====STEPY WIZARD====*/
     $(function() {
@@ -752,6 +830,14 @@
                     break;
                 }
             }
+        //设置不可见的选项的内容为0
+        for(var i =arr.length-1 ;i > 0;i--){
+            if(arr[i].getAttribute('class')=='hidden form-group s'){
+                alert(i)
+                arr[i].children[0].children[1].children[0].children[0].children[0].value = 0
+            }
+        }
+
     }
 
     //减少选项
@@ -770,86 +856,16 @@
                 break;
             }
         }
-    }
-    //自定义创建
-    function diySubmit() {
-        //获取自定义创建考试名、开始时间、结束时间
-        var paperName = $('#paperName1').val()
-        var startTime0 = $('#startTime1').val()
-        var endTime0 = $('#endTime1').val()
-        startTime1 = dateFormat(startTime0)
-        endTime1 = dateFormat(endTime0)
-        //获取所有的单选题的数量跟对应的类型
-        var singleNumArray = {}
-        var singlePoolArray = {}
-        var singleInputNumber = document.getElementsByClassName('form-group s')
-        for(var i =0;i<singleInputNumber.length;i++){
-            var singNum = $("#singId"+parseInt(i+1)+"").val()
-            var singPool = $("#singPool"+parseInt(i+1)+"").val()
-            if(singNum!=0&&singPool!=0){
-                singleNumArray[i] = $("#singId"+parseInt(i+1)+"").val()
-                singlePoolArray[i] = $("#singPool"+parseInt(i+1)+"").val()
+        //设置不可见的选项的内容为0
+        for(var i =arr.length-1 ;i > 0;i--){
+            if(arr[i].getAttribute('class')=='hidden form-group m'){
+                alert(i)
+                arr[i].children[0].children[1].children[0].children[0].children[0].value = 0
             }
         }
-        //获取所有的多选题的数量跟对应的类型
-        var moreNumArray = {}
-        var morePoolArray = {}
-        var moreInputNumber = document.getElementsByClassName('form-group m')
-        for(var i =0;i<moreInputNumber.length;i++)
-        {
-            var moreNum = $("#moreId"+parseInt(i+1)+"").val()
-            var morePool = $("#morePool"+parseInt(i+1)+"").val()
-            if(moreNum!=0&&morePool!=0){
-                moreNumArray[i] = $("#moreId"+parseInt(i+1)+"").val()
-                morePoolArray[i] = $("#morePool"+parseInt(i+1)+"").val()
-            }
-        }
-            $.ajax({
-                //请求路径
-                url: "/admin/createPaperDiy",
-                //请求类型
-                type: "POST",
-                //data表示发送的数据
-                data: JSON.stringify({
-                    paperName:paperName,
-                    startTime:startTime1,
-                    endTime:endTime1,
-                    singleNumArray:singleNumArray,
-                    singlePoolArray:singlePoolArray,
-                    moreNumArray:moreNumArray,
-                    morePoolArray:morePoolArray
-                }), //定义发送请求的数据格式为JSON字符串
-                contentType: "application/json;charset=utf-8",
-                //定义回调响应的数据格式为JSON字符串，该属性可以省略
-                dataType: "json",
-                //成功响应的结果
-                success: function (data) {
-                    if(data.code==200){
-                        $('#toLook').removeClass('hidden')
-                        $('#cancel').text('确定').removeClass('hidden')
-                        alert("success")
-                        $('#modelColor').attr('style','background : #65CEA7')
-                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建成功！')
-                        $('#tip2').click()
-                    }
-                    if(data.code == 500){
-                        $('#modelColor').attr('style','background : #bb1f1f')
-                        if(data.hasPaper == true){
-                            $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因：该试卷已存在，不可重复创建。')
-                            $('#tip2').click()
-                            $('#toLook').removeClass('hidden')
-                            $('#cancel').text('确定').removeClass('hidden')
-                        }
-                        else if (data.hasError!=null){
-                            $('#toLook').addClass('hidden')
-                            $('#cancel').text('确定').removeClass('hidden')
-                            $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因:'+data.hasError)
-                            $('#tip2').click()
-                        }
-                    }
-                },
-            })
+
     }
+
 
 
     // 修改密码
@@ -896,6 +912,36 @@
 
     });
 
+
+
+
+    function paperInfo() {
+        //获取自定义创建考试名、开始时间、结束时间
+        var paperName = $('#paperName1').val()
+        var startTime0 = $('#startTime1').val()
+        var endTime0 = $('#endTime1').val()
+        startTime1 = dateFormat(startTime0)
+        endTime1 = dateFormat(endTime0)
+        //获取所有的单选题的数量跟对应的类型
+        var singleNum = parseInt(0)
+        var moreNum = parseInt(0)
+        var singleInputNumber = document.getElementsByClassName('form-group s')
+        for(var i =0;i<singleInputNumber.length;i++){
+            var num = parseInt($("#singId"+parseInt(i+1)+"").val())
+            singleNum = num+singleNum
+        }
+        var moreInputNumber = document.getElementsByClassName('form-group m')
+        for(var i =0;i<singleInputNumber.length;i++){
+            var num = parseInt($("#moreId"+parseInt(i+1)+"").val())
+            moreNum = num+moreNum
+        }
+        $('#paperNameInf').html(paperName)
+        $('#startInf').html(startTime1)
+        $('#endInf').html(endTime1)
+        $('#singleInf').html(singleNum)
+        $('#moreInf').html(moreNum)
+        $('#questionTotal').html(singleNum+moreNum)
+    }
 
     jQuery(document).ready(function() {
         EditableTable.init();
