@@ -36,10 +36,10 @@
 <body class="sticky-header">
 
 <!--左侧开始-->
-<div th:replace="~{/admin/commons/common :: commonleft}"></div>
+<div th:replace="~{admin/commons/common :: commonleft}"></div>
 <!--左侧结束-->
 <!--头部开始-->
-<div th:replace="~{/admin/commons/common :: commonheader}"></div>
+<div th:replace="~{admin/commons/common :: commonheader}"></div>
 <!--头部结束-->
 
 <!--主页面开始-->
@@ -68,7 +68,7 @@
                 <header class="panel-heading">
                     随机创建......
                     <span class="tools pull-right">
-                                <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                <a class="fa fa-chevron-down" id="openAndClose" href="javascript:;"></a>
                                 <a class="fa fa-times" href="javascript:;"></a>
                     </span>
                 </header>
@@ -559,18 +559,18 @@
                 $('#stepy_form div.stepy-error').append(error);
             },
             rules: {
-                'paperName': 'required',
-                'startTime': 'required',
-                'endTime': 'required'
+                'paperName1': 'required',
+                'startTime1': 'required',
+                'endTime1': 'required'
             },
             messages: {
-                'paperName': {
+                'paperName1': {
                     required: '试卷名未填写!'
                 },
-                'startTime': {
+                'startTime1': {
                     required: '考试开始时间未填写!'
                 },
-                'endTime': {
+                'endTime1': {
                     required: '考试结束时间未填写!'
                 }
             }
@@ -753,8 +753,7 @@
         for (var i =0; i < 3; i++){
             arr2[i].setAttribute('class','form-group m')
         }
-
-
+        $('#openAndClose').click()
     })
 
     //自定义创建增加题目数

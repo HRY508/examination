@@ -66,7 +66,7 @@ public class RegisterController {
             if (save){
                 model.addAttribute("regMsg","success");
                 model.addAttribute("username",userName);
-                return "/login";
+                return "login";
             }
             else{
                 model.addAttribute("regMsg","未知错误，请联系管理员！");
