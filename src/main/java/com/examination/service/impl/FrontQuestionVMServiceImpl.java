@@ -7,6 +7,7 @@ import com.examination.bean.FrontQuestionVM;
 import com.examination.mapper.FrontQuestionVMMapper;
 import com.examination.service.FrontQuestionVMService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author:晓风残月Lx
@@ -19,6 +20,7 @@ public class FrontQuestionVMServiceImpl extends ServiceImpl<FrontQuestionVMMappe
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<FrontQuestionVM> getList(Page page,Integer userId) {
         QueryWrapper<FrontQuestionVM> wrapper = new QueryWrapper<>();
         FrontQuestionVMMapper baseMapper = this.baseMapper;
@@ -27,6 +29,7 @@ public class FrontQuestionVMServiceImpl extends ServiceImpl<FrontQuestionVMMappe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<FrontQuestionVM> getListByName(Page page, Integer userId, String searchName) {
         QueryWrapper<FrontQuestionVM> wrapper = new QueryWrapper<>();
         FrontQuestionVMMapper baseMapper = this.baseMapper;
@@ -35,6 +38,7 @@ public class FrontQuestionVMServiceImpl extends ServiceImpl<FrontQuestionVMMappe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<FrontQuestionVM> getListById(Page page, Integer userId, Integer searchId) {
         QueryWrapper<FrontQuestionVM> wrapper = new QueryWrapper<>();
         FrontQuestionVMMapper baseMapper = this.baseMapper;
@@ -43,11 +47,13 @@ public class FrontQuestionVMServiceImpl extends ServiceImpl<FrontQuestionVMMappe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<FrontQuestionVM> getListByList(Page page, Integer searchId, String searchName,Integer userId) {
         return null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<FrontQuestionVM> selectFrontQuestionVMByPool(Page page, Integer userId, Integer searchPool) {
         QueryWrapper<FrontQuestionVM> wrapper = new QueryWrapper<>();
         FrontQuestionVMMapper baseMapper = this.baseMapper;

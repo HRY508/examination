@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public interface ScoreVMMapper extends BaseMapper<ScoreVM> {
             "LEFT JOIN t_user u ON u.`id` = s.`user_id`\n" +
             "WHERE s.`p_id`= #{pId} order by s.`mark` DESC";
 
+    @Transactional(readOnly = true)
     @Select(query)
     List<ScoreVM> searchMark(@Param("pId")Integer pId);
 

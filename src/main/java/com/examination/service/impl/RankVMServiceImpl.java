@@ -9,6 +9,7 @@ import com.examination.service.QuestionDetailsService;
 import com.examination.service.RankVMService;
 import com.examination.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +24,7 @@ public class RankVMServiceImpl extends ServiceImpl<RankVMMapper, RankVM> impleme
     RankVMMapper rankVMMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<RankVM> getList(Page page) {
         Page<RankVM> rankVMPage = rankVMMapper.queryList(page);
         List<RankVM> records = rankVMPage.getRecords();

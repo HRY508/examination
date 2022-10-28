@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author:晓风残月Lx
@@ -27,15 +28,19 @@ public interface FrontQuestionVMMapper extends BaseMapper<FrontQuestionVM> {
 
     String queryByPool = queryList +" where q.question_pool = #{questionPool}";
 
+    @Transactional(readOnly = true)
     @Select(queryList+"  order BY `id` ASC")
     Page<FrontQuestionVM> selectAllFrontQuestionVM(Page page, @Param("userId") Integer userId);
 
+    @Transactional(readOnly = true)
     @Select(queryById)
     Page<FrontQuestionVM> selectFrontQuestionVMById(Page page, @Param("userId") Integer userId, @Param("qId") Integer qId );
 
+    @Transactional(readOnly = true)
     @Select(queryByName)
     Page<FrontQuestionVM> selectFrontQuestionVMByName(Page page, @Param("userId") Integer userId, @Param("qName") String qName );
 
+    @Transactional(readOnly = true)
     @Select(queryByPool)
     Page<FrontQuestionVM> selectFrontQuestionVMByPool(Page page, @Param("userId") Integer userId, @Param("questionPool") Integer questionPool );
 

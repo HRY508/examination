@@ -19,6 +19,7 @@ import com.examination.utils.StrOperateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,7 @@ public class PaperController {
 
     @Autowired
     TypeService typeService;
+
 
     @RequestMapping("/toPaperList")
     public String getQuestionList(HttpServletRequest request,
@@ -110,6 +112,7 @@ public class PaperController {
     }
 
     // 修改状态
+    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @PostMapping("/paperStatusChange")
     public Object statusChange(@RequestBody String req){
@@ -137,6 +140,7 @@ public class PaperController {
     }
 
     // 批量删除
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/deletePapers")
     public String deleteCount(@RequestParam String ids){//ids是复选框名字
         List<String> delList = new ArrayList<>();
@@ -154,6 +158,7 @@ public class PaperController {
     }
 
     //删除
+    @Transactional(rollbackFor = Exception.class)
     @GetMapping("/deletePaper/{pId}")
     public String delete(@PathVariable("pId") Integer pId) {
         paperService.removeById(pId);
@@ -164,6 +169,7 @@ public class PaperController {
     }
 
     //进入试卷创建页面
+
     @RequestMapping("/paperCreate")
     public String createPaper(Model model){
         //查询所有的题型
@@ -178,6 +184,7 @@ public class PaperController {
     }
 
     //试卷创建（随机创建）
+    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @RequestMapping("/createPaperOperate")
     public Object creatPaperOpt(@RequestBody String request) throws ParseException {
@@ -270,6 +277,7 @@ public class PaperController {
     }
 
     //自定义创建试卷
+    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @RequestMapping("/createPaperDiy")
     public Object createPaperDiy(@RequestBody String request){

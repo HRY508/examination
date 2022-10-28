@@ -10,6 +10,7 @@ import com.examination.mapper.QuestionVMMapper;
 import com.examination.service.QuestionEditVMService;
 import com.examination.service.QuestionVMService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Description
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class QuestionEditVMServiceImpl extends ServiceImpl<QuestionEditVMMapper, QuestionEditVM> implements QuestionEditVMService {
     @Override
+    @Transactional(readOnly = true)
     public QuestionEditVM selectByConditionQuestionVM(Integer questionId) {
         QueryWrapper<QuestionEditVM> wrapper = new QueryWrapper<>();
         QuestionEditVMMapper baseMapper = this.baseMapper;
@@ -27,6 +29,7 @@ public class QuestionEditVMServiceImpl extends ServiceImpl<QuestionEditVMMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateQuestion(QuestionEditVM questionEditVM) {
         QueryWrapper<QuestionEditVM> wrapper = new QueryWrapper<>();
         QuestionEditVMMapper baseMapper = this.baseMapper;

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Mapper
@@ -17,10 +18,12 @@ public interface QuestionEditVMMapper extends BaseMapper<QuestionEditVM> {
     String updateQuestion = "update t_question q,t_content c set q.question_type = #{qt.questionType},q.score = #{qt.score},q.correct=#{qt.correct},q.difficult=#{qt.difficult},c.content= #{qt.content},q.create_user = #{qt.createUser},c.content = #{qt.content} where q.id = c.id and q.id = #{qt.id}";
 //                                                                                                                                                                                                              from t_question q,t_content c where q.id = c.id and q.id = #{qt.id}"
     //查询
+    @Transactional(readOnly = true)
     @Select(selectQuestionEdit)
     QuestionEditVM selectByConditionQuestionVM(Integer questionId);
 
     //更新
+    @Transactional(rollbackFor = Exception.class)
     @Update(updateQuestion)
     int updateQuestion(@Param("qt") QuestionEditVM questionEditVM);
 }

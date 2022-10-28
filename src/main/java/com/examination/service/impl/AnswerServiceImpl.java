@@ -7,6 +7,7 @@ import com.examination.bean.Answer;
 import com.examination.mapper.AnswerMapper;
 import com.examination.service.AnswerService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,6 +22,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer> impleme
     private AnswerMapper answerMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String ishave(Integer pdId) {
         String checked = "";
         LambdaUpdateWrapper<Answer> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();

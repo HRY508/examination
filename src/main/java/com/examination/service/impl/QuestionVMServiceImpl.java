@@ -8,6 +8,7 @@ import com.examination.bean.QuestionVM;
 import com.examination.mapper.QuestionVMMapper;
 import com.examination.service.QuestionVMService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Description
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, QuestionVM> implements QuestionVMService {
 
     @Override
+    @Transactional(readOnly = true)
     public Page<QuestionVM> getQuestionList(Page page) {
         QueryWrapper<QuestionVM> wrapper = new QueryWrapper<>();
         QuestionVMMapper baseMapper = this.baseMapper;
@@ -26,6 +28,7 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<QuestionVM> selectByQuestionType(Page page, Integer questionType) {
         QuestionVMMapper baseMapper = this.baseMapper;
         Page<QuestionVM> questionVM = baseMapper
@@ -34,6 +37,7 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<QuestionVM> selectByQuestionName(Page page, String questionName) {
         QuestionVMMapper baseMapper = this.baseMapper;
         Page<QuestionVM> questionVM = baseMapper
@@ -42,6 +46,7 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<QuestionVM> selectByConditionQuestionVM(Page page, Integer questionType, String questionName) {
         QuestionVMMapper baseMapper = this.baseMapper;
         Page<QuestionVM> questionVM = baseMapper
@@ -50,6 +55,7 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<QuestionVM> selectByQuestionTypeAndQuestionPool(Page page, Integer questionType, Integer questionPool) {
         QuestionVMMapper baseMapper = this.baseMapper;
         Page<QuestionVM> questionVM = baseMapper
@@ -58,6 +64,7 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<QuestionVM> selectByQuestionPool(Page page, Integer questionPool) {
         QuestionVMMapper baseMapper = this.baseMapper;
         Page<QuestionVM> questionVM = baseMapper
@@ -66,6 +73,7 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<QuestionVM> selectByAllConditionQuestionVM(Page page, String questionName, Integer questionType, Integer questionPool) {
         QuestionVMMapper baseMapper = this.baseMapper;
         Page<QuestionVM> questionVM = baseMapper

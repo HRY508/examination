@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author:晓风残月Lx
@@ -22,6 +23,7 @@ public interface PaperDetailsVMMapper extends BaseMapper<PaperDetailsVM> {
               "LEFT JOIN t_content c ON pd.`q_id`=c.id " +
               "where pd.num = #{num} and pd.p_id = #{pId} and pd.q_id = #{qId}";
 
+      @Transactional(readOnly = true)
       @Select(queryNum)
       PaperDetailsVM getOneByPIdAndNum(@Param("pId") int pId,@Param("num") int num, @Param("qId") int qId);
 }

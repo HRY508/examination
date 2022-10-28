@@ -12,6 +12,7 @@ import com.examination.service.PaperDetailsService;
 import com.examination.service.PaperDetailsVMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -33,6 +34,7 @@ public class PaperDetailsVMServiceImpl extends ServiceImpl<PaperDetailsVMMapper,
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public PaperDetailsVM getOneByPIdAndNum(Integer pId, Integer num) {
         LambdaQueryWrapper<PaperDetails> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(PaperDetails::getNum , num);

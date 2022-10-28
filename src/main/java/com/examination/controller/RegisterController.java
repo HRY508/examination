@@ -7,6 +7,7 @@ import com.examination.utils.ShiroMd5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,7 @@ public class RegisterController {
         return "registration";
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/register")
     public String register(@RequestParam("realName")String realName,
                            @RequestParam("uId")String uId,

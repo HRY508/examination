@@ -8,6 +8,7 @@ import com.examination.mapper.AnswerVMMapper;
 import com.examination.service.AnswerService;
 import com.examination.service.AnswerVMService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -32,6 +33,7 @@ public class AnswerVMServiceImpl extends ServiceImpl<AnswerVMMapper, AnswerVM> i
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Page<AnswerVM> selectListByPIdAndUserName(Page page, Integer pId, String searchName) {
         return answerVMMapper.queryListByPIdAndUserName(page, pId, searchName);
     }

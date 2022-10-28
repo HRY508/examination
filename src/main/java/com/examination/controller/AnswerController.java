@@ -10,6 +10,7 @@ import com.examination.utils.GlobalUserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class AnswerController {
     private AnswerVMService answerVMService;
     @Autowired
     private PaperService paperService;
+
 
     @RequestMapping("/answerList")
     public String toAnswer(@RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,

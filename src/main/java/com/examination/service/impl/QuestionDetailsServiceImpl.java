@@ -7,6 +7,7 @@ import com.examination.bean.QuestionDetails;
 import com.examination.mapper.QuestionDetailsMapper;
 import com.examination.service.QuestionDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class QuestionDetailsServiceImpl extends ServiceImpl<QuestionDetailsMappe
     QuestionDetailsMapper questionDetailsMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public Integer getFinishNum() {
         LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
@@ -33,6 +35,7 @@ public class QuestionDetailsServiceImpl extends ServiceImpl<QuestionDetailsMappe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Integer getrightNum() {
         LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);

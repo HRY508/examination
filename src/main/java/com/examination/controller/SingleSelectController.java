@@ -14,6 +14,7 @@ import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +36,7 @@ public class SingleSelectController {
     @Autowired
     private TypeService typeService;
 
+
     @RequestMapping("/admin/singleEditors")
     public String toSingleChoicePage(Model model){
         //查询所有的题型
@@ -47,7 +49,7 @@ public class SingleSelectController {
         return "admin/editors";
     }
 
-
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/admin/singleSelect")
     public String singleSelect(HttpServletRequest request,Model model) throws Exception {
         Integer questionType = StaticVariableUtil.singleSelectType;

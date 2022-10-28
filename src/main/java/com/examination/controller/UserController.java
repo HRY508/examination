@@ -10,6 +10,7 @@ import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.ShiroMd5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class UserController {
     private  UserService userService;
 
     @RequestMapping("/admin/userList")
+
     //pn是每次传回来的当前页
     public Object view(HttpServletRequest request,
                        @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,
@@ -82,6 +84,7 @@ public class UserController {
 
 
     // 批量删除
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("admin/deleteCounts")
     public String deleteCount(@RequestParam String ids){//ids是复选框名字
         List<String> delList = new ArrayList<>();
@@ -93,6 +96,7 @@ public class UserController {
         return "redirect:/admin/userList";
     }
     //删除
+    @Transactional(rollbackFor = Exception.class)
     @GetMapping("admin/delete/{id}")
     public String delete(@PathVariable Integer id) {
         userService.removeById(id);
@@ -102,6 +106,7 @@ public class UserController {
 
 
     // 修改状态
+    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @PostMapping("/admin/statusChange")
     public Object statusChange(@RequestBody String req){
@@ -129,6 +134,7 @@ public class UserController {
     }
 
     // 添加用户
+    @Transactional(rollbackFor = Exception.class)
     @PostMapping("/admin/addUser")
     public String addUser(@RequestParam("userName") String userName,
                           @RequestParam("password") String password,
@@ -161,6 +167,7 @@ public class UserController {
 
 
     // 修改用户
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/admin/updateUser", method = RequestMethod.POST)
     public String updateUser(@RequestParam("id") Integer id,
                              @RequestParam("userNameUpdate") String userName,

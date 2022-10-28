@@ -5,6 +5,7 @@ import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,6 +27,7 @@ public class JudgmentalController {
         return "admin/tree_view";
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/admin/judgmentals")
     public String judgmentals(HttpServletRequest request, Model model){
         questionService.insertJudgeQuestion(request, GlobalUserUtil.getUser().getUserName());

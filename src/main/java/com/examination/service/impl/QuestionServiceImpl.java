@@ -39,6 +39,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Question insertSelectQuestion(HttpServletRequest request, String userName,Integer questionType) {
         Question question = new Question();
         question.setQuestionType(questionType);
@@ -98,6 +99,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Question insertJudgeQuestion(HttpServletRequest request, String userName) {
 
         Question question=new Question();
@@ -153,6 +155,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
      * @param userName
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public Question insertCompletionQuestion(HttpServletRequest request, String userName) {
         Question question=new Question();
         question.setCorrect(request.getParameter("correct"));
@@ -177,11 +180,13 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateSelectQuestion(HttpServletRequest request, String userName) {
         return 0;
     }
 
 //    @Override
+//    @Transactional(rollbackFor = Exception.class)
 //    public int updateSelectQuestion(HttpServletRequest request, String userName) {
 //        Question question=new Question();
 //        question.setQuestionType(StaticVariableUtil.singleSelectType);

@@ -5,6 +5,7 @@ import com.examination.utils.GlobalUserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,6 +29,7 @@ public class CompletionController {
         return "admin/nestable";
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/admin/completions")
     public String completions(HttpServletRequest request, Model model){
         questionService.insertCompletionQuestion(request, GlobalUserUtil.getUser().getUserName());

@@ -6,6 +6,7 @@ import com.examination.mapper.ScoreVMMapper;
 import com.examination.service.ScoreService;
 import com.examination.service.ScoreVMService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ScoreVMServicImpl extends ServiceImpl<ScoreVMMapper, ScoreVM> imple
     ScoreVMMapper scoreVMMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ScoreVM> searchMark(Integer pId) {
         List<ScoreVM> scoreVMS = scoreVMMapper.searchMark(pId);
         Integer i = 1;

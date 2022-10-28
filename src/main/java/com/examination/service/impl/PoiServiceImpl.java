@@ -5,6 +5,7 @@ import com.examination.service.PoiService;
 import com.examination.utils.LocalDateUtil;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
@@ -23,6 +24,7 @@ public class PoiServiceImpl implements PoiService {
      * 导出成绩表
      */
     @Override
+    @Transactional(readOnly = true)
     public void downLoadExcel(List<ScoreVM> scoreVMList) throws IOException {
         String PATH ="D:\\";
         HSSFWorkbook workbook = new HSSFWorkbook();

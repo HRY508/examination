@@ -15,6 +15,7 @@ import com.examination.utils.StrOperateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +44,7 @@ public class FrontQuestionDetailController {
     @Autowired
     private QuestionDetailsService questionDetailsService;
 
+
     @RequestMapping("/questionDetail/{id}")
     public String toQuestionDetail(@PathVariable("id")Integer id, Model model){
         QueryWrapper<Content> wrapper = new QueryWrapper<>();
@@ -64,6 +66,7 @@ public class FrontQuestionDetailController {
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "user/question_detail";
     }
+
 
     @ResponseBody
     @RequestMapping("/questionDetails")
@@ -91,6 +94,7 @@ public class FrontQuestionDetailController {
         return rep;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @RequestMapping("/answerQuestion")
     public Object answerQuestion(@RequestBody String req){

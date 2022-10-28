@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,6 +85,7 @@ public class FrontPaperDetailsController {
      * @param req
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @PostMapping("/paperDetails")
     public Object InDetails(@RequestBody String req){
@@ -189,6 +191,7 @@ public class FrontPaperDetailsController {
      * @param req
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @PostMapping("/paperFinish")
     public Object finishExam(@RequestBody String req){

@@ -14,6 +14,7 @@ import com.examination.utils.StrOperateUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -142,6 +143,7 @@ public class QuestionsController {
 
 
     // 修改状态
+    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @PostMapping("/admin/questionStatusChange")
     public Object statusChange(@RequestBody String req){
@@ -170,6 +172,7 @@ public class QuestionsController {
 
 
     // 批量删除
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("admin/deleteQuestionsCounts")
     public String deleteCount(@RequestParam String ids){//ids是复选框名字
         List<String> delList = new ArrayList<>();
@@ -183,6 +186,7 @@ public class QuestionsController {
     }
 
     //删除
+    @Transactional(rollbackFor = Exception.class)
     @GetMapping("admin/deleteQuestion/{id}")
     public String deleteQuestion(@PathVariable Integer id) {
         questionService.removeById(id);
@@ -191,6 +195,7 @@ public class QuestionsController {
     }
 
     //更新
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/admin/updateQuestion")
     public String updateSingleQuestion(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameterValues("id")[0]);
@@ -242,6 +247,7 @@ public class QuestionsController {
 
 
     //进入更新页面
+    @Transactional(rollbackFor = Exception.class)
     @GetMapping("/admin/updateQuestionPage/{id}")
     public String toUpdateQuestionPage(@PathVariable("id") Integer id, Model model)
     {
