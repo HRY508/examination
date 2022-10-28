@@ -3,6 +3,8 @@ package com.examination.utils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 @SpringBootTest
@@ -15,4 +17,5 @@ public class RandomUtilTest {
         random.forEach(System.out::println);
         System.out.println(random.size());
     }
+
 }
