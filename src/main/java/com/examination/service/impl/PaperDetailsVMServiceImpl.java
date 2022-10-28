@@ -37,7 +37,7 @@ public class PaperDetailsVMServiceImpl extends ServiceImpl<PaperDetailsVMMapper,
     @Transactional(readOnly = true)
     public PaperDetailsVM getOneByPIdAndNum(Integer pId, Integer num) {
         LambdaQueryWrapper<PaperDetails> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(PaperDetails::getNum , num);
+        queryWrapper.eq(PaperDetails::getNum , num).eq(PaperDetails::getPId,pId);
         PaperDetails paperDetails = paperDetailsMapper.selectOne(queryWrapper);
         PaperDetailsVM oneByPIdAndNum = paperDetailsVMMapper.getOneByPIdAndNum(pId, num, paperDetails.getQId());
         return oneByPIdAndNum;

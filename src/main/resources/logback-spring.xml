@@ -110,7 +110,7 @@
 
     <!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
     <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
-    <logger name="com.lv" level="INFO">
+    <logger name="com.examination" level="INFO">
         <appender-ref ref="info_log" />
         <appender-ref ref="error_log" />
     </logger>
