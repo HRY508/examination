@@ -1,8 +1,7 @@
 package com.examination.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.examination.bean.QuestionEditVM;
-import com.examination.bean.QuestionVM;
+import com.examination.viewmodel.QuestionEditVM;
 
 /**
  * @Description

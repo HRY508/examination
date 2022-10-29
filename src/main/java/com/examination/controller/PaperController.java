@@ -16,6 +16,7 @@ import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.RandomUtil;
 import com.examination.utils.StaticVariableUtil;
 import com.examination.utils.StrOperateUtil;
+import com.examination.viewmodel.ScoreVM;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -276,7 +276,7 @@ public class PaperController {
         }
     }
 
-    //自定义创建试卷
+    //随机创建试卷2
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     @RequestMapping("/createPaperDiy")
@@ -395,6 +395,99 @@ public class PaperController {
 
 
     }
+
+    //自定义创建试卷(显示题库试题)
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    @RequestMapping("/showQuestionByPool")
+    public Object showQuestionByPool(@RequestBody String request){
+        JSONObject jsonObject = JSONObject.parseObject(request);
+        Integer questionPool = (Integer) jsonObject.get("pool");
+        //先根据pool查出所有题目id,question_type，
+        QueryWrapper<Question> wrapper = new QueryWrapper<>();
+        wrapper.select("id","question_type").eq("question_pool",questionPool);
+        List<Question> list = questionService.list(wrapper);
+        //id列表
+        List<Integer> qIdList = new ArrayList<>();
+        //类型列表
+        List<Integer> qTypeList = new ArrayList<>();
+        for(int i=0;i< list.size();i++){
+            qIdList.add(list.get(i).getId());
+            qTypeList.add(list.get(i).getQuestionType());
+        }
+        BaseMapper<Content> contentBaseMapper = contentService.getBaseMapper();
+        //获取正文对象
+        List<Content> contentObjectList = contentBaseMapper.selectBatchIds(qIdList);
+        ArrayList<String> contentList = new ArrayList<>();
+        //获取正文对象中的content属性，封装了关于题的信息
+        for(int i = 0; i < contentObjectList.size(); i++){
+            contentList.add(contentObjectList.get(i).getContent());
+            System.out.println(contentObjectList.get(i).getContent());
+        }
+        //将所有信息转为QuestionObject对象
+        ArrayList<QuestionObject> questionObjectList = new ArrayList<>();
+        for(int i = 0; i < contentList.size(); i++){
+            QuestionObject questionObject = JSONObject.parseObject(contentList.get(i), QuestionObject.class);
+            questionObject.setTitleContent(StrOperateUtil.removeTag(questionObject.getTitleContent()));
+            questionObject.setQId(qIdList.get(i));
+            questionObjectList.add(questionObject);
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("questionObjectList",questionObjectList);
+        map.put("qTypeList",qTypeList);
+        return  map;
+    }
+
+    //完全自定义创建试卷
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    @RequestMapping("/createPaperAllDiy")
+    public Object createPaperAllDiy(@RequestBody String request){
+        JSONObject jsonObject = JSONObject.parseObject(request);
+        String paperName = (String) jsonObject.get("paperName");
+        String startTime = (String)jsonObject.get("startTime");
+        String endTime = (String)jsonObject.get("endTime");
+        String qIdStr = (String)jsonObject.get("qIdStr");
+
+        LocalDateTime start = LocalDateTime.parse(startTime);
+        LocalDateTime end = LocalDateTime.parse(endTime);
+        Paper paper = new Paper();
+        paper.setPName(paperName);
+        paper.setIsAuto(1);
+        paper.setPStatus(0);
+        paper.setSingleSelect(1);
+        paper.setMoreSelect(1);
+        paper.setStartTime(start);
+        paper.setEndTime(end);
+        //保存试卷
+        boolean savePaper = paperService.save(paper);
+        //查询试卷，通过试卷名查询，试卷名需要保持唯一
+        QueryWrapper<Paper> queryWrapper = new QueryWrapper();
+        queryWrapper.select("p_id").eq("p_name",paperName);
+        List<Paper> paperList = paperService.list(queryWrapper);
+        //进行试卷细节处理
+        String[] split = qIdStr.split(",");
+        ArrayList<PaperDetails> list = new ArrayList<>();
+        for(int i =0 ;i<split.length;i++){
+            PaperDetails paperDetails = new PaperDetails();
+            paperDetails.setQId(Integer.parseInt(split[i]));
+            paperDetails.setNum(i);
+            paperDetails.setPId(paperList.get(0).getPId());
+            list.add(paperDetails);
+        }
+        boolean savePaperDetails = paperDetailsService.saveBatch(list);
+        HashMap<String, Object> map = new HashMap<>();
+        if(savePaper && savePaperDetails){
+            map.put("code",200);
+            return  map;
+        }
+        else {
+            map.put("code",500);
+            return map;
+        }
+
+    }
+
 
 
     //显示试卷

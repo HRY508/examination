@@ -1,7 +1,7 @@
 package com.examination.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.examination.bean.QuestionEditVM;
+import com.examination.viewmodel.QuestionEditVM;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

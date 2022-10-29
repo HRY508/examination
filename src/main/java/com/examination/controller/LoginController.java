@@ -1,12 +1,8 @@
 package com.examination.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.Paper;
-import com.examination.bean.QuestionDetails;
-import com.examination.bean.RankVM;
+import com.examination.viewmodel.RankVM;
 import com.examination.bean.User;
 import com.examination.service.*;
 import com.examination.utils.GlobalUserUtil;
@@ -15,9 +11,10 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +31,9 @@ import java.util.List;
  */
 @Controller
 public class LoginController {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private PaperService paperService;
@@ -98,9 +98,11 @@ public class LoginController {
         }
         User user = (User)subject.getPrincipal();
         if(user.getPerms().equals("user")){
+            logger.info("用户"+user.getUserName()+"登录了的系统");
             return "redirect:/user/index";
         }
         else if(user.getPerms().equals("admin")){
+            logger.info("管理员"+user.getUserName()+"登录了的系统");
             return "redirect:/admin/index";
         }
         else{

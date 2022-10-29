@@ -73,7 +73,7 @@
                     </span>
                 </header>
                 <div class="panel-body">
-                    <form class="form-horizontal" id="for" th:action="@{/admin/createPaperOpt}">
+                    <form class="form-horizontal" id="for" th:action="@{admin/createPaperOpt}">
 
                         <div class="form-group ">
                             <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
@@ -222,9 +222,9 @@
             <div class="col-md-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        自定义创建......
+                        自定义随机创建......
                         <span class="tools pull-right">
-                                <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                <a class="fa fa-chevron-down" id="d" href="javascript:;"></a>
                                 <a class="fa fa-times" href="javascript:;"></a>
                         </span>
                     </header>
@@ -401,6 +401,95 @@
                     </div>
                 </section>
         </div>
+
+
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    自定义创建......
+                    <span class="tools pull-right">
+                                <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                <a class="fa fa-times" href="javascript:;"></a>
+                        </span>
+                </header>
+                <div class="panel-body">
+                    <div class="form-group col-md-12 ">
+                        <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="paperName2" id="paperName2">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-1"> 开始时间</label>
+                        <div class="col-md-4">
+                            <div class="input-group date form_datetime-component">
+                                <input type="text" class="form-control" readonly="" size="16" name="startTime2" id="startTime2">
+                                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-1">结束时间</label>
+                        <div class="col-md-4">
+                            <div class="input-group date form_datetime-component">
+                                <input type="text" class="form-control" readonly="" size="16" name="endTime2" id="endTime2" >
+                                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12 d" th:each="type : ${typeList}">
+                        <div class="col-md-5">
+                            <button type="button" class="btn btn-sm btn-success" th:onclick="cfqBank([[${type.getQPool()}]])" th:text="'从题库'+${type.getQPool()}+'中选择'"></button>
+                            <a th:id="'poolButtonA_'+${type.getQPool()}"></a>
+                            <input class="hidden" th:id="'pool_'+${type.getQPool()}+'choice'" value="">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <a class="btn btn-success btn-sm " style="float:right" onclick="createPaperAllDIY()"><i class="fa fa-check"></i> 开始创建 </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!--从题库选择开始-->
+        <div class="col-md-12 ">
+            <a href="#myModal1" data-toggle="modal" class="btn btn-warning hidden" id="cButton">
+            </a>
+            <input type="text" class="hidden" id="poolInModel">
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal1" class="modal fade" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:#65CEA7">
+                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                            <h4 class="modal-title">从题库中选择</h4>
+                        </div>
+                        <div class="col-sm-12 icheck" id="paperObjectList" >
+                            <div id="startSingSelect" >
+                            </div>
+                            <div id="choice">
+                                <div class="form-check single-row " id="r_A">
+                                    <div class="radio">
+                                        <input tabindex="3" type="radio"   name="r_choice" value="A" style="display: none">
+                                        <div> A </div>
+                                        <div id="radio_A"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="checkedQ($('#poolInModel').val())">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--从题库选择结束-->
+
     </div>
     <!--        自定义创建结束-->
 
@@ -416,7 +505,7 @@
 </div>
 <!--主页面结束-->
 
-<div th:replace="~{/admin/commons/common :: commonupdatePwd}"></div>
+<div th:replace="~{admin/commons/common :: commonupdatePwd}"></div>
 
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="/js/jquery-1.10.2.min.js"></script>
@@ -451,7 +540,7 @@
 <script src="/js/scripts.js"></script>
 <script type="text/javascript">
 
-    //自定义创建
+    //随机创建2
     function diySubmit() {
         //获取自定义创建考试名、开始时间、结束时间
         var paperName = $('#paperName1').val()
@@ -541,6 +630,7 @@
             titleTarget: '.stepy-tab'
         });
     });
+
     /*=====STEPY WIZARD WITH VALIDATION====*/
     $(function() {
         $('#stepy_form').stepy({
@@ -576,6 +666,7 @@
             }
         });
     });
+
     function createPaper() {
         var paperName = $('#paperName').val()
         var singleSelectNumber = $('#singleSelectNumber').val()
@@ -697,6 +788,7 @@
             object.attr('value',num)
         }
     }
+
     //减少题目数
     function disNumber(object){
         if (object.val()==null||object.val()==''){
@@ -709,6 +801,7 @@
             object.attr('value',num)
         }
     }
+
     //增加分数
     function incScore(object) {
         if (object.val()==null||object.val()==''){
@@ -722,6 +815,7 @@
             object.attr('value',score)
         }
     }
+
     //减少分数
     function disScore(object) {
         if (object.val()==null||object.val()==''){
@@ -754,6 +848,7 @@
             arr2[i].setAttribute('class','form-group m')
         }
         $('#openAndClose').click()
+        $('#d').click()
     })
 
     //自定义创建增加题目数
@@ -865,8 +960,6 @@
 
     }
 
-
-
     // 修改密码
     $("#pwd_btn").click(function() {
         $("#pwd_btn").blur();
@@ -911,9 +1004,7 @@
 
     });
 
-
-
-
+    //随机创建2试卷信息
     function paperInfo() {
         //获取自定义创建考试名、开始时间、结束时间
         var paperName = $('#paperName1').val()
@@ -941,6 +1032,145 @@
         $('#moreInf').html(moreNum)
         $('#questionTotal').html(singleNum+moreNum)
     }
+
+
+    //json数据长度
+    function getGsonLength(json){
+        var jsonLength=0;
+        for (var i in json) {
+            jsonLength++;
+        }
+        return jsonLength;
+    }
+
+    //后台数据响应到Model中
+    function cfqBank(pool) {
+        $.ajax({
+            //请求路径
+            url: "/admin/showQuestionByPool",
+            //请求类型
+            type: "POST",
+            //data表示发送的数据
+            data: JSON.stringify({
+                pool:pool
+            }), //定义发送请求的数据格式为JSON字符串
+            contentType: "application/json;charset=utf-8",
+            //定义回调响应的数据格式为JSON字符串，该属性可以省略
+            dataType: "json",
+            //成功响应的结果
+            success: function (data) {
+                $('#poolInModel').attr('value',pool)
+                //获取所有的选项div
+                document.getElementById('r_A').className = 'form-check single-row '
+                //获取题目数
+                var length = getGsonLength(data.questionObjectList)
+                // 删除所有克隆的节点
+                var f = document.getElementById("startSingSelect");
+                var childs = f.childNodes;
+                for(var i = childs.length - 1; i >= 0; i--) {
+                    f.removeChild(childs[i]);
+                }
+                for(var i = 0; i < length; i++){
+                    var choiceTitle = data.questionObjectList[i].titleContent
+                    //创建一个节点p用来放选项标题
+                    var p = $("<p id='choiceTitle"+i+"'" +"</p>")
+                    $('#startSingSelect').append(p)
+                    p.text(i+1+"."+choiceTitle)
+                    $('#startSingSelect').append()
+                    //创建一个多选放到p标签内
+                    var input = $("<input id='input"+i+"'"+" name=checkedQ"+" type=checkbox"+" value="+i+">")
+                    //设置一个hidden的input存放真实qid
+                    var inputH = $("<input id='input"+i+"'"+" class=hidden"+" name=checkedH"+" type=checkbox"+" value="+data.questionObjectList[i].qid+">")
+                    //将input标签追加到p标签内
+                    $("#choiceTitle"+i+"").append(input).append(inputH)
+                    //获取选项的数量
+                    var choiceNum = getGsonLength(data.questionObjectList[i].questionItemObjects)
+                    for(var j = 0; j < choiceNum; j++){
+                        var prefix = data.questionObjectList[i].questionItemObjects[j].prefix
+                        var choiceContent = data.questionObjectList[i].questionItemObjects[j].content
+                        //获取要克隆的节点
+                        var cloneDiv = document.getElementById('r_A')
+                        var clone = document.getElementById('r_A').cloneNode(true)
+                        clone.id='r_A_clone'
+                        //设置属性
+                        clone.children[0].children[1].innerHTML = prefix
+                        clone.children[0].children[2].innerHTML = choiceContent
+                        var par = document.getElementById('startSingSelect')
+                        par.appendChild(clone)
+                    }
+                }
+                document.getElementById('r_A').className = 'form-check single-row hidden'
+                $('#tip1').click()
+            },
+        })
+        $('#cButton').click()
+
+    }
+
+    //点击model中的确定触发
+    function checkedQ(pool) {
+        //ids显示用户选择
+        var ids="";
+        //用户真实选择qId
+        var realIds = ""
+        $("input[name='checkedQ']").each(function() {
+            if (this.checked == true) {
+                ids += this.value + "、";
+                realIds += this.parentNode.children[1].getAttribute('value')+","
+            }
+        });
+        if(ids==""){
+            $("#poolButtonA_"+pool).text('暂未选择题目！')
+        }else{
+            ids = ids.substring(0,ids.length-1)
+            $("#poolButtonA_"+pool).text('选择了题库'+pool+'中的 '+ids+' 题！')
+            //将用户真实选择的题放到隐藏域中
+            $("#pool_"+pool+"choice").attr('value',realIds)
+        }
+
+    }
+
+    //完全自定创建触发
+    function createPaperAllDIY() {
+        //获取自定义创建考试名、开始时间、结束时间
+        var paperName = $('#paperName2').val()
+        var startTime0 = $('#startTime2').val()
+        var endTime0 = $('#endTime2').val()
+        startTime1 = dateFormat(startTime0)
+        endTime1 = dateFormat(endTime0)
+        //获取已有题库的个数
+        var len = document.getElementsByClassName('form-group col-md-12 d').length
+        //获取选择的所有题目id
+        var qIdStr = "";
+        for(var i = 1; i < len+1; i++){
+          var qIdTemp =  $("#pool_"+i+"choice").val();
+          if (qIdTemp!=""){
+              qIdStr = qIdTemp + qIdStr
+          }
+        }
+        $.ajax({
+            //请求路径
+            url: "/admin/createPaperAllDiy",
+            //请求类型
+            type: "POST",
+            //data表示发送的数据
+            data: JSON.stringify({
+                qIdStr:qIdStr,
+                paperName: paperName,
+                startTime: startTime1,
+                endTime: endTime1
+            }), //定义发送请求的数据格式为JSON字符串
+            contentType: "application/json;charset=utf-8",
+            //定义回调响应的数据格式为JSON字符串，该属性可以省略
+            dataType: "json",
+            //成功响应的结果
+            success: function (data) {
+                alert(data.code)
+            },
+        })
+
+    }
+
 
     jQuery(document).ready(function() {
         EditableTable.init();

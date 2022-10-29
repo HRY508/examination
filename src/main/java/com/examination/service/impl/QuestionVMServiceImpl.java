@@ -4,7 +4,7 @@ package com.examination.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.examination.bean.QuestionVM;
+import com.examination.viewmodel.QuestionVM;
 import com.examination.mapper.QuestionVMMapper;
 import com.examination.service.QuestionVMService;
 import org.springframework.stereotype.Service;

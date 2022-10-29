@@ -2,10 +2,8 @@ package com.examination.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.examination.bean.AnswerVM;
-import com.examination.bean.QuestionVM;
+import com.examination.viewmodel.AnswerVM;
 import com.examination.mapper.AnswerVMMapper;
-import com.examination.service.AnswerService;
 import com.examination.service.AnswerVMService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

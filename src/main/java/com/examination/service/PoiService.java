@@ -1,9 +1,7 @@
 package com.examination.service;
 
-import com.examination.bean.ScoreVM;
+import com.examination.viewmodel.ScoreVM;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 

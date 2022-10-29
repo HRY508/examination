@@ -2,7 +2,7 @@ package com.examination.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.examination.bean.AnswerVM;
+import com.examination.viewmodel.AnswerVM;
 import com.examination.bean.Paper;
 import com.examination.service.AnswerVMService;
 import com.examination.service.PaperService;
@@ -10,9 +10,7 @@ import com.examination.utils.GlobalUserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

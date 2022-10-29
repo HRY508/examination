@@ -3,7 +3,7 @@ package com.examination.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.examination.bean.FrontQuestionVM;
+import com.examination.viewmodel.FrontQuestionVM;
 import com.examination.mapper.FrontQuestionVMMapper;
 import com.examination.service.FrontQuestionVMService;
 import org.springframework.stereotype.Service;

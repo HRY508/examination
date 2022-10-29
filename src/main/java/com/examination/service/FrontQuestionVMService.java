@@ -1,11 +1,8 @@
 package com.examination.service;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.examination.bean.FrontQuestionVM;
-import com.examination.bean.Question;
-import com.examination.bean.QuestionVM;
+import com.examination.viewmodel.FrontQuestionVM;
 
 /**
  * @Author:晓风残月Lx

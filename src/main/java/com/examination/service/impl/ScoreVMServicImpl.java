@@ -1,9 +1,8 @@
 package com.examination.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.examination.bean.ScoreVM;
+import com.examination.viewmodel.ScoreVM;
 import com.examination.mapper.ScoreVMMapper;
-import com.examination.service.ScoreService;
 import com.examination.service.ScoreVMService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

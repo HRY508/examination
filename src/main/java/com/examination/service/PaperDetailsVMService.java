@@ -1,7 +1,7 @@
 package com.examination.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.examination.bean.PaperDetailsVM;
+import com.examination.viewmodel.PaperDetailsVM;
 
 /**
  * @Author:晓风残月Lx

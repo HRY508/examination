@@ -15,6 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionObject {
+
+    private Integer qId;
+
     private String titleContent;
 
     private String analyze;

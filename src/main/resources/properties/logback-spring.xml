@@ -31,6 +31,9 @@
         <!--是否追加到文件末尾,默认为true-->
         <append>true</append>
         <!--日志优先级别标准顺序为: ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF -->
+<!--        这里配置了一个过略器，对ERROR级别的日志做怎样的处理 ，onMatch为DENY意思是拦截，onMismatch为ACCEPT就是接受，
+             拦截ERROR及其以上的信息，放行ERROR以下的信息
+-->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>DENY</onMatch><!-- 如果命中ERROR就禁止这条日志 -->
@@ -71,7 +74,8 @@
         <!--是否追加到文件末尾,默认为true-->
         <append>true</append>
         <!-- ThresholdFilter过滤低于指定阈值的事件。 对于等于或高于阈值的事件，ThresholdFilter将在调用其decision（）方法时响应NEUTRAL。 但是，将拒绝级别低于阈值的事件 -->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">            <level>ERROR</level><!-- 低于ERROR级别的日志（debug,info）将被拒绝，等于或者高于ERROR的级别将相应NEUTRAL -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level><!-- 低于ERROR级别的日志（debug,info）将被拒绝，等于或者高于ERROR的级别将相应NEUTRAL -->
         </filter>
         <!--有两个与RollingFileAppender交互的重要子组件。 第一个RollingFileAppender子组件，即RollingPolicy:负责执行翻转所需的操作。
         RollingFileAppender的第二个子组件，即TriggeringPolicy:将确定是否以及何时发生翻转。 因此，RollingPolicy负责什么和TriggeringPolicy负责什么时候.
@@ -80,7 +84,7 @@
             <!-- 活动文件的名字会根据fileNamePattern的值，每隔一段时间改变一次 -->
             <!-- 文件名：logs/project_error.2017-12-05.0.log -->
             <!-- 注意：SizeAndTimeBasedRollingPolicy中 ％i和％d令牌都是强制性的，必须存在，要不会报错 -->
-            <fileNamePattern>logs/project_error.%d.%i.log</fileNamePattern>
+            <fileNamePattern>logs/project_error_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 每产生一个日志文件，该日志文件的保存期限为30天, ps:maxHistory的单位是根据fileNamePattern中的翻转策略自动推算出来的,例如上面选用了yyyy-MM-dd,则单位为天
             如果上面选用了yyyy-MM,则单位为月,另外上面的单位默认为yyyy-MM-dd-->
             <maxHistory>30</maxHistory>

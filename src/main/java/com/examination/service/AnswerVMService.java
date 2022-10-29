@@ -2,8 +2,7 @@ package com.examination.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.examination.bean.AnswerVM;
-import com.examination.bean.QuestionVM;
+import com.examination.viewmodel.AnswerVM;
 
 /**
  * @Author:晓风残月Lx

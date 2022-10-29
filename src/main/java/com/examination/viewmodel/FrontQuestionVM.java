@@ -1,4 +1,4 @@
-package com.examination.bean;
+package com.examination.viewmodel;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -2,7 +2,7 @@ package com.examination.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.examination.bean.QuestionVM;
+import com.examination.viewmodel.QuestionVM;
 import com.examination.service.QuestionVMService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

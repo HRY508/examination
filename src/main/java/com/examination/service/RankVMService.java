@@ -2,9 +2,7 @@ package com.examination.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.examination.bean.RankVM;
-
-import java.util.List;
+import com.examination.viewmodel.RankVM;
 
 /**
  * @Author:晓风残月Lx

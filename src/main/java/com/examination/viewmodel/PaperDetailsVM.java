@@ -1,4 +1,4 @@
-package com.examination.bean;
+package com.examination.viewmodel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

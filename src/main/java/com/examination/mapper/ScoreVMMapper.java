@@ -1,7 +1,7 @@
 package com.examination.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.examination.bean.ScoreVM;
+import com.examination.viewmodel.ScoreVM;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

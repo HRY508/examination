@@ -1,7 +1,7 @@
 package com.examination.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.examination.bean.ScoreVM;
+import com.examination.viewmodel.ScoreVM;
 
 import java.util.List;
 

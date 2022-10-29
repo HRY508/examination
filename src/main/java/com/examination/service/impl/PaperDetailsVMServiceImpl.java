@@ -2,15 +2,11 @@ package com.examination.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.examination.bean.Paper;
 import com.examination.bean.PaperDetails;
-import com.examination.bean.PaperDetailsVM;
+import com.examination.viewmodel.PaperDetailsVM;
 import com.examination.mapper.PaperDetailsMapper;
 import com.examination.mapper.PaperDetailsVMMapper;
-import com.examination.mapper.PaperMapper;
-import com.examination.service.PaperDetailsService;
 import com.examination.service.PaperDetailsVMService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

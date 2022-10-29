@@ -2,7 +2,7 @@ package com.examination.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.examination.bean.QuestionVM;
+import com.examination.viewmodel.QuestionVM;
 
 
 public interface QuestionVMService extends IService<QuestionVM> {
