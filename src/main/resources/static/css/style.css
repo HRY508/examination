@@ -2679,7 +2679,8 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 }
 
 .icheck .checkbox, .icheck .radio {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
+    margin-bottom: 4px
 }
 
 .icheck .single-row {

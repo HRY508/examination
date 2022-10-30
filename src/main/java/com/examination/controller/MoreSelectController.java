@@ -33,7 +33,7 @@ public class MoreSelectController {
     public String toMoreChoicePage(Model model){
         //查询所有的题型
         QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
-        typeQueryWrapper.select("q_type","q_pool");
+        typeQueryWrapper.select(" DISTINCT q_pool");
         List<Type> list = typeService.list(typeQueryWrapper);
         model.addAttribute("typeList",list);
         // 显示管理员已登录

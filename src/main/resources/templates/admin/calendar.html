@@ -245,12 +245,13 @@
                                     <div class="btn-group ">
                                         <button id="qpV" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
                                         <ul role="menu" class="dropdown-menu">
-                                            <li  th:each=" type :${typeList}" th:value="${typeList}" id="typeList"><a id="pV" th:value="${type.getQPool()}" th:text="${type.getQType()}" th:onclick="questionPool([[${type.getQPool()}]],[[${type.getQType()}]])" ></a></li>
+                                            <li  th:each=" type :${typeList}" th:value="${typeList}" id="typeList"><a id="pV" th:value="${type.getQPool()}" th:text="${type.getQPool()}" th:onclick="questionPool([[${type.getQPool()}]])" ></a></li>
                                         </ul>
                                         <input class="hidden" id="questionPoolValue" name="questionPool">
                                     </div>
                                  </div>
                                 <!--                                题型结束-->
+                                &nbsp;
                                 <!--                                分数开始-->
                                 <div class="form-group">
                                     <label  class="">分数</label>
@@ -402,12 +403,8 @@
     }
 
     //选择分类触发
-    function questionPool(va,te){
-        alert(va)
-        alert(te)
+    function questionPool(va){
         $('#questionPoolValue').attr('value',va)
-        $('#qpV').text(te)
-        // questionPoolValue
     }
 
     // 增加form表单、选项

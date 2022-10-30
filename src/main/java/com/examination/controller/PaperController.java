@@ -179,7 +179,7 @@ public class PaperController {
     public String createPaper(Model model){
         //查询所有的题型
         QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
-        typeQueryWrapper.select("q_type","q_pool");
+        typeQueryWrapper.select(" DISTINCT q_pool");
         List<Type> list = typeService.list(typeQueryWrapper);
         //设置model、返回视图
         model.addAttribute("typeList",list);
@@ -414,7 +414,7 @@ public class PaperController {
         List<Question> list = questionService.list(wrapper);
         //id列表
         List<Integer> qIdList = new ArrayList<>();
-        //类型列表
+        //题库列表
         List<Integer> qTypeList = new ArrayList<>();
         for(int i=0;i< list.size();i++){
             qIdList.add(list.get(i).getId());
