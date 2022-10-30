@@ -121,7 +121,7 @@
                                 &nbsp;
                                 <!--富文本编辑器开始，包括按钮-->
                                 <div class="compose-editor hidden">
-                                    <textarea id="textarea" class="wysihtml5 form-control" rows="5" th:text="请在此输入题干"></textarea>
+                                    <textarea id="textarea" class="wysihtml5 form-control" rows="5" ></textarea>
                                 </div>
                                 <div class="compose-btn hidden" id="textarea-button">
                                     <button type="button" class="btn btn-primary btn-sm"
@@ -238,13 +238,14 @@
                                     <label  class="">解析</label>
                                     <input type="text" name="analysis" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
+                                &nbsp;
                                 <!--题型开始-->
                                 <div class="form-group">
-                                    <label  class="">分类</label>
+                                    <label  class="">题库</label>
                                     <div class="btn-group ">
-                                        <button id="qpV" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                        <button id="qpV" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">所属题库 <span class="caret"></span></button>
                                         <ul role="menu" class="dropdown-menu">
-                                            <li  th:each=" type :${typeList}" th:value="${typeList}" id="typeList"><a id="pV" th:value="${type.getQPool()}" th:text="${type.getQType()}" th:onclick="questionPool([[${type.getQPool()}]],[[${type.getQType()}]])" ></a></li>
+                                            <li  th:each=" type :${typeList}" th:value="${typeList}" id="typeList"><a id="pV" th:value="${type.getQPool()}" th:text="${type.getQPool()}" th:onclick="questionPool([[${type.getQPool()}]])" ></a></li>
                                         </ul>
                                         <input class="hidden" id="questionPoolValue" name="questionPool">
                                     </div>
@@ -403,12 +404,9 @@
     }
 
     //选择分类触发
-    function questionPool(va,te){
-        alert(va)
-        alert(te)
+    function questionPool(va){
         $('#questionPoolValue').attr('value',va)
-        $('#qpV').text(te)
-        // questionPoolValue
+        $('#qpV').text(va)
     }
 
 

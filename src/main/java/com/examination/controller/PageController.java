@@ -29,12 +29,7 @@ public class PageController {
     @Resource
     private UserService userService;
 
-    @RequestMapping({"/admin/","/admin/index","/admin"})
-    public String indexPage(Model model){
-        // 显示管理员已登录
-        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
-        return "admin/index";
-    }
+
 
     /**
      * 管理员退出登录

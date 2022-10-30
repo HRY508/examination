@@ -39,9 +39,9 @@ public class SingleSelectController {
 
     @RequestMapping("/admin/singleEditors")
     public String toSingleChoicePage(Model model){
-        //查询所有的题型
+        //查询所有的题库
         QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
-        typeQueryWrapper.select("q_type","q_pool");
+        typeQueryWrapper.select(" DISTINCT q_pool");
         List<Type> list = typeService.list(typeQueryWrapper);
         model.addAttribute("typeList",list);
         // 显示管理员已登录

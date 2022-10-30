@@ -56,16 +56,8 @@ public class QuestionsController {
                                @RequestParam(required = false, defaultValue = "0", value = "name") String questionName,
                                @RequestParam(required = false,defaultValue = "0",value = "type") Integer questionType,
                                @RequestParam(required = false,defaultValue = "0",value = "qPool") Integer questionPool){
-
-        System.out.println("开始打印参数：questionName"+questionName);
-        System.out.println("开始打印参数：type"+questionType);
-        System.out.println("开始打印参数：qPool"+questionPool);
-        System.out.println("---------------------------------------------");
-
-
         //默认显示第1页，显示5个数据
         Page page = new Page(pn,5);
-
         Page<QuestionVM> result = null;
         //未选择题型，未输入题目关键字，未选择题目种类进行全部查询000
         if((questionName.equals("null")||questionName.equals("0"))&&questionType.equals(0)&&questionPool.equals(0))

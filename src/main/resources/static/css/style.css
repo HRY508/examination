@@ -1163,7 +1163,8 @@ footer.sticky-footer {
 }
 
 .state-overview .panel {
-    padding: 35px 20px;
+    /*padding: 35px 20px;*/
+    padding: 47px 20px;
 }
 
 .state-overview .purple {
@@ -1475,7 +1476,8 @@ ul.pros-chart li:last-child {
 .percent {
     color: rgba(255, 255, 255, 0.7);
     display: inline-block;
-    font-size: 25px;
+    /*font-size: 25px;*/
+    font-size: 16px;
     z-index: 2;
     position: absolute;
     width: 90px;

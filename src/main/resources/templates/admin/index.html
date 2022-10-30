@@ -42,9 +42,6 @@
             首页
         </h3>
         <ul class="breadcrumb">
-<!--            <li class="active">-->
-<!--                <a href="#" >数据总览</a>-->
-<!--            </li>-->
             <li class="active">数据总览</li>
         </ul>
     </div>
@@ -59,11 +56,11 @@
                     <div class="col-md-6 col-xs-12 col-sm-6">
                         <div class="panel purple">
                             <div class="symbol">
-                                <i class="fa fa-gavel"></i>
+                                <i class="fa fa-bars"></i>
                             </div>
                             <div class="state-value">
-                                <div class="value">230</div>
-                                <div class="title">待批阅</div>
+                                <div class="value" th:text="${paperCount}"></div>
+                                <div class="title">试卷量</div>
                             </div>
                         </div>
                     </div>
@@ -73,7 +70,7 @@
                                 <i class="fa fa-tags"></i>
                             </div>
                             <div class="state-value">
-                                <div class="value">3490</div>
+                                <div class="value" th:text="${questionTotal}"></div>
                                 <div class="title">题目数</div>
                             </div>
                         </div>
@@ -83,10 +80,10 @@
                     <div class="col-md-6 col-xs-12 col-sm-6">
                         <div class="panel blue">
                             <div class="symbol">
-                                <i class="fa fa-money"></i>
+                                <i class="fa fa-check"></i>
                             </div>
                             <div class="state-value">
-                                <div class="value">22014</div>
+                                <div class="value" th:text="${finishedTotal}"></div>
                                 <div class="title">完成量</div>
                             </div>
                         </div>
@@ -94,11 +91,11 @@
                     <div class="col-md-6 col-xs-12 col-sm-6">
                         <div class="panel green">
                             <div class="symbol">
-                                <i class="fa fa-eye"></i>
+                                <i class="fa fa-users"></i>
                             </div>
                             <div class="state-value">
-                                <div class="value">390</div>
-                                <div class="title">访问量</div>
+                                <div class="value" th:text="${userCount}"></div>
+                                <div class="title">用户量</div>
                             </div>
                         </div>
                     </div>
@@ -106,88 +103,46 @@
                 <!--statistics end-->
             </div>
             <div class="col-md-6">
-                <!--more statistics box start-->
-                <div class="panel deep-purple-box">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-7 col-sm-7 col-xs-7">
-                                <div id="graph-donut" class="revenue-graph"></div>
 
+                <div class="panel green-box">
+                    <div class="panel-body extra-pad">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6">
+                                <div class="knob">
+                                        <span class="chart" th:data-percent="${singleRate}">
+                                            <span class="percent" th:text="'单选'+${singleRate}+'%'"></span>
+                                        </span>
+                                </div>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-xs-5">
-                                <ul class="bar-legend">
-                                    <li><span class="blue"></span> 选择题</li>
-                                    <li><span class="green"></span> 填空题</li>
-                                    <li><span class="purple"></span> 判断题</li>
-                                    <li><span class="red"></span> 判断题</li>
-                                </ul>
+                            <div class="col-sm-6 col-xs-6">
+                                <div class="knob">
+                                        <span class="chart" th:data-percent="${moreRate}">
+                                            <span class="percent" th:text="'多选'+${moreRate}+'%'"></span>
+                                        </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--more statistics box end-->
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel">
-                    <div class="panel-body">
-                        <div class="row revenue-states">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <h4>Monthly revenue report</h4>
-                                <div class="icheck">
-                                    <div class="square-red single-row">
-                                        <div class="checkbox ">
-                                            <input type="checkbox" checked>
-                                            <label>Online</label>
-                                        </div>
-                                    </div>
-                                    <div class="square-blue single-row">
-                                        <div class="checkbox ">
-                                            <input type="checkbox">
-                                            <label>Offline </label>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="col-md-6">
 
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <ul class="revenue-nav">
-                                    <li><a href="#">weekly</a></li>
-                                    <li><a href="#">monthly</a></li>
-                                    <li class="active"><a href="#">yearly</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                <div class="panel green-box">
+                    <div class="panel-body extra-pad">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="clearfix">
-                                    <div id="main-chart-legend" class="pull-right">
-                                    </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <div class="knob">
+                                        <span class="chart" th:data-percent="${judgeRate}">
+                                            <span class="percent" th:text="'判断'+${judgeRate}+'%'"></span>
+                                        </span>
                                 </div>
-
-                                <div id="main-chart">
-                                    <div id="main-chart-container" class="main-chart">
-                                    </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-6">
+                                <div class="knob">
+                                        <span class="chart" th:data-percent="${statusRate}">
+                                            <span class="percent" th:text="'可用'+${statusRate}+'%'"></span>
+                                        </span>
                                 </div>
-                                <ul class="revenue-short-info">
-                                    <li>
-                                        <h1 class="red">15%</h1>
-                                        <p>Server Load</p>
-                                    </li>
-                                    <li>
-                                        <h1 class="purple">30%</h1>
-                                        <p>Disk Space</p>
-                                    </li>
-                                    <li>
-                                        <h1 class="green">84%</h1>
-                                        <p>Transferred</p>
-                                    </li>
-                                    <li>
-                                        <h1 class="blue">28%</h1>
-                                        <p>Temperature</p>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -198,8 +153,9 @@
     <!--body wrapper end-->
 
     <!--footer section start-->
+
     <footer>
-        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+            2022 &copy;<a href="https://www.pdsu.edu.cn/"  target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
     </footer>
     <!--footer section end-->
 
