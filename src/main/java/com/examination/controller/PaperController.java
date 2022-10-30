@@ -41,14 +41,19 @@ import java.util.*;
 public class PaperController {
     @Autowired
     PaperService paperService;
+
     @Autowired
     PaperDetailsService paperDetailsService;
+
     @Autowired
     QuestionService questionService;
+
     @Autowired
     private  ScoreVMService scoreVMService;
+
     @Autowired
     private PoiService poiService;
+
     @Autowired
     ContentService contentService;
 
@@ -488,8 +493,6 @@ public class PaperController {
 
     }
 
-
-
     //显示试卷
     @ResponseBody
     @RequestMapping("/lookPaperDetails")
@@ -528,7 +531,6 @@ public class PaperController {
         map.put("questionObjectList",questionObjectList);
         return map;
     }
-
 
     // 通过卷子id查找分数
     @ResponseBody

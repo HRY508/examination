@@ -274,7 +274,7 @@
                                         <legend>单选题选择</legend>
 
                                             <div class="form-group s" th:each="type0 :${typeList}">
-                                                <div class="control-label col-md-5">
+                                                <div class="control-label col-md-6">
                                                     <label class="control-label col-md-2">单选数</label>
                                                     <div class="col-md-3">
                                                     <div id="singleChoice">
@@ -416,14 +416,14 @@
                     <div class="form-group col-md-12 ">
                         <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="paperName2" id="paperName2">
+                            <input type="text" class="form-control" name="paperName2" id="paperName2"  required>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-1"> 开始时间</label>
                         <div class="col-md-4">
                             <div class="input-group date form_datetime-component">
-                                <input type="text" class="form-control" readonly="" size="16" name="startTime2" id="startTime2">
+                                <input type="text" class="form-control" readonly="" size="16" name="startTime2" id="startTime2" required>
                                 <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
                                     </span>
@@ -434,7 +434,7 @@
                         <label class="control-label col-md-1">结束时间</label>
                         <div class="col-md-4">
                             <div class="input-group date form_datetime-component">
-                                <input type="text" class="form-control" readonly="" size="16" name="endTime2" id="endTime2" >
+                                <input type="text" class="form-control" readonly="" size="16" name="endTime2" id="endTime2" required>
                                 <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
                                     </span>
@@ -446,17 +446,20 @@
                             <button type="button" class="btn btn-sm btn-success" th:onclick="cfqBank([[${type.getQPool()}]])" th:text="'从题库'+${type.getQPool()}+'中选择'"></button>
                             <a th:id="'poolButtonA_'+${type.getQPool()}"></a>
                             <input class="hidden" th:id="'pool_'+${type.getQPool()}+'choice'" value="">
+                            <input class="hidden" th:id="'type_'+${type.getQPool()}+'choice'" value="">
+                            <input class="hidden" th:id="'single_'+${type.getQPool()}+'choice'" value="">
+                            <input class="hidden" th:id="'more_'+${type.getQPool()}+'choice'" value="">
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <a class="btn btn-success btn-sm " style="float:right" onclick="createPaperAllDIY()"><i class="fa fa-check"></i> 开始创建 </a>
+                        <a class="btn btn-success btn-sm " style="float:right" onclick="completeC()"><i class="fa fa-check"></i> 完成 </a>
                     </div>
                 </div>
             </section>
         </div>
 
 
-        <!--从题库选择开始-->
+        <!--从题库选择Model开始-->
         <div class="col-md-12 ">
             <a href="#myModal1" data-toggle="modal" class="btn btn-warning hidden" id="cButton">
             </a>
@@ -468,15 +471,17 @@
                             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
                             <h4 class="modal-title">从题库中选择</h4>
                         </div>
-                        <div class="col-sm-12 icheck" id="paperObjectList" >
-                            <div id="startSingSelect" >
-                            </div>
-                            <div id="choice">
-                                <div class="form-check single-row " id="r_A">
-                                    <div class="radio">
-                                        <input tabindex="3" type="radio"   name="r_choice" value="A" style="display: none">
-                                        <div> A </div>
-                                        <div id="radio_A"></div>
+                        <div class="modal-body">
+                            <div class="col-sm-12 icheck" id="paperObjectList" >
+                                <div id="startSingSelect" >
+                                </div>
+                                <div id="choice">
+                                    <div class="form-check single-row " id="r_A">
+                                        <div class="radio">
+                                            <input tabindex="3" type="radio"   name="r_choice" value="A" style="display: none">
+                                            <div> A </div>
+                                            <div id="radio_A"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -488,8 +493,68 @@
                 </div>
             </div>
         </div>
-        <!--从题库选择结束-->
+        <!--从题库选择Model结束-->
 
+        <!--试卷详情model-->
+        <div class="col-md-12 ">
+            <a href="#myModal3" data-toggle="modal" class="btn btn-warning hidden" id="pDetail">
+            </a>
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal3" class="modal fade" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:#65CEA7">
+                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                            <h4 class="modal-title">试卷详情</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-sm-12 icheck" id="detail—" >
+                                <div class="form-group col-md-12">
+                                    <label class="form-group col-md-3" style="float: left;"> 试卷名</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control valid" id="d_paperName">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 ">
+                                    <label class="form-group col-md-3" style="float: left;"> 开始时间</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control valid" id="d_startTime">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 ">
+                                    <label class="form-group col-md-3" style="float: left;"> 结束时间</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control valid" id="d_endTime">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 ">
+                                    <label class="form-group col-md-3" style="float: left;"> 单选数</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control valid"  id="d_singleNumber">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 ">
+                                    <label class="form-group col-md-3" style="float: left;"> 多选数</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control valid" id="d_moreNumber">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 ">
+                                    <label class="form-group col-md-3" style="float: left;"> 总共</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control valid" id="d_allNumber">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal" onclick="createPaperAllDIY()">创建</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal" >取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--试卷详情model-->
     </div>
     <!--        自定义创建结束-->
 
@@ -753,6 +818,7 @@
         }
     }
 
+    //查看
     function toLook() {
         var pName = $('#successPaperName').val()
         window.location.replace('/admin/toPaperList'+'?searchName='+pName)
@@ -830,7 +896,7 @@
         }
     }
 
-    //自定义创建的初始化
+    //随机创建2的初始化
     $(document).ready( function() {
         var arr = document.getElementsByClassName('form-group s')
         for (var i =0; i < arr.length; i++){
@@ -851,7 +917,7 @@
         $('#d').click()
     })
 
-    //自定义创建增加题目数
+    //随机创建2增加题目数
     function incNumber1(object){
         //获取数值，转int
         var num = parseInt(object.value)
@@ -862,7 +928,7 @@
         }
     }
 
-    //自定义创建减少题目数
+    //随机创建2减少题目数
     function disNumber1(object){
         //获取数值，转int
         var num = parseInt(object.value)
@@ -1080,9 +1146,11 @@
                     //创建一个多选放到p标签内
                     var input = $("<input id='input"+i+"'"+" name=checkedQ"+" type=checkbox"+" value="+i+">")
                     //设置一个hidden的input存放真实qid
-                    var inputH = $("<input id='input"+i+"'"+" class=hidden"+" name=checkedH"+" type=checkbox"+" value="+data.questionObjectList[i].qid+">")
+                    var input1 = $("<input id='input"+i+"'"+" class=hidden"+" name=checkedH"+" type=checkbox"+" value="+data.questionObjectList[i].qid+">")
+                    //隐藏域存放题目类型
+                    var input2 = $("<input id='input"+i+"'"+" class=hidden"+" value="+data.qTypeList[i]+">")
                     //将input标签追加到p标签内
-                    $("#choiceTitle"+i+"").append(input).append(inputH)
+                    $("#choiceTitle"+i+"").append(input).append(input1).append(input2)
                     //获取选项的数量
                     var choiceNum = getGsonLength(data.questionObjectList[i].questionItemObjects)
                     for(var j = 0; j < choiceNum; j++){
@@ -1113,19 +1181,76 @@
         var ids="";
         //用户真实选择qId
         var realIds = ""
+        //用户选择的该题的类型
+        var qSingleNum = 0
+        var qMoreNum = 0
+        var total = 0
         $("input[name='checkedQ']").each(function() {
-            if (this.checked == true) {
-                ids += this.value + "、";
+            if (this.checked == true)
+            {
+                ids += this.value+1 + "、";
                 realIds += this.parentNode.children[1].getAttribute('value')+","
+                //获得该题的类型
+                var type = this.parentNode.children[2].getAttribute('value')
+                if(type == 1)
+                {
+                    qSingleNum = qSingleNum + 1
+                }
+                if(type == 2)
+                {
+                    qMoreNum = qMoreNum + 1
+                }
+                total = qSingleNum + qMoreNum
             }
-        });
+        }
+        );
         if(ids==""){
             $("#poolButtonA_"+pool).text('暂未选择题目！')
         }else{
             ids = ids.substring(0,ids.length-1)
-            $("#poolButtonA_"+pool).text('选择了题库'+pool+'中的 '+ids+' 题！')
-            //将用户真实选择的题放到隐藏域中
+            $("#poolButtonA_"+pool).text('选择了题库'+pool+'中的 '+ids+' 题！其中单选'+qSingleNum+'道,'+'多选'+qMoreNum+'道,共'+total+'道。')
+            //用户真正选的题目qId
             $("#pool_"+pool+"choice").attr('value',realIds)
+            //一共多少题
+            $("#type_"+pool+"choice").attr('value',total)
+            //单选
+            $("#single_"+pool+"choice").attr('value',qSingleNum)
+            //多选
+            $("#more_"+pool+"choice").attr('value',qMoreNum)
+        }
+
+    }
+
+    function completeC() {
+        dPaper()
+        $('#pDetail').click()
+    }
+
+    //加载试卷详情
+    function dPaper() {
+        var len = document.getElementsByClassName('form-group col-md-12 d').length
+        var singleTotal = 0
+        var moreTotal = 0
+        var allTotal = 0
+        for(var i = 1; i < len+1; i++){
+            var qTypeTemp =  $("#type_"+i+"choice").val();
+            var singleTemp = $("#single_"+i+"choice").val();
+            var moreTemp = $("#more_"+i+"choice").val();
+            if (qTypeTemp!=""){
+                allTotal += parseInt(qTypeTemp)
+            }
+            if (singleTemp!=""){
+                singleTotal += parseInt(singleTemp)
+            }
+            if (moreTotal!=""){
+                moreTotal += parseInt(moreTemp)
+            }
+            $('#d_paperName').attr('value',$('#paperName2').val())
+            $('#d_startTime').attr('value',$('#startTime2').val())
+            $('#d_endTime').attr('value',$('#endTime2').val())
+            $('#d_singleNumber').attr('value',singleTotal)
+            $('#d_moreNumber').attr('value',moreTotal)
+            $('#d_allNumber').attr('value',allTotal)
         }
 
     }

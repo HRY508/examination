@@ -116,6 +116,8 @@
     <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
     <logger name="com.examination" level="INFO">
         <appender-ref ref="info_log" />
+    </logger>
+    <logger name="com.examination" level="ERROR">
         <appender-ref ref="error_log" />
     </logger>
 
