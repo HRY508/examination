@@ -81,10 +81,7 @@ public class LoginController {
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         Model model, HttpServletRequest request){
-        if (!userService.selectByStatus(username)){
-            model.addAttribute("msg","用户已被禁用，请与管理员联系！");
-            return "login";
-        }
+
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         //获取记住我，的选中状态，如果未选中，获取的是null，如果选中获取的是value值，没有设置value值选中时获取的是on
@@ -100,6 +97,10 @@ public class LoginController {
         }
         catch (IncorrectCredentialsException e){
             model.addAttribute("msg","密码错误");
+            return "login";
+        }
+        if (!userService.selectByStatus(username)){
+            model.addAttribute("msg","用户已被禁用，请与管理员联系！");
             return "login";
         }
         User user = (User)subject.getPrincipal();

@@ -14,6 +14,8 @@
     <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
     <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
     <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">-->
     <!--dashboard calendar-->
     <link href="/css/clndr.css" rel="stylesheet">
     <!--common-->
@@ -65,7 +67,7 @@
                         <!--搜索结束-->
 
                         <div style="margin-top: 15px;" class="col-xs-3">
-                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="toAdd()"><i class="fa fa-plus"></i>添加分类</button>
+                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal"  onclick="toAdd()"><i class="fa fa-plus"></i>添加分类</button>
                         </div>
                     </header>
 
@@ -86,10 +88,13 @@
                                 <tr th:each="type : ${page.records}">
                                     <td th:text="${type.id}"></td>
                                     <td th:text="${type.qPool}"></td>
-                                    <td th:text="${type.qType}"></td>
+                                    <td>
+                                        <span th:text="${type.qType}" th:value="${type.qType}" class="label label-primary"></span>
+                                    </td>
                                     <td th:text="${type.qNumber}"></td>
                                     <td>
-                                        <button th:if="${type.qPool} != 0" class="btn btn-sm btn-danger" th:onclick="del([[${type.id}]])">删除</button>
+                                        <button th:if="${type.qPool} != 0" class="btn btn-sm btn-info"  th:onclick="update([[${type.id}]],[[${type.qPool}]],[[${type.qType}]])">修改</button>
+                                        <button th:if="${type.qPool} != 0" class="btn btn-sm btn-danger"  th:onclick="del([[${type.id}]])">删除</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -150,7 +155,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
+                    <div class="item form-group col-md-12  tip"   >
+                        <div class="col-md-offset-3 col-md-3" style="color:red;display:none;" id="addTips"></div>
+                    </div>
                     <div class="form-inline">
                         <label for="questionPool">分类号:</label><br/>
                         <input type="text" id="questionPool" name="questionPool" class="form-control" placeholder="输入分类号"/>
@@ -161,16 +168,16 @@
                         <input type="text" id="qType" name="qType" class="form-control" placeholder="输入分类名"/>
                     </div>
 
-                    <div class="form-inline">
-                        <label>添加题目(只有没有分类的题):</label><br/>
-                        <select id="selectQuestion" name="questionList" class="selectpicker" multiple>
+<!--                    <div class="form-inline">-->
+<!--                        <label>添加题目(只有没有分类的题):</label><br/>-->
+<!--                        <select id="selectQuestion" name="selectQuestion" class="selectpicker show-tick form-control"  data-live-search="false" multiple>-->
 
-                        </select >
-                    </div>
+<!--                        </select >-->
+<!--                    </div>-->
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                        <button type="submit" class="btn btn-primary" >保存</button>
+                        <button type="button" class="btn btn-primary" onclick="addFinish()">保存</button>
                     </div>
 
                 </div>
@@ -178,6 +185,49 @@
         </div>
     </div>
     <!--   添加modal框结束-->
+
+    <!--   修改功能modal框开始-->
+    <div aria-hidden="true" data-backdrop="static" data-keyboard="false"  aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="updatePool" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">修改</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <div aria-hidden="true">&times;</div>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="updateId" id="updateId" value=""/>
+                    <div class="item form-group col-md-12  tip"   >
+                        <div class="col-md-offset-3 col-md-3" style="color:red;display:none;" id="addTipsU"></div>
+                    </div>
+                    <div class="form-inline">
+                        <label for="questionPool">分类号:</label><br/>
+                        <input type="text" id="questionPoolU" name="questionPool" class="form-control" placeholder="输入分类号"/>
+                    </div>
+
+                    <div class="form-inline">
+                        <label for="qType">分类名:</label><br/>
+                        <input type="text" id="qTypeU" name="qType" class="form-control" placeholder="输入分类名"/>
+                    </div>
+
+                    <!--                    <div class="form-inline">-->
+                    <!--                        <label>添加题目(只有没有分类的题):</label><br/>-->
+                    <!--                        <select id="selectQuestion" name="selectQuestion" class="selectpicker show-tick form-control"  data-live-search="false" multiple>-->
+
+                    <!--                        </select >-->
+                    <!--                    </div>-->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="updateFinish()">保存</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   修改modal框结束-->
 
     <!--footer section start-->
     <footer>
@@ -201,10 +251,10 @@
 <script src="/js/modernizr.min.js"></script>
 <script src="/js/jquery.nicescroll.js"></script>
 
-<!--data table-->
-<script type="text/javascript" src="/js/data-tables/jquery.dataTables.js"></script>
-<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
-
+<!--&lt;!&ndash; Latest compiled and minified JavaScript &ndash;&gt;-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>-->
+<!--&lt;!&ndash; (Optional) Latest compiled and minified JavaScript translation files &ndash;&gt;-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-zh_CN.min.js"></script>-->
 
 <!--表单校验-->
 <script type="text/javascript" src="js/jquery.validate.min.js"></script>
@@ -287,34 +337,108 @@
     //     })
     // }
 
-
+    //
     function toAdd(){
-        $('#addModal').modal("hide");
-
-        $.ajax({
-            type:"get",
-            url:"/admin/addPool",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success:function (data) {
-                 if (data.code == 200) {
+        // $('#addModal').modal("hide");
+        $("#tip").hide()
+        // $.ajax({
+        //     type:"get",
+        //     url:"/admin/getQuestionId",
+        //     contentType: "application/json;charset=utf-8",
+        //     dataType: "json",
+        //     success:function (data) {
+        //          if (data.code == 200) {
                     //删除所有克隆的节点
-                    var f = document.getElementById("selectQuestion")
-                    f.innerHTML = ""
-
+                    // var f = document.getElementById("selectQuestion")
+                    // f.innerHTML = ""
+                    //
                     $("#addModal").modal("show");
-
-                    var list = document.getElementById('selectQuestion')
-                    var arry = data.qList
-                    var str = '';
-                    for(var i = 0; i < arry.length; i++){
-                        str += '<option value="arry[i].id">'+arry[i].id+'</option>';
-                    }
+                    //
+                    // var list = document.getElementById('selectQuestion')
+                    // var arry = data.qList
+                    // var str = '';
+                    // for(var i = 0; i < arry.length; i++){
+                    //     str += '<option value="arry[i].id">'+arry[i].id+'</option>';
+                    // }
+                    //  list.innerHTML = str
+        //         }
+        //     }
+        // })
+    }
+    // 添加
+    function addFinish() {
+        var questionPool = $("#questionPool").val()
+        var qType = $("#qType").val()
+        if (qType == "" || questionPool ==""){
+           $("#addTips").html("分类名或分类号不能为空！");
+           $("#addTips").show();
+           return
+        }
+        $.ajax({
+            type:"post",
+            url:"/admin/poolList/addPool",
+            data:JSON.stringify({
+               questionPool:questionPool,
+               qType:qType
+            }),
+            contentType: "application/json;charset=utf-8",
+            //定义回调响应的数据格式为JSON字符串，该属性可以省略
+            dataType: "json",
+            success:function (data){
+                if (data.code == 200){
+                    $('#addModal').modal("hide");
+                    alert("添加完成！")
+                    location.reload();
+                }else{
+                    alert("操作失败，请稍候重试！")
                 }
             }
         })
     }
 
+    //给修改框传值
+    function update(id,qPool,qType) {
+        $("#updatePool").modal("show")
+        $("#addTipsU").hide();
+        $("#questionPoolU").val(qPool)
+        $("#qTypeU").val(qType)
+        $("#updateId").val(id)
+
+    }
+
+    // 修改
+    function updateFinish() {
+        var qPool = $("#questionPoolU").val()
+        var qType = $("#qTypeU").val()
+        var id = $("#updateId").val()
+        if (qType == "" || questionPool == "") {
+            $("#addTipsU").html("分类名或分类号不能为空！");
+            $("#addTipsU").show();
+            return
+        }
+        $.ajax({
+            type:"post",
+            url:"/admin/poolList/updatePool",
+            data:JSON.stringify({
+                id : id,
+                qPool:qPool,
+                qType:qType
+            }),
+            contentType: "application/json;charset=utf-8",
+            //定义回调响应的数据格式为JSON字符串，该属性可以省略
+            dataType: "json",
+            success:function (data){
+                if (data.code == 200){
+                    alert("更新成功！")
+                    $('#updatePool').modal("hide");
+                    location.reload();
+                }else{
+                    location.reload();
+                    alert("操作失败，请稍后重试！")
+                }
+            }
+        })
+    }
 
     // 单个删除
     function del(id) {
@@ -350,6 +474,7 @@
 
     // 修改密码
     $("#pwd_btn").click(function() {
+        $("#tip").hide()
         $("#pwd_btn").blur();
         if (confirm("是否确定修改?")){
             var submit = true;
