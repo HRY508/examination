@@ -10,6 +10,8 @@ import com.examination.service.QuestionVMService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author he
@@ -79,6 +81,31 @@ public class QuestionVMServiceImpl extends ServiceImpl<QuestionVMMapper, Questio
         Page<QuestionVM> questionVM = baseMapper
                 .selectByAllConditionQuestionVM(page,questionName,questionType,questionPool);
         return  questionVM;
+    }
+
+    @Override
+    public Page<QuestionVM> selectByQuestionPoolAndName(Page page, Integer questionPool, String questionName) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        Page<QuestionVM> questionVM = baseMapper
+                .selectByQuestionPoolAndName(page,questionName,questionPool);
+        return  questionVM;
+    }
+
+    @Override
+    public Page<QuestionVM> selectByQuestionTypeAndQuestionName(Page page, Integer questionType, String questionName) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        Page<QuestionVM> questionVM = baseMapper
+                .selectByQuestionTypeAndQuestionName(page,questionName,questionType);
+        return  questionVM;
+    }
+
+    @Override
+    public List<QuestionVM> selectByPool(Integer pool) {
+        QuestionVMMapper baseMapper = this.baseMapper;
+        List<QuestionVM> questionVM = baseMapper
+                .selectByQPool(pool);
+        return  questionVM;
+
     }
 
 }

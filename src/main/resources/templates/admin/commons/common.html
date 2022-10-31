@@ -59,6 +59,7 @@
                 <li id="menu4" class="menu-list"><a href=""><i class="fa fa-align-justify"></i> <span>题库管理</span></a>
                     <ul class="sub-menu-list">
                         <li id="question-list"><a th:href="@{/admin/questionsList}"><i class="fa fa-list"></i>题目列表</a></li>
+                        <li id="question-pool"><a th:href="@{/admin/poolList}"><i class="fa fa-tags"></i>题库列表</a></li>
                         <li id="single-choice"><a th:href="@{/admin/singleEditors}"><i class="fa fa-minus"></i>单选题创建</a></li>
                         <li id="more-choice"><a th:href="@{/admin/moreEditors}"><i class="fa fa-check-square-o"></i>多选题创建</a></li>
 <!--                        <li id="judgmental"><a th:href="@{/admin/judgmentalEditors}"><i class="fa fa-square-o"></i>判断题创建</a></li>-->
@@ -69,7 +70,7 @@
                 <!--导航四结束-->
 
                 <!--导航五开始-->
-                <li class="menu-list"><a href=""><i class="fa fa-pencil"></i> <span>答题管理</span></a>
+                <li id="menu5" class="menu-list"><a href=""><i class="fa fa-pencil"></i> <span>答题管理</span></a>
                     <ul class="sub-menu-list">
                         <li id="answer-list"><a th:href="@{/admin/answerList}"><i class="fa fa-pencil-square"></i>答题清况</a></li>
                     </ul>

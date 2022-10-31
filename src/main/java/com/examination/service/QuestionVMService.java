@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.examination.viewmodel.QuestionVM;
 
+import java.util.List;
+
 
 public interface QuestionVMService extends IService<QuestionVM> {
 
@@ -20,4 +22,10 @@ public interface QuestionVMService extends IService<QuestionVM> {
     Page<QuestionVM> selectByQuestionPool(Page page, Integer questionPool);
 
     Page<QuestionVM> selectByAllConditionQuestionVM(Page page, String questionName, Integer questionType, Integer questionPool);
+
+    Page<QuestionVM> selectByQuestionPoolAndName(Page page, Integer questionPool, String questionName);
+
+    Page<QuestionVM> selectByQuestionTypeAndQuestionName(Page page, Integer questionType, String questionName);
+
+    List<QuestionVM> selectByPool(Integer pool);
 }

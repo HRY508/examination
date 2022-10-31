@@ -233,7 +233,7 @@ public class PaperController {
         Integer pId = paperService.list(queryWrapper).get(0).getPId();
         //查询所有的单选题，在单选题中抽取指定数目的题：
         QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
-        questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType);
+        questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType).eq("status",1);
         List<Question> list1 = questionService.list(questionQueryWrapperWrapper);
         //数组用来存放抽取的题目id，RandomUtil.random回从指定数组抽取指定个数的随机题目，且不重复
         Integer array[] = new Integer[list1.size()];
@@ -252,7 +252,7 @@ public class PaperController {
         }
         //查询所有的多选题，在多选题中抽取指定题：
         QueryWrapper<Question> moreWrapperWrapper = new QueryWrapper();
-        moreWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType);
+        moreWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType).eq("status",1);
         List<Question> list2 = questionService.list(moreWrapperWrapper);
         Integer array2[] = new Integer[list2.size()];
         for(int i = 0; i < array2.length; i++){
@@ -342,7 +342,7 @@ public class PaperController {
             // 查询条件：question_pool
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType)
-                    .eq("question_pool",Integer.parseInt((String) singlePoolArray.get(String.valueOf(i))));
+                    .eq("question_pool",Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))).eq("status",1);
             //查出满足某种题型、某种类型的题，并将该题的id存放在array中
             List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
             Integer array[] = new Integer[questionList.size()];
@@ -366,7 +366,7 @@ public class PaperController {
             // 查询条件：question_pool
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType)
-                    .eq("question_pool",Integer.parseInt((String) morePoolArray.get(String.valueOf(i))));
+                    .eq("question_pool",Integer.parseInt((String) morePoolArray.get(String.valueOf(i)))).eq("status",1);
             //查出满足某种题型、某种类型的题，并将该题的id存放在array中
             List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
             Integer array[] = new Integer[questionList.size()];

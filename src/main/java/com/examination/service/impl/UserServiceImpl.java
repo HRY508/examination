@@ -64,5 +64,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
        return false;
     }
 
+    @Override
+    public boolean selectByStatus(String username) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(User::getUStatus).eq(User::getUserName,username);
+        User user = userMapper.selectOne(queryWrapper);
+        if (user.getUStatus()==1){
+            return true;
+        }
+        return false;
+    }
+
 
 }

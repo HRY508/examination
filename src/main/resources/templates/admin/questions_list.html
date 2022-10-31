@@ -56,49 +56,32 @@
                         <!--form表单开始-->
                         <form class="form-horizontal adminex-form" method="get">
                             <div class="form-inline">
-                                    <input type="text" class="form-control" th:value="${qNameValue}" name="name" placeholder="输入关键字查询" style="font-weight:lighter">
-                                    <button class="btn btn-default" th:href="@{${typeUrl}+${qName}+${qNameValue}}">查询</button>
-                                    <div class="btn-group" >
-                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==0" data-toggle="dropdown"  type="button">题目类型 <span class="caret"></span></button>
-                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==1" data-toggle="dropdown"  type="button">单选题 <span class="caret"></span></button>
-                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==2" data-toggle="dropdown"  type="button">多选题 <span class="caret"></span></button>
-<!--                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==3" data-toggle="dropdown"  type="button">判断题 <span class="caret"></span></button>-->
-<!--                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==4" data-toggle="dropdown"  type="button">填空题 <span class="caret"></span></button>-->
-<!--                                        <button  class="btn btn-success dropdown-toggle" th:if="${qTypeValue}==5" data-toggle="dropdown"  type="button">简答题 <span class="caret"></span></button>-->
-                                        <ul role="menu" class="dropdown-menu">
-                                            <li ><a th:href="@{${typeUrl}+1+${qName}+${qNameValue}}">单选题</a></li>
-                                            <li ><a th:href="@{${typeUrl}+2+${qName}+${qNameValue}}">多选题</a></li>
-<!--                                            <li ><a th:href="@{${typeUrl}+3+${qName}+${qNameValue}}">判断题</a></li>-->
-<!--                                            <li ><a th:href="@{${typeUrl}+4+${qName}+${qNameValue}}">填空题</a></li>-->
-<!--                                            <li ><a th:href="@{${typeUrl}+5+${qName}+${qNameValue}}">简答题</a></li>-->
-                                            <li class="divider"></li>
-                                            <li><a th:href="@{${typeUrl}}">全部题型</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="btn-group ">
-                                        <button  class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">题目创建 <span class="caret"></span></button>
-                                        <ul role="menu" class="dropdown-menu">
-                                            <li><a th:href="@{/admin/singleEditors}">单选题创建</a></li>
-                                            <li><a th:href="@{/admin/moreEditors}">多选题创建</a></li>
-<!--                                            <li><a href="#">判断题创建</a></li>-->
-<!--                                            <li><a href="#">填空题创建</a></li>-->
-<!--                                            <li><a href="#">简答题创建</a></li>-->
-                                        </ul>
-                                    </div>
-                                <div class="btn-group ">
-                                    <button th:if="${qPoolValue==0}" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
-                                    <div th:each=" type :${typeList}">
-                                        <button th:if="${type.getQPool()}==${qPoolValue}" th:text="${type.getQType()}" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button"> <span class="caret" ></span></button>
-                                    </div>
+                                <input type="text" class="form-control" th:value="${qNameValue}" name="name" placeholder="输入关键字查询" style="font-weight:lighter">
 
-                                    <ul role="menu" class="dropdown-menu">
-                                        <li  th:each=" type :${typeList}"><a th:href="@{${typeUrl}+${qTypeValue}+${qPool}+${type.getQPool()}+${qName}+${qNameValue}}" th:text="${type.getQType()}"></a></li>
-                                    </ul>
-                                </div>
-                                    <button class="btn btn-danger" onclick="DelSelect()" type="button" >批量删除</button>
-                                </div>
+                                <select class="" id="qType" name="qType">
+                                    <option value="0" th:selected="${qTypeValue} == 0">题目类型</option>
+                                    <option value="1" th:selected="${qTypeValue} == 1">单选题</option>
+                                    <option value="2" th:selected="${qTypeValue} == 2">多选题</option>
+                                </select>
 
+                                <select class="" id="qPool" name="qPool">
+                                    <option value="0" th:selected="${qPoolValue} == 0">请选择类型</option>
+                                    <option
+                                            th:each="type:${typeList}"
+                                            th:value="${type.getQPool()}"
+                                            th:text="${type.getQType()}"
+                                            th:selected="${qPoolValue} == ${type.getQPool()}"
+                                    >
+                                    </option>
+                                </select>
+
+                                <input type="submit" value="查询">
+
+                                <button class="btn btn-danger" onclick="DelSelect()" type="button" >批量删除</button>
+
+                                </div>
                         </form>
+
                         <!--form表单结束-->
                     </header>
 
@@ -114,6 +97,7 @@
                                     <th class="col-md-5">题干</th>
                                     <th>分数</th>
                                     <th>难度</th>
+                                    <th>分类</th>
                                     <th>解决数</th>
                                     <th>创建人</th>
                                     <th>创建时间</th>
@@ -127,12 +111,20 @@
                                     <td th:text="${question.id}"></td>
                                     <td  th:if="${question.questionType}==1" th:text="单选题"></td>
                                     <td  th:if="${question.questionType}==2" th:text="多选题"></td>
-                                    <td  th:if="${question.questionType}==3" th:text="判断题"></td>
-                                    <td  th:if="${question.questionType}==4" th:text="填空题"></td>
-                                    <td  th:if="${question.questionType}==5" th:text="简答题"></td>
+<!--                                    <td  th:if="${question.questionType}==3" th:text="判断题"></td>-->
+<!--                                    <td  th:if="${question.questionType}==4" th:text="填空题"></td>-->
+<!--                                    <td  th:if="${question.questionType}==5" th:text="简答题"></td>-->
                                     <td th:text="${question.content}" class="col-md-5"></td>
                                     <td th:text="${question.score}"></td>
-                                    <td th:text="${question.difficult}"></td>
+                                    <td>
+                                        <span th:if="${question.difficult}==1" th:text="简单" class="label label-success">简单</span>
+                                        <span th:if="${question.difficult}==2" th:text="中等" class="label label-primary">中等</span>
+                                        <span th:if="${question.difficult}==3" th:text="困难" class="label label-danger">困难</span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${question.qType}" th:value="${question.questionPool}" class="label label-info"></span>
+                                    </td>
+
                                     <td th:text="${question.solutioned}"></td>
                                     <td th:text="${question.createUser}"></td>
                                     <td th:text="${question.createTime}"></td>
@@ -180,7 +172,8 @@
                                        th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
                                        th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
                                     <a th:href="@{${jumpUrl}+${page.current+1}+${qType}+${qTypeValue}+${qName}+${qNameValue}+${qPool}+${qPoolValue}}" th:text="下一页" th:class="page-item"
-                                       th:if="${page.current<page.pages}"></a> <a
+                                       th:if="${page.current<page.pages}"></a>
+                                    <a
                                         th:href="@{${jumpUrl}+${page.pages}+${qType}+${qTypeValue}+${qName}+${qNameValue}+${qPool}+${qPoolValue}}" th:text="尾页" th:class="page-item"
                                         th:if="${page.current<page.pages}"></a>
                                 </div>

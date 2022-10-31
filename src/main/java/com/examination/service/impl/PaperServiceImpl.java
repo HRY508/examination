@@ -1,10 +1,14 @@
 package com.examination.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.examination.bean.Paper;
 import com.examination.mapper.PaperMapper;
 import com.examination.service.PaperService;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @Author:晓风残月Lx
@@ -12,4 +16,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements PaperService {
+
 }

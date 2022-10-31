@@ -30,6 +30,10 @@ public class QuestionVM {
 
     private Integer difficult;
 
+    private Integer questionPool;
+
+    private String qType;
+
     private Integer solutioned;
 
     private String createUser;

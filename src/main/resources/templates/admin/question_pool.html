@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" type="image/png">
+    <title>题库列表</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
+    <!--dashboard calendar-->
+    <link href="/css/clndr.css" rel="stylesheet">
+    <!--common-->
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+</head>
+
+<body class="sticky-header">
+
+<!--左侧开始-->
+<div th:replace="~{admin/commons/common :: commonleft}"></div>
+<!--左侧结束-->
+
+<!--主页面开始-->
+<div class="main-content" >
+    <!--头部开始-->
+    <div th:replace="~{admin/commons/common :: commonheader}"></div>
+    <!--头部结束-->
+
+
+    <!--当前位置介绍开始-->
+    <div class="page-heading">
+        <h3>
+            题库列表
+        </h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#">题库管理</a>
+            </li>
+            <li class="active"> 题库列表 </li>
+        </ul>
+    </div>
+    <!-- 当前位置介绍结束-->
+
+
+    <!--    body wrapper start-->
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <!--搜索开始-->
+
+                        <div style="margin-top: 15px; " class="col-xs-6">
+                            <form >
+                                <input type="text" class="form-control" name="qName" th:value="${searchName}" placeholder="输入关键词搜索">
+                            </form>
+                        </div>
+                        <!--搜索结束-->
+
+                        <div style="margin-top: 15px;" class="col-xs-3">
+                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="toAdd()"><i class="fa fa-plus"></i>添加分类</button>
+                        </div>
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="table-responsive" style="height: 55em">
+                            <div class="space15"></div>
+                            <table class="display table table-hover" id="dynamic-table">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>类型号</th>
+                                    <th>类型名</th>
+                                    <th>题数</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="type : ${page.records}">
+                                    <td th:text="${type.id}"></td>
+                                    <td th:text="${type.qPool}"></td>
+                                    <td th:text="${type.qType}"></td>
+                                    <td th:text="${type.qNumber}"></td>
+                                    <td>
+                                        <button th:if="${type.qPool} != 0" class="btn btn-sm btn-danger" th:onclick="del([[${type.id}]])">删除</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <!--分页-->
+                            <div th:fragment="page"><!--定义用于被显示列表页包含-->
+                                <head>
+                                    <style>
+                                        .page-item {
+                                            padding: 1px 5px;
+                                            border: 1px solid #afafaf;
+                                            margin-left: 3px
+                                        }
+
+                                        .page-item.active {
+                                            color: red;
+                                            border: 1px solid red;
+                                        }
+                                    </style>
+                                </head>
+                                <div style="float: left" th:if="${page.pages>0}">
+                                    当前第<span th:text="${page.current}"></span>页,共<span
+                                        th:text="${page.pages}"></span>页,总记录数<span th:text="${page.total}"></span>
+                                </div>
+                                <div style="float: right" th:if="${page.pages>0}">
+                                    <a th:href="@{${jumpUrl}+${qName}+${searchName}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
+                                    <a th:href="@{${jumpUrl}+${page.current-1}+${qName}+${searchName}}" th:text="上一页" th:class="page-item"
+                                       th:if="${page.current>1}"></a>
+                                    <a th:href="@{${jumpUrl}+${i}+${qName}+${searchName}}"
+                                       th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
+                                       th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
+                                    <a th:href="@{${jumpUrl}+${page.current+1}+${qName}+${searchName}}" th:text="下一页" th:class="page-item"
+                                       th:if="${page.current<page.pages}"></a> <a
+                                        th:href="@{${jumpUrl}+${page.pages}+${qName}+${searchName}}" th:text="尾页" th:class="page-item"
+                                        th:if="${page.current<page.pages}"></a>
+                                </div>
+                            </div>
+                            <!--分页结束-->
+                            <br>     <br>     <br>
+                            <span class="label label-danger">提示： 一旦删除分类，分类下所属题目将变为未添加题库!</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!--    body wrapper end-->
+
+    <!--   添加功能modal框开始-->
+    <div aria-hidden="true" data-backdrop="static" data-keyboard="false"  aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">新增</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <div aria-hidden="true">&times;</div>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-inline">
+                        <label for="questionPool">分类号:</label><br/>
+                        <input type="text" id="questionPool" name="questionPool" class="form-control" placeholder="输入分类号"/>
+                    </div>
+
+                    <div class="form-inline">
+                        <label for="qType">分类名:</label><br/>
+                        <input type="text" id="qType" name="qType" class="form-control" placeholder="输入分类名"/>
+                    </div>
+
+                    <div class="form-inline">
+                        <label>添加题目(只有没有分类的题):</label><br/>
+                        <select id="selectQuestion" name="questionList" class="selectpicker" multiple>
+
+                        </select >
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" >保存</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   添加modal框结束-->
+
+    <!--footer section start-->
+    <footer>
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--footer section end-->
+
+
+</div>
+<!--主页面结束-->
+
+
+<div th:replace="~{admin/commons/common :: commonupdatePwd}"></div>
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.nicescroll.js"></script>
+
+<!--data table-->
+<script type="text/javascript" src="/js/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+
+
+<!--表单校验-->
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script src="js/validation-init.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/js/scripts.js"></script>
+<!--script for editable table-->
+<script src="/js/editable-table.js"></script>
+
+
+<script type="text/javascript">
+    // function checkAll(obj,cName){
+    //     var checkboxs = document.getElementsByName(cName);
+    //     for(var i = 0; i< checkboxs.length; i+=1){
+    //         checkboxs[i].checked = obj.checked;
+    //     }
+    // }
+
+    // function queryQuestion(pool) {
+    //
+    //     $('#selectPool').modal("hide");
+    //     // 删除所有克隆的节点
+    //     var f = document.getElementById("questionList")
+    //     f.innerHTML = ""
+    //
+    //     $.ajax({
+    //         url: "/admin/queryQuestion",
+    //         type: "POST",
+    //         data: JSON.stringify({
+    //             qPool : pool
+    //         }),
+    //         contentType: "application/json;charset=utf-8",
+    //         //定义回调响应的数据格式为JSON字符串，该属性可以省略
+    //         dataType: "json",
+    //         success: function (data) {
+    //             if (data.code == 200){
+    //
+    //                 $('#selectPool').modal("show");
+    //
+    //                 // $('#score').attr("value",data.scoreList)
+    //                 // 删除所有克隆的节点
+    //                 var f = document.getElementById("questionList")
+    //                 f.innerHTML = ""
+    //
+    //                 var list = document.getElementById('questionList')
+    //                 var arry = data.questionList
+    //                 var str = '';
+    //                 for(var i = 0; i < arry.length; i++){
+    //                     str += '<tr>'
+    //                     str += '<td>'+arry[i].id+'</td>'
+    //                     str += '<td>'+arry[i].content+'</td>'
+    //                     if (arry[i].questionType == 1){
+    //                         str += '<td>'+'单选题'+'</td>'
+    //                     }else if (arry[i].questionType == 2){
+    //                         str += '<td>'+'多选题'+'</td>'
+    //                     }
+    //                     str+='<td>'
+    //                     if (arry[i].difficult == 1){
+    //                         str += '<span class="label label-success">'+'简单'+'</span>'
+    //                     }else if (arry[i].difficult == 2){
+    //                         str += '<span class="label label-primary">'+'中等'+'</span>'
+    //                     }else if (arry[i].difficult == 3){
+    //                         str += '<span class="label label-danger">'+'困难'+'</span>'
+    //                     }
+    //                     str+='</td>'
+    //                     str += '<td>'+arry[i].solutioned+'</td>'
+    //                     str += '<td>'+arry[i].createUser+'</td>'
+    //                     str += '<td>'+arry[i].createTime+'</td>'
+    //                     str += '</tr>'
+    //                 }
+    //                 list.innerHTML = str
+    //
+    //             }else{
+    //                 $('#selectPool').modal("hide");
+    //                 alert("数据库出了点问题，请重试！")
+    //             }
+    //
+    //         }
+    //     })
+    // }
+
+
+    function toAdd(){
+        $('#addModal').modal("hide");
+
+        $.ajax({
+            type:"get",
+            url:"/admin/addPool",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success:function (data) {
+                 if (data.code == 200) {
+                    //删除所有克隆的节点
+                    var f = document.getElementById("selectQuestion")
+                    f.innerHTML = ""
+
+                    $("#addModal").modal("show");
+
+                    var list = document.getElementById('selectQuestion')
+                    var arry = data.qList
+                    var str = '';
+                    for(var i = 0; i < arry.length; i++){
+                        str += '<option value="arry[i].id">'+arry[i].id+'</option>';
+                    }
+                }
+            }
+        })
+    }
+
+
+    // 单个删除
+    function del(id) {
+        if (confirm("您确定要删除吗？")) {
+            $.ajax({
+                type: "post",
+                url: "/admin/poolList/delete",
+                data: JSON.stringify({
+                    typeId : id
+                }),
+                contentType: "application/json;charset=utf-8",
+                //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                dataType: "json",
+                success:function (data){
+                    if (data.code == 200){
+                        location.reload();
+                        alert("删除成功！")
+                    }else if (data.code == 500){
+                        location.reload();
+                        alert("分类删除成功，但该分类下未有所属题目!")
+                    }else if (data.code == 400){
+                        location.reload();
+                        alert("操作失败，请稍后重试！")
+                    }
+                }
+            });
+        } else {
+            return false;
+        }
+    }
+
+
+
+    // 修改密码
+    $("#pwd_btn").click(function() {
+        $("#pwd_btn").blur();
+        if (confirm("是否确定修改?")){
+            var submit = true;
+            var oldPwd = $("#oldPwd").val(); //原始密码
+            var newPwd = $("#newPwd").val(); //新密码1
+            var newPwd2 = $("#newPwd2").val(); //新密码2
+
+            if ((oldPwd && newPwd && newPwd2) == '') {
+                $("#tip").html("密码不能为空");
+                $("#tip").show();
+                submit = false;
+            }
+            if(submit){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/updatePwd",
+                    data: JSON.stringify({
+                        oldPwd : oldPwd,
+                        newPwd : newPwd,
+                        newPwd2 : newPwd2
+                    }),
+                    contentType: "application/json;charset=utf-8",
+                    //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                    dataType: "json",
+                    success:function (data){
+                        if(data.status == 200 ){
+                            $("#tip").hide();
+                            $("#pwd_form").submit();
+                            alert("修改成功，请重新登录!")
+                            window.location.href = "/admin/logout"
+                        }else if(data.status != 200){
+
+                            $("#tip").html(data.info);
+                            $("#tip").show();
+                        }
+                    }
+                });
+            }
+        }
+
+    });
+
+    jQuery(document).ready(function() {
+        EditableTable.init();
+    });
+    document.getElementById("question-pool").className="active";
+    document.getElementById("menu4").className="menu-list nav-active";
+</script>
+
+</body>
+
+
+</html>
+<script>
+    import Form_advanced_components from "./form_advanced_components.html";
+    export default {
+        components: {Form_advanced_components}
+    }
+</script>

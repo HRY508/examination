@@ -10,11 +10,14 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface QuestionVMMapper extends BaseMapper<QuestionVM> {
     //固定开头
-    String start = "select q.id,q.question_type  questionType,q.score,q.difficult,q.solutioned solutioned,q.create_user createUser,q.create_time,q.status,c.content from t_question q,t_content c where q.id = c.id ";
+    String start = "SELECT q.id,q.question_type  questionType,q.score,q.difficult,q.solutioned solutioned,q.create_user createUser,q.create_time,q.status,c.content,t.`q_type`,q.`question_pool`\n" +
+            "FROM t_question q,t_content c,t_type t WHERE q.id = c.id AND t.`q_pool`=q.`question_pool`  ";
     //固定结尾
     String end = "${ew.customSqlSegment}";
 
@@ -60,4 +63,14 @@ public interface QuestionVMMapper extends BaseMapper<QuestionVM> {
                                                     @Param("questionType")Integer questionType,
                                                     @Param("questionPool") Integer questionPool);
 
+    @Transactional(readOnly = true)
+    @Select(start+ " and  q.question_pool = #{questionPool} and c.content like concat('%',#{questionName},'%') ")
+    Page<QuestionVM> selectByQuestionPoolAndName(Page page,  @Param("questionName") String questionName, @Param("questionPool") Integer questionPool);
+
+    @Transactional(readOnly = true)
+    @Select(start+ " and  q.question_type = #{questionType} and c.content like concat('%',#{questionName},'%') ")
+    Page<QuestionVM> selectByQuestionTypeAndQuestionName(Page page, @Param("questionName") String questionName,  @Param("questionType")Integer questionType);
+
+    @Select(start+ " and  q.question_pool = #{questionPool}")
+    List<QuestionVM> selectByQPool(Integer pool);
 }

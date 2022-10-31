@@ -9,4 +9,5 @@ import com.examination.bean.Paper;
  * @Date: 2022/10/15 17:17
  */
 public interface PaperService extends IService<Paper> {
+
 }

@@ -2,7 +2,6 @@ package com.examination.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.*;
@@ -51,49 +50,61 @@ public class QuestionsController {
 
     //查询
     @RequestMapping("/admin/questionsList")
-    public String questionView(HttpServletRequest request, Model model,
+    public String questionView( Model model,
                                @RequestParam(required = false, defaultValue = "1", value = "pn") Integer pn,
-                               @RequestParam(required = false, defaultValue = "0", value = "name") String questionName,
-                               @RequestParam(required = false,defaultValue = "0",value = "type") Integer questionType,
-                               @RequestParam(required = false,defaultValue = "0",value = "qPool") Integer questionPool){
+                               @RequestParam(required = false, defaultValue = "", value = "name") String questionName,
+                               @RequestParam(required = false, defaultValue = "0",value = "qType") Integer questionType,
+                               @RequestParam(required = false, defaultValue = "0",value = "qPool") Integer questionPool){
+
         //默认显示第1页，显示5个数据
-        Page page = new Page(pn,5);
+        Page<QuestionVM> page = new Page<QuestionVM>(pn,5);
+
         Page<QuestionVM> result = null;
         //未选择题型，未输入题目关键字，未选择题目种类进行全部查询000
-        if((questionName.equals("null")||questionName.equals("0"))&&questionType.equals(0)&&questionPool.equals(0))
+        if(questionName.equals("")&&questionType==0&&questionPool==0)
         {
             System.out.println("未选择题型，未输入题目关键字，未选择题目种类进行全部查询");
             result = questionVMService.getQuestionList(page);
         }
 
         //进行了题目关键字搜索而没进行题型、题目种类检索
-        else if((!questionName.equals("0"))&&(questionType.equals(0))&&questionPool.equals("0"))
+        else if((!questionName.equals(""))&&(questionType == 0)&&questionPool == 0)
         {
             System.out.println("进行了题目关键字搜索而没进行题型检索");
             result = questionVMService.selectByQuestionName(page, questionName);
         }
 
         //进行了题型检索而没进行题目关键字检索
-        else if((!questionType.equals(0))&&(questionName.equals("null"))&&questionPool.equals(0))
+        else if((questionType != 0)&&(questionName.equals(""))&& questionPool == 0)
         {
             System.out.println("进行了题型检索而没进行题目关键字检索");
             result = questionVMService.selectByQuestionType(page, questionType);
         }
 
         //001
-        else if(questionName.equals("null")&&(questionType.equals(0))&&(!"".equals(questionPool))){
+        else if(questionName.equals("")&& questionType==0 && questionPool != 0){
             System.out.println("进行了题目种类检索，没进行题型检索、关键字检索");
             result = questionVMService.selectByQuestionPool(page,questionPool);
         }
 
+        else if (questionType == 0 && questionPool !=0 && !questionName.equals("")){
+            System.out.println("进行了题目种类检索和关键字检索，没进行题型检索");
+            result = questionVMService.selectByQuestionPoolAndName(page,questionPool,questionName);
+        }
+
         //011
-        else if((!questionType.equals(0))&&(!"".equals(questionPool))){
-            System.out.println("进行题型和题目种类检索");
+        else if(questionType != 0 && questionPool != 0 && questionName.equals("")){
+            System.out.println("进行题型和题目种类检索，没进行关键字检索");
             result = questionVMService.selectByQuestionTypeAndQuestionPool(page,questionType,questionPool);
         }
 
+        else if (!questionName.equals("") && questionPool == 0 && questionType != 0){
+            System.out.println("进行关键字和题目类型检索，没进行题目种类检索");
+            result = questionVMService.selectByQuestionTypeAndQuestionName(page,questionType,questionName);
+        }
+
         //111检索
-        else if((!questionType.equals(0))&&(!"".equals(questionPool))&&!questionType.equals(0))
+        else if(questionType != 0 && questionPool != 0 && !questionName.equals(""))
         {
             System.out.println("进行了全部检索");
             result = questionVMService.selectByAllConditionQuestionVM(page, questionName, questionType,questionPool);
@@ -108,28 +119,18 @@ public class QuestionsController {
             records.get(i).setContent(StrOperateUtil.removeTag(questionObject.getTitleContent()));
         }
         //查询所有的题型
-        QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
-        typeQueryWrapper.select("q_type","q_pool");
-        List<Type> list = typeService.list(typeQueryWrapper);
+        List<Type> list = typeService.list();
         //设置model、返回视图
         model.addAttribute("typeList",list);
         model.addAttribute("questionList",records);
-        request.setAttribute("jumpUrl","/admin/questionsList?pn=");
-        request.setAttribute("typeUrl","/admin/questionsList?type=");
-        request.setAttribute("nameUrl","/admin/questionsList?name=");
-        request.setAttribute("qType","&type=");
-        request.setAttribute("qTypeValue",questionType);
-        request.setAttribute("qName","&name=");
-        request.setAttribute("qPool","&qPool=");
-        request.setAttribute("qPoolValue",questionPool);
-        if(questionName.equals("null")||questionName.equals("0"))
-        {
-            request.setAttribute("qNameValue",null);
-        }
-        else {
-            request.setAttribute("qNameValue",questionName);
-        }
-        request.setAttribute("page",result);
+        model.addAttribute("jumpUrl","/admin/questionsList?pn=");
+        model.addAttribute("qType","&qType=");
+        model.addAttribute("qTypeValue",questionType);
+        model.addAttribute("qName","&name=");
+        model.addAttribute("qPool","&qPool=");
+        model.addAttribute("qPoolValue",questionPool);
+        model.addAttribute("qNameValue",questionName);
+        model.addAttribute("page",result);
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/questions_list";
@@ -279,6 +280,5 @@ public class QuestionsController {
             return "redirect:/admin/questionsList";
         }
     }
-
 
 }

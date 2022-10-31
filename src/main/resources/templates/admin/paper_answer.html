@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="ThemeBucket">
     <link rel="shortcut icon" type="image/png">
-    <title>用户列表</title>
+    <title>答题列表</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
@@ -37,13 +37,13 @@
     <!--当前位置介绍开始-->
     <div class="page-heading">
         <h3>
-            答题情况
+            答题列表
         </h3>
         <ul class="breadcrumb">
             <li>
                 <a href="#">答题管理</a>
             </li>
-            <li class="active"> 答题情况 </li>
+            <li class="active"> 答题列表 </li>
         </ul>
     </div>
     <!-- 当前位置介绍结束-->
@@ -135,7 +135,7 @@
                                     <a th:href="@{${jumpUrl}+${qid}+${paperId}+${username}+${searchName}}" th:text="首页" th:if="${page.current>1}" th:class="page-item"></a>
                                     <a th:href="@{${jumpUrl}+${page.current-1}+${qid}+${paperId}+${username}+${searchName}}" th:text="上一页" th:class="page-item"
                                        th:if="${page.current>1}"></a>
-                                    <a th:href="@{${jumpUrl}+${i}+${qid}+${paperId}}"
+                                    <a th:href="@{${jumpUrl}+${i}+${qid}+${paperId}+${username}+${searchName}}"
                                        th:each="i :${#numbers.sequence(1, page.pages)}" th:text="${i}"
                                        th:class="${page.current == i}? 'page-item active' :'page-item' "></a>
                                     <a th:href="@{${jumpUrl}+${page.current+1}+${qid}+${paperId}+${username}+${searchName}}" th:text="下一页" th:class="page-item"

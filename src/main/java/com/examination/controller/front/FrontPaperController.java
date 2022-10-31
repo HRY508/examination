@@ -35,7 +35,7 @@ public class FrontPaperController{
             return "error/4xx";
         }
         Page page=new Page(pn,15);
-        Page<Paper> paperPage = paperService.page(page);
+        Page<Paper> paperPage = paperService.page(page );
         List<Paper> papers = paperPage.getRecords();
         request.setAttribute("paperList",papers);
         request.setAttribute("page",paperPage);
