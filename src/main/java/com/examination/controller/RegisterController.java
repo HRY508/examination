@@ -48,7 +48,7 @@ public class RegisterController {
         user.setProfession(profession);
         user.setSex(sex);
         user.setUserName(userName);
-        user.setSex(1);//新注册的用户启用状态
+        user.setUStatus(1);//新注册的用户启用状态
         if (userService.getOne(wrapper)!=null){
             model.addAttribute("regMsg","该用户名已存在");
             model.addAttribute("reg",user);
