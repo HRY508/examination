@@ -251,23 +251,41 @@ public class PaperController {
         QueryWrapper<Paper> queryWrapper = new QueryWrapper();
         queryWrapper.select("p_id").eq("p_name",paperName);
         List<Paper> paperList = paperService.list(queryWrapper);
+        map.put("paperName", paperName);
         //已经创建过，直接返回信息到前端
         if(paperList.size()>=1){
             map.put("code", 500);
             map.put("hasPaper",true);
-            map.put("paperName",paperName);
             return map;
         }
         else {
             map.put("hasPaper",false);
         }
-        //保存试卷信息
-        boolean savePaper = paperService.save(paper);
-        Integer pId = paperService.list(queryWrapper).get(0).getPId();
         //查询所有的单选题，在单选题中抽取指定数目的题：
         QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
         questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType).eq("status",1).ne("question_pool",0);
         List<Question> list1 = questionService.list(questionQueryWrapperWrapper);
+        //单选校验---用户输入是否能够创建试卷
+        if(list1.size() < singleSelectNumber){
+            map.put("code", 500);
+            map.put("hasError","题库中单选题数量不足无法创建");
+            return map;
+        }
+        //多选校验
+        //查询所有的多选题
+        QueryWrapper<Question> moreWrapperWrapper = new QueryWrapper();
+        moreWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType).eq("status",1).ne("question_pool",0);
+        List<Question> list2 = questionService.list(moreWrapperWrapper);
+        //单选校验---用户输入是否能够创建试卷
+        if(list2.size() < moreSelectNumber){
+            map.put("code", 500);
+            map.put("hasError","题库中多选题数量不足无法创建");
+            return map;
+        }
+        //校验通过
+        //保存试卷信息
+        boolean savePaper = paperService.save(paper);
+        Integer pId = paperService.list(queryWrapper).get(0).getPId();
         //数组用来存放抽取的题目id，RandomUtil.random回从指定数组抽取指定个数的随机题目，且不重复
         Integer array[] = new Integer[list1.size()];
         for(int i = 0; i < array.length; i++){
@@ -283,15 +301,11 @@ public class PaperController {
             paperDetails.setPId(pId);
             list.add(paperDetails);
         }
-        //查询所有的多选题，在多选题中抽取指定题：
-        QueryWrapper<Question> moreWrapperWrapper = new QueryWrapper();
-        moreWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType).eq("status",1).ne("question_pool",0);
-        List<Question> list2 = questionService.list(moreWrapperWrapper);
         Integer array2[] = new Integer[list2.size()];
         for(int i = 0; i < array2.length; i++){
             array2[i] = list2.get(i).getId();
         }
-
+        //设置多选题
         ArrayList<Integer> randomList2 = RandomUtil.random(moreSelectNumber, array2);
         for(int i = 0; i < moreSelectNumber; i++){
             PaperDetails paperDetails = new PaperDetails();
@@ -304,11 +318,9 @@ public class PaperController {
         boolean savePaperDetails = paperDetailsService.saveBatch(list);
         if(savePaper&&savePaperDetails){
             map.put("code",200);
-            map.put("paperName",paperName);
             return map;
         }else {
             map.put("code", 500);
-            map.put("paperName", paperName);
             map.put("hasError","保存试卷出错!");
             return map;
         }

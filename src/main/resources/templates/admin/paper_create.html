@@ -244,14 +244,14 @@
                                         <div class="form-group ">
                                             <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="paperName1" id="paperName1">
+                                                <input type="text" class="form-control" name="paperName1" id="paperName1" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-1"> 开始时间</label>
                                             <div class="col-md-4">
                                                 <div class="input-group date form_datetime-component">
-                                                    <input type="text" class="form-control" readonly="" size="16" name="startTime1" id="startTime1">
+                                                    <input type="text" class="form-control" readonly="" size="16" name="startTime1" id="startTime1" required>
                                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
                                                     </span>
@@ -262,7 +262,7 @@
                                             <label class="control-label col-md-1">结束时间</label>
                                             <div class="col-md-4">
                                                 <div class="input-group date form_datetime-component">
-                                                    <input type="text" class="form-control" readonly="" size="16" name="endTime1" id="endTime1">
+                                                    <input type="text" class="form-control" readonly="" size="16" name="endTime1" id="endTime1" required>
                                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
                                                     </span>
@@ -765,11 +765,6 @@
             else if(parseInt(moreSelectNumber) < 1){
                 $('#modelColor').attr('style','background : #bb1f1f')
                 $('#paperCreateTips').text('多选题数小于1，无法创建！')
-                $('#tip2').click()
-            }
-            else {
-                $('#modelColor').attr('style','background : #bb1f1f')
-                $('#paperCreateTips').text('题数过少，无法创建！')
                 $('#tip2').click()
             }
         }
