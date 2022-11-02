@@ -7,29 +7,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class LogReaderUtil {
-    public static void readLogs() throws FileNotFoundException {
-
-
-        FileReader frd = null;
-        try {
-            //创建文件字符输入流对象
-            frd = new FileReader("logs/project_error.log");
-            int temp = 0;
-            while ((temp = frd.read()) != -1) {
-                System.out.print((char) temp);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (frd != null) {
-                    frd.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public static String download(HttpServletResponse response, String url) {
         //得到要下载的文件
@@ -38,7 +15,6 @@ public class LogReaderUtil {
         if (!file.exists()) {
             //如果文件不存在，进行处理
             int i = 1 / 0;//系统会报错，除数不能为0.
-            // return "modules/cms/front/themes/"+site.getTheme()+"/frontError";
         }
         InputStream inputStream = null;
         OutputStream outputStream = null;
@@ -81,15 +57,6 @@ public class LogReaderUtil {
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
 
     public static ArrayList<String> readFileNames() throws FileNotFoundException {
         ArrayList<String> list = new ArrayList<>();

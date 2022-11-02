@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="ThemeBucket">
-  <link rel="shortcut icon"  type="image/png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" type="image/png">
 
-  <title>单选题创编</title>
+    <title>多选题创编</title>
 
-  <link rel="stylesheet" type="text/css" href="/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
-  <link href="/css/style.css" rel="stylesheet">
-  <link href="/css/style-responsive.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
 
 
     <!--icheck-->
@@ -37,11 +37,11 @@
     <link th:href="@{/js/iCheck/skins/flat/purple.css}" rel="stylesheet">
 
 
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-  <script src="/js/html5shiv.js"></script>
-  <script src="/js/respond.min.js"></script>
-  <![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 <body class="sticky-header">
@@ -62,13 +62,13 @@
         <!--当前位置介绍开始-->
         <div class="page-heading">
             <h3>
-                单选题创编
+               多选题创编
             </h3>
             <ul class="breadcrumb">
                 <li>
                     <a href="#">题库管理</a>
                 </li>
-                <li class="active"> 单选题创建 </li>
+                <li class="active">多选题创建 </li>
             </ul>
         </div>
         <!-- 当前位置介绍结束-->
@@ -80,7 +80,7 @@
                     <header class="header">
                         <div class="btn-toolbar">
                             <h4 class="pull-left">
-                                单选题创建中......
+                                多选题创建中......
                             </h4>
                         </div>
 
@@ -88,7 +88,25 @@
 
                     <section class="mail-list">
                         <div class="compose-mail">
-                            <form role="form-horizontal" th:action="@{/admin/singleSelect}" method="post">
+                            <form role="form-horizontal" th:action="@{/admin/moreSelect}" method="post">
+
+
+                                    <!--                                    <div class="compose-options">-->
+                                    <!--                                        <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>-->
+                                    <!--                                        <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>-->
+                                    <!--                                    </div>-->
+
+
+                                <!--                                <div class="form-group hidden">-->
+                                <!--                                    <label for="cc" class="0">Cc:</label>-->
+                                <!--                                    <input type="text" tabindex="2" id="cc" class="form-control">-->
+                                <!--                                </div>-->
+
+                                <!--                                <div class="form-group hidden">-->
+                                <!--                                    <label for="bcc" class="">Bcc:</label>-->
+                                <!--                                    <input type="text" tabindex="2" id="bcc" class="form-control">-->
+                                <!--                                </div>-->
+
 
                                 <!--onclick函数，当管理员点击题干表单时题干表单设置不可见，显示富文本编辑器，-->
                                 <div class="form-group">
@@ -104,7 +122,7 @@
                                 &nbsp;
                                 <!--富文本编辑器开始，包括按钮-->
                                 <div class="compose-editor hidden">
-                                    <textarea id="textarea" class="wysihtml5 form-control" rows="5" ></textarea>
+                                    <textarea id="textarea" class="wysihtml5 form-control" rows="5" th:text="请在此输入题干"></textarea>
                                 </div>
                                 <div class="compose-btn hidden" id="textarea-button">
                                     <button type="button" class="btn btn-primary btn-sm"
@@ -117,25 +135,25 @@
                                 </div>
                                 <!--富文本编辑器结束-->
                                 <div id="p">
-                                <div class="form-group">
-                                    <label for="subject" class="a">A</label>
-                                    <input type="text" tabindex="1" id="A" class="form-control" name="A" required>
-                                </div>
+                                    <div class="form-group">
+                                        <label for="subject" class="a">A</label>
+                                        <input type="text" tabindex="1" id="A" class="form-control" name="A" required>
+                                    </div>
 
-                                <div class="form-group" id="cloneForm">
-                                    <label for="subject" class="a">B</label>
-                                    <input type="text" tabindex="1" id="B" class="form-control" name="B" required>
-                                </div>
+                                    <div class="form-group">
+                                        <label for="subject" class="a">B</label>
+                                        <input type="text" tabindex="1" id="B" class="form-control" name="B" required>
+                                    </div>
 
-                                <div class="form-group" >
-                                    <label for="subject" class="a" >C</label>
-                                    <input type="text" tabindex="1" id="C" class="form-control" name="C" required>
-                                </div>
+                                    <div class="form-group" id="cloneForm">
+                                        <label for="subject" class="a" >C</label>
+                                        <input type="text" tabindex="1" id="C" class="form-control" name="C" required>
+                                    </div>
 
-                                <div class="form-group" >
-                                    <label for="subject" class="a" >D</label>
-                                    <input type="text" tabindex="1" id="D"  class="form-control" name="D" required>
-                                </div>
+                                    <div class="form-group" >
+                                        <label for="subject" class="a" >D</label>
+                                        <input type="text" tabindex="1" id="D"  class="form-control" name="D" required>
+                                    </div>
 
                                 </div>
 
@@ -145,85 +163,85 @@
 
                                     <div class="col-sm-9 icheck ">
 
-                                        <div class="flat-grey " id="choice_A">
-                                            <div class="radio " >
-                                                <input tabindex="3" type="radio"  name="correct" id="r_A" value="A">
+                                        <div class="flat-grey ">
+                                            <div class="checkbox " >
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_A" value="A" required>
                                                 A
                                             </div>
                                         </div>
-                                        <div class="flat-red " id="choice_B">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio" name="correct" id="r_B" value="B">
+                                        <div class="flat-red ">
+                                            <div class="checkbox ">
+                                                <input tabindex="3" type="checkbox" name="correct" id="r_B" value="B" required>
                                                 B
                                             </div>
                                         </div>
 
-                                        <div class="flat-green " id="choice_C">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio" name="correct" id="r_C" value="C">
+                                        <div class="flat-green ">
+                                            <div class="checkbox ">
+                                                <input tabindex="3" type="checkbox" name="correct" id="r_C" value="C" required>
                                                 C
                                             </div>
                                         </div>
 
                                         <div class="flat-blue " id="choice_D">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="correct" id="r_D" value="D">
+                                            <div class="checkbox ">
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_D" value="D" required>
                                                 D
                                             </div>
                                         </div>
 
                                         <div class="flat-yellow hidden" id="choice_E">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="correct" id="r_E" value="E">
+                                            <div class="checkbox ">
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_E" value="E" required>
                                                 E
                                             </div>
                                         </div>
 
                                         <div class="flat-purple hidden" id="choice_F">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="correct" id="r_F" value="F">
-                                               F
+                                            <div class="checkbox ">
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_F" value="F" required>
+                                                F
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_G">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="correct" id="r_G" value="G">
+                                            <div class="checkbox">
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_G" value="G" required>
                                                 G
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_H">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="correct" id="r_H" value="H">
+                                            <div class="checkbox ">
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_H" value="H" required>
                                                 H
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_I">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="correct" id="r_I" value="I">
+                                            <div class="checkbox ">
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_I" value="I" required>
                                                 I
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_J">
-                                            <div class="radio ">
-                                                <input tabindex="3" type="radio"  name="correct" id="r_J" value="J">
+                                            <div class="checkbox ">
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_J" value="J" required>
                                                 J
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-<!--                                <div class="form-group">-->
-<!--                                    <label for="bcc" class="">答案</label>-->
-<!--                                    <input type="text" tabindex="2" id="Key" class="form-control">-->
-<!--                                </div>-->
+                                <!--                                <div class="form-group">-->
+                                <!--                                    <label for="bcc" class="">答案</label>-->
+                                <!--                                    <input type="text" tabindex="2" id="Key" class="form-control">-->
+                                <!--                                </div>-->
 
                                 <div class="form-group">
                                     <label  class="">解析</label>
                                     <input type="text" name="analysis" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
-                                <!--题型开始-->
+                                <!--                                题型开始-->
                                 <div class="form-group" id="">
-                                    <label  class="">分类</label>
+                                    <label  class="">题库</label>
                                     <div class="btn-group">
                                         <select class="form-control" id="typenums">
                                             <option th:each="type :${typeList}"  id="typeList" th:value="${type.getQPool()}" th:text="${type.getQType()}" ></option>
@@ -231,8 +249,9 @@
                                     </div>
                                 </div>
                                 <input type="hidden" id="questionPoolValue" name="questionPoolValue" />
-                                <!--题型结束-->
-                                <!--分数开始-->
+                                <!--                                题型结束-->
+                                &nbsp;
+                                <!--                                分数开始-->
                                 <div class="form-group">
                                     <label  class="">分数</label>
                                     <div id="spinner4">
@@ -251,9 +270,11 @@
                                         </div>
                                     </div>
                                 </div>
-<!--                                分数结束-->
-
-<!--                                难度选择开始-->
+                                <!--                                分数结束-->
+                                <!--题型开始-->
+                                <input name="questionType" style="display: none" value="2">
+                                <!--题型结束-->
+                                <!--                                难度选择开始-->
                                 <div class="form-group">
                                     <label  class="">难度</label>
                                     <div class="btn-group btn-group-justified" style="width: 90%">
@@ -265,21 +286,17 @@
                                     </div>
                                 </div>
                                 &nbsp;
-<!--                                难度选择结束-->
-                                <!--题型开始-->
-                                <input name="questionType" style="display: none" value="2">
-                                <!--题型结束-->
-
-<!--                                充当换行-->
+                                <!--                                难度选择结束-->
+                                <!--                                充当换行-->
                                 <div class="form-group " style="display: none"></div>
 
                                 <div class="compose-btn1">
                                     <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-check"></i> 完成</button>
                                     <button type="button" onclick="reSetQuestion()" class="btn btn-sm btn-warning"><i class="fa fa-rotate-right"></i> 重置</button>
                                     <button type="button" class="btn btn-sm btn-success"
-                                    onclick="addForm()"><i class="fa fa-plus"></i>添加选项</button>
+                                            onclick="addForm()"><i class="fa fa-plus"></i>添加选项</button>
                                     <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="reduceForm()"><i class="fa fa-minus"></i>减少选项</button>
+                                            onclick="reduceForm()"><i class="fa fa-minus"></i>减少选项</button>
                                 </div>
 
                             </form>
@@ -321,7 +338,7 @@
                                                 <h4 class="modal-title">提示</h4>
                                             </div>
                                             <div class="modal-body">
-                                                最少三个选项
+                                                最少四个选项
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -375,7 +392,7 @@
 <script src="/js/scripts.js"></script>
 
 <script>
-    document.getElementById("single-choice").className="active";
+    document.getElementById("more-choice").className="active";
     document.getElementById("menu4").className="menu-list nav-active";
     //点击取消触发
     function quit(){
@@ -383,7 +400,6 @@
         $('#textarea-button').addClass('hidden');//设置按钮不可见，设置题干可见
         $('#subject2').parent().removeClass('hidden')
     }
-
 
     $("#typenums").change(function(){
         state = $('#typenums option:selected').val();
@@ -393,9 +409,9 @@
 
     // 增加form表单、选项
     function addForm() {
-        var arr1 = ['C','D','E', 'F', 'G', 'H','I','J'];
+        var arr1 = ['D','E', 'F', 'G', 'H','I','J'];
         //通过类获取选项的个数
-         var num = document.getElementsByClassName('a').length
+        var num = document.getElementsByClassName('a').length
         //设置选项数目最多不能大于10个选项
         if(num<10){
             // alert(document.getElementsByClassName('a').length)
@@ -404,16 +420,16 @@
             //他的属性全部会被克隆
             var clone = document.getElementById('cloneForm').cloneNode(true)
             //设置选项name属性，label标签的文本内容通过动态获取jquery的id设置的
-            clone.childNodes[1].innerHTML = arr1[num-2]
-            clone.childNodes[3].id=arr1[num-2]
+            clone.childNodes[1].innerHTML = arr1[num-3]
+            clone.childNodes[3].id=arr1[num-3]
             // alert(clone.childNodes[1].innerHTML)
             //获取父节点，用来将子节点追加到其后
             var p = document.getElementById('p')
             p.appendChild(clone)
             //最后在修改name属性value属性（放在前面不生效，巨坑）
-            $("#"+arr1[num-2]+"").attr('name',arr1[num-2]).attr('value',null)
+            $("#"+arr1[num-3]+"").attr('name',arr1[num-3]).attr('value',null)
             //将该表单对应的选项设置为可见
-            $("#choice_"+arr1[num-2]+"").removeClass('hidden')
+            $("#choice_"+arr1[num-3]+"").removeClass('hidden')
         }
         //大于十个选项设置提示
         else{
@@ -424,16 +440,16 @@
     //减少Form表单、选项
     function reduceForm(){
         $('#tip1').addClass('hidden')
-        var arr1 = ['C','D','E', 'F', 'G', 'H','I','J'];
+        var arr1 = ['E', 'F', 'G', 'H','I','J'];
         var num = document.getElementsByClassName('a').length
-        if(num<3){
+        if(num<5){
             //弹出提示框
             document.getElementById("tip2").click()
         }
         else{//js写的，获取该节点，用js获取的用jquery也能获取，见上文
-           var d =  document.getElementsByName(arr1[num-3])[0]
+            var d =  document.getElementsByName(arr1[num-5])[0]
             //将该节点对应的选项设置为不可见
-            $("#choice_"+arr1[num-3]+"").addClass('hidden')
+            $("#choice_"+arr1[num-5]+"").addClass('hidden')
             //移除该节点
             var dp=d.parentNode
             dp.remove()
@@ -462,6 +478,7 @@
         $(this).attr("name",3)
         $('#b4').css("width","48%").removeClass('hidden')
     }
+
     function cd4() {
         $('#nd').val(3)
         $('#b1').removeClass('hidden')
@@ -469,12 +486,12 @@
         $('#b3').removeClass('hidden')
         $('#b4').addClass('hidden')
     }
+
     function reSetQuestion() {
         //增加子节点
         $('#qpV').text('题目类型')
         var span1 = $("<span class="+"caret"+"></span>");
         $('#qpV').append(span1)
-
 
         //移除选定状态
         var arrR =['A','B','C','D','E','F','G','H','I','J']
@@ -485,7 +502,8 @@
 
         }
         //将默认文本框的值设置为空
-
+        $('#to').attr('value',null)
+        $('#subject').attr('value',null)
         $('#subject2').attr('value',null)
         $('#Answer').attr('value',null)
         $('#A').attr('value',null)
@@ -511,6 +529,7 @@
             }
         }
     }
+
 
     // 修改密码
     $("#pwd_btn").click(function() {
@@ -557,7 +576,7 @@
     });
 
     jQuery(document).ready(function(){
-         $('.wysihtml5').wysihtml5();
+        $('.wysihtml5').wysihtml5();
     });
 
 </script>

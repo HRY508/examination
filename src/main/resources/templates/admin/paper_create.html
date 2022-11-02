@@ -292,9 +292,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                    <label  class=" control-label col-md-2">分类</label>
+                                                    <label  class=" control-label col-md-2">题库</label>
                                                     <div class="btn-group col-md-3">
-                                                        <button id="questionTypeButton1" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                                        <button id="questionTypeButton1" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">请选择题库 <span class="caret"></span></button>
                                                         <ul role="menu" class="dropdown-menu" style="text-align: left">
                                                             <li  th:each="type :${typeList}" >
                                                                 <a th:value="${type.getQPool()}" th:text="${type.getQType()}"
@@ -314,7 +314,6 @@
                                                 <button type="button" class="btn btn-sm btn-danger" onclick="reduceLine()"><i class="fa fa-minus"></i>减少选项</button>
                                             </div>
                                         </div>
-
                                     </fieldset>
                                     <fieldset title="Step 3" onclick="paperInfo()">
                                         <legend>多选题选择</legend>
@@ -394,6 +393,9 @@
                                     </fieldset>
                                     <button onclick="diySubmit()" type="button" class="finish btn btn-info btn-extend"> 完成!</button>
                                 </form>
+                                <div class="col-md-12" style="float:right">
+                                    <a target="_blank" href="#">Tips：选定题目数量后需指定所属题库，否则按未命名题库处理！</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -620,6 +622,10 @@
         for(var i =0;i<singleInputNumber.length;i++){
             var singNum = $("#singId"+parseInt(i+1)+"").val()
             var singPool = $("#singPool"+parseInt(i+1)+"").val()
+            //用户未选择的pool将pool设置为空
+            if(singPool == ''){
+                singPool = parseInt(0)
+            }
             if(singNum!=0&&singPool!=0){
                 singleNumArray[i] = $("#singId"+parseInt(i+1)+"").val()
                 singlePoolArray[i] = $("#singPool"+parseInt(i+1)+"").val()
@@ -633,6 +639,10 @@
         {
             var moreNum = $("#moreId"+parseInt(i+1)+"").val()
             var morePool = $("#morePool"+parseInt(i+1)+"").val()
+            //用户未选择的pool将pool设置为空
+            if(morePool == ''){
+                morePool = parseInt(0)
+            }
             if(moreNum!=0&&morePool!=0){
                 moreNumArray[i] = $("#moreId"+parseInt(i+1)+"").val()
                 morePoolArray[i] = $("#morePool"+parseInt(i+1)+"").val()
@@ -898,14 +908,23 @@
 
     //随机创建2的初始化
     $(document).ready( function() {
+        //初始化时候先获取pool的个数并将其隐藏
         var arr = document.getElementsByClassName('form-group s')
         for (var i =0; i < arr.length; i++){
             arr[i].setAttribute('class','hidden form-group s')
         }
-        for (var i =0; i < 3; i++){
-            arr[i].setAttribute('class','form-group s')
+        //pool数量>3 将前三个显示出来剩余的根据用户自己选择是否隐藏
+        if(arr.length >=3){
+            for (var i =0; i < 3; i++){
+                arr[i].setAttribute('class','form-group s')
+            }
         }
-
+        //pool数量<3将pool全部显示出来
+        if(arr.length < 3){
+            for (var i =0; i < arr.length; i++){
+                arr[i].setAttribute('class','form-group s')
+            }
+        }
         var arr2 = document.getElementsByClassName('form-group m')
         for (var i =0; i < arr2.length; i++){
             arr2[i].setAttribute('class','hidden form-group m')

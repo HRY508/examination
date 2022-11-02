@@ -212,7 +212,7 @@ public class PaperController {
     public String createPaper(Model model){
         //查询所有的题型
         QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
-        typeQueryWrapper.select(" DISTINCT q_pool").ne("q_pool",0);
+        typeQueryWrapper.select(" DISTINCT q_pool","q_type").ne("q_pool",0);
         List<Type> list = typeService.list(typeQueryWrapper);
         //设置model、返回视图
         model.addAttribute("typeList",list);
@@ -350,6 +350,7 @@ public class PaperController {
         paper.setUpdateTime(updateTime);
         //储存返回给前端的数据
         Map map = new HashMap();
+        //查询试卷是否存在,存在直接创建失败返回到前端，不能直接保存因为还没有对用户输入的题目数量进行校验
         //查询试卷，判断试卷是否已经存在，通过试卷名查询，试卷名需要保持唯一
         QueryWrapper<Paper> queryWrapper = new QueryWrapper();
         queryWrapper.select("p_id").eq("p_name",paperName);
@@ -364,14 +365,55 @@ public class PaperController {
         else {
             map.put("hasPaper",false);
         }
-        //试卷不存在保存试卷信息
+        //单选校验(查出题库所有满足条件的题目数量跟用户输入作比较，如果用户输入题目数量大于实际数量，就返回创建失败信息)
+        for(int i =0;i<singlePoolArray.size();i++){
+            QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
+            questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType)
+                    .eq("question_pool",Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))).eq("status",1).ne("question_pool",0);
+            //查出满足某种题型、某种类型的题，并将该题的id存放在array中
+            List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
+            Integer array[] = new Integer[questionList.size()];
+            for(int j = 0; j < array.length; j++){
+                array[j] = questionList.get(j).getId();
+            }
+            //需要某个题库中的单选的数量
+            Integer number = Integer.parseInt((String) singleNumArray.get(String.valueOf(i)));
+            //可能存在需求量>题库中单选题目数量，返回创建失败给前端
+            if(number>questionList.size()){
+                map.put("code", 500);
+                map.put("hasError","题库"+Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))+"余量不足，创建失败");
+                return map;
+            }
+        }
+        //多选校验
+        for(int i =0;i<morePoolArray.size();i++){
+            QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
+            questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType)
+                    .eq("question_pool",Integer.parseInt((String) morePoolArray.get(String.valueOf(i)))).eq("status",1).ne("question_pool",0);
+            //查出满足某种题型、某种类型的题，并将该题的id存放在array中
+            List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
+            Integer array[] = new Integer[questionList.size()];
+            for(int j = 0; j < array.length; j++){
+                array[j] = questionList.get(j).getId();
+            }
+            //限定这种题型的数量
+            Integer number = Integer.parseInt((String) moreNumArray.get(String.valueOf(i)));
+            //可能存在需求量>题库中单选题目数量，返回创建失败数据
+            if(number>questionList.size()){
+                map.put("code", 500);
+                map.put("hasError","题库"+Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))+"余量不足，创建失败");
+                return map;
+            }
+        }
+        //运行到这里说明单选多选都通过校验了，可以保存试卷信息
         boolean savePaper = paperService.save(paper);
+        //获取试卷id
         Integer pId = paperService.list(queryWrapper).get(0).getPId();
         //试卷详情list，所有筛选的题目信息存入
         List<PaperDetails> paperDetailsList = new ArrayList<>();
         //单选：查出所有符合条件的单选题
         for(int i =0;i<singlePoolArray.size();i++){
-            //先查出所有符合pool条件的--->再由random查出指定数目的-->添加道总和的paperDetailsList中
+            //先查出所有符合pool条件的--->再由random查出指定数目的-->添加到总和的paperDetailsList中
             // 查询条件：question_pool
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType)
@@ -382,7 +424,7 @@ public class PaperController {
             for(int j = 0; j < array.length; j++){
                 array[j] = questionList.get(j).getId();
             }
-            //限定这种题型的数量
+            //需要某个题库中的单选的数量
             Integer number = Integer.parseInt((String) singleNumArray.get(String.valueOf(i)));
             ArrayList<Integer> randomList = RandomUtil.random(number, array);
             for(int m = 0; m < number; m++){
@@ -390,7 +432,7 @@ public class PaperController {
                 paperDetails.setNum(paperDetailsList.size()+1);
                 paperDetails.setQId(randomList.get(m));
                 paperDetails.setPId(pId);
-                //添加道到和list中
+                //添加道总和list中
                 paperDetailsList.add(paperDetails);
             }
         }
@@ -408,6 +450,12 @@ public class PaperController {
             }
             //限定这种题型的数量
             Integer number = Integer.parseInt((String) moreNumArray.get(String.valueOf(i)));
+            //可能存在需求量>题库中单选题目数量，返回创建失败数据
+            if(number>questionList.size()){
+                map.put("code", 500);
+                map.put("hasError","题库"+Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))+"余量不足，创建失败");
+                return map;
+            }
             ArrayList<Integer> randomList = RandomUtil.random(number, array);
             for(int m = 0; m < number; m++){
                 PaperDetails paperDetails = new PaperDetails();
@@ -427,11 +475,9 @@ public class PaperController {
         }else {
             map.put("code", 500);
             map.put("paperName", paperName);
-            map.put("hasError","保存试卷出错!");
+            map.put("hasError","保存试卷出错,请联系查看日志或联系管理员!");
             return map;
         }
-
-
     }
 
     //自定义创建试卷(显示题库试题)

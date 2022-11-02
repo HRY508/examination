@@ -44,7 +44,7 @@ public class SingleSelectController {
         model.addAttribute("typeList",typeList);
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
-        return "admin/editors";
+        return "admin/single_create";
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -54,6 +54,6 @@ public class SingleSelectController {
         questionService.insertSelectQuestion(request,GlobalUserUtil.getUser().getUserName(),questionType);
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
-        return "admin/editors";
+        return "admin/single_create";
     }
 }

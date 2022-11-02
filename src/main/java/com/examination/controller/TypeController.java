@@ -125,10 +125,10 @@ public class TypeController {
         Type type = new Type();
         type.setQPool(questionPool);
         type.setQType(qType);
-
+        boolean save = typeService.save(type);
         Map<String,Object> map = new HashMap<>();
         map.put("code",StaticVariableUtil.FAILCODE);
-        if (typeService.save(type)){
+        if (save){
             map.put("code",StaticVariableUtil.SUCCESSCODE);
         }
         return map;

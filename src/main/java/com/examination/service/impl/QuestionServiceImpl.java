@@ -58,7 +58,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
         boolean save = questionService.save(question);
         Integer id = question.getId();
-
         //动态获取题的详细信息插入到表t_content中
         String param[] = {"A","B","C","D","E","F","G","H","I","J"};
         QuestionObject questionObject = new QuestionObject();

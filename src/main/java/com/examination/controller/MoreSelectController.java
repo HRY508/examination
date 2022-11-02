@@ -37,7 +37,7 @@ public class MoreSelectController {
 
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
-        return "admin/calendar";
+        return "admin/more_create";
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -48,6 +48,6 @@ public class MoreSelectController {
         log.info("===================="+request.getParameter("difficult"));
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
-        return "admin/calendar";
+        return "admin/more_create";
     }
 }
