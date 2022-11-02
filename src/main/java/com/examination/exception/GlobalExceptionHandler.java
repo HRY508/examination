@@ -34,7 +34,6 @@ public class GlobalExceptionHandler {
             //根据当前处理的异常，自定义的错误数据
             map.put("code", 500);
             map.put("message", GlobalExceptionHandler.getExceptionDetail(e));
-
             //将详细的错误信息写入日志
             logger.error("用户:"+ GlobalUserUtil.getUser().getUserName()+"操作时发生了异常："+e);
             logger.error("用户信息："+ GlobalUserUtil.getUser());

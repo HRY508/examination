@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" type="image/png">
+    <title>用户列表</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/minimal/minimal.css}" rel="stylesheet">
+    <link th:href="@{/js/iCheck/skins/square/square.css}" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/red.css" rel="stylesheet">
+    <link href="/js/iCheck/skins/square/blue.css" rel="stylesheet">
+    <!--dashboard calendar-->
+    <link href="/css/clndr.css" rel="stylesheet">
+    <!--common-->
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+</head>
+
+<body class="sticky-header">
+
+<!--左侧开始-->
+<div th:replace="~{admin/commons/common :: commonleft}"></div>
+<!--左侧结束-->
+
+<!--主页面开始-->
+<div class="main-content" >
+    <!--头部开始-->
+    <div th:replace="~{admin/commons/common :: commonheader}"></div>
+    <!--头部结束-->
+
+
+    <!--当前位置介绍开始-->
+    <div class="page-heading">
+        <h3>
+            日志管理
+        </h3>
+        <ul class="breadcrumb">
+            <li class="active"> 日志列表 </li>
+        </ul>
+    </div>
+    <!-- 当前位置介绍结束-->
+
+
+    <!--body wrapper start-->
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        日志记录:
+                    </header>
+                    <div class="panel-body">
+                        <div th:each="path : ${pathNames}">
+                            <a th:text="${path}" th:href="${path}">
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <!--body wrapper end-->
+
+    <!--footer section start-->
+    <footer>
+        2022 &copy;<a href="https://www.pdsu.edu.cn/" target="_blank">平顶山学院软件应用双创实验室提供技术支持</a>
+    </footer>
+    <!--footer section end-->
+
+
+</div>
+<!--主页面结束-->
+
+<div th:replace="~{admin/commons/common :: commonupdatePwd}"></div>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.nicescroll.js"></script>
+
+<!--data table-->
+<script type="text/javascript" src="/js/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+
+<!--表单校验-->
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script src="js/validation-init.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/js/scripts.js"></script>
+<!--script for editable table-->
+<script src="/js/editable-table.js"></script>
+
+
+<script type="text/javascript">
+
+    document.getElementById("log-manage").className="menu-list nav-active";
+</script>
+
+</body>
+
+
+</html>
+<script>
+    import Form_advanced_components from "./form_advanced_components.html";
+    export default {
+        components: {Form_advanced_components}
+    }
+</script>
