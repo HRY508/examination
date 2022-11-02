@@ -37,7 +37,7 @@ public class LoggerController {
     public String downLog(@PathVariable("name") String name,HttpServletResponse response) {
         System.out.println(name);
         String download = LogReaderUtil.download(response, "logs/" + name);
-        return "success";
+        return null;
     }
 
 

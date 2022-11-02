@@ -46,8 +46,6 @@ public class LogReaderUtil {
         byte[] b = new byte[1024];
         int len = 0;
         try {
-            //清空response
-            response.reset();
             //读取要下载的文件，保存到文件输入流
             inputStream = new FileInputStream(file);
             outputStream = response.getOutputStream();
