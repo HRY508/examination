@@ -7,7 +7,7 @@
     <meta name="author" content="ThemeBucket">
     <link rel="shortcut icon" type="image/png">
 
-    <title>多选题创编</title>
+    <title>多选题修改</title>
 
     <link rel="stylesheet" type="text/css" href="/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
     <link href="/css/style.css" rel="stylesheet">
@@ -62,13 +62,14 @@
         <!--当前位置介绍开始-->
         <div class="page-heading">
             <h3>
-                多选题创编
+                多选题修改
             </h3>
             <ul class="breadcrumb">
                 <li>
                     <a href="#">题库管理</a>
                 </li>
-                <li class="active"> 多选题创编 </li>
+                <li > 题目列表 </li>
+                <li class="active"> 多选题修改 </li>
             </ul>
         </div>
         <!-- 当前位置介绍结束-->
@@ -90,14 +91,6 @@
                         <div class="compose-mail">
                             <form role="form-horizontal"  th:action="@{/admin/updateQuestion}" method="post">
                                 <input style="display: none" name="id" th:value="${questionEditVM.getId()}">
-                                <div class="form-group">
-                                    <label for="to" class="">To:</label>
-                                    <input type="text" tabindex="1" id="to" name="to" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="subject" class="">Subject:</label>
-                                    <input type="text" name="subject" tabindex="1" id="subject" class="form-control">
-                                </div>
 
                                 <!--onclick函数，当管理员点击题干表单时题干表单设置不可见，显示富文本编辑器，-->
                                 <div class="form-group">
@@ -273,6 +266,21 @@
                                     <label  class="">解析</label>
                                     <input type="text" th:value="${questionObject.getAnalyze()}" name="analysis" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
+
+
+                                <!--                                题型开始-->
+                                <div class="form-group" id="">
+                                    <label  class="">分类</label>
+                                    <div class="btn-group">
+                                        <select class="form-control" id="typenums">
+                                            <option th:each="type :${typeList}" th:selected="${questionEditVM.getQuestionPool()} == ${type.getQPool()}" id="typeList" th:value="${type.getQPool()}" th:text="${type.getQType()}" ></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="questionPoolValue" name="questionPoolValue" th:value="${questionEditVM.getQuestionPool()}"/>
+                                <!--                                题型结束-->
+                                <br>
+
                                 <!--                                分数开始-->
                                 <div class="form-group">
                                     <label  class="">分数</label>
@@ -416,7 +424,7 @@
 <script src="/js/scripts.js"></script>
 
 <script>
-    document.getElementById("more-choice").className="active";
+    document.getElementById("question-list").className="active";
     document.getElementById("menu4").className="menu-list nav-active";
     //点击取消触发
     function quit(){
@@ -454,6 +462,11 @@
             cd4()
         }
     });
+
+    $("#typenums").change(function(){
+        state = $('#typenums option:selected').val();
+        $("#questionPoolValue").val(state)
+    })
 
 
     // 增加form表单、选项

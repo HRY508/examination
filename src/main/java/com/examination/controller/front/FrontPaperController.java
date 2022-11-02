@@ -1,5 +1,7 @@
 package com.examination.controller.front;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.Paper;
 import com.examination.service.PaperService;
@@ -35,7 +37,9 @@ public class FrontPaperController{
             return "error/4xx";
         }
         Page page=new Page(pn,15);
-        Page<Paper> paperPage = paperService.page(page );
+        LambdaQueryWrapper<Paper> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Paper::getPStatus,1);
+        Page<Paper> paperPage = paperService.page(page,queryWrapper);
         List<Paper> papers = paperPage.getRecords();
         request.setAttribute("paperList",papers);
         request.setAttribute("page",paperPage);

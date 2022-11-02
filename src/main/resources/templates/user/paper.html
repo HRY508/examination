@@ -82,9 +82,9 @@
                                     <a th:text="${papers.pName}" href="javascript:;" th:onclick="isStartTime([[${papers.pId}]],[[${papers.pName}]],[[${papers.pStatus}]],[[${papers.startTime}]],[[${papers.endTime}]])" style="color: #65CEA7;"></a>
                                 </td>
                                 <td>
-                                  <span th:if="${papers.pStatus}==0" th:text="未开始" class="label label-info"></span>
-                                  <span th:if="${papers.pStatus}==1" th:text="进行中" class="label label-primary"></span>
-                                  <span th:if="${papers.pStatus}==2" th:text="已结束" class="label label-danger"></span>
+                                  <span th:if="${papers.pdStatus}==0" th:text="未开始" class="label label-info"></span>
+                                  <span th:if="${papers.pdStatus}==1" th:text="进行中" class="label label-primary"></span>
+                                  <span th:if="${papers.pdStatus}==2" th:text="已结束" class="label label-danger"></span>
                                 </td>
                                 <td id="startTime" th:text="${#temporals.format(papers.startTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                 <td id="endTime" th:text="${#temporals.format(papers.endTime, 'yyyy-MM-dd HH:mm:ss')}"></td>

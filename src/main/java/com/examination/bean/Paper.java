@@ -22,7 +22,9 @@ public class Paper {
 
     private String pName;
 
-    private Integer pStatus; // 卷子状态 0未开始 1开放 2已结束
+    private Integer pStatus;  // 启用禁用
+
+    private Integer pdStatus;// 卷子状态 0未开始 1开放 2已结束
 
     private Integer isAuto;
 

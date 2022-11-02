@@ -18,7 +18,6 @@ public class QuestionEditVMServiceImpl extends ServiceImpl<QuestionEditVMMapper,
     @Override
     @Transactional(readOnly = true)
     public QuestionEditVM selectByConditionQuestionVM(Integer questionId) {
-        QueryWrapper<QuestionEditVM> wrapper = new QueryWrapper<>();
         QuestionEditVMMapper baseMapper = this.baseMapper;
         QuestionEditVM questionEditVM = baseMapper.selectByConditionQuestionVM(questionId);
         return questionEditVM;
@@ -27,9 +26,16 @@ public class QuestionEditVMServiceImpl extends ServiceImpl<QuestionEditVMMapper,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateQuestion(QuestionEditVM questionEditVM) {
-        QueryWrapper<QuestionEditVM> wrapper = new QueryWrapper<>();
         QuestionEditVMMapper baseMapper = this.baseMapper;
         int res = baseMapper.updateQuestion(questionEditVM);
         return res;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int updateQuestionExcepConrrect(QuestionEditVM questionEditVM) {
+        QuestionEditVMMapper baseMapper = this.baseMapper;
+        int res = baseMapper.updateQuestionExcepCorrect(questionEditVM);
+        return 0;
     }
 }

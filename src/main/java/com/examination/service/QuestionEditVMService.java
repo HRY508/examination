@@ -13,4 +13,6 @@ public interface QuestionEditVMService  extends IService<QuestionEditVM> {
     QuestionEditVM selectByConditionQuestionVM(Integer questionId);
 
     int updateQuestion(QuestionEditVM questionEditVM);
+
+    int updateQuestionExcepConrrect(QuestionEditVM questionEditVM);
 }

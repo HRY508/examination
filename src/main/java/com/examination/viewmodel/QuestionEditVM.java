@@ -32,6 +32,8 @@ public class QuestionEditVM {
 
     private String correct;
 
+    private Integer questionPool;
+
     private Integer difficult;
 
     private String createUser;

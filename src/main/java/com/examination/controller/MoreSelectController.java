@@ -32,10 +32,9 @@ public class MoreSelectController {
     @RequestMapping("/admin/moreEditors")
     public String toMoreChoicePage(Model model){
         //查询所有的题型
-        QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
-        typeQueryWrapper.select(" DISTINCT q_pool");
-        List<Type> list = typeService.list(typeQueryWrapper);
-        model.addAttribute("typeList",list);
+        List<Type> typeList = typeService.list();
+        model.addAttribute("typeList",typeList);
+
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/calendar";

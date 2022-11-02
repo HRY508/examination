@@ -222,17 +222,15 @@
                                     <input type="text" name="analysis" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
                                 <!--题型开始-->
-                                <div class="form-group">
-                                    <label  class="">题库</label>
-                                    <div class="btn-group ">
-                                        <button id="qpV" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">所属题库 <span class="caret"></span></button>
-                                        <ul role="menu" class="dropdown-menu">
-                                            <li  th:each=" type :${typeList}" th:value="${typeList}" id="typeList"><a id="pV" th:value="${type.getQPool()}" th:text="${type.getQPool()}" th:onclick="questionPool([[${type.getQPool()}]])" ></a></li>
-                                        </ul>
-                                        <input class="hidden" id="questionPoolValue" name="questionPool">
+                                <div class="form-group" id="">
+                                    <label  class="">分类</label>
+                                    <div class="btn-group">
+                                        <select class="form-control" id="typenums">
+                                            <option th:each="type :${typeList}"  id="typeList" th:value="${type.getQPool()}" th:text="${type.getQType()}" ></option>
+                                        </select>
                                     </div>
                                 </div>
-                                &nbsp;
+                                <input type="hidden" id="questionPoolValue" name="questionPoolValue" />
                                 <!--题型结束-->
                                 <!--分数开始-->
                                 <div class="form-group">
@@ -386,11 +384,11 @@
         $('#subject2').parent().removeClass('hidden')
     }
 
-    //选择分类触发
-    function questionPool(va){
-        $('#questionPoolValue').attr('value',va)
-        $('#qpV').text(va)
-    }
+
+    $("#typenums").change(function(){
+        state = $('#typenums option:selected').val();
+        $("#questionPoolValue").val(state)
+    })
 
 
     // 增加form表单、选项
@@ -487,8 +485,7 @@
 
         }
         //将默认文本框的值设置为空
-        $('#to').attr('value',null)
-        $('#subject').attr('value',null)
+
         $('#subject2').attr('value',null)
         $('#Answer').attr('value',null)
         $('#A').attr('value',null)

@@ -116,6 +116,40 @@ public class PaperController {
         return "admin/paper_list";
     }
 
+    // 修改考试状态
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    @PostMapping("/paperPdStatusChange")
+    public Object paperPdStatusChange(@RequestBody String req){
+        Paper paper = new Paper();
+        //转化为json数据
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(req);
+        //获取点击前的按钮状态，该修改的id
+        Integer pId = Integer.parseInt(((String) jsonObject.get("id")));
+        //转换为Integer
+        Integer pdStatus = (Integer) jsonObject.get("pdStatus");
+        Map<String, Object> rep = new HashMap<String, Object>();
+        if (pdStatus == 3){
+            rep.put("code",StaticVariableUtil.FAILCODE);
+        }
+        if (pdStatus == 0){
+            pdStatus = 1;
+        }else if (pdStatus == 1){
+            pdStatus = 2;
+        }else if (pdStatus == 2){
+            pdStatus = 0;
+        }
+
+        UpdateWrapper<Paper> wrapper = new UpdateWrapper<>();
+        wrapper.eq("p_id",pId);
+        wrapper.set("pd_status",pdStatus);
+        boolean update = paperService.update(wrapper);
+        if (update){
+            rep.put("code", StaticVariableUtil.SUCCESSCODE);
+        }
+        return rep;
+    }
+
     // 修改状态
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -174,12 +208,11 @@ public class PaperController {
     }
 
     //进入试卷创建页面
-
     @RequestMapping("/paperCreate")
     public String createPaper(Model model){
         //查询所有的题型
         QueryWrapper<Type> typeQueryWrapper = new QueryWrapper<>();
-        typeQueryWrapper.select(" DISTINCT q_pool");
+        typeQueryWrapper.select(" DISTINCT q_pool").ne("q_pool",0);
         List<Type> list = typeService.list(typeQueryWrapper);
         //设置model、返回视图
         model.addAttribute("typeList",list);
@@ -233,7 +266,7 @@ public class PaperController {
         Integer pId = paperService.list(queryWrapper).get(0).getPId();
         //查询所有的单选题，在单选题中抽取指定数目的题：
         QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
-        questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType).eq("status",1);
+        questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType).eq("status",1).ne("question_pool",0);
         List<Question> list1 = questionService.list(questionQueryWrapperWrapper);
         //数组用来存放抽取的题目id，RandomUtil.random回从指定数组抽取指定个数的随机题目，且不重复
         Integer array[] = new Integer[list1.size()];
@@ -252,7 +285,7 @@ public class PaperController {
         }
         //查询所有的多选题，在多选题中抽取指定题：
         QueryWrapper<Question> moreWrapperWrapper = new QueryWrapper();
-        moreWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType).eq("status",1);
+        moreWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType).eq("status",1).ne("question_pool",0);
         List<Question> list2 = questionService.list(moreWrapperWrapper);
         Integer array2[] = new Integer[list2.size()];
         for(int i = 0; i < array2.length; i++){
@@ -342,7 +375,7 @@ public class PaperController {
             // 查询条件：question_pool
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType)
-                    .eq("question_pool",Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))).eq("status",1);
+                    .eq("question_pool",Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))).eq("status",1).ne("question_pool",0);
             //查出满足某种题型、某种类型的题，并将该题的id存放在array中
             List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
             Integer array[] = new Integer[questionList.size()];
@@ -366,7 +399,7 @@ public class PaperController {
             // 查询条件：question_pool
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType)
-                    .eq("question_pool",Integer.parseInt((String) morePoolArray.get(String.valueOf(i)))).eq("status",1);
+                    .eq("question_pool",Integer.parseInt((String) morePoolArray.get(String.valueOf(i)))).eq("status",1).ne("question_pool",0);
             //查出满足某种题型、某种类型的题，并将该题的id存放在array中
             List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
             Integer array[] = new Integer[questionList.size()];
@@ -410,7 +443,7 @@ public class PaperController {
         Integer questionPool = (Integer) jsonObject.get("pool");
         //先根据pool查出所有题目id,question_type，
         QueryWrapper<Question> wrapper = new QueryWrapper<>();
-        wrapper.select("id","question_type").eq("question_pool",questionPool);
+        wrapper.select("id","question_type").eq("question_pool",questionPool).ne("question_pool",0);
         List<Question> list = questionService.list(wrapper);
         //id列表
         List<Integer> qIdList = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.examination.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.examination.bean.*;
@@ -40,7 +41,7 @@ public class QuestionsController {
     private ContentService contentService;
 
     @Autowired
-    private QuestionVMMapper questionVMMapper;
+    private TypeVMService typeVMService;
 
     @Autowired
     private QuestionEditVMService questionEditVMService;
@@ -193,20 +194,13 @@ public class QuestionsController {
     @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/admin/updateQuestion")
     public String updateSingleQuestion(HttpServletRequest request){
-        Integer id = Integer.parseInt(request.getParameterValues("id")[0]);
+        Integer id = Integer.parseInt( request.getParameterValues("id")[0]);
         QuestionEditVM questionEditVM = new QuestionEditVM();
         questionEditVM.setId(id);
-        Integer questionType = Integer.parseInt(request.getParameter("questionType"));
+        int questionType = Integer.parseInt(request.getParameter("questionType"));
         questionEditVM.setQuestionType(questionType);
-        if(questionType == StaticVariableUtil.singleSelectType){
-            questionEditVM.setCorrect(request.getParameterValues("correct")[0]);
-        }else if(questionType == StaticVariableUtil.moreSelectType){
-            String[] corrects = request.getParameterValues("correct");
-            questionEditVM.setCorrect(StringUtils.join(corrects));
-        }
-        else if (questionType == StaticVariableUtil.JudgmentalType){
-            questionEditVM.setCorrect(request.getParameterValues("correct")[0]);
-        }
+        Integer questionPool = Integer.parseInt(request.getParameterValues("questionPoolValue")[0]);
+        questionEditVM.setQuestionPool(questionPool);
         questionEditVM.setScore(Integer.parseInt(request.getParameter("score")));
         questionEditVM.setDifficult(Integer.parseInt(request.getParameter("difficult")));
         questionEditVM.setCreateUser(GlobalUserUtil.getUser().getUserName());
@@ -236,7 +230,22 @@ public class QuestionsController {
         questionObject.setQuestionItemObjects(list);
         String selectContents = JSON.toJSONString(questionObject);
         questionEditVM.setContent(selectContents);
-        int i = questionEditVMService.updateQuestion(questionEditVM);
+
+        if (request.getParameterValues("correct") == null){
+            int i = questionEditVMService.updateQuestionExcepConrrect(questionEditVM);
+        }else{
+            if(questionType == StaticVariableUtil.singleSelectType){
+                String corrects = request.getParameterValues("correct")[0];
+                questionEditVM.setCorrect(corrects);
+            }else if(questionType == StaticVariableUtil.moreSelectType){
+                String[] corrects = request.getParameterValues("correct");
+                questionEditVM.setCorrect(StringUtils.join(corrects));
+            }
+            else if (questionType == StaticVariableUtil.JudgmentalType){
+                questionEditVM.setCorrect(request.getParameterValues("correct")[0]);
+            }
+            int i = questionEditVMService.updateQuestion(questionEditVM);
+        }
         return "redirect:/admin/questionsList";
     }
 
@@ -247,6 +256,9 @@ public class QuestionsController {
     public String toUpdateQuestionPage(@PathVariable("id") Integer id, Model model)
     {
         QuestionEditVM questionEditVM = questionEditVMService.selectByConditionQuestionVM(id);
+
+        List<Type> typeList = typeService.list();
+        model.addAttribute("typeList",typeList);
         //获取题目、选项相关内容
         String content = questionEditVM.getContent();
         QuestionObject questionObject = JSON.parseObject(content, QuestionObject.class);
@@ -256,6 +268,7 @@ public class QuestionsController {
             int size = questionObject.getQuestionItemObjects().size();
             model.addAttribute("size",size);
             model.addAttribute("questionObject",questionObject);
+
             return "admin/update_singleChoice";
         }
         else if(questionEditVM.getQuestionType()==2){
