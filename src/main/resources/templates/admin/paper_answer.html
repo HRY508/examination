@@ -58,22 +58,20 @@
                         <!--搜索开始-->
 
                         <form role="form" class="form-horizontal" action="/admin/answerList">
-
-                            <input type="text"  style="font-weight:lighter" placeholder="请输入查询信息..." name="username" th:value="${searchName}">
-
-                            <select class="" id="pid" name="pid">
-                                <option value="0" th:selected="${paperId} == 0">请选择试卷</option>
-                                <option
-                                        th:each="paper:${paperList}"
-                                        th:value="${paper.getPId()}"
-                                        th:text="${paper.getPName()}"
-                                        th:selected="${paperId} == ${paper.getPId()}"
-                                >
-                                </option>
-                            </select>
-
-                            <input type="submit" value="提交">
-
+                            <div class="form-inline">
+                                <input type="text" class="form-control input-sm" style="font-weight:lighter" placeholder="请输入查询信息..." name="username" th:value="${searchName}">
+                                <select class="btn-default btn-sm" id="pid" name="pid">
+                                    <option value="0" th:selected="${paperId} == 0">请选择试卷</option>
+                                    <option
+                                            th:each="paper:${paperList}"
+                                            th:value="${paper.getPId()}"
+                                            th:text="${paper.getPName()}"
+                                            th:selected="${paperId} == ${paper.getPId()}"
+                                    >
+                                    </option>
+                                </select>
+                                <input type="submit" class="btn btn-default btn-sm  " value="提交">
+                            </div>
                         </form>
 
                         <!--搜索结束-->

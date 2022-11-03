@@ -122,7 +122,7 @@
                                 &nbsp;
                                 <!--富文本编辑器开始，包括按钮-->
                                 <div class="compose-editor hidden">
-                                    <textarea id="textarea" class="wysihtml5 form-control" rows="5" th:text="请在此输入题干"></textarea>
+                                    <textarea id="textarea" class="wysihtml5 form-control" rows="5"></textarea>
                                 </div>
                                 <div class="compose-btn hidden" id="textarea-button">
                                     <button type="button" class="btn btn-primary btn-sm"
@@ -165,93 +165,87 @@
 
                                         <div class="flat-grey ">
                                             <div class="checkbox " >
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_A" value="A" required>
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_A" value="A" >
                                                 A
                                             </div>
                                         </div>
                                         <div class="flat-red ">
                                             <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox" name="correct" id="r_B" value="B" required>
+                                                <input tabindex="3" type="checkbox" name="correct" id="r_B" value="B" >
                                                 B
                                             </div>
                                         </div>
 
                                         <div class="flat-green ">
                                             <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox" name="correct" id="r_C" value="C" required>
+                                                <input tabindex="3" type="checkbox" name="correct" id="r_C" value="C" >
                                                 C
                                             </div>
                                         </div>
 
                                         <div class="flat-blue " id="choice_D">
                                             <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_D" value="D" required>
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_D" value="D" >
                                                 D
                                             </div>
                                         </div>
 
                                         <div class="flat-yellow hidden" id="choice_E">
                                             <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_E" value="E" required>
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_E" value="E" >
                                                 E
                                             </div>
                                         </div>
 
                                         <div class="flat-purple hidden" id="choice_F">
                                             <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_F" value="F" required>
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_F" value="F" >
                                                 F
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_G">
                                             <div class="checkbox">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_G" value="G" required>
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_G" value="G" >
                                                 G
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_H">
                                             <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_H" value="H" required>
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_H" value="H" >
                                                 H
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_I">
                                             <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_I" value="I" required>
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_I" value="I" >
                                                 I
                                             </div>
                                         </div>
                                         <div class="flat-purple hidden" id="choice_J">
                                             <div class="checkbox ">
-                                                <input tabindex="3" type="checkbox"  name="correct" id="r_J" value="J" required>
+                                                <input tabindex="3" type="checkbox"  name="correct" id="r_J" value="J">
                                                 J
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!--                                <div class="form-group">-->
-                                <!--                                    <label for="bcc" class="">答案</label>-->
-                                <!--                                    <input type="text" tabindex="2" id="Key" class="form-control">-->
-                                <!--                                </div>-->
-
                                 <div class="form-group">
                                     <label  class="">解析</label>
                                     <input type="text" name="analysis" tabindex="2" id="Answer" class="form-control" required>
                                 </div>
-                                <!--                                题型开始-->
+                                <!--                               题库开始-->
                                 <div class="form-group" id="">
                                     <label  class="">题库</label>
                                     <div class="btn-group">
-                                        <select class="form-control" id="typenums">
+                                        <select class="form-control btn-warning" id="typenums">
                                             <option th:each="type :${typeList}"  id="typeList" th:value="${type.getQPool()}" th:text="${type.getQType()}" ></option>
                                         </select>
                                     </div>
                                 </div>
-                                <input type="hidden" id="questionPoolValue" name="questionPoolValue" />
-                                <!--                                题型结束-->
+                                <input type="hidden" id="questionPoolValue" name="questionPoolValue"/>
+                                <!--题库结束-->
                                 &nbsp;
-                                <!--                                分数开始-->
+                                <!--分数开始-->
                                 <div class="form-group">
                                     <label  class="">分数</label>
                                     <div id="spinner4">
@@ -270,11 +264,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--                                分数结束-->
+                                <!--分数结束-->
                                 <!--题型开始-->
                                 <input name="questionType" style="display: none" value="2">
                                 <!--题型结束-->
-                                <!--                                难度选择开始-->
+                                <!--难度选择开始-->
                                 <div class="form-group">
                                     <label  class="">难度</label>
                                     <div class="btn-group btn-group-justified" style="width: 90%">
@@ -286,8 +280,8 @@
                                     </div>
                                 </div>
                                 &nbsp;
-                                <!--                                难度选择结束-->
-                                <!--                                充当换行-->
+                                <!--难度选择结束-->
+                                <!--充当换行-->
                                 <div class="form-group " style="display: none"></div>
 
                                 <div class="compose-btn1">

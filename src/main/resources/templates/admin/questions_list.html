@@ -56,28 +56,27 @@
                         <!--form表单开始-->
                         <form class="form-horizontal adminex-form" method="get">
                             <div class="form-inline">
-                                <input type="text" class="form-control" th:value="${qNameValue}" name="name" placeholder="输入关键字查询" style="font-weight:lighter">
+                                <input type="text" class="form-control input-sm" th:value="${qNameValue}" name="name" placeholder="输入关键字查询" style="font-weight:lighter">
 
-                                <select class="" id="qType" name="qType">
+                                <select class="btn  btn-default btn-sm" id="qType" name="qType">
                                     <option value="0" th:selected="${qTypeValue} == 0">题目类型</option>
                                     <option value="1" th:selected="${qTypeValue} == 1">单选题</option>
                                     <option value="2" th:selected="${qTypeValue} == 2">多选题</option>
                                 </select>
 
-                                <select class="" id="qPool" name="qPool">
+                                <select class="btn  btn-default btn-sm" id="qPool" name="qPool">
                                     <option value="0" th:selected="${qPoolValue} == 0">请选择类型</option>
                                     <option
                                             th:each="type:${typeList}"
                                             th:value="${type.getQPool()}"
                                             th:text="${type.getQType()}"
-                                            th:selected="${qPoolValue} == ${type.getQPool()}"
-                                    >
+                                            th:selected="${qPoolValue} == ${type.getQPool()}">
                                     </option>
                                 </select>
 
-                                <input type="submit" value="查询">
+                                <input type="submit" class="btn  btn-success btn-sm" value="查询">
 
-                                <button class="btn btn-danger" onclick="DelSelect()" type="button" >批量删除</button>
+                                <button class="btn btn-danger btn-sm" onclick="DelSelect()" type="button" >批量删除</button>
 
                                 </div>
                         </form>

@@ -56,23 +56,22 @@
                 <section class="panel">
                     <header class="panel-heading">
                         <form class="form-horizontal adminex-form" method="get">
-                                <input type="text" value="" name="searchName" th:value="${searchName}" placeholder="请输入关键字" style="font-weight:lighter">
+                            <div class="form-inline">
+                                <input type="text" value="" name="searchName" class="form-control input-sm" placeholder="请输入关键字" style="font-weight:lighter">
                                 <button class="btn btn-default btn-sm" th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}}">查询</button>
-
-                            <div class="btn-group btn-sm">
-                                <button  class="btn btn-success dropdown-toggle btn-sm" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq ''" data-toggle="dropdown"  type="button">权限 <span class="caret"></span></button>
-                                <button  class="btn btn-success dropdown-toggle btn-sm" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq 'admin' " data-toggle="dropdown"  type="button">管理员 <span class="caret"></span></button>
-                                <button  class="btn btn-success dropdown-toggle btn-sm" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq 'user'" data-toggle="dropdown"  type="button">用户 <span class="caret"></span></button>
-                                <ul role="menu" class="dropdown-menu">
-                                    <li ><a th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}+'admin'}">管理员</a></li>
-                                    <li ><a th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}+'user'}">用户</a></li>
-                                </ul>
-                            </div>
-
+                                <div class="btn-group btn-sm">
+                                    <button  class="btn btn-success dropdown-toggle btn-sm" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq ''" data-toggle="dropdown"  type="button">权限 <span class="caret"></span></button>
+                                    <button  class="btn btn-success dropdown-toggle btn-sm" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq 'admin' " data-toggle="dropdown"  type="button">管理员 <span class="caret"></span></button>
+                                    <button  class="btn btn-success dropdown-toggle btn-sm" th:if="${permsValue} != null and ${#strings.trim(permsValue)} eq 'user'" data-toggle="dropdown"  type="button">用户 <span class="caret"></span></button>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li ><a th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}+'admin'}">管理员</a></li>
+                                        <li ><a th:href="@{${jumpUrl}+${qName}+${searchName}+${qPerms}+'user'}">用户</a></li>
+                                    </ul>
+                                </div>
                                 <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#addModal"><i class="fa fa-plus"></i>添加用户</button>
                                 <button class="btn btn-sm btn-danger" onclick="DelSelect()"><i class="fa fa-archive" ></i>批量删除</button>
+                            </div>
                         </form>
-
                     </header>
 
                     <div class="panel-body">

@@ -4,18 +4,11 @@ package com.examination.exception;
 import com.examination.utils.GlobalUserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,9 +27,11 @@ public class GlobalExceptionHandler {
             //根据当前处理的异常，自定义的错误数据
             map.put("code", 500);
             map.put("message", GlobalExceptionHandler.getExceptionDetail(e));
+            if(GlobalUserUtil.getUser()!=null){
+                logger.error("用户:"+ GlobalUserUtil.getUser().getUserName()+"操作时发生了异常："+e);
+                logger.error("用户信息："+ GlobalUserUtil.getUser());
+            }
             //将详细的错误信息写入日志
-            logger.error("用户:"+ GlobalUserUtil.getUser().getUserName()+"操作时发生了异常："+e);
-            logger.error("用户信息："+ GlobalUserUtil.getUser());
             logger.error("该发生异常URL--->"+ request.getRequestURL());
             logger.error("异常跟踪栈----->："+ GlobalExceptionHandler.getExceptionDetail(e));
             return map;
