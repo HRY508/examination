@@ -225,7 +225,7 @@
                                 <div class="form-group" id="">
                                     <label  class="">题库</label>
                                     <div class="btn-group">
-                                        <select class="form-control" id="typenums" name="questionPoolValue">
+                                        <select class="form-control btn-warning" id="typenums" name="questionPoolValue">
                                             <option th:each="type :${typeList}"  id="typeList" th:value="${type.getQPool()}" th:text="${type.getQType()}" ></option>
                                         </select>
                                     </div>
