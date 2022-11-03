@@ -47,8 +47,6 @@ public class LoginController {
     private QuestionDetailsService questionDetailsService;
     @Resource
     private UserService userService;
-    @Resource
-    private SessionDAO sessionDAO;
 
     @RequestMapping({"/login","","/"})
     public String toLoginPage(Model model){
