@@ -301,8 +301,6 @@
         $("#s_checkBox").addClass("hidden")
         $("#lastQ").removeClass("hidden")
         $("#nextQ").removeClass("hidden")
-        document.getElementById("single").innerHTML = ""
-        document.getElementById("more").innerHTML = ""
 
         var arr = ['A','B','C','D','E', 'F', 'G', 'H','I','J']
         for (var i = 0; i<arr.length;i++){
@@ -519,10 +517,6 @@
                 $('#nextQ').attr("value",data.num+1)
                 $('#lastQ').attr("value",data.num-1)
 
-                console.log(numC)
-                console.log(parseInt(singleNum)+ parseInt(moreNum))
-                console.log(singleNum)
-                console.log(moreNum)
 
                 // 下一题 条件显示
                 if(numC == parseInt(singleNum) + parseInt(moreNum)){
@@ -628,10 +622,8 @@
 
     // 动态生成按钮
     function addButton(single, more) {
-        console.log(single)
-        console.log(more)
+
         var n = parseInt(single) + parseInt(more);
-        console.log(n)
        for (var i =1; i <= n; i++){
            var btn = document.createElement("input");
            btn.type = "button";
@@ -649,6 +641,7 @@
            }
        }
     }
+
 
 
     // 修改密码
