@@ -10,6 +10,7 @@ import com.examination.service.PaperDetailsVMService;
 import com.examination.service.ScoreService;
 import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.LocalDateUtil;
+import com.examination.utils.StaticVariableUtil;
 import com.examination.viewmodel.PaperDetailsVM;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author:晓风残月Lx
@@ -38,12 +40,30 @@ public class FrontPaperDetailsController {
     @Autowired
     private ScoreService scoreService;
 
+    @ResponseBody
+    @RequestMapping("/isScore")
+    public Object isScore(@RequestBody String req){
+
+        Integer pId = (Integer) JSONObject.parseObject(req).get("pId");
+        Map<String,Integer> map = new HashMap<>();
+        int mark = scoreService.selectByPId(pId, GlobalUserUtil.getUser().getId());
+        if(mark!=0){
+            map.put("code", StaticVariableUtil.FAILCODE);
+            map.put("score", mark);
+        }else {
+            map.put("code",StaticVariableUtil.SUCCESSCODE);
+        }
+        return map;
+    }
+
+
     @RequestMapping("/paperDetail")
     public String toPaperDetails(@RequestParam(value = "pid",defaultValue = "0",required = false)Integer pId,
                                  Model model){
         if(pId == null || pId == 0){
-            return "error/4xx";
+            return "error/5xx";
         }
+
         Integer num = 1;
         PaperDetailsVM paperDetailsVM = paperDetailsVMService.getOneByPIdAndNum(pId , num);
         QuestionObject questionObject = JSONObject.parseObject(paperDetailsVM.getContent(), QuestionObject.class);

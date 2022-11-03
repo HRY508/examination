@@ -171,7 +171,26 @@
         }else{
             if(start <= str && str <= end){
                 if (confirm("是否要进入"+pName+"")) {
-                    window.location.href = "/user/paper/paperDetail?pid=" + pid;
+                    $.ajax({
+                        url:"/user/paper/isScore",
+                        type:"post",
+                        data:JSON.stringify({
+                            pId:pid
+                        }),
+                        contentType: "json/application",
+                        //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                        dataType: "json",
+                        // 成功响应的结果
+                        success: function (data) {
+                            if (data.code != 200){
+                                alert("您已完成了本次考试，成绩为："+data.score+"分!")
+                                return;
+                            }else{
+                                window.location.href = "/user/paper/paperDetail?pid=" + pid;
+                            }
+                        }
+                    })
+
                 }else{
                     return
                 }

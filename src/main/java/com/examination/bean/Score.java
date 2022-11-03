@@ -29,8 +29,6 @@ public class Score {
 
     private LocalDateTime examTime;
 
-    private LocalDateTime updateTime;
-
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 }

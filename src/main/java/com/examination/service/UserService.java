@@ -19,4 +19,6 @@ public interface UserService extends IService<User> {
     boolean updatePwdByUserId(String sysMd5, Integer userId);
 
     boolean selectByStatus(String username);
+
+
 }

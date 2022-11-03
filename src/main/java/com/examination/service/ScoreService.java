@@ -8,4 +8,5 @@ import com.examination.bean.Score;
  * @Date: 2022/10/18 15:58
  */
 public interface ScoreService extends IService<Score> {
+    int selectByPId(Integer pId, Integer userId);
 }
