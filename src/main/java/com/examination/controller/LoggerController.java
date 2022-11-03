@@ -28,6 +28,7 @@ public class LoggerController {
         }
         return "admin/log";
     }
+
     @RequestMapping("/admin/logs/{name}")
     public String downLog(@PathVariable("name") String name,HttpServletResponse response) {
         System.out.println(name);

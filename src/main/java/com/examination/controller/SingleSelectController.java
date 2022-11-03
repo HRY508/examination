@@ -37,6 +37,8 @@ public class SingleSelectController {
     private TypeService typeService;
 
 
+    private boolean created = false;
+
     @RequestMapping("/admin/singleEditors")
     public String toSingleChoicePage(Model model){
         //查询所有的题型
@@ -44,6 +46,12 @@ public class SingleSelectController {
         model.addAttribute("typeList",typeList);
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
+        if(created == true){
+            model.addAttribute("created",true);
+        }
+        else {
+            model.addAttribute("created",false);
+        }
         return "admin/single_create";
     }
 
@@ -51,9 +59,10 @@ public class SingleSelectController {
     @RequestMapping("/admin/singleSelect")
     public String singleSelect(HttpServletRequest request,Model model) throws Exception {
         Integer questionType = StaticVariableUtil.singleSelectType;
-        questionService.insertSelectQuestion(request,GlobalUserUtil.getUser().getUserName(),questionType);
+        questionService.insertSelectQuestion(request, GlobalUserUtil.getUser().getUserName(), questionType);
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
-        return "admin/single_create";
+        created = true;
+        return "redirect:/admin/singleEditors";
     }
 }

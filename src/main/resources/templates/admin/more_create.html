@@ -88,6 +88,7 @@
 
                     <section class="mail-list">
                         <div class="compose-mail">
+                            <input style="display: none" th:value="${created}" id="questionCreated">
                             <form role="form-horizontal" th:action="@{/admin/moreSelect}" method="post">
 
 
@@ -343,6 +344,31 @@
                             </div>
                             <!--弹出框结束-->
                             <!--提示结束-->
+
+                            <!--                            创建成功提示框开始-->
+                            <div class="col-md-12 ">
+                                <a href="#myModal3" data-toggle="modal" class="btn btn-warning hidden" id="tip3">
+                                    提示按钮
+                                </a>
+                                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal3" class="modal fade" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background:#5cb85c">
+                                                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                                <h4 class="modal-title">提示</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                创建成功!
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" onclick="toQuestionList()" class="btn btn-default" data-dismiss="modal">前往查看</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">继续创建</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--创建成功提示框结束-->
                         </div>
                     </section>
                 </section>
@@ -388,6 +414,19 @@
 <script>
     document.getElementById("more-choice").className="active";
     document.getElementById("menu4").className="menu-list nav-active";
+
+    //初始化操作：判断是否完成了创建题目操作
+    $(function(){
+        var b = $('#questionCreated').val()
+        if(b == 'true'){
+            document.getElementById("tip3").click()
+        }
+    });
+    //查看题目
+    function toQuestionList() {
+        window.location.replace('/admin/questionsList')
+    }
+
     //点击取消触发
     function quit(){
         $('#textarea').parent().addClass('hidden');//设置文本编辑器不可见，

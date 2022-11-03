@@ -29,14 +29,21 @@ public class MoreSelectController {
     @Autowired
     private TypeService typeService;
 
+    private boolean created = false;
+
     @RequestMapping("/admin/moreEditors")
     public String toMoreChoicePage(Model model){
         //查询所有的题型
         List<Type> typeList = typeService.list();
         model.addAttribute("typeList",typeList);
-
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
+        if(created == true){
+            model.addAttribute("created",true);
+        }
+        else {
+            model.addAttribute("created",false);
+        }
         return "admin/more_create";
     }
 
@@ -45,9 +52,9 @@ public class MoreSelectController {
     public String moreSelect(HttpServletRequest request,Model model) throws Exception {
         Integer questionType = StaticVariableUtil.moreSelectType;
         questionService.insertSelectQuestion(request, GlobalUserUtil.getUser().getUserName(),questionType);
-        log.info("===================="+request.getParameter("difficult"));
         // 显示管理员已登录
         model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
-        return "admin/more_create";
+        created = true;
+        return "redirect:/admin/moreEditors";
     }
 }
