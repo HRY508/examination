@@ -86,7 +86,7 @@
                             <div class="col-md-4">
                                 <div id="single">
                                     <div class="input-group input-small">
-<!--                                        设置只能输入数字-->
+                                        <!--                                        设置只能输入数字-->
                                         <input type="text" class="spinner-input form-control" maxlength="3" value="0" name="singleSelectNumber" id="singleSelectNumber"
                                                onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                                         <div class="spinner-buttons input-group-btn btn-group-vertical">
@@ -138,22 +138,22 @@
                                 </div>
                             </div>
 
-<!--                            <label class="control-label col-md-1">判断题分值</label>-->
-<!--                            <div class="col-md-4">-->
-<!--                                <div id="judgeScoreD">-->
-<!--                                    <div class="input-group input-small">-->
-<!--                                        <input type="text" class="spinner-input form-control" maxlength="3" value="1" name="judgeScore" id="judgeScore" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">-->
-<!--                                        <div class="spinner-buttons input-group-btn btn-group-vertical">-->
-<!--                                            <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incScore($('#judgeScore'))">-->
-<!--                                                <i class="fa fa-angle-up"></i>-->
-<!--                                            </button>-->
-<!--                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disScore($('#judgeScore'))">-->
-<!--                                                <i class="fa fa-angle-down"></i>-->
-<!--                                            </button>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            <label class="control-label col-md-1">判断题分值</label>-->
+                            <!--                            <div class="col-md-4">-->
+                            <!--                                <div id="judgeScoreD">-->
+                            <!--                                    <div class="input-group input-small">-->
+                            <!--                                        <input type="text" class="spinner-input form-control" maxlength="3" value="1" name="judgeScore" id="judgeScore" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">-->
+                            <!--                                        <div class="spinner-buttons input-group-btn btn-group-vertical">-->
+                            <!--                                            <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incScore($('#judgeScore'))">-->
+                            <!--                                                <i class="fa fa-angle-up"></i>-->
+                            <!--                                            </button>-->
+                            <!--                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disScore($('#judgeScore'))">-->
+                            <!--                                                <i class="fa fa-angle-down"></i>-->
+                            <!--                                            </button>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                         </div>
 
 
@@ -212,86 +212,86 @@
                             </div>
                         </div>
                     </div>
-<!--                    弹出框结束-->
-<!--                    隐藏域-->
+                    <!--                    弹出框结束-->
+                    <!--                    隐藏域-->
                     <input id="successPaperName" class="hidden">
                 </div>
             </section>
         </div>
-<!--        自定义创建开始-->
-            <div class="col-md-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        自定义随机创建......
-                        <span class="tools pull-right">
+        <!--        自定义创建开始-->
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    自定义随机创建......
+                    <span class="tools pull-right">
                                 <a class="fa fa-chevron-down" id="d" href="javascript:;"></a>
                                 <a class="fa fa-times" href="javascript:;"></a>
                         </span>
-                    </header>
-                    <div class="panel-body">
-                <h4 class="fw-title">按步骤完成即可创建试卷</h4>
-                <div class="box-widget">
-                    <div class="widget-head clearfix">
-                        <div id="top_tabby" class="block-tabby pull-left">
+                </header>
+                <div class="panel-body">
+                    <h4 class="fw-title">按步骤完成即可创建试卷</h4>
+                    <div class="box-widget">
+                        <div class="widget-head clearfix">
+                            <div id="top_tabby" class="block-tabby pull-left">
+                            </div>
                         </div>
-                    </div>
-                    <div class="widget-container">
-                        <div class="widget-block">
-                            <div class="widget-content box-padding">
-                                <form id="stepy_form" class=" form-horizontal left-align form-well">
-                                    <fieldset title="Step 1" onclick="paperInfo()">
-                                        <legend>初始化</legend>
-                                        <div class="form-group ">
-                                            <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" name="paperName1" id="paperName1" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-1"> 开始时间</label>
-                                            <div class="col-md-4">
-                                                <div class="input-group date form_datetime-component">
-                                                    <input type="text" class="form-control" readonly="" size="16" name="startTime1" id="startTime1" required>
-                                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
-                                                    </span>
+                        <div class="widget-container">
+                            <div class="widget-block">
+                                <div class="widget-content box-padding">
+                                    <form id="stepy_form" class=" form-horizontal left-align form-well">
+                                        <fieldset title="Step 1" onclick="paperInfo()">
+                                            <legend>初始化</legend>
+                                            <div class="form-group ">
+                                                <label class="control-label col-md-1" style="float: left;"> 试卷名</label>
+                                                <div class="col-md-4">
+                                                    <input type="text" class="form-control" name="paperName1" id="paperName1" required>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-1">结束时间</label>
-                                            <div class="col-md-4">
-                                                <div class="input-group date form_datetime-component">
-                                                    <input type="text" class="form-control" readonly="" size="16" name="endTime1" id="endTime1" required>
-                                                    <span class="input-group-btn">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-1"> 开始时间</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date form_datetime-component">
+                                                        <input type="text" class="form-control" readonly="" size="16" name="startTime1" id="startTime1" required>
+                                                        <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
                                                     </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset title="Step 2" onclick="paperInfo()">
-                                        <legend>单选题选择</legend>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-1">结束时间</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date form_datetime-component">
+                                                        <input type="text" class="form-control" readonly="" size="16" name="endTime1" id="endTime1" required>
+                                                        <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary date-set"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset title="Step 2" onclick="paperInfo()">
+                                            <legend>单选题选择</legend>
 
                                             <div class="form-group s" th:each="type0 :${typeList}">
                                                 <div class="control-label col-md-6">
                                                     <label class="control-label col-md-2">单选数</label>
                                                     <div class="col-md-3">
-                                                    <div id="singleChoice">
-                                                        <div class="input-group input-small" >
-                                                            <input type="text" class="spinner-input form-control valid" maxlength="3" value="0" th:name="'singNumber'+${type0.getQPool()}" th:id="'singId'+${type0.getQPool()}"
-                                                                   onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
-                                                            <div class="spinner-buttons input-group-btn btn-group-vertical">
-                                                                <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber1(this.parentNode.parentNode.children[0])">
-                                                                    <i class="fa fa-angle-up"></i>
-                                                                </button>
-                                                                <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber1(this.parentNode.parentNode.children[0])">
-                                                                    <i class="fa fa-angle-down"></i>
-                                                                </button>
+                                                        <div id="singleChoice">
+                                                            <div class="input-group input-small" >
+                                                                <input type="text" class="spinner-input form-control valid" maxlength="3" value="0" th:name="'singNumber'+${type0.getQPool()}" th:id="'singId'+${type0.getQPool()}"
+                                                                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                                                <div class="spinner-buttons input-group-btn btn-group-vertical">
+                                                                    <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber1(this.parentNode.parentNode.children[0])">
+                                                                        <i class="fa fa-angle-up"></i>
+                                                                    </button>
+                                                                    <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber1(this.parentNode.parentNode.children[0])">
+                                                                        <i class="fa fa-angle-down"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                                     <label  class=" control-label col-md-2">题库</label>
                                                     <div class="btn-group col-md-3">
                                                         <button id="questionTypeButton1" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">请选择题库 <span class="caret"></span></button>
@@ -308,100 +308,100 @@
                                                 </div>
                                             </div>
 
-                                        <div class="form-group">
-                                            <div class="col-md-5">
-                                                <button type="button" class="btn btn-sm btn-success" onclick="addLine()"><i class="fa fa-plus"></i>添加选项</button>
-                                                <button type="button" class="btn btn-sm btn-danger" onclick="reduceLine()"><i class="fa fa-minus"></i>减少选项</button>
+                                            <div class="form-group">
+                                                <div class="col-md-5">
+                                                    <button type="button" class="btn btn-sm btn-success" onclick="addLine()"><i class="fa fa-plus"></i>添加选项</button>
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="reduceLine()"><i class="fa fa-minus"></i>减少选项</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset title="Step 3" onclick="paperInfo()">
-                                        <legend>多选题选择</legend>
+                                        </fieldset>
+                                        <fieldset title="Step 3" onclick="paperInfo()">
+                                            <legend>多选题选择</legend>
 
-                                        <div class="form-group m" th:each="type1 :${typeList}">
-                                            <div class="control-label col-md-5">
-                                                <label class="control-label col-md-2">多选数</label><div class="col-md-3">
-                                                <div id="moreChoice">
-                                                    <div class="input-group input-small" >
-                                                        <input type="text" class="spinner-input form-control valid" maxlength="3" value="0" th:name="'moreNumber'+${type1.getQPool()}" th:id="'moreId'+${type1.getQPool()}"
-                                                               onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
-                                                        <div class="spinner-buttons input-group-btn btn-group-vertical">
-                                                            <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber1(this.parentNode.parentNode.children[0])">
-                                                                <i class="fa fa-angle-up"></i>
-                                                            </button>
-                                                            <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber1(this.parentNode.parentNode.children[0])">
-                                                                <i class="fa fa-angle-down"></i>
-                                                            </button>
+                                            <div class="form-group m" th:each="type1 :${typeList}">
+                                                <div class="control-label col-md-5">
+                                                    <label class="control-label col-md-2">多选数</label><div class="col-md-3">
+                                                    <div id="moreChoice">
+                                                        <div class="input-group input-small" >
+                                                            <input type="text" class="spinner-input form-control valid" maxlength="3" value="0" th:name="'moreNumber'+${type1.getQPool()}" th:id="'moreId'+${type1.getQPool()}"
+                                                                   onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                                            <div class="spinner-buttons input-group-btn btn-group-vertical">
+                                                                <button type="button" class="btn spinner-up btn-xs btn-default" onclick="incNumber1(this.parentNode.parentNode.children[0])">
+                                                                    <i class="fa fa-angle-up"></i>
+                                                                </button>
+                                                                <button type="button" class="btn spinner-down btn-xs btn-default" onclick="disNumber1(this.parentNode.parentNode.children[0])">
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                                <label  class=" control-label col-md-2">分类</label>
-                                                <div class="btn-group col-md-3">
-                                                    <button id="questionTypeButton2" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
-                                                    <ul role="menu" class="dropdown-menu" style="text-align: left">
-                                                        <li  th:each="type :${typeList}" >
-                                                            <a th:value="${type.getQPool()}" th:text="${type.getQType()}"
-                                                               th:onclick="questionPool1([[${type.getQPool()}]],[[${type.getQType()}]],
+                                                    <label  class=" control-label col-md-2">分类</label>
+                                                    <div class="btn-group col-md-3">
+                                                        <button id="questionTypeButton2" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">题目类型 <span class="caret"></span></button>
+                                                        <ul role="menu" class="dropdown-menu" style="text-align: left">
+                                                            <li  th:each="type :${typeList}" >
+                                                                <a th:value="${type.getQPool()}" th:text="${type.getQType()}"
+                                                                   th:onclick="questionPool1([[${type.getQPool()}]],[[${type.getQType()}]],
                                                                    this.parentNode.parentNode.parentNode.children[2],this.parentNode.parentNode.parentNode.children[0])"
-                                                               style="width: 100%" href="javascript:void(0);">
-                                                            </a></li>
-                                                    </ul>
-                                                    <input class="hidden" th:id="'morePool'+${type1.getQPool()}" th:name="'morePool'+${type1.getQPool()}"  >
+                                                                   style="width: 100%" href="javascript:void(0);">
+                                                                </a></li>
+                                                        </ul>
+                                                        <input class="hidden" th:id="'morePool'+${type1.getQPool()}" th:name="'morePool'+${type1.getQPool()}"  >
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <div class="col-md-5">
-                                                <button type="button" class="btn btn-sm btn-success" onclick="addLine2()"><i class="fa fa-plus"></i>添加选项</button>
-                                                <button type="button" class="btn btn-sm btn-danger" onclick="reduceLine2()"><i class="fa fa-minus"></i>减少选项</button>
+                                            <div class="form-group">
+                                                <div class="col-md-5">
+                                                    <button type="button" class="btn btn-sm btn-success" onclick="addLine2()"><i class="fa fa-plus"></i>添加选项</button>
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="reduceLine2()"><i class="fa fa-minus"></i>减少选项</button>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                    </fieldset>
-                                    <fieldset title="Step 4" onclick="paperInfo()">
-                                        <legend>完成创建</legend>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" style="float: left;">本次考试试卷名:</label>
-                                            <label id="paperNameInf" class="control-label col-md-2" style="float: left;"></label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" style="float: left;">开始时间:</label>
-                                            <label id="startInf" class="control-label col-md-2" style="float: left;"></label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" style="float: left;">结束时间:</label>
-                                            <label id="endInf" class="control-label col-md-2" style="float: left;"></label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" style="float: left;">单选数:</label>
-                                            <label id="singleInf" class="control-label col-md-2" style="float: left;"></label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" style="float: left;">多选数:</label>
-                                            <label id="moreInf" class="control-label col-md-2" style="float: left;"></label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" style="float: left;">共:</label>
-                                            <label id="questionTotal" class="control-label col-md-2" style="float: left;"></label>
-                                            <label class="control-label col-md-1" style="float: left;">题</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" style="float: left;">点击完成即可创建试卷——></label>
-                                        </div>
-                                    </fieldset>
-                                    <button onclick="diySubmit()" type="button" class="finish btn btn-info btn-extend"> 完成!</button>
-                                </form>
-                                <div class="col-md-12" style="float:right">
-                                    <a target="_blank" href="#">Tips：选定题目数量后需指定所属题库，否则按未命名题库处理！</a>
+                                        </fieldset>
+                                        <fieldset title="Step 4" onclick="paperInfo()">
+                                            <legend>完成创建</legend>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2" style="float: left;">本次考试试卷名:</label>
+                                                <label id="paperNameInf" class="control-label col-md-2" style="float: left;"></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2" style="float: left;">开始时间:</label>
+                                                <label id="startInf" class="control-label col-md-2" style="float: left;"></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2" style="float: left;">结束时间:</label>
+                                                <label id="endInf" class="control-label col-md-2" style="float: left;"></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2" style="float: left;">单选数:</label>
+                                                <label id="singleInf" class="control-label col-md-2" style="float: left;"></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2" style="float: left;">多选数:</label>
+                                                <label id="moreInf" class="control-label col-md-2" style="float: left;"></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2" style="float: left;">共:</label>
+                                                <label id="questionTotal" class="control-label col-md-2" style="float: left;"></label>
+                                                <label class="control-label col-md-1" style="float: left;">题</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2" style="float: left;">点击完成即可创建试卷——></label>
+                                            </div>
+                                        </fieldset>
+                                        <button onclick="diySubmit()" type="button" class="finish btn btn-info btn-extend"> 完成!</button>
+                                    </form>
+                                    <div class="col-md-12" style="float:right">
+                                        <a target="_blank" href="#">Tips：选定题目数量后需指定所属题库，否则按未命名题库处理！</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                    </div>
-                </section>
+            </section>
         </div>
 
 
@@ -828,7 +828,7 @@
         var pName = $('#successPaperName').val()
         window.location.replace('/admin/toPaperList'+'?searchName='+pName)
     }
-    
+
     //日期格式化
     function dateFormat(date) {
         var arr = date.split(' ')
@@ -998,12 +998,12 @@
             $('#paperCreateTips').text('最少一个种类！')
             $('#tip2').click()
         }
-            for(var i =arr.length-1 ;i > 0;i--){
-                if(arr[i].getAttribute('class')=='form-group s'){
-                    arr[i].setAttribute('class','hidden form-group s')
-                    break;
-                }
+        for(var i =arr.length-1 ;i > 0;i--){
+            if(arr[i].getAttribute('class')=='form-group s'){
+                arr[i].setAttribute('class','hidden form-group s')
+                break;
             }
+        }
         //设置不可见的选项的内容为0
         for(var i =arr.length-1 ;i > 0;i--){
             if(arr[i].getAttribute('class')=='hidden form-group s'){
@@ -1201,23 +1201,24 @@
         var qMoreNum = 0
         var total = 0
         $("input[name='checkedQ']").each(function() {
-            if (this.checked == true)
-            {
-                ids += this.value+1 + "、";
-                realIds += this.parentNode.children[1].getAttribute('value')+","
-                //获得该题的类型
-                var type = this.parentNode.children[2].getAttribute('value')
-                if(type == 1)
+                if (this.checked == true)
                 {
-                    qSingleNum = qSingleNum + 1
+                    ids += this.value+1 + "、";
+                    alert(this.parentNode.children[1].getAttribute('value'))
+                    realIds += this.parentNode.children[1].getAttribute('value')+","
+                    //获得该题的类型
+                    var type = this.parentNode.children[2].getAttribute('value')
+                    if(type == 1)
+                    {
+                        qSingleNum = qSingleNum + 1
+                    }
+                    if(type == 2)
+                    {
+                        qMoreNum = qMoreNum + 1
+                    }
+                    total = qSingleNum + qMoreNum
                 }
-                if(type == 2)
-                {
-                    qMoreNum = qMoreNum + 1
-                }
-                total = qSingleNum + qMoreNum
             }
-        }
         );
         if(ids==""){
             $("#poolButtonA_"+pool).text('暂未选择题目！')
@@ -1283,10 +1284,11 @@
         //获取选择的所有题目id
         var qIdStr = "";
         for(var i = 1; i < len+1; i++){
-          var qIdTemp =  $("#pool_"+i+"choice").val();
-          if (qIdTemp!=""){
-              qIdStr = qIdTemp + qIdStr
-          }
+            var qIdTemp =  $("#pool_"+i+"choice").val();
+            alert(qIdTemp)
+            if (qIdTemp!=""){
+                qIdStr = qIdTemp + qIdStr
+            }
         }
         $.ajax({
             //请求路径

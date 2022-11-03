@@ -1,16 +1,21 @@
 package com.examination.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.examination.bean.User;
 import com.examination.service.UserService;
 import com.examination.utils.ShiroMd5Util;
+import com.examination.utils.StaticVariableUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * @Description
@@ -31,17 +36,31 @@ public class RegisterController {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @RequestMapping("/register")
-    public String register(@RequestParam("realName")String realName,
-                           @RequestParam("uId")String uId,
-                           @RequestParam("profession")String profession,
-                           @RequestParam("sex")Integer sex,
-                           @RequestParam("username")String userName,
-                           @RequestParam("password")String password,
-                           @RequestParam("repassword")String repassword,
-                           Model model){
+    @ResponseBody
+    @PostMapping("/register")
+    public Object register(@RequestBody String req) {
+
+        String realName = JSONObject.parseObject(req).get("realName").toString();
+        String uId =JSONObject.parseObject(req).get("uId").toString();
+        String profession =  JSONObject.parseObject(req).get("profession").toString();
+        Integer sex = Integer.parseInt((String) JSONObject.parseObject(req).get("sex")) ;
+        String userName = JSONObject.parseObject(req).get("username").toString();
+        String password = JSONObject.parseObject(req).get("password").toString();
+        String rePassword = JSONObject.parseObject(req).get("repassword").toString();
+
+        Map<String, Object> map = new Hashtable<>();
+        if (!StringUtils.isNumeric(uId)) {
+            map.put("code", StaticVariableUtil.FAILCODE);
+            map.put("msg", "学号格式不正确，请输入数字！");
+            return map;
+        }
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_name",userName);
+        wrapper.eq("user_name", userName);
+        if (userService.getOne(wrapper) != null) {
+            map.put("code", StaticVariableUtil.FAILCODE);
+            map.put("msg", "该用户名已存在，请更换！");
+            return map;
+        }
         User user = new User();
         user.setRealName(realName);
         user.setUId(uId);
@@ -49,32 +68,17 @@ public class RegisterController {
         user.setSex(sex);
         user.setUserName(userName);
         user.setUStatus(1);//新注册的用户启用状态
-        if (userService.getOne(wrapper)!=null){
-            model.addAttribute("regMsg","该用户名已存在");
-            model.addAttribute("reg",user);
-            return "registration";
-        }
+        user.setPassword(ShiroMd5Util.SysMd5(userName, password));
+        user.setPerms("user");
 
-        else if(!repassword.equals(password)){
-            model.addAttribute("regMsg","两次输入密码不一致");
-            return "registration";
+        if (userService.save(user)) {
+            map.put("code", StaticVariableUtil.SUCCESSCODE);
+            map.put("msg", "注册成功！");
+            return map;
+        } else {
+            map.put("code", StaticVariableUtil.HALFSUCCESSCODE);
+            map.put("msg", "数据库出了点问题，请稍后重试！");
+            return map;
         }
-
-        else{
-            user.setPassword(ShiroMd5Util.SysMd5(userName,password));
-            user.setPerms("user");
-            boolean save = userService.save(user);
-            System.out.println("注册成功"+user);
-            if (save){
-                model.addAttribute("regMsg","success");
-                model.addAttribute("username",userName);
-                return "login";
-            }
-            else{
-                model.addAttribute("regMsg","未知错误，请联系管理员！");
-                return "registration";
-            }
-        }
-
     }
 }

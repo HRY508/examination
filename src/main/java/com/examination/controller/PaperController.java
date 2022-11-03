@@ -549,9 +549,10 @@ public class PaperController {
         LocalDateTime end = LocalDateTime.parse(endTime);
         Paper paper = new Paper();
         paper.setPName(paperName);
-        paper.setIsAuto(1);
-        paper.setPStatus(0);
+        paper.setIsAuto(0);
+        paper.setPStatus(1);
         paper.setSingleSelect(1);
+        paper.setPdStatus(0);
         paper.setMoreSelect(1);
         paper.setStartTime(start);
         paper.setEndTime(end);

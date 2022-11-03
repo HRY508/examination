@@ -93,8 +93,10 @@
                                     </td>
                                     <td th:text="${type.qNumber}"></td>
                                     <td>
+                                        
                                         <button th:if="${type.qPool} != 0" class="btn btn-sm btn-info"  th:onclick="update([[${type.id}]],[[${type.qPool}]],[[${type.qType}]])">修改</button>
                                         <button th:if="${type.qPool} != 0" class="btn btn-sm btn-danger"  th:onclick="del([[${type.id}]])">删除</button>
+
                                     </td>
                                 </tr>
                                 </tbody>

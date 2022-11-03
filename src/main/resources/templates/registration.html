@@ -23,45 +23,37 @@
 
 <div class="container">
 
-
-    <form class="form-signin" th:action="@{/register}" method="post">
+    <div class="form-signin">
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">新用户注册</h1>
             <img src="/images/login-logo.png" alt=""/>
         </div>
         <div class="login-wrap">
             <p>输入您的个人信息</p>
-            <input type="text" autofocus="" placeholder="姓名" name="realName" th:value="${reg.realName}" class="form-control">
-            <input type="text" autofocus="" placeholder="学号" name="uId" th:value="${reg.UId}" class="form-control">
-            <input type="text" autofocus="" placeholder="专业" name="profession" th:value="${reg.profession}" class="form-control">
+            <input type="text" autofocus="" placeholder="姓名" id="realName" class="form-control">
+            <input type="text" autofocus="" placeholder="学号" id="uId"  class="form-control">
+            <input type="text" autofocus="" placeholder="专业" id="profession"  class="form-control">
             <div class="radios">
                 <label for="radio-01" class="label_radio col-lg-6 col-sm-6">
-                    <input type="radio"  id="radio-01" th:field="*{reg.sex}" th:value="1" name="sex"> 男
+                    <input type="radio"  id="radio-01" value="1" name="sex"> 男
                 </label>
                 <label for="radio-02" class="label_radio col-lg-6 col-sm-6">
-                    <!--数据回显-->
-                    <input type="radio" id="radio-02" th:field="*{reg.sex}" th:value="0"  name="sex"> 女
+                    <input type="radio"   id="radio-02"  value="2"  name="sex"> 女
                 </label>
             </div>
 
             <p>输入您的帐户详细信息如下</p>
-            <input type="text" autofocus="" placeholder="用户名" name="username" class="form-control">
-            <input type="password" placeholder="密码" name="password" class="form-control">
-            <input type="password" placeholder="确认密码" name="repassword" class="form-control">
+            <input type="text" autofocus="" placeholder="用户名" id="username" class="form-control">
+            <input type="password" placeholder="密码" id="password" class="form-control">
+            <input type="password" placeholder="确认密码" id="repassword" class="form-control">
             <!--注册出错通知开始-->
-            <div class="alert alert-block alert-danger fade in" th:if="${regMsg}!=null">
-                <button type="button" class="close close-sm" data-dismiss="alert">
-                    <i class="fa fa-times"></i>
-                </button>
-                <strong>注册失败！</strong>
-                <a th:text="${regMsg}" style="color: #a94442"></a>
-            </div>
+            <div style="color:red;" id="reMsg" ></div>
             <!--注册出错通知结束-->
 
             <label class="checkbox">
                 <input type="checkbox" value="agree this condition"> 我同意服务条款和隐私政策
             </label>
-            <button type="submit" class="btn btn-lg btn-login btn-block">
+            <button type="submit" class="btn btn-lg btn-login btn-block" onclick="submitByReg()">
                 <i class="fa fa-check"></i>
             </button>
 
@@ -72,8 +64,8 @@
                 </a>
             </div>
         </div>
+    </div>
 
-    </form>
 
 </div>
 
@@ -91,7 +83,63 @@
 </html>
 <script>
     $(document).ready(function(){
-        alert(document.getElementById("boy").val())
-
+        $("#reMsg").html("");
     });
+
+
+    function submitByReg() {
+        var realName = document.getElementById("realName").value
+        var uId = document.getElementById("uId").value
+        var profession = document.getElementById("profession").value
+        var sex = $("input[name='sex']:checked").val()
+        var username = document.getElementById("username").value
+        var password = document.getElementById("password").value
+        var repassword = document.getElementById("repassword").value
+        console.log(realName)
+        console.log(uId)
+        console.log(sex)
+        console.log(username)
+        console.log(password)
+        console.log(repassword)
+
+
+        if (realName == ""  || uId == "" || profession == "" || sex == ""|| username == ""|| password == "" || repassword == "" ||
+            realName == null  || uId == undefined || profession == undefined || sex == undefined|| username == undefined
+            || password == undefined || repassword == undefined){
+            $("#reMsg").html("请将信息填写完整!")
+            return;
+        }else{
+            if (password != repassword){
+                $("#reMsg").html("两次输入密码不一致!")
+                return;
+            }
+            $.ajax({
+                url : "/register",
+                type: "POST",
+                data: JSON.stringify({
+                    realName : realName,
+                    uId : uId,
+                    profession : profession,
+                    sex : sex,
+                    username : username,
+                    password : password,
+                    repassword : repassword
+                }),
+                contentType: "application/json;charset=utf-8",
+                //定义回调响应的数据格式为JSON字符串，该属性可以省略
+                dataType: "json",
+                //成功响应的结果
+                success: function (data){
+                    if (data.code == 200){
+                        $("#reMsg").html(data.msg)
+                    }else{
+                        $("#reMsg").html(data.msg)
+                    }
+                }
+
+            })
+        }
+
+    }
+
 </script>
