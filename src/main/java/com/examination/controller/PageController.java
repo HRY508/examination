@@ -71,6 +71,7 @@ public class PageController {
             map.put("info", "密码长度至少6位");
             return map;
         }
+
         if (userService.equalsByPwd(oldPwd, userId, userName)) {
             if (userService.updatePwdByUserId(ShiroMd5Util.SysMd5(userName, newPwd), userId)) {
                 map.put("status", 200);

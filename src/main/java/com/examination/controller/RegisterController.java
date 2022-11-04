@@ -54,6 +54,7 @@ public class RegisterController {
             map.put("msg", "学号格式不正确，请输入数字！");
             return map;
         }
+
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("user_name", userName);
         if (userService.getOne(wrapper) != null) {
@@ -73,7 +74,7 @@ public class RegisterController {
 
         if (userService.save(user)) {
             map.put("code", StaticVariableUtil.SUCCESSCODE);
-            map.put("msg", "注册成功！");
+            map.put("msg", "注册成功,快去登录吧！");
             return map;
         } else {
             map.put("code", StaticVariableUtil.HALFSUCCESSCODE);
