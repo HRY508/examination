@@ -1,5 +1,6 @@
 package com.examination.controller;
 
+import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.LogReaderUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,8 @@ public class LoggerController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/log";
     }
 

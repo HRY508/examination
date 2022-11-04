@@ -99,12 +99,15 @@
                                     <td class="center">  <input type="checkbox" name="id[]"  th:value="${user.id}" id="id[]" /></td>
                                     <td th:text="${user.id}"></td>
                                     <td th:text="${user.userName}"></td>
-                                    <td th:text="${user.password}"></td>
+                                    <td  th:text="${user.password}"></td>
                                     <td th:text="${user.uId}"></td>
                                     <td th:text="${user.realName}"></td>
                                     <td th:text="${user.sex==1} ? '男' : '女'"></td>
                                     <td th:text="${user.profession}"></td>
-                                    <td th:text="${user.perms}"></td>
+                                    <td>
+                                        <span th:if="${user.perms}==admin"  class="label label-success">管理员</span>
+                                        <span th:if="${user.perms}==user" class="label label-primary">用户</span>
+                                    </td>
                                     <td th:text="${#temporals.format(user.createTime, 'yyyy-MM-dd HH:mm')}"></td>
                                     <td>
                                         <button th:if="${user.uStatus}==1" type="button" th:value="${user.id}" class="btn btn-sm btn-success"  name="statusButton"  id="statusButton" ><i class="fa "></i>启用</button>

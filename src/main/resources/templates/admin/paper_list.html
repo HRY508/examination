@@ -129,7 +129,7 @@
                                     <td>
                                         <button class="btn btn-sm btn-success" type="button"  id="see" name="see" th:value="${paper.getPId()}">查看</button>
                                         <a  th:href="@{/admin/deletePaper/{pId}(pId=${paper.getPId()})}"
-                                            onclick="return del()" th:value="${paper.getPId()}" value="1">Delete
+                                            onclick="return del()" th:value="${paper.getPId()}" >Delete
                                         </a>
                                     </td>
                                     <td>

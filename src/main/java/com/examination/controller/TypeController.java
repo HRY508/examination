@@ -10,6 +10,7 @@ import com.examination.bean.Question;
 import com.examination.bean.Type;
 import com.examination.mapper.QuestionMapper;
 import com.examination.service.QuestionService;
+import com.examination.utils.GlobalUserUtil;
 import com.examination.utils.StaticVariableUtil;
 import com.examination.viewmodel.TypeVM;
 import com.examination.service.TypeService;
@@ -62,7 +63,8 @@ public class TypeController {
         model.addAttribute("searchName",searchName);
         model.addAttribute("jumpUrl","/admin/poolList?pn=");
         model.addAttribute("qName","&qName=");
-
+        // 显示管理员已登录
+        model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
         return "admin/question_pool";
     }
 

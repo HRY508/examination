@@ -268,7 +268,8 @@ public class QuestionsController {
             int size = questionObject.getQuestionItemObjects().size();
             model.addAttribute("size",size);
             model.addAttribute("questionObject",questionObject);
-
+            // 显示管理员已登录
+            model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
             return "admin/update_singleChoice";
         }
         else if(questionEditVM.getQuestionType()==2){
@@ -276,6 +277,8 @@ public class QuestionsController {
             int size = questionObject.getQuestionItemObjects().size();
             model.addAttribute("size",size);
             model.addAttribute("questionObject",questionObject);
+            // 显示管理员已登录
+            model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
             return "admin/update_moreChoice";
         }
         else if(questionEditVM.getQuestionType()==3){
@@ -284,6 +287,8 @@ public class QuestionsController {
             List<QuestionItemObject> questionItemObjects =
                     questionObject.getQuestionItemObjects();
             model.addAttribute("questionObject",questionObject);
+            // 显示管理员已登录
+            model.addAttribute("userName", GlobalUserUtil.getUser().getUserName());
             return "admin/update_judgemental";
         }
         else if(questionEditVM.getQuestionType()==4){
