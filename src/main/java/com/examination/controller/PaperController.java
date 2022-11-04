@@ -543,6 +543,8 @@ public class PaperController {
         JSONObject jsonObject = JSONObject.parseObject(request);
         String paperName = (String) jsonObject.get("paperName");
         String startTime = (String)jsonObject.get("startTime");
+        Integer singleNumber = (Integer) jsonObject.get("singleNumber");
+        Integer moreNumber = (Integer) jsonObject.get("moreNumber");
         String endTime = (String)jsonObject.get("endTime");
         String qIdStr = (String)jsonObject.get("qIdStr");
         LocalDateTime start = LocalDateTime.parse(startTime);
@@ -551,9 +553,9 @@ public class PaperController {
         paper.setPName(paperName);
         paper.setIsAuto(0);
         paper.setPStatus(1);
-        paper.setSingleSelect(1);
+        paper.setSingleSelect(singleNumber);
         paper.setPdStatus(0);
-        paper.setMoreSelect(1);
+        paper.setMoreSelect(moreNumber);
         paper.setStartTime(start);
         paper.setEndTime(end);
         //查询试卷，通过试卷名查询，试卷名需要保持唯一
