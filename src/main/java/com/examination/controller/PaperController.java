@@ -539,12 +539,12 @@ public class PaperController {
     @ResponseBody
     @RequestMapping("/createPaperAllDiy")
     public Object createPaperAllDiy(@RequestBody String request){
+        HashMap<String, Object> map = new HashMap<>();
         JSONObject jsonObject = JSONObject.parseObject(request);
         String paperName = (String) jsonObject.get("paperName");
         String startTime = (String)jsonObject.get("startTime");
         String endTime = (String)jsonObject.get("endTime");
         String qIdStr = (String)jsonObject.get("qIdStr");
-
         LocalDateTime start = LocalDateTime.parse(startTime);
         LocalDateTime end = LocalDateTime.parse(endTime);
         Paper paper = new Paper();
@@ -556,12 +556,17 @@ public class PaperController {
         paper.setMoreSelect(1);
         paper.setStartTime(start);
         paper.setEndTime(end);
-        //保存试卷
-        boolean savePaper = paperService.save(paper);
         //查询试卷，通过试卷名查询，试卷名需要保持唯一
         QueryWrapper<Paper> queryWrapper = new QueryWrapper();
         queryWrapper.select("p_id").eq("p_name",paperName);
         List<Paper> paperList = paperService.list(queryWrapper);
+        if(paperList.size()>0){
+            map.put("code",500);
+            map.put("message","创建失败，试卷已存在.");
+            return map;
+        }
+        //保存试卷
+        boolean savePaper = paperService.save(paper);
         //进行试卷细节处理
         String[] split = qIdStr.split(",");
         ArrayList<PaperDetails> list = new ArrayList<>();
@@ -569,16 +574,18 @@ public class PaperController {
             PaperDetails paperDetails = new PaperDetails();
             paperDetails.setQId(Integer.parseInt(split[i]));
             paperDetails.setNum(i);
-            paperDetails.setPId(paperList.get(0).getPId());
+            //设置试卷id
+            paperDetails.setPId(paperService.list(queryWrapper).get(0).getPId());
             list.add(paperDetails);
         }
         boolean savePaperDetails = paperDetailsService.saveBatch(list);
-        HashMap<String, Object> map = new HashMap<>();
         if(savePaper && savePaperDetails){
             map.put("code",200);
+            map.put("message","试卷"+paperName+"创建成功！");
             return  map;
         }
         else {
+            map.put("message","试卷"+paperName+"创建失败！请查看日志或联系开发人员。");
             map.put("code",500);
             return map;
         }
