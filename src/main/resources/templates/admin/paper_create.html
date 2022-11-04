@@ -61,9 +61,10 @@
     <!-- 当前位置介绍结束-->
 
 
-    <!--    body wrapper start-->
+    <!--body wrapper start-->
     <div class="wrapper">
-        <div class="col-md-12">
+            <!--随机创建1开始-->
+            <div class="col-md-12">
             <section class="panel">
                 <header class="panel-heading">
                     随机创建......
@@ -185,69 +186,16 @@
                             <a class="btn btn-success btn-sm " style="float:right" onclick="createPaper()"><i class="fa fa-check"></i> 开始创建 </a>
                         </div>
 
-                        <a href="#myModal1" data-toggle="modal" class="btn btn-warning hidden" id="tip1">
-                            提示按钮
-                        </a>
                     </form>
-                    <!--                        弹出框开始-->
-                    <div class="col-md-12 ">
-                        <a href="#myModal2" data-toggle="modal" class="btn btn-warning hidden" id="tip2">
-                            提示按钮
-                        </a>
-                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade" style="display: none;">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header" id="modelColor" style="background:#65CEA7">
-                                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                        <h4 class="modal-title">提示</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p id="paperCreateTips"></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default hidden" data-dismiss="modal" onclick="toLook()" id="toLook">去查看</button>
-                                        <button type="button" class="btn btn-default hidden" data-dismiss="modal" id="cancel">取消</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
-
-
-                    <div class="col-md-12 ">
-                        <a href="#myModal4" data-toggle="modal" class="btn btn-warning hidden" id="tip3">
-                            提示按钮
-                        </a>
-                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal4" class="modal fade" style="display: none;">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header" id="modelColor1" style="background:#65CEA7">
-                                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                        <h4 class="modal-title">提示</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p id="paperCreateTips1"></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default hidden" data-dismiss="modal" onclick="toLook()" id="toLook1">去查看</button>
-                                        <button type="button" class="btn btn-default hidden" data-dismiss="modal" id="cancel1">取消</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-<!--                    弹出框结束-->
-
-
-
-<!--                    隐藏域-->
+                    <!--隐藏域-->
                     <input id="successPaperName" class="hidden">
                 </div>
             </section>
         </div>
-<!--        自定义创建开始-->
+
+            <!--随机创建2开始-->
             <div class="col-md-12">
                 <section class="panel">
                     <header class="panel-heading">
@@ -323,7 +271,7 @@
                                                 </div>
                                                     <label  class=" control-label col-md-2">题库</label>
                                                     <div class="btn-group col-md-3">
-                                                        <button id="questionTypeButton1" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">请选择题库 <span class="caret"></span></button>
+                                                        <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown" type="button">请选择题库 <span class="caret"></span></button>
                                                         <ul role="menu" class="dropdown-menu" style="text-align: left">
                                                             <li  th:each="type :${typeList}" >
                                                                 <a th:value="${type.getQPool()}" th:text="${type.getQType()}"
@@ -433,8 +381,8 @@
                 </section>
         </div>
 
-
-        <div class="col-md-12">
+            <!--自定义创建开始-->
+            <div class="col-md-12">
             <section class="panel">
                 <header class="panel-heading">
                     自定义创建......
@@ -490,9 +438,33 @@
             </section>
         </div>
 
+            <!--弹出框开始-->
+            <div class="col-md-12 ">
+            <a href="#myModal2" data-toggle="modal" class="btn btn-warning hidden" id="tip2">
+                提示按钮
+            </a>
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal2" class="modal fade" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" id="modelColor" style="background:#65CEA7">
+                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                            <h4 class="modal-title">提示</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="paperCreateTips"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default hidden" data-dismiss="modal" onclick="toLook()" id="toLook">去查看</button>
+                            <button type="button" class="btn btn-default hidden" data-dismiss="modal" id="cancel">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!--弹出框结束-->
 
-        <!--从题库选择Model开始-->
-        <div class="col-md-12 ">
+            <!--从题库选择Model开始-->
+            <div class="col-md-12 ">
             <a href="#myModal1" data-toggle="modal" class="btn btn-warning hidden" id="cButton">
             </a>
             <input type="text" class="hidden" id="poolInModel">
@@ -526,10 +498,10 @@
                 </div>
             </div>
         </div>
-        <!--从题库选择Model结束-->
+            <!--从题库选择Model结束-->
 
-        <!--试卷详情model-->
-        <div class="col-md-12 ">
+            <!--试卷详情model-->
+            <div class="col-md-12 ">
             <a href="#myModal3" data-toggle="modal" class="btn btn-warning hidden" id="pDetail">
             </a>
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal3" class="modal fade" style="display: none;">
@@ -587,14 +559,35 @@
                 </div>
             </div>
         </div>
-        <!--试卷详情model-->
+            <!--试卷详情model-->
 
-
+            <!--提示model-->
+            <div class="col-md-12 ">
+            <a href="#myModal0" data-toggle="modal" class="btn btn-warning hidden" id="diySuggest">
+            </a>
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal0" class="modal fade" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:#65CEA7" id="diySuggestionColor">
+                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                            <h4 class="modal-title">提示</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="diySuggestionTip"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default hidden" data-dismiss="modal" id="diySuggestionYes">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!--提示model-->
 
     </div>
-    <!--        自定义创建结束-->
 
-    <!--    body wrapper end-->
+    <!--body wrapper end-->
 
     <!--footer section start-->
     <footer>
@@ -641,92 +634,6 @@
 <script src="/js/scripts.js"></script>
 <script type="text/javascript">
 
-    //随机创建2
-    function diySubmit() {
-        //获取自定义创建考试名、开始时间、结束时间
-        var paperName = $('#paperName1').val()
-        var startTime0 = $('#startTime1').val()
-        var endTime0 = $('#endTime1').val()
-        startTime1 = dateFormat(startTime0)
-        endTime1 = dateFormat(endTime0)
-        //获取所有的单选题的数量跟对应的类型
-        var singleNumArray = {}
-        var singlePoolArray = {}
-        var singleInputNumber = document.getElementsByClassName('form-group s')
-        for(var i =0;i<singleInputNumber.length;i++){
-            var singNum = $("#singId"+parseInt(i+1)+"").val()
-            var singPool = $("#singPool"+parseInt(i+1)+"").val()
-            //用户未选择的pool将pool设置为空
-            if(singPool == ''){
-                singPool = parseInt(0)
-            }
-            if(singNum!=0&&singPool!=0){
-                singleNumArray[i] = $("#singId"+parseInt(i+1)+"").val()
-                singlePoolArray[i] = $("#singPool"+parseInt(i+1)+"").val()
-            }
-        }
-        //获取所有的多选题的数量跟对应的类型
-        var moreNumArray = {}
-        var morePoolArray = {}
-        var moreInputNumber = document.getElementsByClassName('form-group m')
-        for(var i =0;i<moreInputNumber.length;i++)
-        {
-            var moreNum = $("#moreId"+parseInt(i+1)+"").val()
-            var morePool = $("#morePool"+parseInt(i+1)+"").val()
-            //用户未选择的pool将pool设置为空
-            if(morePool == ''){
-                morePool = parseInt(0)
-            }
-            if(moreNum!=0&&morePool!=0){
-                moreNumArray[i] = $("#moreId"+parseInt(i+1)+"").val()
-                morePoolArray[i] = $("#morePool"+parseInt(i+1)+"").val()
-            }
-        }
-        $.ajax({
-            //请求路径
-            url: "/admin/createPaperDiy",
-            //请求类型
-            type: "POST",
-            //data表示发送的数据
-            data: JSON.stringify({
-                paperName:paperName,
-                startTime:startTime1,
-                endTime:endTime1,
-                singleNumArray:singleNumArray,
-                singlePoolArray:singlePoolArray,
-                moreNumArray:moreNumArray,
-                morePoolArray:morePoolArray
-            }), //定义发送请求的数据格式为JSON字符串
-            contentType: "application/json;charset=utf-8",
-            //定义回调响应的数据格式为JSON字符串，该属性可以省略
-            dataType: "json",
-            //成功响应的结果
-            success: function (data) {
-                if(data.code==200){
-                    $('#toLook').removeClass('hidden')
-                    $('#cancel').text('确定').removeClass('hidden')
-                    $('#modelColor').attr('style','background : #65CEA7')
-                    $('#paperCreateTips').text('试卷：'+data.paperName+'创建成功！')
-                    $('#tip2').click()
-                }
-                if(data.code == 500){
-                    $('#modelColor').attr('style','background : #bb1f1f')
-                    if(data.hasPaper == true){
-                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因：该试卷已存在，不可重复创建。')
-                        $('#tip2').click()
-                        $('#toLook').removeClass('hidden')
-                        $('#cancel').text('确定').removeClass('hidden')
-                    }
-                    else if (data.hasError!=null){
-                        $('#toLook').addClass('hidden')
-                        $('#cancel').text('确定').removeClass('hidden')
-                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因:'+data.hasError)
-                        $('#tip2').click()
-                    }
-                }
-            },
-        })
-    }
 
     /*=====STEPY WIZARD====*/
     $(function() {
@@ -784,8 +691,6 @@
         var endTime0 = $('#endTime').val()
         startTime = dateFormat(startTime0)
         endTime = dateFormat(endTime0)
-        alert(singleSelectNumber)
-        alert(moreSelectNumber)
         var sum = parseInt(singleSelectNumber) + parseInt(moreSelectNumber)
         if(parseInt(singleSelectNumber) < 1 || parseInt(moreSelectNumber) < 1){
             $('#toLook').addClass('hidden')
@@ -830,7 +735,6 @@
                     if(data.code == 200){
                         $('#toLook').removeClass('hidden')
                         $('#cancel').text('确定').removeClass('hidden')
-                        alert("success")
                         $('#modelColor').attr('style','background : #65CEA7')
                         $('#paperCreateTips').text('试卷：'+data.paperName+'创建成功！')
                         $('#tip2').click()
@@ -996,10 +900,10 @@
     function addLine(){
         var arr = document.getElementsByClassName('hidden form-group s')
         if(arr.length==0){
-            $('#cancel').text('确定').removeClass('hidden')
-            $('#modelColor').attr('style','background : #65CEA7')
-            $('#paperCreateTips').text('种类数达到上限！')
-            $('#tip2').click()
+            $('#diySuggestionYes').text('确定').removeClass('hidden')
+            $('#diySuggestionColor').attr('style','background : #65CEA7')
+            $('#diySuggestionTip').text('种类数达到上限！')
+            $('#diySuggest').click()
         }
         if(arr.length>0){
             arr[0].setAttribute('class','form-group s')
@@ -1010,10 +914,10 @@
     function addLine2(){
         var arr = document.getElementsByClassName('hidden form-group m')
         if(arr.length==0){
-            $('#cancel').text('确定').removeClass('hidden')
-            $('#modelColor').attr('style','background : #65CEA7')
-            $('#paperCreateTips').text('种类数达到上限！')
-            $('#tip2').click()
+            $('#diySuggestionYes').text('确定').removeClass('hidden')
+            $('#diySuggestionColor').attr('style','background : #65CEA7')
+            $('#diySuggestionTip').text('种类数达到上限！')
+            $('#diySuggest').click()
         }
         if(arr.length>0){
             arr[0].setAttribute('class','form-group m')
@@ -1026,10 +930,10 @@
         var arr = document.getElementsByClassName('form-group s')
         var arr2 = document.getElementsByClassName('hidden form-group s')
         if(arr.length-arr2.length==1){
-            $('#cancel').text('确定').removeClass('hidden')
-            $('#modelColor').attr('style','background : #bb1f1f')
-            $('#paperCreateTips').text('最少一个种类！')
-            $('#tip2').click()
+            $('#diySuggestionYes').text('确定').removeClass('hidden')
+            $('#diySuggestionColor').attr('style','background : #bb1f1f')
+            $('#diySuggestionTip').text('最少一个种类！')
+            $('#diySuggest').click()
         }
             for(var i =arr.length-1 ;i > 0;i--){
                 if(arr[i].getAttribute('class')=='form-group s'){
@@ -1040,7 +944,6 @@
         //设置不可见的选项的内容为0
         for(var i =arr.length-1 ;i > 0;i--){
             if(arr[i].getAttribute('class')=='hidden form-group s'){
-                alert(i)
                 arr[i].children[0].children[1].children[0].children[0].children[0].value = 0
             }
         }
@@ -1052,10 +955,10 @@
         var arr = document.getElementsByClassName('form-group m')
         var arr2 = document.getElementsByClassName('hidden form-group m')
         if(arr.length-arr2.length==1){
-            $('#cancel').text('确定').removeClass('hidden')
-            $('#modelColor').attr('style','background : #bb1f1f')
-            $('#paperCreateTips').text('最少一个种类！')
-            $('#tip2').click()
+            $('#diySuggestionYes').text('确定').removeClass('hidden')
+            $('#diySuggestionColor').attr('style','background : #bb1f1f')
+            $('#diySuggestionTip').text('最少一个种类！')
+            $('#diySuggest').click()
         }
         for(var i =arr.length-1 ;i > 0;i--){
             if(arr[i].getAttribute('class')=='form-group m'){
@@ -1126,16 +1029,16 @@
         startTime1 = dateFormat(startTime0)
         endTime1 = dateFormat(endTime0)
         //获取所有的单选题的数量跟对应的类型
-        var singleNum = parseInt(0)
-        var moreNum = parseInt(0)
+        var singleNum = parseInt('0')
+        var moreNum = parseInt('0')
         var singleInputNumber = document.getElementsByClassName('form-group s')
-        for(var i =0;i<singleInputNumber.length;i++){
-            var num = parseInt($("#singId"+parseInt(i+1)+"").val())
+        for(var i =1;i<singleInputNumber.length;i++){
+            var num = parseInt($("#singId"+parseInt(i)+"").val())
             singleNum = num+singleNum
         }
         var moreInputNumber = document.getElementsByClassName('form-group m')
-        for(var i =0;i<singleInputNumber.length;i++){
-            var num = parseInt($("#moreId"+parseInt(i+1)+"").val())
+        for(var i =1;i<singleInputNumber.length;i++){
+            var num = parseInt($("#moreId"+parseInt(i)+"").val())
             moreNum = num+moreNum
         }
         $('#paperNameInf').html(paperName)
@@ -1311,6 +1214,93 @@
 
     }
 
+    //随机创建2
+    function diySubmit() {
+        //获取自定义创建考试名、开始时间、结束时间
+        var paperName = $('#paperName1').val()
+        var startTime0 = $('#startTime1').val()
+        var endTime0 = $('#endTime1').val()
+        startTime1 = dateFormat(startTime0)
+        endTime1 = dateFormat(endTime0)
+        //获取所有的单选题的数量跟对应的类型
+        var singleNumArray = {}
+        var singlePoolArray = {}
+        var singleInputNumber = document.getElementsByClassName('form-group s')
+        for(var i =0;i<singleInputNumber.length;i++){
+            var singNum = $("#singId"+parseInt(i+1)+"").val()
+            var singPool = $("#singPool"+parseInt(i+1)+"").val()
+            if(singNum!=0){
+                //用户未选择题目所属题库
+                if(singPool == ''){
+                    singPool = parseInt('0')
+                }
+                singleNumArray[i] = singNum
+                singlePoolArray[i] = singPool
+            }
+        }
+        //获取所有的多选题的数量跟对应的类型
+        var moreNumArray = {}
+        var morePoolArray = {}
+        var moreInputNumber = document.getElementsByClassName('form-group m')
+        for(var i =0;i<moreInputNumber.length;i++)
+        {
+            var moreNum = $("#moreId"+parseInt(i+1)+"").val()
+            var morePool = $("#morePool"+parseInt(i+1)+"").val()
+            if(moreNum!=0){
+                //用户未选择题目所属题库
+                if(morePool == ''){
+                    morePool = parseInt('0')
+                }
+                moreNumArray[i] = moreNum
+                morePoolArray[i] = morePool
+            }
+        }
+        $.ajax({
+            //请求路径
+            url: "/admin/createPaperDiy",
+            //请求类型
+            type: "POST",
+            //data表示发送的数据
+            data: JSON.stringify({
+                paperName:paperName,
+                startTime:startTime1,
+                endTime:endTime1,
+                singleNumArray:singleNumArray,
+                singlePoolArray:singlePoolArray,
+                moreNumArray:moreNumArray,
+                morePoolArray:morePoolArray
+            }), //定义发送请求的数据格式为JSON字符串
+            contentType: "application/json;charset=utf-8",
+            //定义回调响应的数据格式为JSON字符串，该属性可以省略
+            dataType: "json",
+            //成功响应的结果
+            success: function (data) {
+                if(data.code==200){
+                    $('#toLook').removeClass('hidden')
+                    $('#cancel').text('确定').removeClass('hidden')
+                    $('#modelColor').attr('style','background : #65CEA7')
+                    $('#paperCreateTips').text('试卷：'+data.paperName+'创建成功！')
+                    $('#tip2').click()
+                }
+                if(data.code == 500){
+                    $('#modelColor').attr('style','background : #bb1f1f')
+                    if(data.hasPaper == true){
+                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因：该试卷已存在，不可重复创建。')
+                        $('#tip2').click()
+                        $('#toLook').removeClass('hidden')
+                        $('#cancel').text('确定').removeClass('hidden')
+                    }
+                    else if (data.hasError!=null){
+                        $('#toLook').addClass('hidden')
+                        $('#cancel').text('确定').removeClass('hidden')
+                        $('#paperCreateTips').text('试卷：'+data.paperName+'创建失败！原因:'+data.hasError)
+                        $('#tip2').click()
+                    }
+                }
+            },
+        })
+    }
+
     //完全自定创建触发
     function createPaperAllDIY() {
         //获取自定义创建考试名、开始时间、结束时间
@@ -1366,6 +1356,9 @@
 
     }
 
+    jQuery(document).ready(function() {
+        EditableTable.init();
+    });
     document.getElementById("paper-create").className="active";
     document.getElementById("menu3").className="menu-list nav-active";
 </script>
@@ -1375,5 +1368,8 @@
 
 </html>
 <script>
-
+    import Form_advanced_components from "./form_advanced_components.html";
+    export default {
+        components: {Form_advanced_components}
+    }
 </script>

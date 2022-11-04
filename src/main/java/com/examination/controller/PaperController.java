@@ -331,6 +331,8 @@ public class PaperController {
     @ResponseBody
     @RequestMapping("/createPaperDiy")
     public Object createPaperDiy(@RequestBody String request){
+        //储存返回给前端的数据
+        Map map = new HashMap();
         JSONObject jsonObject = JSONObject.parseObject(request);
         String paperName = (String) jsonObject.get("paperName");
         String startTime = (String)jsonObject.get("startTime");
@@ -346,7 +348,7 @@ public class PaperController {
             singleSelect+=Integer.parseInt((String) singleNumArray.get(String.valueOf(i)));
         }
         for(int i = 0; i < moreNumArray.size(); i++){
-            moreSelect+=Integer.parseInt((String) morePoolArray.get(String.valueOf(i)));
+            moreSelect+=Integer.parseInt((String) moreNumArray.get(String.valueOf(i)));
         }
         LocalDateTime start = LocalDateTime.parse(startTime);
         LocalDateTime end = LocalDateTime.parse(endTime);
@@ -360,18 +362,16 @@ public class PaperController {
         paper.setEndTime(end);
         LocalDateTime updateTime = LocalDateTime.parse(startTime);
         paper.setUpdateTime(updateTime);
-        //储存返回给前端的数据
-        Map map = new HashMap();
         //查询试卷是否存在,存在直接创建失败返回到前端，不能直接保存因为还没有对用户输入的题目数量进行校验
         //查询试卷，判断试卷是否已经存在，通过试卷名查询，试卷名需要保持唯一
         QueryWrapper<Paper> queryWrapper = new QueryWrapper();
         queryWrapper.select("p_id").eq("p_name",paperName);
         List<Paper> paperList = paperService.list(queryWrapper);
+        map.put("paperName",paperName);
         //已经创建过，直接返回信息到前端
         if(paperList.size()>=1){
             map.put("code", 500);
             map.put("hasPaper",true);
-            map.put("paperName",paperName);
             return map;
         }
         else {
@@ -381,7 +381,7 @@ public class PaperController {
         for(int i =0;i<singlePoolArray.size();i++){
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType)
-                    .eq("question_pool",Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))).eq("status",1).ne("question_pool",0);
+                    .eq("question_pool",singlePoolArray.get(String.valueOf(i))).eq("status",1).ne("question_pool",0);
             //查出满足某种题型、某种类型的题，并将该题的id存放在array中
             List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
             Integer array[] = new Integer[questionList.size()];
@@ -393,7 +393,7 @@ public class PaperController {
             //可能存在需求量>题库中单选题目数量，返回创建失败给前端
             if(number>questionList.size()){
                 map.put("code", 500);
-                map.put("hasError","题库"+Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))+"余量不足，创建失败");
+                map.put("hasError","题库"+ singlePoolArray.get(String.valueOf(i))+"余量不足，创建失败");
                 return map;
             }
         }
@@ -401,7 +401,7 @@ public class PaperController {
         for(int i =0;i<morePoolArray.size();i++){
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType)
-                    .eq("question_pool",Integer.parseInt((String) morePoolArray.get(String.valueOf(i)))).eq("status",1).ne("question_pool",0);
+                    .eq("question_pool", morePoolArray.get(String.valueOf(i))).eq("status",1).ne("question_pool",0);
             //查出满足某种题型、某种类型的题，并将该题的id存放在array中
             List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
             Integer array[] = new Integer[questionList.size()];
@@ -413,7 +413,7 @@ public class PaperController {
             //可能存在需求量>题库中单选题目数量，返回创建失败数据
             if(number>questionList.size()){
                 map.put("code", 500);
-                map.put("hasError","题库"+Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))+"余量不足，创建失败");
+                map.put("hasError","题库"+singlePoolArray.get(String.valueOf(i))+"余量不足，创建失败");
                 return map;
             }
         }
@@ -429,7 +429,7 @@ public class PaperController {
             // 查询条件：question_pool
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.singleSelectType)
-                    .eq("question_pool",Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))).eq("status",1).ne("question_pool",0);
+                    .eq("question_pool",singlePoolArray.get(String.valueOf(i))).eq("status",1).ne("question_pool",0);
             //查出满足某种题型、某种类型的题，并将该题的id存放在array中
             List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
             Integer array[] = new Integer[questionList.size()];
@@ -453,7 +453,7 @@ public class PaperController {
             // 查询条件：question_pool
             QueryWrapper<Question> questionQueryWrapperWrapper = new QueryWrapper();
             questionQueryWrapperWrapper.select("id").eq("question_type", StaticVariableUtil.moreSelectType)
-                    .eq("question_pool",Integer.parseInt((String) morePoolArray.get(String.valueOf(i)))).eq("status",1).ne("question_pool",0);
+                    .eq("question_pool", morePoolArray.get(String.valueOf(i))).eq("status",1).ne("question_pool",0);
             //查出满足某种题型、某种类型的题，并将该题的id存放在array中
             List<Question> questionList = questionService.list(questionQueryWrapperWrapper);
             Integer array[] = new Integer[questionList.size()];
@@ -465,7 +465,7 @@ public class PaperController {
             //可能存在需求量>题库中单选题目数量，返回创建失败数据
             if(number>questionList.size()){
                 map.put("code", 500);
-                map.put("hasError","题库"+Integer.parseInt((String) singlePoolArray.get(String.valueOf(i)))+"余量不足，创建失败");
+                map.put("hasError","题库"+singlePoolArray.get(String.valueOf(i))+"余量不足，创建失败");
                 return map;
             }
             ArrayList<Integer> randomList = RandomUtil.random(number, array);
