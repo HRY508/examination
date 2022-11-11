@@ -6,6 +6,14 @@
 #### 软件架构
 采用 SpringBoot+MybatisPlus+MySQL+Thymeleaf+Shiro
 #### 预览图片
-
+![输入图片说明](src/main/resources/static/images/blog/1668145878502.jpg)
+![输入图片说明](src/main/resources/static/images/blog/1668145891148.jpg)
+![输入图片说明](src/main/resources/static/images/blog/1668145912829.jpg)
+![输入图片说明](src/main/resources/static/images/blog/1668145903134.jpg)
+![输入图片说明](src/main/resources/static/images/blog/1668145921162.jpg)
+![输入图片说明](src/main/resources/static/images/blog/1668145930123.jpg)
+![输入图片说明](src/main/resources/static/images/blog/1668145939963.jpg)
+![输入图片说明](src/main/resources/static/images/blog/1668145950480.jpg)
+![输入图片说明](src/main/resources/static/images/blog/1668145963392.jpg)
 # 延伸阅读
 
